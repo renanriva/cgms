@@ -18,3 +18,41 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+//    Route::get('/admin/location/ajax/province', 'ProvinceController@getTableData');
+
+
+Route::middleware(['auth'])->group(function (){
+
+
+    Route::prefix('admin')->group(function(){
+
+
+        Route::prefix('location')->group(function(){
+
+
+            /**
+             * Province
+             */
+            Route::get('/province/ajax/table', 'ProvinceController@getTableData');
+            Route::get('/province', 'ProvinceController@index');
+
+
+            /**
+             * Cantons
+             */
+            Route::post('/canton/ajax/table', 'CantonController@getTableData');
+            Route::get('/canton', 'CantonController@index');
+
+            /**
+             * Parroquia
+             */
+            Route::post('/parroquia/ajax/table', 'ParroquiaController@getTableData');
+            Route::get('/parroquia', 'ParroquiaController@index');
+
+        });
+
+    });
+
+});

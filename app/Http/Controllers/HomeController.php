@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class HomeController extends Controller
 {
@@ -14,6 +15,9 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
+        App::setLocale('en');
+
     }
 
     /**
@@ -23,6 +27,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+
+//        echo  __('menu.settings');
+//        echo  App::getLocale();
         return view('home');
     }
 }
