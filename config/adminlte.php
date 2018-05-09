@@ -108,22 +108,66 @@ return [
     */
 
     'menu' => [
-        'MAIN NAVIGATION',
-        [
-            'text' => 'Blog',
-            'url'  => 'admin/blog',
+        'lms.menu.main_nav',
+//        [
+//            'text' => 'Blog',
+//            'url'  => 'admin/blog',
 //            'can'  => 'manage-blog',
+//        ],
+        [
+            'text'        => 'lms.menu.students',
+            'url'         => 'admin/students',
+            'icon'        => 'users',
+//            'label'       => 5,
+//            'label_color' => 'primary',
         ],
         [
-            'text'        => 'Pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'file',
-            'label'       => 4,
-            'label_color' => 'success',
+            'text'        => 'lms.menu.course',
+            'url'         => 'admin/courses',
+            'icon'        => 'book',
+//            'label'       => 4,
+//            'label_color' => 'success',
         ],
-        'ACCOUNT SETTINGS',
         [
-            'text' => 'Profile',
+            'text'        => 'lms.menu.institute',
+            'url'         => 'admin/institute',
+            'icon'        => 'building',
+//            'label'       => 5,
+//            'label_color' => 'primary',
+        ],
+        [
+            'text'    => 'lms.menu.settings.title',
+            'icon'    => 'cogs',
+            'submenu' => [
+                [
+                    'text'  => 'lms.menu.settings.user_management',
+                    'icon'  => 'user-secret',
+                    'url'   => 'admin/users',
+                ],
+                [
+                    'text'    => 'lms.menu.settings.location.title',
+                    'icon'      => 'map',
+                    'url'     => '#',
+                    'submenu' => [
+                        [
+                            'text' => 'lms.menu.settings.location.province',
+                            'url'  => '/admin/location/province',
+                        ],
+                        [
+                            'text'    => 'lms.menu.settings.location.canton',
+                            'url'     => '/admin/location/canton',
+                        ],
+                        [
+                            'text'    => 'lms.menu.settings.location.parroquia',
+                            'url'     => '/admin/location/parroquia',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+        'lms.menu.account_settings',
+        [
+            'text' => 'lms.menu.profile',
             'url'  => 'admin/settings',
             'icon' => 'user',
         ],
@@ -131,57 +175,6 @@ return [
             'text' => 'Change Password',
             'url'  => 'admin/settings',
             'icon' => 'lock',
-        ],
-        [
-            'text'    => 'Multilevel',
-            'icon'    => 'share',
-            'submenu' => [
-                [
-                    'text' => 'Level One',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'Level One',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'Level Two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'Level Two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'Level Three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'Level Three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'Level One',
-                    'url'  => '#',
-                ],
-            ],
-        ],
-        'LABELS',
-        [
-            'text'       => 'Important',
-            'icon_color' => 'red',
-        ],
-        [
-            'text'       => 'Warning',
-            'icon_color' => 'yellow',
-        ],
-        [
-            'text'       => 'Information',
-            'icon_color' => 'aqua',
         ],
     ],
 

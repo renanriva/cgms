@@ -1,4 +1,4 @@
-let mix = require('laravel-mix');
+var mix = require('laravel-mix');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,5 +11,35 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+// @link https://github.com/JeffreyWay/laravel-mix/issues/819
+
+/**
+ *  ADMIN
+ */
+// .sass('resources/assets/sass/app.scss', 'public/admin/css/vendor.css')
+// .copy('node_modules/bootstrap-sass/', 'public/admin')
+// .sass('resources/assets/admin/sass/admin.scss', 'public/admin/css/app.css')
+
+mix.autoload({
+        jquery: ['$', 'window.jQuery',"jQuery","window.$","jquery","window.jquery"]
+    })
+    .sass('resources/assets/sass/app.scss', 'public/admin/css/app.css')
+    .js([
+        'public/vendor/adminlte/vendor/jquery/dist/jquery.js',
+        'public/vendor/adminlte/vendor/bootstrap/dist/js/bootstrap.min.js',
+        'public/vendor/adminlte/dist/js/adminlte.min.js',
+        'node_modules/datatables/media/js/jquery.dataTables.js',
+        'node_modules/select2/dist/js/select2.js',
+        'public/vendor/adminlte/vendor/jquery/dist/jquery.slimscroll.min.js',
+
+            'resources/assets/admin/js/ajax-setup.js',
+            'resources/assets/admin/js/location.js',
+            'resources/assets/admin/js/location/canton.js',
+            'resources/assets/admin/js/location/parroquia.js',
+            'resources/assets/admin/js/common.js'
+        ],
+        'public/admin/js/app.js')
+    .options({
+        processCssUrls: true
+    })
+    .version();
