@@ -11,6 +11,17 @@ $(document).ready(function () {
         }
     });
 
+
+    $('table').on('hover', '.btn-remove', function () {
+        $(this).removeClass('btn-default');
+        $(this).addClass('btn-danger');
+    },function () {
+        console.log('hover in');
+        $(this).removeClass('btn-danger');
+        $(this).addClass('btn-default');
+    });
+
+
     //enable tooltip
     // $('[data-toggle="tooltip"]').tooltip();
 

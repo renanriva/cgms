@@ -1,6 +1,5 @@
 @extends('adminlte::page')
 
-{{--@section('title',  isset($title) ? $title : env('APP_TITLE'))--}}
 @include('lms.admin.parts.title')
 
 @section('content_header')
@@ -24,7 +23,7 @@
                 </div>
                 <div class="box-body">
 
-                    <table class="table table-bordered" id="cantons-table">
+                    <table class="table table-bordered table-responsive" id="cantons-table">
                         <thead>
                             <tr>
                                 <th>{{ __('lms.location.canton.table.province_name') }}</th>
@@ -47,4 +46,6 @@
     </div>
 
     @include('lms.admin.location.canton.edit_modal')
+    @include('lms.admin.parts.modal_delete')
+
 @stop

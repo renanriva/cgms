@@ -46,6 +46,7 @@ Route::middleware(['auth'])->group(function (){
             Route::post('/canton/ajax/table', 'CantonController@getTableData');
             Route::get('/canton', 'CantonController@index');
             Route::post('/canton/{id}/ajax', 'CantonController@update');
+            Route::delete('/canton/{id}/ajax', 'CantonController@delete');
             Route::post('/canton/ajax', 'CantonController@store');
 
             /**

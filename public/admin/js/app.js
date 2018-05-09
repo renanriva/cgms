@@ -48390,37 +48390,46 @@ if ("undefined" == typeof jQuery) throw new Error("AdminLTE requires jQuery");+f
 /* WEBPACK VAR INJECTION */(function($) {
 $(document).ready(function () {
 
-  /**
-   * Set csrf token to all ajax call
-   */
+    /**
+     * Set csrf token to all ajax call
+     */
 
-  $.ajaxSetup({
-    headers: {
-      'X-CSRF-TOKEN': $('[name="_token"]').val()
-    }
-  });
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('[name="_token"]').val()
+        }
+    });
 
-  //enable tooltip
-  // $('[data-toggle="tooltip"]').tooltip();
+    $('table').on('hover', '.btn-remove', function () {
+        $(this).removeClass('btn-default');
+        $(this).addClass('btn-danger');
+    }, function () {
+        console.log('hover in');
+        $(this).removeClass('btn-danger');
+        $(this).addClass('btn-default');
+    });
 
-
-  /**
-   * Make the form elements enable and disable
-   *
-   * @param disableStatus
-   */
-  // window.toogleForm = function(disableStatus) {
-  //     $('.modal input').attr('DISABLED', disableStatus);
-  //     $('.modal button').attr('DISABLED', disableStatus);
-  // }
+    //enable tooltip
+    // $('[data-toggle="tooltip"]').tooltip();
 
 
-  /**
-   * Datetime picker
-   */
-  // $('.js-ds-datepicker').datetimepicker({
-  //     format: 'MM/DD/YYYY',
-  // });
+    /**
+     * Make the form elements enable and disable
+     *
+     * @param disableStatus
+     */
+    // window.toogleForm = function(disableStatus) {
+    //     $('.modal input').attr('DISABLED', disableStatus);
+    //     $('.modal button').attr('DISABLED', disableStatus);
+    // }
+
+
+    /**
+     * Datetime picker
+     */
+    // $('.js-ds-datepicker').datetimepicker({
+    //     format: 'MM/DD/YYYY',
+    // });
 
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))
@@ -48664,6 +48673,58 @@ $(document).ready(function () {
             });
         };
 
+        var showDelete = function showDelete() {
+
+            $('#cantons-table').on('click', '.btn-remove', function () {
+
+                var id = $(this).attr('data-id');
+                var name = $(this).attr('data-name');
+
+                deleteModal.find('.model-title').text('Delete Canton');
+                deleteModal.find('.js-message').text('Are you sure to delete Canton [' + name + ']?');
+                deleteModal.find('#btn-delete-confirm').attr('data-url', '/admin/location/canton/' + id + '/ajax');
+                deleteModal.find('#btn-delete-confirm').attr('data-id', id);
+                deleteModal.modal('show');
+            });
+        };
+
+        var deleteItem = function deleteItem() {
+
+            $('#btn-delete-confirm').click(function () {
+
+                var data = {
+                    id: $(this).attr('data-id'),
+                    url: $(this).attr('data-url')
+                };
+
+                var ajaxObj = {
+                    method: 'delete',
+                    url: data.url
+                };
+
+                $('tr#canton_id_' + data.id).addClass('warning');
+
+                $.ajax(ajaxObj).done(function (response, textStatus, jqXhr) {
+
+                    if (jqXhr.status === 204) {
+
+                        deleteModal.modal('hide');
+
+                        (function () {
+                            setTimeout(function () {
+                                console.log('remove now');
+                                $('tr#canton_id_' + data.id).remove();
+                            }, 1500);
+                        })(this);
+                    }
+                }).fail(function (jqXhr, textStatus, errorThrown) {
+
+                    alert('Error: ' + errorThrown);
+                    console.log('error ', jqXhr);
+                });
+            });
+        };
+
         console.log('canton ready');
 
         $('#cantons-table').DataTable({
@@ -48693,9 +48754,27 @@ $(document).ready(function () {
 
         clickCreateUpdate();
         showAddCantonModal();
-    }
+
+
+        var deleteModal = $('#delete-modal');
+
+        /**
+         * Show Delete modal
+         */
+        showDelete();
+
+
+        deleteItem();
+    } // page
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))
+
+/***/ }),
+
+/***/ "./resources/assets/sass/app.scss":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 
@@ -48710,7 +48789,8 @@ __webpack_require__("./node_modules/select2/dist/js/select2.js");
 __webpack_require__("./public/vendor/adminlte/vendor/jquery/dist/jquery.slimscroll.min.js");
 __webpack_require__("./resources/assets/admin/js/ajax-setup.js");
 __webpack_require__("./resources/assets/admin/js/location.js");
-module.exports = __webpack_require__("./resources/assets/admin/js/location/canton.js");
+__webpack_require__("./resources/assets/admin/js/location/canton.js");
+module.exports = __webpack_require__("./resources/assets/sass/app.scss");
 
 
 /***/ })

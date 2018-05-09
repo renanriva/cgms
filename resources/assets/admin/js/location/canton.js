@@ -195,6 +195,72 @@ $(document).ready(function () {
         }
 
 
+        var deleteModal = $('#delete-modal');
 
-    }
+        /**
+         * Show Delete modal
+         */
+        showDelete();
+        function showDelete() {
+
+            $('#cantons-table').on('click','.btn-remove', function () {
+
+                    var id = $(this).attr('data-id');
+                    var name = $(this).attr('data-name');
+
+                    deleteModal.find('.model-title').text('Delete Canton');
+                    deleteModal.find('.js-message').text('Are you sure to delete Canton ['+name+']?');
+                    deleteModal.find('#btn-delete-confirm').attr('data-url', '/admin/location/canton/'+id+'/ajax');
+                    deleteModal.find('#btn-delete-confirm').attr('data-id', id);
+                    deleteModal.modal('show');
+
+                });
+        }
+        
+        
+        deleteItem();
+        function deleteItem() {
+
+            $('#btn-delete-confirm').click(function () {
+
+
+                var data = {
+                    id: $(this).attr('data-id'),
+                    url: $(this).attr('data-url')
+                };
+
+                var ajaxObj = {
+                    method: 'delete',
+                    url: data.url
+                };
+
+                $('tr#canton_id_'+data.id).addClass('warning');
+
+                $.ajax(ajaxObj)
+                    .done(function (response, textStatus, jqXhr) {
+
+                        if (jqXhr.status === 204) {
+
+                            deleteModal.modal('hide');
+
+                            (function () {
+                                setTimeout(function(){
+                                    console.log('remove now');
+                                    $('tr#canton_id_'+data.id).remove();
+                                }, 1500)
+                            })(this);
+                        }
+
+                    }).fail(function (jqXhr, textStatus, errorThrown) {
+
+                        alert('Error: '+errorThrown);
+                        console.log('error ', jqXhr);
+
+                });
+
+
+            });
+        }
+
+    }// page
 });

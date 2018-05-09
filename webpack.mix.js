@@ -23,6 +23,7 @@ var mix = require('laravel-mix');
 mix.autoload({
         jquery: ['$', 'window.jQuery',"jQuery","window.$","jquery","window.jquery"]
     })
+    .sass('resources/assets/sass/app.scss', 'public/admin/css/app.css')
     .js([
         'public/vendor/adminlte/vendor/jquery/dist/jquery.js',
             'public/vendor/adminlte/dist/js/adminlte.min.js',

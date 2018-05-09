@@ -74,7 +74,10 @@
         'elements' => [
             'button' => [
                 'edit'      => 'Edit',
-                'create'    => 'Create'
+                'create'    => 'Create',
+                'delete'    => 'Delete',
+                'remove'    => 'Remove',
+                'close'     => 'Close'
             ],
         ],
         'words' =>[

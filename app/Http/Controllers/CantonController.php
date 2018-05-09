@@ -99,4 +99,15 @@ class CantonController extends Controller
 
     }
 
+
+    public function delete($id){
+
+        $canton = Canton::findOrFail($id);
+
+        $canton->delete();
+
+        return response()->json()->setStatusCode(204);
+
+    }
+
 }
