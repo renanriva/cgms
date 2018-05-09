@@ -26,8 +26,8 @@ mix.autoload({
     .sass('resources/assets/sass/app.scss', 'public/admin/css/app.css')
     .js([
         'public/vendor/adminlte/vendor/jquery/dist/jquery.js',
-            'public/vendor/adminlte/dist/js/adminlte.min.js',
-        'node_modules/bootstrap/dist/js/bootstrap.js',
+        'public/vendor/adminlte/vendor/bootstrap/dist/js/bootstrap.min.js',
+        'public/vendor/adminlte/dist/js/adminlte.min.js',
         'node_modules/datatables/media/js/jquery.dataTables.js',
         'node_modules/select2/dist/js/select2.js',
         'public/vendor/adminlte/vendor/jquery/dist/jquery.slimscroll.min.js',
