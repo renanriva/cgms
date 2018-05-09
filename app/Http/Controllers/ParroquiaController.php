@@ -10,7 +10,8 @@ class ParroquiaController extends Controller
 {
     public function index(){
 
-        return view('lms.admin.location.parroquia.index');
+        $title = 'Parroquia Management '.env('APP_NAME');
+        return view('lms.admin.location.parroquia.index', ['title' => $title]);
 
     }
 

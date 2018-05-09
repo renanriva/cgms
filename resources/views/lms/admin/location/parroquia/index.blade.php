@@ -1,6 +1,8 @@
 @extends('adminlte::page')
 
-@section('title', env('APP_TITLE'))
+{{--@section('title', env('APP_TITLE'))--}}
+@include('lms.admin.parts.title')
+
 
 @section('content_header')
     <h1>{{ __('lms.location.parroquia.index.page_header') }}</h1>
@@ -12,7 +14,15 @@
         <div class="col-lg-8 col-md-10 col-sm-12 col-lg-offset-2 col-md-offset-1">
 
             <div class="box">
-                <div class="box-header"><h3 class="box-title">{{ __('lms.location.parroquia.index.table_header') }}</h3></div>
+                <div class="box-header">
+                    <div class="pull-left">
+                        <h3 class="box-title">{{ __('lms.location.parroquia.index.table_header') }}</h3>
+                    </div>
+                    <div class="pull-right">
+                        <button class="btn btn-sm btn-primary" id="btn-create-parroquia">
+                            <i class="fa fa-plus"></i> {{ __('lms.elements.button.create') }}</button>
+                    </div>
+                </div>
                 <div class="box-body">
 
                     <table class="table table-bordered" id="parroquia-table">

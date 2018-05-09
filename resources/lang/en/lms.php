@@ -73,8 +73,9 @@
         ],
         'elements' => [
             'button' => [
-                'edit'  => 'Edit'
-            ]
+                'edit'      => 'Edit',
+                'create'    => 'Create'
+            ],
         ],
         'words' =>[
             'zone'  => 'Zone'

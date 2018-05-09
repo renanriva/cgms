@@ -177,7 +177,7 @@ $(document).ready(function () {
 
                     if (jqXhr.status === 201) {
 
-                        var row = '<tr class="suuccess"><td>'+data.province_name+'</td><td>'+data.name+'</td><td>'+data.capital
+                        var row = '<tr class="success"><td>'+data.province_name+'</td><td>'+data.name+'</td><td>'+data.capital
                             +'</td><td>'+data.dist_name+'</td><td>'+data.dist_code+'</td><td>'+data.zone+'</td><td>Actions</td></tr>';
 
                         $('#cantons-table tr:last').after(row);
