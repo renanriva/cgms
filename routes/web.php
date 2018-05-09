@@ -56,6 +56,9 @@ Route::middleware(['auth'])->group(function (){
             Route::post('/parroquia/ajax/table', 'ParroquiaController@getTableData');
             Route::get('/parroquia', 'ParroquiaController@index');
             Route::post('/parroquia/ajax', 'ParroquiaController@store');
+            Route::post('/parroquia/{id}/ajax', 'ParroquiaController@update');
+            Route::delete('/parroquia/{id}/ajax', 'ParroquiaController@delete');
+
 
 
         });

@@ -42841,7 +42841,6 @@ $(document).ready(function () {
             },
             columns: [{ data: 'province_name', name: 'provinces.name', searchable: true }, { data: 'canton_name', name: 'cantons.name', searchable: true }, { data: 'canton_capital', name: 'cantons.capital', searchable: true }, { data: 'canton_dist_name', name: 'cantons.dist_name', searchable: true }, { data: 'canton_dist_code', name: 'cantons.dist_code', searchable: true }, { data: 'canton_zone', name: 'cantons.zone', searchable: true }, { data: 'action', searchable: false, orderable: false }],
             initComplete: function initComplete() {
-                console.log('init complete ');
                 this.api().columns().every(function () {
                     var column = this;
                     var input = document.createElement("input");
@@ -42886,26 +42885,22 @@ $(document).ready(function () {
     if (page > 0) {
         var parroquiaShowEditModal = function parroquiaShowEditModal() {
 
-            $('#cantons-table').on('click', '.btn-edit-parroquia', function () {
+            $('#parroquia-table').on('click', '.btn-edit-parroquia', function () {
 
                 modal.find('.js-modal-title').text('Edit Parroquia');
 
                 var data = {
                     id: $(this).attr('data-id'),
                     province_id: $(this).attr('data-province_id'),
-                    name: $(this).attr('data-canton_name'),
-                    capital: $(this).attr('data-canton_capital'),
-                    dist_name: $(this).attr('data-canton_dist_name'),
-                    dist_code: $(this).attr('data-canton_dist_code'),
-                    zone: $(this).attr('data-canton_zone')
+                    canton_id: $(this).attr('data-canton_id'),
+                    canton_name: $(this).attr('data-canton_name'),
+                    name: $(this).attr('data-parroquia_name')
                 };
 
-                modal.find('.js-edit-parroquia-province option[value="' + data.province_id + '"]').attr('selected', true);
+                modal.find('.js-edit-canton-province option[value="' + data.province_id + '"]').attr('selected', true);
+                modal.find('.js-edit-canton').empty();
+                modal.find('.js-edit-canton').append('<option value="' + data.canton_id + '">' + data.canton_name + '</option>');
                 modal.find('.js-edit-parroquia-name').val(data.name);
-                modal.find('.js-edit-parroquia-capital').val(data.capital);
-                modal.find('.js-edit-parroquia-district').val(data.dist_name);
-                modal.find('.js-edit-parroquia-dist_code').val(data.dist_code);
-                modal.find('.js-edit-parroquia-zone option[value="' + data.zone + '"]').attr('selected', true);
                 modal.find('#btn-edit-parroquia').attr('data-id', data.id);
 
                 modal.find('#btn-edit-parroquia').text('Update');
@@ -42972,16 +42967,14 @@ $(document).ready(function () {
 
                 if (jqXhr.status === 200) {
 
-                    $('tr#canton_id_' + data.id).each(function () {
+                    $('tr#parroquia_id_' + data.id).each(function () {
 
-                        $(this).find('td').eq(1).text(data.name);
-                        $(this).find('td').eq(2).text(data.capital);
-                        $(this).find('td').eq(3).text(data.dist_name);
-                        $(this).find('td').eq(4).text(data.dist_code);
-                        $(this).find('td').eq(5).text(data.zone);
+                        $(this).find('td').eq(0).text(data.province_name);
+                        $(this).find('td').eq(1).text(data.canton_name);
+                        $(this).find('td').eq(2).text(data.name);
                     });
 
-                    $('tr#canton_id_' + data.id).addClass('success');
+                    $('tr#parroquia_id_' + data.id).addClass('success');
 
                     modal.modal('hide');
                 }
@@ -43025,7 +43018,7 @@ $(document).ready(function () {
 
         var showDelete = function showDelete() {
 
-            $('#cantons-table').on('click', '.btn-remove', function () {
+            $('#parroquia-table').on('click', '.btn-remove', function () {
 
                 var id = $(this).attr('data-id');
                 var name = $(this).attr('data-name');
@@ -43052,18 +43045,15 @@ $(document).ready(function () {
                     url: data.url
                 };
 
-                $('tr#canton_id_' + data.id).addClass('warning');
+                $('tr#parroquia_id_' + data.id).addClass('warning');
 
                 $.ajax(ajaxObj).done(function (response, textStatus, jqXhr) {
 
                     if (jqXhr.status === 204) {
-
                         deleteModal.modal('hide');
-
                         (function () {
                             setTimeout(function () {
-                                console.log('remove now');
-                                $('tr#canton_id_' + data.id).remove();
+                                $('tr#parroquia_id_' + data.id).remove();
                             }, 1500);
                         })(this);
                     }

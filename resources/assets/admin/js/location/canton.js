@@ -24,7 +24,6 @@ $(document).ready(function () {
                 { data :'action', searchable:false, orderable: false,}
             ],
             initComplete: function () {
-                console.log('init complete ');
                 this.api().columns().every(function () {
                     var column = this;
                     var input = document.createElement("input");
