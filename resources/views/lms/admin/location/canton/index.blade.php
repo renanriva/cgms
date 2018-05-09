@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', env('APP_TITLE'))
+@section('title',  isset($title) ? $title : env('APP_TITLE'))
 
 @section('content_header')
     <h1>{{ __('lms.location.canton.index.page_header') }}</h1>
@@ -8,11 +8,18 @@
 
 @section('content')
 
-    <div class="row">
+    <div class="row" id="page_canton">
         <div class="col-lg-8 col-md-10 col-sm-12 col-lg-offset-2 col-md-offset-1">
 
             <div class="box">
-                <div class="box-header"><h3 class="box-title">{{ __('lms.location.canton.index.table_header') }}</h3></div>
+                <div class="box-header">
+                    <div class="pull-left">
+                        <h3 class="box-title">{{ __('lms.location.canton.index.table_header') }}</h3>
+                    </div>
+                    <div class="pull-right">
+                        <button class="btn btn-sm btn-primary" id="btn-create-canton"><i class="fa fa-plus"></i> Create</button>
+                    </div>
+                </div>
                 <div class="box-body">
 
                     <table class="table table-bordered" id="cantons-table">
@@ -37,4 +44,5 @@
         </div>
     </div>
 
+    @include('lms.admin.location.canton.edit_modal')
 @stop

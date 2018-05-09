@@ -14,6 +14,17 @@ class ProvinceController extends Controller
 
     }
 
+    /**
+     * @return $this
+     */
+    public function getAllData(){
+
+        $allProvinces = Province::get();
+
+        return response()->json(['provinces' => $allProvinces])->setStatusCode(200);
+
+    }
+
 
     /**
      * Process datatables ajax request.

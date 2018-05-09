@@ -109,14 +109,14 @@ return [
 
     'menu' => [
         'lms.menu.main_nav',
-        [
-            'text' => 'Blog',
-            'url'  => 'admin/blog',
+//        [
+//            'text' => 'Blog',
+//            'url'  => 'admin/blog',
 //            'can'  => 'manage-blog',
-        ],
+//        ],
         [
-            'text'        => 'lms.menu.users',
-            'url'         => 'admin/users',
+            'text'        => 'lms.menu.students',
+            'url'         => 'admin/students',
             'icon'        => 'users',
 //            'label'       => 5,
 //            'label_color' => 'primary',

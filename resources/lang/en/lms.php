@@ -11,20 +11,20 @@
         'menu' => [
             'main_nav'          => 'MAIN NAVIGATION',
             'account_settings'  => 'ACCOUNT SETTINGS',
-            'users'         => 'Users',
-            'course'   => 'Courses',
-            'institute' => 'Institute',
-            'profile'   => 'My Profile',
-            'settings'  => [
-                    'title' => 'Settings',
-                    'user_management' => 'User Management',
-                    'location' => [
-                        'title' => 'Location',
-                        'province'  => 'Province',
-                        'canton'    => 'Canton',
-                        'parroquia'    => 'PARROQUIA',
+            'students'          => 'Students',
+            'course'            => 'Courses',
+            'institute'         => 'Institute',
+            'profile'           => 'My Profile',
+            'settings'          => [
+                                'title' => 'Settings',
+                                'user_management' => 'User Management',
+                                'location' => [
+                                    'title' => 'Location',
+                                    'province'  => 'Province',
+                                    'canton'    => 'Canton',
+                                    'parroquia'    => 'PARROQUIA',
 
-                    ],
+                                ],
             ]
 
         ],
@@ -75,5 +75,8 @@
             'button' => [
                 'edit'  => 'Edit'
             ]
+        ],
+        'words' =>[
+            'zone'  => 'Zone'
         ]
     ];

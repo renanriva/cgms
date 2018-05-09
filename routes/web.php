@@ -35,6 +35,7 @@ Route::middleware(['auth'])->group(function (){
             /**
              * Province
              */
+            Route::post('/province/ajax/all', 'ProvinceController@getAllData');
             Route::get('/province/ajax/table', 'ProvinceController@getTableData');
             Route::get('/province', 'ProvinceController@index');
 
@@ -44,6 +45,8 @@ Route::middleware(['auth'])->group(function (){
              */
             Route::post('/canton/ajax/table', 'CantonController@getTableData');
             Route::get('/canton', 'CantonController@index');
+            Route::post('/canton/{id}/ajax', 'CantonController@update');
+            Route::post('/canton/ajax', 'CantonController@store');
 
             /**
              * Parroquia
