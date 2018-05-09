@@ -99,7 +99,21 @@ class CantonController extends Controller
 
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getByProvinceId($id){
 
+        $cantons = Canton::where('province_id', $id)->get();
+
+        return response()->json(['cantons'=> $cantons])->setStatusCode(200);
+    }
+
+    /**
+     * @param $id
+     * @return $this
+     */
     public function delete($id){
 
         $canton = Canton::findOrFail($id);

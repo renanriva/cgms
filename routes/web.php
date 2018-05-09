@@ -45,6 +45,7 @@ Route::middleware(['auth'])->group(function (){
              */
             Route::post('/canton/ajax/table', 'CantonController@getTableData');
             Route::get('/canton', 'CantonController@index');
+            Route::get('/canton/ajax/{provinceId}', 'CantonController@getByProvinceId');
             Route::post('/canton/{id}/ajax', 'CantonController@update');
             Route::delete('/canton/{id}/ajax', 'CantonController@delete');
             Route::post('/canton/ajax', 'CantonController@store');
@@ -54,6 +55,8 @@ Route::middleware(['auth'])->group(function (){
              */
             Route::post('/parroquia/ajax/table', 'ParroquiaController@getTableData');
             Route::get('/parroquia', 'ParroquiaController@index');
+            Route::post('/parroquia/ajax', 'ParroquiaController@store');
+
 
         });
 

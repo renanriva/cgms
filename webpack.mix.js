@@ -34,7 +34,9 @@ mix.autoload({
 
             'resources/assets/admin/js/ajax-setup.js',
             'resources/assets/admin/js/location.js',
-            'resources/assets/admin/js/location/canton.js'
+            'resources/assets/admin/js/location/canton.js',
+            'resources/assets/admin/js/location/parroquia.js',
+            'resources/assets/admin/js/common.js'
         ],
         'public/admin/js/app.js')
     .options({

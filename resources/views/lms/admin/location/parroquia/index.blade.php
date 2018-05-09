@@ -1,6 +1,5 @@
 @extends('adminlte::page')
 
-{{--@section('title', env('APP_TITLE'))--}}
 @include('lms.admin.parts.title')
 
 
@@ -10,7 +9,7 @@
 
 @section('content')
 
-    <div class="row">
+    <div class="row" id="page_parroquia">
         <div class="col-lg-8 col-md-10 col-sm-12 col-lg-offset-2 col-md-offset-1">
 
             <div class="box">
@@ -43,4 +42,6 @@
         </div>
     </div>
 
+    @include('lms.admin.location.parroquia.edit_modal')
+    @include('lms.admin.parts.modal_delete')
 @stop

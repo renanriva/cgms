@@ -39,5 +39,24 @@ class ParroquiaController extends Controller
 
     }
 
+    /**
+     * @todo require validation
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function store(Request $request){
+
+        $post = $request->all();
+
+        $parroquia = new Parroquia();
+
+        $parroquia->canton_id = $post['canton_id'];
+        $parroquia->name        = $post['name'];
+        $parroquia->save();
+
+        return response()->json(['parroquia' => $parroquia])->setStatusCode(201);
+
+    }
+
 
 }
