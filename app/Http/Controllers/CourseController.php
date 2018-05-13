@@ -17,6 +17,11 @@ use App\Canton;
  */
 class CourseController extends Controller
 {
+
+    /**
+     * @todo add authorization check
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(){
 
         $title = 'Course Management - '.env('APP_NAME') ;
@@ -26,6 +31,7 @@ class CourseController extends Controller
 
 
     /**
+     * @todo add authorization check
      * Process datatables ajax request.
      *
      * @return \Illuminate\Http\JsonResponse
@@ -52,6 +58,7 @@ class CourseController extends Controller
      */
     public function store(Request $request){
 
+        // @todo add authorization check
 
         $course = new Course();
 
@@ -81,6 +88,7 @@ class CourseController extends Controller
     }
 
     /**
+     * @todo add authorization check
      * @param Request $request
      * @param         $id
      * @return \Illuminate\Http\JsonResponse
@@ -113,9 +121,6 @@ class CourseController extends Controller
             $course->updated_by     = Auth::user()->id;
             $course->save();
 
-
-//            $course->start_date     = date('m/d/Y', strtod)
-
             return response()->json(['course' => $course])->setStatusCode(200);
         } else{
 
@@ -125,16 +130,6 @@ class CourseController extends Controller
 
     }
 
-    /**
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getByProvinceId($id){
-
-        $cantons = Canton::where('province_id', $id)->get();
-
-        return response()->json(['cantons'=> $cantons])->setStatusCode(200);
-    }
 
     /**
      * @param $id
@@ -142,9 +137,9 @@ class CourseController extends Controller
      */
     public function delete($id){
 
-        $canton = Canton::findOrFail($id);
-
-        $canton->delete();
+//        @todo add authorization check
+        $course = Course::findOrFail($id);
+        $course->delete();
 
         return response()->json()->setStatusCode(204);
 

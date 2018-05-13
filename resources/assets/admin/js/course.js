@@ -278,19 +278,13 @@ $(document).ready(function () {
                         var startDate = new Date(data.start_date).toLocaleDateString();
                         var endDate = new Date(data.end_date).toLocaleDateString();
 
-
-
                         $('tr#course_id_'+data.id).each(function(){
 
                             $(this).find('td').eq(0).text(data.course_id);
                             $(this).find('td').eq(1).text(data.short_name);
                             $(this).find('td').eq(2).text(data.hours);
-
-                            // $(this).find('td').eq(3).text(startDate.getDay() +'/'+(startDate.getMonth()+1)+'/'+startDate.getFullYear());
                             $(this).find('td').eq(3).text(startDate);
-                            // $(this).find('td').eq(4).text(endDate.getDay()+'/'+(endDate.getMonth()+1)+'/'+endDate.getFullYear());
                             $(this).find('td').eq(4).text(endDate);
-
                             $(this).find('td').eq(5).text(data.quota);
                             $(this).find('td').eq(6).text(data.comment);
 
@@ -312,6 +306,73 @@ $(document).ready(function () {
 
     }//end page
 
+
+    var deleteModal = $('#delete-modal');
+
+    /**
+     * Show Delete modal
+     */
+    showDelete();
+    function showDelete() {
+
+        $('#course-table').on('click','.btn-remove', function () {
+
+            var id = $(this).attr('data-id');
+            var name = $(this).attr('data-name');
+
+            deleteModal.find('.model-title').text('Delete Canton');
+            deleteModal.find('.js-message').text('Are you sure to delete Canton ['+name+']?');
+            deleteModal.find('#btn-delete-confirm').attr('data-url', '/admin/course/ajax/'+id);
+            deleteModal.find('#btn-delete-confirm').attr('data-id', id);
+            deleteModal.modal('show');
+
+        });
+    }
+
+
+    deleteItem();
+    function deleteItem() {
+
+        $('#btn-delete-confirm').click(function () {
+
+
+            var data = {
+                id: $(this).attr('data-id'),
+                url: $(this).attr('data-url')
+            };
+
+            var ajaxObj = {
+                method: 'delete',
+                url: data.url
+            };
+
+            $('tr#course_id_'+data.id).addClass('warning');
+
+            $.ajax(ajaxObj)
+                .done(function (response, textStatus, jqXhr) {
+
+                    if (jqXhr.status === 204) {
+
+                        deleteModal.modal('hide');
+
+                        (function () {
+                            setTimeout(function(){
+                                console.log('remove now');
+                                $('tr#course_id_'+data.id).remove();
+                            }, 1500)
+                        })(this);
+                    }
+
+                }).fail(function (jqXhr, textStatus, errorThrown) {
+
+                    alert('Error: '+errorThrown);
+                    console.log('error ', jqXhr);
+
+            });
+
+
+        });
+    }
 
 
 });
