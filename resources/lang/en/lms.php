@@ -11,7 +11,7 @@
         'menu' => [
             'main_nav'          => 'MAIN NAVIGATION',
             'account_settings'  => 'ACCOUNT SETTINGS',
-            'students'          => 'Students',
+            'teachers'          => 'Teachers',
             'course'            => 'Courses',
             'institute'         => 'Institute',
             'profile'           => 'My Profile',
@@ -23,10 +23,8 @@
                                     'province'  => 'Province',
                                     'canton'    => 'Canton',
                                     'parroquia'    => 'PARROQUIA',
-
                                 ],
             ]
-
         ],
         'location' => [
             'province' => [
@@ -69,6 +67,68 @@
                 ]
             ]
 
+
+        ],
+        'page' => [
+            'teacher' => [
+                'index' => [
+                    'page_header'=> 'Teacher Portfolio',
+                    'table_header' => 'Teacher Portfolio'
+                ],
+                'table' => [
+                    'id'                => 'Id',
+                    'security_id'       => 'Social Id',
+                    'first_name'        => 'First name',
+                    'last_name'         => 'Last name',
+                    'email'             => 'Email',
+                    'modal_id'          => 'Modal ID',
+                    'action'            => 'Teacher Profile'
+                ]
+            ],
+            'course' => [
+                'index' => [
+                    'page_header'=> 'Course Management',
+                    'table_header' => 'Courses - Inspection Processes'
+                ],
+                'table' => [
+                    'id'                => 'Id',
+                    'course_id'         => 'Course Id',
+                    'short_name'        => 'Short Name',
+                    'hours'             => 'Hours',
+                    'start_date'        => 'Start Date',
+                    'end_date'          => 'End Date',
+                    'quota'             => 'Quota',
+                    'comment'           => 'Comment',
+                    'action'            => 'Editor'
+                ],
+                'form'  =>[
+                    'edit_title'        => 'Edit Course',
+                    'add_title'         => 'Add New Course',
+                    'course_id'         => 'Course Id',
+                    'course_type'       => 'Course Type',
+                    'course_modality'   => 'Modality',
+                    'university'        => 'University',
+                    'short_name'        => 'Short Name',
+                    'hours'             => 'Hours',
+                    'start_date'        => 'Start date',
+                    'end_date'          => 'End date',
+                    'quota'             => 'Quota',
+                    'comment'           => 'Comment',
+                    'description'       => 'Description'
+
+                ]
+            ],
+            'university' => [
+                'index' => [
+                    'page_header'=> 'University Portfolio',
+                    'table_header' => 'University Portfolio'
+                ],
+                'table' => [
+                    'id'                => 'Id',
+                    'name'              => 'Name',
+                    'action'            => 'Action'
+                ]
+            ]
 
         ],
         'elements' => [

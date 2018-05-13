@@ -17,12 +17,12 @@ var mix = require('laravel-mix');
  *  ADMIN
  */
 // .sass('resources/assets/sass/app.scss', 'public/admin/css/vendor.css')
-// .copy('node_modules/bootstrap-sass/', 'public/admin')
 // .sass('resources/assets/admin/sass/admin.scss', 'public/admin/css/app.css')
 
 mix.autoload({
         jquery: ['$', 'window.jQuery',"jQuery","window.$","jquery","window.jquery"]
     })
+    .copy('node_modules/bootstrap-datepicker/dist/css/', 'public/admin/vendor/bootstrap-datepicker/dist/css')
     .sass('resources/assets/sass/app.scss', 'public/admin/css/app.css')
     .js([
         'public/vendor/adminlte/vendor/jquery/dist/jquery.js',
@@ -30,12 +30,14 @@ mix.autoload({
         'public/vendor/adminlte/dist/js/adminlte.min.js',
         'node_modules/datatables/media/js/jquery.dataTables.js',
         'node_modules/select2/dist/js/select2.js',
+        'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
         'public/vendor/adminlte/vendor/jquery/dist/jquery.slimscroll.min.js',
 
             'resources/assets/admin/js/ajax-setup.js',
             'resources/assets/admin/js/location.js',
             'resources/assets/admin/js/location/canton.js',
             'resources/assets/admin/js/location/parroquia.js',
+            'resources/assets/admin/js/course.js',
             'resources/assets/admin/js/common.js'
         ],
         'public/admin/js/app.js')
