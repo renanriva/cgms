@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal" id="edit-canton-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal" id="edit-teacher-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">

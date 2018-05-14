@@ -78,10 +78,11 @@
                 'table' => [
                     'id'                => 'Id',
                     'security_id'       => 'Social Id',
-                    'first_name'        => 'First name',
-                    'last_name'         => 'Last name',
+                    'name'              => 'Name',
                     'email'             => 'Email',
-                    'modal_id'          => 'Modal ID',
+                    'moodle_id'          => 'Id Moodle',
+                    'university'        => 'University',
+                    'function'          => 'Function',
                     'action'            => 'Teacher Profile'
                 ]
             ],
@@ -137,7 +138,9 @@
                 'create'    => 'Create',
                 'delete'    => 'Delete',
                 'remove'    => 'Remove',
-                'close'     => 'Close'
+                'close'     => 'Close',
+                'import'    =>  'Import',
+                'upload'    =>  'Upload'
             ],
         ],
         'words' =>[

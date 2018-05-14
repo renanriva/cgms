@@ -29,6 +29,7 @@ mix.autoload({
         'public/vendor/adminlte/vendor/bootstrap/dist/js/bootstrap.min.js',
         'public/vendor/adminlte/dist/js/adminlte.min.js',
         'node_modules/datatables/media/js/jquery.dataTables.js',
+        'node_modules/fine-uploader/jquery.fine-uploader/jquery.fine-uploader.js',
         'node_modules/select2/dist/js/select2.js',
         'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
         'public/vendor/adminlte/vendor/jquery/dist/jquery.slimscroll.min.js',
@@ -38,6 +39,7 @@ mix.autoload({
             'resources/assets/admin/js/location/canton.js',
             'resources/assets/admin/js/location/parroquia.js',
             'resources/assets/admin/js/course.js',
+            'resources/assets/admin/js/teacher.js',
             'resources/assets/admin/js/common.js'
         ],
         'public/admin/js/app.js')

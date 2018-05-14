@@ -39,6 +39,8 @@ Route::middleware(['auth'])->group(function (){
             Route::delete('/canton/{id}/ajax', 'TeacherController@delete');
             Route::post('/canton/ajax', 'TeacherController@store');
 
+            Route::post('/upload', 'TeacherController@upload');
+
 
         });
 

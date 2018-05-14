@@ -21,39 +21,33 @@ class CreateTeachersTable extends Migration
             $table->bigIncrements('id');
 
             $table->string('social_id')->unique();  // CEDULA
+            $table->string('moodle_id', 20)->nullable();
+            $table->string('username', 30)->nullable();
 
             $table->string('cc')->nullable();       // c_c
-            $table->string('amie')->nullable();       // AMIE
             $table->date('date_of_birth')->nullable();       // DOB
 
             $table->string('gender')->nullable();       // gender
             $table->string('telephone')->nullable();       // gender
             $table->string('mobile')->nullable();       // gender
 
-            $table->string('inst_email')->nullable();       // UNIVERSITY email
+            $table->string('inst_email',100)->nullable();       // column k
+            $table->string('university_name', 255)->nullable();       // column z
+            $table->string('function')->nullable();         // column p
+            $table->string('work_area')->nullable();        // column q
+            $table->string('category')->nullable();         // column r
+            $table->string('reason_type')->nullable();      // column s
+            $table->string('action_type')->nullable();      // column t
+            $table->string('action_description')->nullable();// column u
+            $table->string('speciality')->nullable();       // column v
+            $table->date('join_date')->nullable();          // column w
+            $table->date('end_date')->nullable();           // column x
+            $table->string('amie', 50)->nullable();             // column y
+            $table->string('disability', 100)->nullable();             // column aa
+            $table->string('ethnic_group', 100)->nullable();       // ab
 
-
-
-            $table->string('function')->nullable();
-            $table->string('function_type')->nullable();
-            $table->string('reason_type')->nullable();
-            $table->string('action_type')->nullable();
-            $table->string('action_description')->nullable();
-            $table->string('speciality')->nullable();
-
-            $table->date('start_date')->nullable();
-            $table->date('end_date')->nullable();
-
-
-
-            $table->string('function_category')->nullable();       // CATEGORIA
-
-            $table->string('university_name', 255)->nullable();       // INSTITUCION EDUCATIVA
-
-            $table->string('ethnic_group', 100)->nullable();       // INSTITUCION EDUCATIVA
 
             $table->integer('parroquia_id')->nullable();       // parroquia
-//            $table->foreign('parroquia_id')->references('id')->on('parroquias')->onDelete('cascade');
 
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

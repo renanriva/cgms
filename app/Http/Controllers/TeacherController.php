@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Teacher;
 use Illuminate\Http\Request;
 use App\Province;
+use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 use App\Canton;
 
@@ -30,22 +33,24 @@ class TeacherController extends Controller
     public function getTableData()
     {
 
-        $cantons = Canton::select([
-            'cantons.id as id',
-            'provinces.id as province_id',
-            'provinces.name as province_name',
-            'cantons.name as canton_name',
-            'cantons.capital as canton_capital',
-            'cantons.dist_name as canton_dist_name',
-            'cantons.dist_code as canton_dist_code',
-            'cantons.zone as canton_zone',
+        $teachers = Teacher::select([
+            'teachers.id as id',
+            'users.name as teacher_name',
+            'users.email as user_email',
+            'teacher.social_id as social_id',
+            'teacher.cc as cc',
+            'teacher.moodle_id as moodle_id',
+            'teacher.university as university',
+            'teacher.function as function',
+            'teacher.gender as gender',
+            'teacher.username as username',
             ])
-            ->join('provinces','cantons.province_id', '=' ,'provinces.id');
+            ->join('users','teachers.user_id', '=' ,'users.id');
 
-        return Datatables::of($cantons)
-            ->editColumn('action', 'lms.admin.location.canton.action')
+        return Datatables::of($teachers)
+            ->editColumn('action', 'lms.admin.teacher.action')
             ->setRowId(function ($cantons){
-                return 'canton_id_'.$cantons->id;
+                return 'teacher_id_'.$cantons->id;
             })
             ->make(true);
 
@@ -103,6 +108,61 @@ class TeacherController extends Controller
 
 
     }
+
+    /**
+     * @param Request $request
+     */
+    public function upload(Request $request){
+
+
+        $cloud = Storage::disk('public');
+//            $disk = Storage::disk('gcs');
+//            $path = $cloud->putFile($event->short_name.'/'.$event->year.'/images/upload', $request->file('qqfile'));
+        $path = $cloud->putFile('teacher', $request->file('qqfile'));
+
+        $path = storage_path('app/public/'.$path);
+
+        try {
+            $rows = [];
+
+//            $collection = collect();
+
+            $rows = Excel::load($path, function ($reader) use(&$rows){
+
+//                $myrows = [];
+                foreach ($reader->toArray() as $row) {
+//                    var_dump($rows);
+
+//                    var_dump($row);
+
+//                    $collection->push($row);
+//                    if (is_array($row)){
+                        array_push($rows, $row);
+//                    }
+//                    User::firstOrCreate($row);
+                }
+
+//                return $myrows;
+            });
+//            \Session::flash('success', 'Users uploaded successfully.');
+
+            // @todo after adding all items into an array, add the array to database in batch
+
+
+
+            return response()->json(['rows' => $rows] );
+
+        } catch (\Exception $e) {
+//            \Session::flash('error', $e->getMessage());
+//            return redirect(route('teachers.index'));
+            return response()->json(['error' => $e->getMessage(), 'file' => $path]);
+        }
+
+
+        return $path;
+
+    }
+
 
     /**
      * @param $id
