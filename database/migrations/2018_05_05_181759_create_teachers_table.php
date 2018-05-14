@@ -46,7 +46,12 @@ class CreateTeachersTable extends Migration
             $table->string('disability', 100)->nullable();             // column aa
             $table->string('ethnic_group', 100)->nullable();       // ab
 
-
+            $table->string('province', 100)->nullable();       // ab
+            $table->string('canton', 100)->nullable();       // ab
+            $table->string('parroquia', 100)->nullable();       // ab
+            $table->string('district', 100)->nullable();       // ab
+            $table->string('district_code', 100)->nullable();       // ab
+            $table->string('zone', 10)->nullable();       // ab
             $table->integer('parroquia_id')->nullable();       // parroquia
 
             $table->bigInteger('user_id')->unsigned();
@@ -58,6 +63,8 @@ class CreateTeachersTable extends Migration
             $table->bigInteger('updated_by')->unsigned();
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
 
+
+            $table->timestamps();
 
         });
     }

@@ -24,14 +24,32 @@ class Teacher extends Model
         'inst_email', 'university_name', 'function', 'work_area', 'category',
         'reason_type', 'action_type', 'action_description', 'speciality',
         'join_date', 'end_date', 'amie', 'disability', 'ethnic_group',
-        'parroquia', 'user_id', 'created_by', 'updated_by'
+        'province', 'canton', 'parroquia', 'district', 'district_code', 'zone',
+        'parroquia_id', 'user_id', 'created_by', 'updated_by'
     ];
 
 
-
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user(){
-
+        return $this->belongsTo('App\User', 'user_id', 'id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function createdBy(){
+        return $this->belongsTo('App\User', 'created_by', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function updatedBy(){
+        return $this->belongsTo('App\User', 'updated_by', 'id');
+    }
+
 
     public function registrations(){
 
