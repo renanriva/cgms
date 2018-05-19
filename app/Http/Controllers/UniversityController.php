@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\University;
 use Illuminate\Http\Request;
 use App\Province;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 use App\Canton;
 
@@ -40,22 +41,20 @@ class UniversityController extends Controller
     public function getTableData()
     {
 
-        $cantons = Canton::select([
-            'cantons.id as id',
-            'provinces.id as province_id',
-            'provinces.name as province_name',
-            'cantons.name as canton_name',
-            'cantons.capital as canton_capital',
-            'cantons.dist_name as canton_dist_name',
-            'cantons.dist_code as canton_dist_code',
-            'cantons.zone as canton_zone',
+        $universities = University::select([
+            'universities.id as id',
+            'universities.name as name',
+            'universities.created_by as created_by_id',
+            'users.name as created_by_name',
+            'universities.created_at as created_at',
             ])
-            ->join('provinces','cantons.province_id', '=' ,'provinces.id');
+            ->join('users','universities.created_by', '=' ,'users.id')
+            ->orderBy('universities.created_at', 'desc');
 
-        return Datatables::of($cantons)
-            ->editColumn('action', 'lms.admin.location.canton.action')
-            ->setRowId(function ($cantons){
-                return 'canton_id_'.$cantons->id;
+        return Datatables::of($universities)
+            ->editColumn('action', 'lms.admin.university.action')
+            ->setRowId(function ($universities){
+                return 'university_id_'.$universities->id;
             })
             ->make(true);
 
@@ -65,22 +64,21 @@ class UniversityController extends Controller
     /**
      * @todo add validation rule
      * @param Request $request
-     * @return $this
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request){
 
-        $canton = new Canton();
+        $university = new University();
+
         $post = $request->all();
 
-        $canton->province_id    = $post['province_id'];
-        $canton->name           = $post['name'];
-        $canton->capital        = $post['capital'];
-        $canton->dist_name        = $post['dist_name'];
-        $canton->dist_code        = $post['dist_code'];
-        $canton->zone        = $post['zone'];
-        $canton->save();
+        $university->name           = $post['name'];
+        $university->created_by        = Auth::user()->id;
+        $university->updated_by        = Auth::user()->id;
+        $university->save();
+        $university->created_by_name = Auth::user()->name;
 
-        return response()->json(['canton' => $canton])->setStatusCode(201);
+        return response()->json(['university' => $university])->setStatusCode(201);
     }
 
     /**
@@ -90,22 +88,20 @@ class UniversityController extends Controller
      */
     public function update(Request $request, $id){
 
-        $canton = Canton::find($id);
+        $university = University::find($id);
 
-        if ($canton){
+        if ($university){
 
-            // todo add canton update validation
+            // todo add university update validation
             $post = $request->all();
 
-            $canton->province_id    = $post['province_id'];
-            $canton->name           = $post['name'];
-            $canton->capital        = $post['capital'];
-            $canton->dist_name        = $post['dist_name'];
-            $canton->dist_code        = $post['dist_code'];
-            $canton->zone        = $post['zone'];
-            $canton->save();
+            $university->name               = $post['name'];
+            $university->updated_by         = Auth::user()->id;
+            $university->save();
+            $university->created_by_name    = Auth::user()->name;
 
-            return response()->json(['canton' => $canton])->setStatusCode(200);
+
+            return response()->json(['university' => $university])->setStatusCode(200);
         } else{
 
             return response()->json(['error' => 'Not found'])->setStatusCode(404);
@@ -118,22 +114,10 @@ class UniversityController extends Controller
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getByProvinceId($id){
-
-        $cantons = Canton::where('province_id', $id)->get();
-
-        return response()->json(['cantons'=> $cantons])->setStatusCode(200);
-    }
-
-    /**
-     * @param $id
-     * @return $this
-     */
     public function delete($id){
 
-        $canton = Canton::findOrFail($id);
-
-        $canton->delete();
+        $university = University::findOrFail($id);
+        $university->delete();
 
         return response()->json()->setStatusCode(204);
 

@@ -44,9 +44,10 @@
 
 
         </div>
-    </div>
 
-    @include('lms.admin.course.edit_modal')
-    @include('lms.admin.parts.modal_delete')
+        @include('lms.admin.course.edit_modal')
+        @include('lms.admin.parts.modal_delete')
+
+    </div>
 
 @stop

@@ -13,7 +13,7 @@
             'account_settings'  => 'ACCOUNT SETTINGS',
             'teachers'          => 'Teachers',
             'course'            => 'Courses',
-            'institute'         => 'Institute',
+            'university'        => 'University',
             'profile'           => 'My Profile',
             'settings'          => [
                                 'title' => 'Settings',
@@ -148,8 +148,16 @@
                 'table' => [
                     'id'                => 'Id',
                     'name'              => 'Name',
+                    'created_by'        => 'Created By',
+                    'created_at'        => 'Created At',
                     'action'            => 'Action'
+                ],
+                'form'  =>[
+                    'edit_title'        => 'Edit University',
+                    'add_title'         => 'Add New University',
+                    'name'              => 'Name',
                 ]
+
             ]
 
         ],
