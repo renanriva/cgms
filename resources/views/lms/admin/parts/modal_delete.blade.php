@@ -11,7 +11,7 @@
                     <p class="js-message"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('lms.elements.button.close') }}</button>
+                <button type="button" class="btn btn-default btn-close" data-dismiss="modal">{{ __('lms.elements.button.close') }}</button>
                 <button type="button" class="btn btn-danger" data-id="" data-url=""
                         id="btn-delete-confirm"><span class="fa fa-trash-o"></span> {{ __('lms.elements.button.delete') }}</button>
             </div>

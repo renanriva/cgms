@@ -129,8 +129,8 @@ return [
 //            'label_color' => 'success',
         ],
         [
-            'text'        => 'lms.menu.institute',
-            'url'         => 'admin/institute',
+            'text'        => 'lms.menu.university',
+            'url'         => 'admin/university',
             'icon'        => 'building',
 //            'label'       => 5,
 //            'label_color' => 'primary',

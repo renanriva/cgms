@@ -269,10 +269,6 @@ $(document).ready(function () {
             $.ajax(ajaxObj)
                 .done(function (response, textStatus, jqXhr) {
 
-
-
-                    console.log('respnse ', response);
-
                     if (jqXhr.status === 200) {
 
                         var startDate = new Date(data.start_date).toLocaleDateString();
@@ -333,8 +329,7 @@ $(document).ready(function () {
     deleteItem();
     function deleteItem() {
 
-        $('#btn-delete-confirm').click(function () {
-
+        $('#page_course #btn-delete-confirm').click(function () {
 
             var data = {
                 id: $(this).attr('data-id'),
@@ -357,7 +352,6 @@ $(document).ready(function () {
 
                         (function () {
                             setTimeout(function(){
-                                console.log('remove now');
                                 $('tr#course_id_'+data.id).remove();
                             }, 1500)
                         })(this);

@@ -66,8 +66,8 @@ Route::middleware(['auth'])->group(function (){
             Route::get('/ajax', 'UniversityController@getUniversityList');
 
             Route::post('/ajax/table', 'UniversityController@getTableData');
-            Route::post('/{id}/ajax', 'UniversityController@update');
-            Route::delete('/{id}/ajax', 'UniversityController@delete');
+            Route::post('/ajax/{id}', 'UniversityController@update');
+            Route::delete('/ajax/{id}', 'UniversityController@delete');
             Route::post('/ajax', 'UniversityController@store');
 
 
