@@ -30,14 +30,17 @@
                     <table class="table table-bordered table-responsive" id="teacher-table">
                         <thead>
                             <tr>
-                                <th>{{ __('lms.page.teacher.table.id') }}</th>
+                                {{--<th>{{ __('lms.page.teacher.table.id') }}</th>--}}
                                 <th>{{ __('lms.page.teacher.table.security_id') }}</th>
-                                <th>{{ __('lms.page.teacher.table.name') }}</th>
+                                <th width="18%">{{ __('lms.page.teacher.table.name') }}</th>
                                 <th>{{ __('lms.page.teacher.table.email') }}</th>
                                 <th>{{ __('lms.page.teacher.table.university') }}</th>
-                                <th>{{ __('lms.page.teacher.table.function') }}</th>
+                                {{--<th>{{ __('lms.page.teacher.table.function') }}</th>--}}
                                 <th>{{ __('lms.page.teacher.table.moodle_id') }}</th>
-                                <th>{{ __('lms.page.teacher.table.action') }}</th>
+                                <th>{{ __('lms.page.teacher.table.location') }}</th>
+                                {{--<th>{{ __('lms.page.teacher.table.canton') }}</th>--}}
+                                <th>{{ __('lms.page.teacher.table.district') }}</th>
+                                <th width="16%">{{ __('lms.page.teacher.table.action') }}</th>
                             </tr>
                         </thead>
                         <tfoot></tfoot>
@@ -51,7 +54,8 @@
     </div>
 
 {{--    @include('lms.admin.location.canton.edit_modal')--}}
+    @include('lms.admin.teacher.moodal_modal')
     @include('lms.admin.teacher.upload_form')
-    @include('lms.admin.parts.modal_delete')
+    {{--@include('lms.admin.parts.modal_delete')--}}
 
 @stop

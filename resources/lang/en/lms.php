@@ -83,7 +83,28 @@
                     'moodle_id'          => 'Id Moodle',
                     'university'        => 'University',
                     'function'          => 'Function',
-                    'action'            => 'Teacher Profile'
+                    'location'          => 'Address',
+                    'province'          => 'Province',
+                    'canton'            => 'Canton',
+                    'district'          => 'District',
+                    'action'            => 'Action'
+                ]
+            ],
+            'teacher_profile' => [
+                'index' => [
+                    'page_header'=> 'Teacher Profile',
+                    'table_header' => 'Teacher Portfolio'
+                ],
+                'table' => [
+                    'course_type'       => 'Course Type',
+                    'course_name'       => 'Course Name',
+                    'institute'         => 'University',
+                    'modality'          => 'Modality',
+                    'hours'             => 'Hours',
+                    'start_date'        => 'Start Date',
+                    'end_date'          => 'End Date',
+                    'status'            => 'Status',
+                    'certificate'       => 'Certificate',
                 ]
             ],
             'course' => [

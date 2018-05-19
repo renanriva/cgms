@@ -38,21 +38,27 @@ class TeacherController extends Controller
         $teachers = Teacher::select([
             'teachers.id as id',
             'users.name as teacher_name',
-            'users.email as user_email',
-            'teacher.social_id as social_id',
-            'teacher.cc as cc',
-            'teacher.moodle_id as moodle_id',
-            'teacher.university as university',
-            'teacher.function as function',
-            'teacher.gender as gender',
-            'teacher.username as username',
+            'users.email as teacher_email',
+            'teachers.social_id as social_id',
+            'teachers.cc as cc',
+            'teachers.moodle_id as moodle_id',
+            'teachers.university_name as university',
+            'teachers.function as function',
+            'teachers.gender as gender',
+            'teachers.province as province',
+            'teachers.canton as canton',
+            'teachers.parroquia as parroquia',
+            'teachers.district as district',
+            'teachers.district_code as district_code',
+            'teachers.zone as zone',
+            'teachers.amie as amie',
             ])
             ->join('users','teachers.user_id', '=' ,'users.id');
 
         return Datatables::of($teachers)
             ->editColumn('action', 'lms.admin.teacher.action')
-            ->setRowId(function ($cantons){
-                return 'teacher_id_'.$cantons->id;
+            ->setRowId(function ($teachers){
+                return 'teacher_id_'.$teachers->id;
             })
             ->make(true);
 
@@ -87,26 +93,26 @@ class TeacherController extends Controller
      */
     public function update(Request $request, $id){
 
-        $canton = Canton::find($id);
-
-        if ($canton){
-
-            // todo add canton update validation
-            $post = $request->all();
-
-            $canton->province_id    = $post['province_id'];
-            $canton->name           = $post['name'];
-            $canton->capital        = $post['capital'];
-            $canton->dist_name        = $post['dist_name'];
-            $canton->dist_code        = $post['dist_code'];
-            $canton->zone        = $post['zone'];
-            $canton->save();
-
-            return response()->json(['canton' => $canton])->setStatusCode(200);
-        } else{
-
-            return response()->json(['error' => 'Not found'])->setStatusCode(404);
-        }
+//        $canton = Canton::find($id);
+//
+//        if ($canton){
+//
+//            // todo add canton update validation
+//            $post = $request->all();
+//
+//            $canton->province_id    = $post['province_id'];
+//            $canton->name           = $post['name'];
+//            $canton->capital        = $post['capital'];
+//            $canton->dist_name        = $post['dist_name'];
+//            $canton->dist_code        = $post['dist_code'];
+//            $canton->zone        = $post['zone'];
+//            $canton->save();
+//
+//            return response()->json(['canton' => $canton])->setStatusCode(200);
+//        } else{
+//
+//            return response()->json(['error' => 'Not found'])->setStatusCode(404);
+//        }
 
 
     }
@@ -133,7 +139,7 @@ class TeacherController extends Controller
 
 
                     $teacher['name'] = $row['nombres'];
-                    $teacher['gender'] = $row['genero'];
+                    $teacher['gender'] = ucfirst($row['genero']);
                     $teacher['social_id'] = $row['cedula'];
 
                     $teacher['cc'] = $row['c_c'];
@@ -196,6 +202,16 @@ class TeacherController extends Controller
 
 
         return $path;
+
+    }
+
+    public function showProfile($id){
+
+
+        $teacher = Teacher::find($id);
+        $title = $teacher->user->name . ' - ' . env('APP_NAME');
+
+        return view('lms.admin.teacher.profile', ['teacher'=> $teacher, 'title' =>  $title]);
 
     }
 

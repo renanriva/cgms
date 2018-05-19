@@ -33,11 +33,13 @@ Route::middleware(['auth'])->group(function (){
 
             Route::get('/', 'TeacherController@index');
 
-            Route::post('/canton/ajax/table', 'TeacherController@getTableData');
-            Route::get('/canton/ajax/{provinceId}', 'TeacherController@getByProvinceId');
-            Route::post('/canton/{id}/ajax', 'TeacherController@update');
-            Route::delete('/canton/{id}/ajax', 'TeacherController@delete');
-            Route::post('/canton/ajax', 'TeacherController@store');
+            Route::post('/ajax/table', 'TeacherController@getTableData');
+            Route::get('/profile/{id}', 'TeacherController@showProfile');
+
+//            Route::get('/ajax/{provinceId}', 'TeacherController@getByProvinceId');
+//            Route::post('/canton/{id}/ajax', 'TeacherController@update');
+//            Route::delete('/{id}/ajax', 'TeacherController@delete');
+//            Route::post('/ajax', 'TeacherController@store');
 
             Route::post('/upload', 'TeacherController@upload');
 
