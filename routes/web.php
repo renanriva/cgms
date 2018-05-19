@@ -29,6 +29,50 @@ Route::middleware(['auth'])->group(function (){
     Route::prefix('admin')->group(function(){
 
 
+        Route::prefix('teachers')->group(function (){
+
+            Route::get('/', 'TeacherController@index');
+
+            Route::post('/ajax/table', 'TeacherController@getTableData');
+            Route::get('/profile/{id}', 'TeacherController@showProfile');
+
+//            Route::get('/ajax/{provinceId}', 'TeacherController@getByProvinceId');
+//            Route::post('/canton/{id}/ajax', 'TeacherController@update');
+//            Route::delete('/{id}/ajax', 'TeacherController@delete');
+//            Route::post('/ajax', 'TeacherController@store');
+
+            Route::post('/upload', 'TeacherController@upload');
+
+
+        });
+
+        Route::prefix('course')->group(function (){
+
+            Route::get('/', 'CourseController@index');
+
+            Route::post('/ajax/table', 'CourseController@getTableData');
+            Route::delete('/{id}/ajax', 'CourseController@delete');
+            Route::post('/ajax', 'CourseController@store');
+            Route::post('/ajax/{id}', 'CourseController@update');
+            Route::delete('/ajax/{id}', 'CourseController@delete');
+
+
+
+        });
+
+        Route::prefix('university')->group(function (){
+
+            Route::get('/', 'UniversityController@index');
+            Route::get('/ajax', 'UniversityController@getUniversityList');
+
+            Route::post('/ajax/table', 'UniversityController@getTableData');
+            Route::post('/{id}/ajax', 'UniversityController@update');
+            Route::delete('/{id}/ajax', 'UniversityController@delete');
+            Route::post('/ajax', 'UniversityController@store');
+
+
+        });
+
         Route::prefix('location')->group(function(){
 
 

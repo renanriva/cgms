@@ -14,7 +14,13 @@ class CreateHistoriesTable extends Migration
     public function up()
     {
         Schema::create('histories', function (Blueprint $table) {
+
             $table->bigIncrements('id');
+            $table->string('page');
+            $table->text('description');
+            $table->bigInteger('added_by')->unsigned();
+            $table->foreign('added_by')->references('id')->on('users')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

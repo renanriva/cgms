@@ -11,7 +11,7 @@
         'menu' => [
             'main_nav'          => 'MAIN NAVIGATION',
             'account_settings'  => 'ACCOUNT SETTINGS',
-            'students'          => 'Students',
+            'teachers'          => 'Teachers',
             'course'            => 'Courses',
             'institute'         => 'Institute',
             'profile'           => 'My Profile',
@@ -23,10 +23,8 @@
                                     'province'  => 'Province',
                                     'canton'    => 'Canton',
                                     'parroquia'    => 'PARROQUIA',
-
                                 ],
             ]
-
         ],
         'location' => [
             'province' => [
@@ -71,13 +69,99 @@
 
 
         ],
+        'page' => [
+            'teacher' => [
+                'index' => [
+                    'page_header'=> 'Teacher Portfolio',
+                    'table_header' => 'Teacher Portfolio'
+                ],
+                'table' => [
+                    'id'                => 'Id',
+                    'security_id'       => 'Social Id',
+                    'name'              => 'Name',
+                    'email'             => 'Email',
+                    'moodle_id'          => 'Id Moodle',
+                    'university'        => 'University',
+                    'function'          => 'Function',
+                    'location'          => 'Address',
+                    'province'          => 'Province',
+                    'canton'            => 'Canton',
+                    'district'          => 'District',
+                    'action'            => 'Action'
+                ]
+            ],
+            'teacher_profile' => [
+                'index' => [
+                    'page_header'=> 'Teacher Profile',
+                    'table_header' => 'Teacher Portfolio'
+                ],
+                'table' => [
+                    'course_type'       => 'Course Type',
+                    'course_name'       => 'Course Name',
+                    'institute'         => 'University',
+                    'modality'          => 'Modality',
+                    'hours'             => 'Hours',
+                    'start_date'        => 'Start Date',
+                    'end_date'          => 'End Date',
+                    'status'            => 'Status',
+                    'certificate'       => 'Certificate',
+                ]
+            ],
+            'course' => [
+                'index' => [
+                    'page_header'=> 'Course Management',
+                    'table_header' => 'Courses - Inspection Processes'
+                ],
+                'table' => [
+                    'id'                => 'Id',
+                    'course_id'         => 'Course Id',
+                    'short_name'        => 'Short Name',
+                    'hours'             => 'Hours',
+                    'start_date'        => 'Start Date',
+                    'end_date'          => 'End Date',
+                    'quota'             => 'Quota',
+                    'comment'           => 'Comment',
+                    'action'            => 'Editor'
+                ],
+                'form'  =>[
+                    'edit_title'        => 'Edit Course',
+                    'add_title'         => 'Add New Course',
+                    'course_id'         => 'Course Id',
+                    'course_type'       => 'Course Type',
+                    'course_modality'   => 'Modality',
+                    'university'        => 'University',
+                    'short_name'        => 'Short Name',
+                    'hours'             => 'Hours',
+                    'start_date'        => 'Start date',
+                    'end_date'          => 'End date',
+                    'quota'             => 'Quota',
+                    'comment'           => 'Comment',
+                    'description'       => 'Description'
+
+                ]
+            ],
+            'university' => [
+                'index' => [
+                    'page_header'=> 'University Portfolio',
+                    'table_header' => 'University Portfolio'
+                ],
+                'table' => [
+                    'id'                => 'Id',
+                    'name'              => 'Name',
+                    'action'            => 'Action'
+                ]
+            ]
+
+        ],
         'elements' => [
             'button' => [
                 'edit'      => 'Edit',
                 'create'    => 'Create',
                 'delete'    => 'Delete',
                 'remove'    => 'Remove',
-                'close'     => 'Close'
+                'close'     => 'Close',
+                'import'    =>  'Import',
+                'upload'    =>  'Upload'
             ],
         ],
         'words' =>[

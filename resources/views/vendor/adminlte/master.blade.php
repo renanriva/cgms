@@ -8,6 +8,8 @@
     @yield('title_postfix', config('adminlte.title_postfix', ''))</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Tell the browser to be responsive to screen width -->
+    <link rel="shortcut icon" href="{{ url('favicon.png') }}" />
+
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
@@ -15,12 +17,14 @@
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/font-awesome/css/font-awesome.min.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/Ionicons/css/ionicons.min.css') }}">
-    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="{{ asset('admin/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin/vendor/fine-uploader/jquery.fine-uploader/fine-uploader-new.css') }}">
 
-    @if(config('adminlte.plugins.select2'))
-        <!-- Select2 -->
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css">
-    @endif
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css">
+
+    {{--@if(config('adminlte.plugins.select2'))--}}
+        {{--<!-- Select2 -->--}}
+    {{--@endif--}}
 
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/AdminLTE.min.css') }}">

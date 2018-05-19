@@ -115,15 +115,15 @@ return [
 //            'can'  => 'manage-blog',
 //        ],
         [
-            'text'        => 'lms.menu.students',
-            'url'         => 'admin/students',
+            'text'        => 'lms.menu.teachers',
+            'url'         => 'admin/teachers',
             'icon'        => 'users',
 //            'label'       => 5,
 //            'label_color' => 'primary',
         ],
         [
             'text'        => 'lms.menu.course',
-            'url'         => 'admin/courses',
+            'url'         => 'admin/course',
             'icon'        => 'book',
 //            'label'       => 4,
 //            'label_color' => 'success',

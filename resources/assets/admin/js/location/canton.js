@@ -213,7 +213,7 @@ $(document).ready(function () {
                     deleteModal.find('#btn-delete-confirm').attr('data-id', id);
                     deleteModal.modal('show');
 
-                });
+            });
         }
         
         
