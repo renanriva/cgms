@@ -15,7 +15,7 @@
 
                 <div class="modal-body">
 
-                    <div class="row">
+                    <div class="row js-course-form">
 
                         <div class="col-lg-12 col-md-12 col-sm-12">
 
@@ -180,6 +180,17 @@
                         </div>
 
                     </div>
+
+                    <div class="row js-course-inspection-form hidden">
+
+                        <div class="col-md-12 col-md-12 col-sm-12">
+
+                            <div id="course-inspection-form-uploader-manual-trigger"></div>
+
+                        </div>
+
+                    </div>
+
                     <div class="row">
                         <div class="col-lg-12 js-errors">
                         </div>
@@ -195,3 +206,4 @@
         </div>
     </div>
 </div>
+@include('lms.admin.teacher.template')

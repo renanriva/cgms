@@ -71,7 +71,8 @@
         background-image: none;
     }
 
-    #fine-uploader-manual-trigger .qq-upload-button {
+    #fine-uploader-manual-trigger .qq-upload-button ,
+    #course-inspection-form-uploader-manual-trigger .qq-upload-button{
         margin-right: 15px;
     }
 

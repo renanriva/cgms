@@ -52646,7 +52646,7 @@ $(document).ready(function () {
                     dropdownParent: modal,
                     width: 'resolve',
                     minimumResultsForSearch: 20,
-                    minimumInputLength: 3, // only start searching when the user has input 3 or more characters
+                    minimumInputLength: 1, // only start searching when the user has input 3 or more characters
                     maximumInputLength: 20 // only allow terms up to 20 characters long
                 });
             }
@@ -52661,7 +52661,7 @@ $(document).ready(function () {
 
             $('#btn-create-course').click(function () {
 
-                console.log('click create course');
+                // console.log('click create course');
 
                 modal.find('.js-modal-title-add').removeClass('hidden');
                 modal.find('.js-modal-title-edit').addClass('hidden');
@@ -52792,11 +52792,17 @@ $(document).ready(function () {
 
                 if (jqXhr.status === 201) {
 
+                    // after insert, hide form and show upload
+
+                    modal.find('.js-course-id').val(response.course.id);
+
+                    modal.find('.js-course-form').addClass('hidden');
+                    modal.find('.js-course-inspection-form').removeClass('hidden');
+                    modal.find('#btn-edit-course').attr('disabled', true);
+
                     var row = '<tr class="success"><td>' + data.course_id + '</td><td>' + data.short_name + '</td><td>' + data.hours + '</td><td>' + data.start_date + '</td><td>' + data.end_date + '</td><td>' + data.quota + '</td>+' + '<td>' + data.comment + '</td><td>Actions</td></tr>';
 
                     $('#course-table tr:last').after(row);
-
-                    modal.modal('hide');
                 }
             }).fail(function (jqXhr, textStatus, errorThrown) {
 
@@ -52943,6 +52949,47 @@ $(document).ready(function () {
             });
         });
     }
+
+    /**
+     * Inspection form Upload for course
+     */
+    $('#course-inspection-form-uploader-manual-trigger').fineUploader({
+        template: 'qq-template-manual-trigger',
+        multiple: false,
+        request: {
+            endpoint: '/admin/course/upload/inspection-form',
+            params: {
+                course_id: function course_id() {
+                    return modal.find('.js-course-id').val();
+                }
+            },
+            customHeaders: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        },
+        validation: {
+            itemLimit: 1,
+            allowedExtensions: ['pdf', 'doc', 'docx']
+        },
+        callbacks: {
+            onSubmit: function onSubmit(id, name) {},
+            onComplete: function onComplete(id, name, response, xhr) {
+
+                // $('.js-message').empty();
+
+                if (response.error === undefined) {
+                    modal.modal('hide');
+                }
+            },
+            onStatusChange: function onStatusChange(id, oldStatus, newStatus) {},
+            onCancel: function onCancel(id, name) {}
+        },
+        autoUpload: false
+    });
+
+    $('#page_course #trigger-upload').click(function () {
+        $('#course-inspection-form-uploader-manual-trigger').fineUploader('uploadStoredFiles');
+    });
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))
 
@@ -53604,6 +53651,10 @@ $(document).ready(function () {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             },
+            validation: {
+                itemLimit: 1,
+                allowedExtensions: ['xlsx', 'xls', 'csv']
+            },
             callbacks: {
                 onSubmit: function onSubmit(id, name) {},
                 onComplete: function onComplete(id, name, response, xhr) {
@@ -53623,6 +53674,7 @@ $(document).ready(function () {
             autoUpload: false
         });
 
+        //@todo should be #page_teacher #triger-upload to be specific button selector
         $('#trigger-upload').click(function () {
             $('#fine-uploader-manual-trigger').fineUploader('uploadStoredFiles');
         });

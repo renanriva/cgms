@@ -190,10 +190,7 @@ class TeacherController extends Controller
 
             // @todo after adding all items into an array, add the array to database in batch
 
-
-
-
-            return response()->json(['rows' => $rows] );
+            return response()->json(['rows' => $rows, 'success' => true] );
 
         } catch (\Exception $e) {
 

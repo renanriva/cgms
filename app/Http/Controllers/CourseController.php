@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
 
@@ -140,7 +141,7 @@ class CourseController extends Controller
 
     /**
      * @param $id
-     * @return $this
+     * @return \Illuminate\Http\JsonResponse
      */
     public function delete($id){
 
@@ -151,5 +152,30 @@ class CourseController extends Controller
         return response()->json()->setStatusCode(204);
 
     }
+
+
+    /**
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function uploadInspection(Request $request) {
+
+
+        $cloud = Storage::disk('public');
+
+        $filename = "course_".$request->input('course_id').'_inspection_form.'.$request->file('qqfile')->extension();
+        $path = $cloud->putFileAs('course/inspection', $request->file('qqfile'), $filename);
+
+        $path = storage_path('app/'.$path);
+        $course = Course::find($request->input('course_id'));
+        $course->inspection_form_generated  = true;
+        $course->save();
+
+        return response()->json(['path'=> $path, 'success' => true]);
+
+
+    }
+
 
 }
