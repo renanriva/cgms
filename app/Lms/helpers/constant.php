@@ -42,3 +42,12 @@
 
     const REGISTRATION_ACCEPT_TERMS_AND_CONDITION = 1;
     const REGISTRATION_NOT_ACCEPTED_TERMS_AND_CONDITION = 0;
+
+
+    /**
+     * COURSE VIDEO TYPE
+     */
+
+    const COURSE_VIDEO_TYPE_YOUTUBE = 'youtube';
+    const COURSE_VIDEO_TYPE_VIMEO = 'vimeo';
+    const COURSE_VIDEO_TYPE_UPLOADED = 'uploaded';

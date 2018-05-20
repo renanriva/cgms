@@ -136,7 +136,13 @@
                     'end_date'          => 'End date',
                     'quota'             => 'Quota',
                     'comment'           => 'Comment',
-                    'description'       => 'Description'
+                    'description'       => 'Description',
+                    'terms_condition'   => 'Terms & Condition',
+                    'video'             => 'Video Information',
+                    'video_type'        => 'Video Type',
+                    'video_embed'       => 'Embed Code',
+                    'data_update'       => 'Data Update Tab Info',
+                    'inspection_file_message' => 'After creating the course, you can upload inspection file.'
 
                 ]
             ],

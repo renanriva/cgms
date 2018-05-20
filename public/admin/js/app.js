@@ -52701,7 +52701,13 @@ $(document).ready(function () {
                     quota: modal.find('.js-edit-course-quota').val(),
 
                     comment: modal.find('.js-edit-course-comment').val(),
-                    description: modal.find('.js-edit-course-description').val()
+                    description: modal.find('.js-edit-course-description').val(),
+                    video_text: modal.find('.js-edit-course-video').val(),
+                    video_type: modal.find('.js-edit-course-video_type option:selected').val(),
+                    video_code: modal.find('.js-edit-course-video_embed_code').val(),
+                    terms_condition: modal.find('.js-edit-course-terms_condition').val(),
+                    data_update_text: modal.find('.js-edit-course-data_update').val()
+
                 };
 
                 if ($(this).attr('data-type') === 'update') {
@@ -52736,7 +52742,13 @@ $(document).ready(function () {
                     quota: $(this).attr('data-quota'),
                     start_date: $(this).attr('data-start_date'),
                     end_date: $(this).attr('data-end_date'),
-                    university_id: $(this).attr('data-university_id')
+                    university_id: $(this).attr('data-university_id'),
+                    video_text: $(this).attr('data-video_text'),
+                    video_type: $(this).attr('data-video_type'),
+                    video_code: $(this).attr('data-video_code'),
+                    terms_condition: $(this).attr('data-terms_condition'),
+                    data_update: $(this).attr('data-data_update')
+
                 };
 
                 modal.find('.js-edit-course-id').val(data.course_id);
@@ -52750,6 +52762,11 @@ $(document).ready(function () {
                 modal.find('.js-edit-course-quota').val(data.quota);
                 modal.find('.js-edit-course-start_date').val(data.start_date);
                 modal.find('.js-edit-course-end_date').val(data.end_date);
+                modal.find('.js-edit-course-video').val(data.video_text);
+                modal.find('.js-edit-course-video_type option[value="' + data.video_type + '"]').attr('selected', true);
+                modal.find('.js-edit-course-video_embed_code').val(data.video_code);
+                modal.find('.js-edit-course-terms_condition').val(data.terms_condition);
+                modal.find('.js-edit-course-data_update').val(data.data_update);
 
                 modal.find('#btn-edit-course').attr('data-id', data.id);
                 modal.find('#btn-edit-course').text('Update');

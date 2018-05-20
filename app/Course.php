@@ -22,6 +22,9 @@ class Course extends Model
     protected $fillable = [
         'course_id', 'course_type', 'modality',
         'short_name', 'description',         'comment',
+        'video_text', 'video_code', 'video_type',
+        'terms_and_conditions', 'data_update_brief',
+        'inspection_form_url', 'inspection_form_generated',
         'hours',         'quota',
         'start_date', 'end_date',
         'university_id',
