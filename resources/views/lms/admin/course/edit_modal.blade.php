@@ -22,9 +22,9 @@
                             <input type="hidden" name="id" class="js-course-id" value=""/>
 
                             <div class="form-group">
-                                <label for="edit-course-id" class="col-md-2 control-label">{{ __('lms.page.course.form.course_id') }}</label>
+                                <label for="js-edit-course-code" class="col-md-2 control-label">{{ __('lms.page.course.form.course_id') }}</label>
                                 <div class="col-md-4">
-                                    <input id="edit-course-id" type="text" class="js-edit-course-id form-control" name="course_id"
+                                    <input id="js-edit-course-code" type="text" class="js-edit-course-code form-control" name="course_id"
                                            value="" required placeholder="{{ __('lms.page.course.form.course_id') }}" maxlength="100">
                                 </div>
                             </div>

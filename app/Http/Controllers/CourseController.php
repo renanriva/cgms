@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 use App\Canton;
 
@@ -65,7 +67,7 @@ class CourseController extends Controller
 
         $post = $request->all();
 
-        $course->course_id      = $post['course_id'];
+        $course->course_code      = $post['course_code'];
         $course->course_type    = $post['course_type'];
         $course->modality       = $post['modality'];
 
@@ -110,7 +112,7 @@ class CourseController extends Controller
             // todo add course update validation
             $post = $request->all();
 
-            $course->course_id      = $post['course_id'];
+            $course->course_code      = $post['course_code'];
             $course->course_type    = $post['course_type'];
             $course->modality       = $post['modality'];
 
@@ -176,6 +178,77 @@ class CourseController extends Controller
 
 
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|string
+     */
+    public function uploadCourseRequest(Request $request) {
+
+        $cloud = Storage::disk('public');
+        $path = $cloud->putFile('course/request', $request->file('qqfile'));
+
+        $path = storage_path('app/public/'.$path);
+
+        try {
+            $rows = [];
+
+            Excel::load($path, function ($reader) use(&$rows){
+
+                foreach ($reader->toArray() as $row) {
+
+
+                    $teacher['course_id']       = $this->getCourseId($row['course_code']);
+                    $teacher['course_code']     = $row['course_code'];
+                    $teacher['teacher_id']      = $this->getTeacherId($row['teacher_social_id']);
+                    $teacher['teacher_social_id'] = $row['teacher_social_id'];
+                    $teacher['created_by']      = Auth::user()->id;
+                    $teacher['status']          = COURSE_REQUEST_CREATED;
+
+                    array_push($rows, $teacher);
+
+                }
+
+            });
+
+            // batch insert
+            DB::table('course_requests')->insert($rows);
+
+            // @todo after adding all items into an array, add the array to database in batch
+            return response()->json(['rows' => $rows, 'success' => true] );
+
+        } catch (\Exception $e) {
+
+            return response()->json(['error' => $e->getMessage(), 'file' => $path]);
+        }
+
+    }
+
+    /**
+     * @param $social_id
+     * @return mixed
+     */
+    private function getTeacherId($social_id) {
+
+
+        $teacher = Teacher::where('social_id', $social_id)->first();
+
+        return $teacher->id;
+
+    }
+
+    /**
+     * @param $course_code
+     * @return mixed
+     */
+    private function getCourseId($course_code) {
+
+        $course = Course::where('course_code', $course_code)->first();
+
+        return $course->id;
+
+    }
+
 
 
 }

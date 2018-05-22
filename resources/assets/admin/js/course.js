@@ -26,7 +26,7 @@ $(document).ready(function () {
                 method: 'POST'
             },
             columns: [
-                { data: 'course_id', name: 'course_id', searchable: true },
+                { data: 'course_code', name: 'course_code', searchable: true },
                 { data: 'short_name', name: 'short_name', searchable: true},
                 { data: 'hours', name: 'hours', searchable: true},
                 { data: 'start_date', name: 'start_date', searchable: true, render:function (item) {
@@ -143,7 +143,7 @@ $(document).ready(function () {
 
                 var data = {
                     id          : $(this).attr('data-id'),
-                    course_id   : modal.find('.js-edit-course-id').val(),
+                    course_code   : modal.find('.js-edit-course-code').val(),
                     modality : modal.find('.js-edit-course-modality option:selected').val(),
                     course_type : modal.find('.js-edit-course-type option:selected').val(),
 
@@ -191,7 +191,7 @@ $(document).ready(function () {
 
                 var data = {
                     id              : $(this).attr('data-id'),
-                    course_id       : $(this).attr('data-course_id'),
+                    course_code     : $(this).attr('data-course_code'),
                     course_type     : $(this).attr('data-course_type'),
                     modality        : $(this).attr('data-modality'),
                     short_name      : $(this).attr('data-short_name'),
@@ -212,7 +212,7 @@ $(document).ready(function () {
                 };
 
 
-                modal.find('.js-edit-course-id').val(data.course_id);
+                modal.find('.js-edit-course-code').val(data.course_code);
                 modal.find('.js-edit-course-type option[value="'+data.course_type+'"]').attr('selected', true);
                 modal.find('.js-edit-course-modality option[value="'+data.modality+'"]').attr('selected', true);
                 modal.find('.js-edit-course-university option[value="'+data.university_id+'"]').attr('selected', true);
@@ -258,13 +258,13 @@ $(document).ready(function () {
 
                         // after insert, hide form and show upload
 
-                        modal.find('.js-course-id').val(response.course.id);
+                        modal.find('.js-course-code').val(response.course.id);
 
                         modal.find('.js-course-form').addClass('hidden');
                         modal.find('.js-course-inspection-form').removeClass('hidden');
                         modal.find('#btn-edit-course').attr('disabled', true);
 
-                        var row = '<tr class="success"><td>'+data.course_id+'</td><td>'+data.short_name+'</td><td>'+data.hours
+                        var row = '<tr class="success"><td>'+data.course_code+'</td><td>'+data.short_name+'</td><td>'+data.hours
                             +'</td><td>'+data.start_date+'</td><td>'+data.end_date+'</td><td>'+data.quota+'</td>+' +
                             '<td>'+data.comment+'</td><td>Actions</td></tr>';
 
@@ -302,7 +302,7 @@ $(document).ready(function () {
 
                         $('tr#course_id_'+data.id).each(function(){
 
-                            $(this).find('td').eq(0).text(data.course_id);
+                            $(this).find('td').eq(0).text(data.course_code);
                             $(this).find('td').eq(1).text(data.short_name);
                             $(this).find('td').eq(2).text(data.hours);
                             $(this).find('td').eq(3).text(startDate);
@@ -326,122 +326,189 @@ $(document).ready(function () {
 
         }
 
-    }//end page
 
 
-    var deleteModal = $('#delete-modal');
 
-    /**
-     * Show Delete modal
-     */
-    showDelete();
-    function showDelete() {
+        var deleteModal = $('#delete-modal');
 
-        $('#course-table').on('click','.btn-remove', function () {
+        /**
+         * Show Delete modal
+         */
+        showDelete();
+        function showDelete() {
 
-            var id = $(this).attr('data-id');
-            var name = $(this).attr('data-name');
+            $('#course-table').on('click','.btn-remove', function () {
 
-            deleteModal.find('.model-title').text('Delete Canton');
-            deleteModal.find('.js-message').text('Are you sure to delete Canton ['+name+']?');
-            deleteModal.find('#btn-delete-confirm').attr('data-url', '/admin/course/ajax/'+id);
-            deleteModal.find('#btn-delete-confirm').attr('data-id', id);
-            deleteModal.modal('show');
+                var id = $(this).attr('data-id');
+                var name = $(this).attr('data-name');
 
-        });
-    }
-
-
-    deleteItem();
-    function deleteItem() {
-
-        $('#page_course #btn-delete-confirm').click(function () {
-
-            var data = {
-                id: $(this).attr('data-id'),
-                url: $(this).attr('data-url')
-            };
-
-            var ajaxObj = {
-                method: 'delete',
-                url: data.url
-            };
-
-            $('tr#course_id_'+data.id).addClass('warning');
-
-            $.ajax(ajaxObj)
-                .done(function (response, textStatus, jqXhr) {
-
-                    if (jqXhr.status === 204) {
-
-                        deleteModal.modal('hide');
-
-                        (function () {
-                            setTimeout(function(){
-                                $('tr#course_id_'+data.id).remove();
-                            }, 1500)
-                        })(this);
-                    }
-
-                }).fail(function (jqXhr, textStatus, errorThrown) {
-
-                    alert('Error: '+errorThrown);
-                    console.log('error ', jqXhr);
+                deleteModal.find('.model-title').text('Delete Canton');
+                deleteModal.find('.js-message').text('Are you sure to delete Canton ['+name+']?');
+                deleteModal.find('#btn-delete-confirm').attr('data-url', '/admin/course/ajax/'+id);
+                deleteModal.find('#btn-delete-confirm').attr('data-id', id);
+                deleteModal.modal('show');
 
             });
+        }
 
+
+        deleteItem();
+        function deleteItem() {
+
+            $('#page_course #btn-delete-confirm').click(function () {
+
+                var data = {
+                    id: $(this).attr('data-id'),
+                    url: $(this).attr('data-url')
+                };
+
+                var ajaxObj = {
+                    method: 'delete',
+                    url: data.url
+                };
+
+                $('tr#course_id_'+data.id).addClass('warning');
+
+                $.ajax(ajaxObj)
+                    .done(function (response, textStatus, jqXhr) {
+
+                        if (jqXhr.status === 204) {
+
+                            deleteModal.modal('hide');
+
+                            (function () {
+                                setTimeout(function(){
+                                    $('tr#course_id_'+data.id).remove();
+                                }, 1500)
+                            })(this);
+                        }
+
+                    }).fail(function (jqXhr, textStatus, errorThrown) {
+
+                        alert('Error: '+errorThrown);
+                        console.log('error ', jqXhr);
+
+                });
+
+
+            });
+        }
+
+
+        /**
+         * Course inspection form upload
+         * @type {*}
+         */
+
+        /**
+         * Inspection form Upload for course
+         */
+        $('#course-inspection-form-uploader-manual-trigger').fineUploader({
+            template: 'qq-template-manual-trigger',
+            multiple: false,
+            request: {
+                endpoint: '/admin/course/upload/inspection-form',
+                params: {
+                    course_id : function () {
+                        return modal.find('.js-course-id').val();
+                    }
+                },
+                customHeaders: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            },
+            validation: {
+                itemLimit: 1,
+                allowedExtensions:  ['pdf', 'doc', 'docx'],
+            },
+            callbacks: {
+                onSubmit: function (id, name) {
+
+                },
+                onComplete: function (id, name, response, xhr ) {
+
+                    // $('.js-message').empty();
+
+                    if(response.error === undefined){
+                        modal.modal('hide');
+                    }
+
+                },
+                onStatusChange: function (id, oldStatus, newStatus) {
+
+                },
+                onCancel: function (id, name) {
+
+                }
+            },
+            autoUpload: false
+        });
+
+        $('#page_course #trigger-upload').click(function() {
+            $('#course-inspection-form-uploader-manual-trigger').fineUploader('uploadStoredFiles');
+        });
+
+
+        /**
+         * ==========================================================================
+         */
+
+
+        var requestListModal = $('#request-list-modal');
+        /**
+         * Course Request List Upload for course & teachers
+         */
+        $('#page_course #btn-upload-course-request').click(function () {
+
+            requestListModal.modal('show');
 
         });
-    }
 
 
-    /**
-     * Inspection form Upload for course
-     */
-    $('#course-inspection-form-uploader-manual-trigger').fineUploader({
-        template: 'qq-template-manual-trigger',
-        multiple: false,
-        request: {
-            endpoint: '/admin/course/upload/inspection-form',
-            params: {
-                course_id : function () {
-                    return modal.find('.js-course-id').val();
+        $('#course-request-list-uploader-manual-trigger').fineUploader({
+            template: 'qq-course-request-template-manual-trigger',
+            multiple: false,
+            request: {
+                endpoint: '/admin/course/upload/request-list',
+                customHeaders: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             },
-            customHeaders: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        },
-        validation: {
-            itemLimit: 1,
-            allowedExtensions:  ['pdf', 'doc', 'docx'],
-        },
-        callbacks: {
-            onSubmit: function (id, name) {
-
+            validation: {
+                itemLimit: 1,
+                allowedExtensions:  ['csv', 'xls', 'xlsx'],
             },
-            onComplete: function (id, name, response, xhr ) {
+            callbacks: {
+                onSubmit: function (id, name) {
 
-                // $('.js-message').empty();
+                },
+                onComplete: function (id, name, response, xhr ) {
 
-                if(response.error === undefined){
-                    modal.modal('hide');
+                    if(response.error === undefined){
+                        modal.modal('hide');
+                    }
+
+                },
+                onStatusChange: function (id, oldStatus, newStatus) {
+
+                },
+                onCancel: function (id, name) {
+
                 }
-
             },
-            onStatusChange: function (id, oldStatus, newStatus) {
+            autoUpload: false
+        });
 
-            },
-            onCancel: function (id, name) {
+        $('#btn-upload-course-request-list').click(function() {
+            console.log('course-request-list-uploader-manual-trigger');
+            $('#course-request-list-uploader-manual-trigger').fineUploader('uploadStoredFiles');
+        });
 
-            }
-        },
-        autoUpload: false
-    });
 
-    $('#page_course #trigger-upload').click(function() {
-        $('#course-inspection-form-uploader-manual-trigger').fineUploader('uploadStoredFiles');
-    });
+        /**
+         * Upload course request
+         */
 
+    }//end page
 
 });

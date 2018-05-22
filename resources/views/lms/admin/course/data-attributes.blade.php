@@ -1,5 +1,5 @@
 data-id="{{ $id }}"
-data-course_id="{{$course_id}}"
+data-course_code="{{$course_code}}"
 data-course_type="{{$course_type}}"
 data-modality="{{ $modality }}"
 data-short_name="{{ $short_name }}"

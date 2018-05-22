@@ -126,7 +126,7 @@
                 'form'  =>[
                     'edit_title'        => 'Edit Course',
                     'add_title'         => 'Add New Course',
-                    'course_id'         => 'Course Id',
+                    'course_id'         => 'Course Code',
                     'course_type'       => 'Course Type',
                     'course_modality'   => 'Modality',
                     'university'        => 'University',
@@ -175,7 +175,8 @@
                 'remove'    => 'Remove',
                 'close'     => 'Close',
                 'import'    =>  'Import',
-                'upload'    =>  'Upload'
+                'upload'    =>  'Upload',
+                'upload_course_request' => 'Upload Course Request' // in course list page
             ],
         ],
         'words' =>[

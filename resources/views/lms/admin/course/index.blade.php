@@ -17,8 +17,12 @@
                         <h3 class="box-title">{{ __('lms.page.course.index.table_header') }}</h3>
                     </div>
                     <div class="pull-right">
-                        <button class="btn btn-sm btn-primary" id="btn-create-course">
-                            <i class="fa fa-plus"></i> {{ __('lms.elements.button.create') }}</button>
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-info" id="btn-upload-course-request">
+                                <i class="fa fa-upload"></i> {{ __('lms.elements.button.upload_course_request') }}</button>
+                            <button class="btn btn-sm btn-primary" id="btn-create-course">
+                                <i class="fa fa-plus"></i> {{ __('lms.elements.button.create') }}</button>
+                        </div>
                     </div>
                 </div>
                 <div class="box-body">
@@ -46,6 +50,7 @@
         </div>
 
         @include('lms.admin.course.edit_modal')
+        @include('lms.admin.course.request_list_modal')
         @include('lms.admin.parts.modal_delete')
 
     </div>

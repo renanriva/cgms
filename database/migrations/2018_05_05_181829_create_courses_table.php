@@ -18,7 +18,7 @@ class CreateCoursesTable extends Migration
             $table->engine = 'InnoDB';
 
             $table->bigIncrements('id');
-            $table->string('course_id', 50)->unique();
+            $table->string('course_code', 50)->unique();
             $table->string('course_type', 100)->nullable();
             $table->string('short_name', 150)->nullable();
             $table->string('modality', 100)->nullable();

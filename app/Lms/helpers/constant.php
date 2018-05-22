@@ -51,3 +51,12 @@
     const COURSE_VIDEO_TYPE_YOUTUBE = 'youtube';
     const COURSE_VIDEO_TYPE_VIMEO = 'vimeo';
     const COURSE_VIDEO_TYPE_UPLOADED = 'uploaded';
+
+
+    /**
+     * Course REQUEST
+     */
+    const COURSE_REQUEST_VOID       = 0;
+    const COURSE_REQUEST_CREATED    = 1;
+    const COURSE_REQUEST_ACCEPTED   = 2;
+    const COURSE_REQUEST_REJECTED   = 3;

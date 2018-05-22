@@ -50,6 +50,14 @@ class Teacher extends Model
         return $this->belongsTo('App\User', 'updated_by', 'id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function requestedCourses(){
+
+        return $this->belongsToMany('App\Course', 'course_requests','teacher_id', 'course_id');
+
+    }
 
     public function registrations(){
 
