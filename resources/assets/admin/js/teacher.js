@@ -87,6 +87,10 @@ $(document).ready(function () {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             },
+            validation: {
+                itemLimit: 1,
+                allowedExtensions:  ['xlsx', 'xls', 'csv'],
+            },
             callbacks: {
                 onSubmit: function (id, name) {
 
@@ -115,6 +119,7 @@ $(document).ready(function () {
             autoUpload: false
         });
 
+        //@todo should be #page_teacher #triger-upload to be specific button selector
         $('#trigger-upload').click(function() {
             $('#fine-uploader-manual-trigger').fineUploader('uploadStoredFiles');
         });

@@ -52646,7 +52646,7 @@ $(document).ready(function () {
                     dropdownParent: modal,
                     width: 'resolve',
                     minimumResultsForSearch: 20,
-                    minimumInputLength: 3, // only start searching when the user has input 3 or more characters
+                    minimumInputLength: 1, // only start searching when the user has input 3 or more characters
                     maximumInputLength: 20 // only allow terms up to 20 characters long
                 });
             }
@@ -52661,7 +52661,7 @@ $(document).ready(function () {
 
             $('#btn-create-course').click(function () {
 
-                console.log('click create course');
+                // console.log('click create course');
 
                 modal.find('.js-modal-title-add').removeClass('hidden');
                 modal.find('.js-modal-title-edit').addClass('hidden');
@@ -52686,7 +52686,7 @@ $(document).ready(function () {
 
                 var data = {
                     id: $(this).attr('data-id'),
-                    course_id: modal.find('.js-edit-course-id').val(),
+                    course_code: modal.find('.js-edit-course-code').val(),
                     modality: modal.find('.js-edit-course-modality option:selected').val(),
                     course_type: modal.find('.js-edit-course-type option:selected').val(),
 
@@ -52701,7 +52701,13 @@ $(document).ready(function () {
                     quota: modal.find('.js-edit-course-quota').val(),
 
                     comment: modal.find('.js-edit-course-comment').val(),
-                    description: modal.find('.js-edit-course-description').val()
+                    description: modal.find('.js-edit-course-description').val(),
+                    video_text: modal.find('.js-edit-course-video').val(),
+                    video_type: modal.find('.js-edit-course-video_type option:selected').val(),
+                    video_code: modal.find('.js-edit-course-video_embed_code').val(),
+                    terms_condition: modal.find('.js-edit-course-terms_condition').val(),
+                    data_update_text: modal.find('.js-edit-course-data_update').val()
+
                 };
 
                 if ($(this).attr('data-type') === 'update') {
@@ -52726,7 +52732,7 @@ $(document).ready(function () {
 
                 var data = {
                     id: $(this).attr('data-id'),
-                    course_id: $(this).attr('data-course_id'),
+                    course_code: $(this).attr('data-course_code'),
                     course_type: $(this).attr('data-course_type'),
                     modality: $(this).attr('data-modality'),
                     short_name: $(this).attr('data-short_name'),
@@ -52736,10 +52742,16 @@ $(document).ready(function () {
                     quota: $(this).attr('data-quota'),
                     start_date: $(this).attr('data-start_date'),
                     end_date: $(this).attr('data-end_date'),
-                    university_id: $(this).attr('data-university_id')
+                    university_id: $(this).attr('data-university_id'),
+                    video_text: $(this).attr('data-video_text'),
+                    video_type: $(this).attr('data-video_type'),
+                    video_code: $(this).attr('data-video_code'),
+                    terms_condition: $(this).attr('data-terms_condition'),
+                    data_update: $(this).attr('data-data_update')
+
                 };
 
-                modal.find('.js-edit-course-id').val(data.course_id);
+                modal.find('.js-edit-course-code').val(data.course_code);
                 modal.find('.js-edit-course-type option[value="' + data.course_type + '"]').attr('selected', true);
                 modal.find('.js-edit-course-modality option[value="' + data.modality + '"]').attr('selected', true);
                 modal.find('.js-edit-course-university option[value="' + data.university_id + '"]').attr('selected', true);
@@ -52750,6 +52762,11 @@ $(document).ready(function () {
                 modal.find('.js-edit-course-quota').val(data.quota);
                 modal.find('.js-edit-course-start_date').val(data.start_date);
                 modal.find('.js-edit-course-end_date').val(data.end_date);
+                modal.find('.js-edit-course-video').val(data.video_text);
+                modal.find('.js-edit-course-video_type option[value="' + data.video_type + '"]').attr('selected', true);
+                modal.find('.js-edit-course-video_embed_code').val(data.video_code);
+                modal.find('.js-edit-course-terms_condition').val(data.terms_condition);
+                modal.find('.js-edit-course-data_update').val(data.data_update);
 
                 modal.find('#btn-edit-course').attr('data-id', data.id);
                 modal.find('#btn-edit-course').text('Update');
@@ -52775,11 +52792,17 @@ $(document).ready(function () {
 
                 if (jqXhr.status === 201) {
 
-                    var row = '<tr class="success"><td>' + data.course_id + '</td><td>' + data.short_name + '</td><td>' + data.hours + '</td><td>' + data.start_date + '</td><td>' + data.end_date + '</td><td>' + data.quota + '</td>+' + '<td>' + data.comment + '</td><td>Actions</td></tr>';
+                    // after insert, hide form and show upload
+
+                    modal.find('.js-course-code').val(response.course.id);
+
+                    modal.find('.js-course-form').addClass('hidden');
+                    modal.find('.js-course-inspection-form').removeClass('hidden');
+                    modal.find('#btn-edit-course').attr('disabled', true);
+
+                    var row = '<tr class="success"><td>' + data.course_code + '</td><td>' + data.short_name + '</td><td>' + data.hours + '</td><td>' + data.start_date + '</td><td>' + data.end_date + '</td><td>' + data.quota + '</td>+' + '<td>' + data.comment + '</td><td>Actions</td></tr>';
 
                     $('#course-table tr:last').after(row);
-
-                    modal.modal('hide');
                 }
             }).fail(function (jqXhr, textStatus, errorThrown) {
 
@@ -52810,7 +52833,7 @@ $(document).ready(function () {
 
                     $('tr#course_id_' + data.id).each(function () {
 
-                        $(this).find('td').eq(0).text(data.course_id);
+                        $(this).find('td').eq(0).text(data.course_code);
                         $(this).find('td').eq(1).text(data.short_name);
                         $(this).find('td').eq(2).text(data.hours);
                         $(this).find('td').eq(3).text(startDate);
@@ -52830,6 +52853,67 @@ $(document).ready(function () {
             });
         };
 
+        var showDelete = function showDelete() {
+
+            $('#course-table').on('click', '.btn-remove', function () {
+
+                var id = $(this).attr('data-id');
+                var name = $(this).attr('data-name');
+
+                deleteModal.find('.model-title').text('Delete Canton');
+                deleteModal.find('.js-message').text('Are you sure to delete Canton [' + name + ']?');
+                deleteModal.find('#btn-delete-confirm').attr('data-url', '/admin/course/ajax/' + id);
+                deleteModal.find('#btn-delete-confirm').attr('data-id', id);
+                deleteModal.modal('show');
+            });
+        };
+
+        var deleteItem = function deleteItem() {
+
+            $('#page_course #btn-delete-confirm').click(function () {
+
+                var data = {
+                    id: $(this).attr('data-id'),
+                    url: $(this).attr('data-url')
+                };
+
+                var ajaxObj = {
+                    method: 'delete',
+                    url: data.url
+                };
+
+                $('tr#course_id_' + data.id).addClass('warning');
+
+                $.ajax(ajaxObj).done(function (response, textStatus, jqXhr) {
+
+                    if (jqXhr.status === 204) {
+
+                        deleteModal.modal('hide');
+
+                        (function () {
+                            setTimeout(function () {
+                                $('tr#course_id_' + data.id).remove();
+                            }, 1500);
+                        })(this);
+                    }
+                }).fail(function (jqXhr, textStatus, errorThrown) {
+
+                    alert('Error: ' + errorThrown);
+                    console.log('error ', jqXhr);
+                });
+            });
+        };
+
+        /**
+         * Course inspection form upload
+         * @type {*}
+         */
+
+        /**
+         * Inspection form Upload for course
+         */
+
+
         /**
          * Datepicker
          */
@@ -52846,7 +52930,7 @@ $(document).ready(function () {
                 url: '/admin/course/ajax/table',
                 method: 'POST'
             },
-            columns: [{ data: 'course_id', name: 'course_id', searchable: true }, { data: 'short_name', name: 'short_name', searchable: true }, { data: 'hours', name: 'hours', searchable: true }, { data: 'start_date', name: 'start_date', searchable: true, render: function render(item) {
+            columns: [{ data: 'course_code', name: 'course_code', searchable: true }, { data: 'short_name', name: 'short_name', searchable: true }, { data: 'hours', name: 'hours', searchable: true }, { data: 'start_date', name: 'start_date', searchable: true, render: function render(item) {
                     return new Date(item).toLocaleDateString();
                 } }, { data: 'end_date', name: 'end_date', searchable: true, render: function render(item) {
                     return new Date(item).toLocaleDateString();
@@ -52866,66 +52950,104 @@ $(document).ready(function () {
         showAddModal();
         clickCreateUpdate();
         showEditModal();
-    } //end page
 
 
-    var deleteModal = $('#delete-modal');
+        var deleteModal = $('#delete-modal');
 
-    /**
-     * Show Delete modal
-     */
-    showDelete();
-    function showDelete() {
+        /**
+         * Show Delete modal
+         */
+        showDelete();
 
-        $('#course-table').on('click', '.btn-remove', function () {
 
-            var id = $(this).attr('data-id');
-            var name = $(this).attr('data-name');
-
-            deleteModal.find('.model-title').text('Delete Canton');
-            deleteModal.find('.js-message').text('Are you sure to delete Canton [' + name + ']?');
-            deleteModal.find('#btn-delete-confirm').attr('data-url', '/admin/course/ajax/' + id);
-            deleteModal.find('#btn-delete-confirm').attr('data-id', id);
-            deleteModal.modal('show');
-        });
-    }
-
-    deleteItem();
-    function deleteItem() {
-
-        $('#page_course #btn-delete-confirm').click(function () {
-
-            var data = {
-                id: $(this).attr('data-id'),
-                url: $(this).attr('data-url')
-            };
-
-            var ajaxObj = {
-                method: 'delete',
-                url: data.url
-            };
-
-            $('tr#course_id_' + data.id).addClass('warning');
-
-            $.ajax(ajaxObj).done(function (response, textStatus, jqXhr) {
-
-                if (jqXhr.status === 204) {
-
-                    deleteModal.modal('hide');
-
-                    (function () {
-                        setTimeout(function () {
-                            $('tr#course_id_' + data.id).remove();
-                        }, 1500);
-                    })(this);
+        deleteItem();
+        $('#course-inspection-form-uploader-manual-trigger').fineUploader({
+            template: 'qq-template-manual-trigger',
+            multiple: false,
+            request: {
+                endpoint: '/admin/course/upload/inspection-form',
+                params: {
+                    course_id: function course_id() {
+                        return modal.find('.js-course-id').val();
+                    }
+                },
+                customHeaders: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-            }).fail(function (jqXhr, textStatus, errorThrown) {
+            },
+            validation: {
+                itemLimit: 1,
+                allowedExtensions: ['pdf', 'doc', 'docx']
+            },
+            callbacks: {
+                onSubmit: function onSubmit(id, name) {},
+                onComplete: function onComplete(id, name, response, xhr) {
 
-                alert('Error: ' + errorThrown);
-                console.log('error ', jqXhr);
-            });
+                    // $('.js-message').empty();
+
+                    if (response.error === undefined) {
+                        modal.modal('hide');
+                    }
+                },
+                onStatusChange: function onStatusChange(id, oldStatus, newStatus) {},
+                onCancel: function onCancel(id, name) {}
+            },
+            autoUpload: false
         });
-    }
+
+        $('#page_course #trigger-upload').click(function () {
+            $('#course-inspection-form-uploader-manual-trigger').fineUploader('uploadStoredFiles');
+        });
+
+        /**
+         * ==========================================================================
+         */
+
+        var requestListModal = $('#request-list-modal');
+        /**
+         * Course Request List Upload for course & teachers
+         */
+        $('#page_course #btn-upload-course-request').click(function () {
+
+            requestListModal.modal('show');
+        });
+
+        $('#course-request-list-uploader-manual-trigger').fineUploader({
+            template: 'qq-course-request-template-manual-trigger',
+            multiple: false,
+            request: {
+                endpoint: '/admin/course/upload/request-list',
+                customHeaders: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            },
+            validation: {
+                itemLimit: 1,
+                allowedExtensions: ['csv', 'xls', 'xlsx']
+            },
+            callbacks: {
+                onSubmit: function onSubmit(id, name) {},
+                onComplete: function onComplete(id, name, response, xhr) {
+
+                    if (response.error === undefined) {
+                        modal.modal('hide');
+                    }
+                },
+                onStatusChange: function onStatusChange(id, oldStatus, newStatus) {},
+                onCancel: function onCancel(id, name) {}
+            },
+            autoUpload: false
+        });
+
+        $('#btn-upload-course-request-list').click(function () {
+            console.log('course-request-list-uploader-manual-trigger');
+            $('#course-request-list-uploader-manual-trigger').fineUploader('uploadStoredFiles');
+        });
+
+        /**
+         * Upload course request
+         */
+    } //end page
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))
 
@@ -53587,6 +53709,10 @@ $(document).ready(function () {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             },
+            validation: {
+                itemLimit: 1,
+                allowedExtensions: ['xlsx', 'xls', 'csv']
+            },
             callbacks: {
                 onSubmit: function onSubmit(id, name) {},
                 onComplete: function onComplete(id, name, response, xhr) {
@@ -53606,6 +53732,7 @@ $(document).ready(function () {
             autoUpload: false
         });
 
+        //@todo should be #page_teacher #triger-upload to be specific button selector
         $('#trigger-upload').click(function () {
             $('#fine-uploader-manual-trigger').fineUploader('uploadStoredFiles');
         });

@@ -126,7 +126,7 @@
                 'form'  =>[
                     'edit_title'        => 'Edit Course',
                     'add_title'         => 'Add New Course',
-                    'course_id'         => 'Course Id',
+                    'course_id'         => 'Course Code',
                     'course_type'       => 'Course Type',
                     'course_modality'   => 'Modality',
                     'university'        => 'University',
@@ -136,7 +136,13 @@
                     'end_date'          => 'End date',
                     'quota'             => 'Quota',
                     'comment'           => 'Comment',
-                    'description'       => 'Description'
+                    'description'       => 'Description',
+                    'terms_condition'   => 'Terms & Condition',
+                    'video'             => 'Video Information',
+                    'video_type'        => 'Video Type',
+                    'video_embed'       => 'Embed Code',
+                    'data_update'       => 'Data Update Tab Info',
+                    'inspection_file_message' => 'After creating the course, you can upload inspection file.'
 
                 ]
             ],
@@ -169,7 +175,8 @@
                 'remove'    => 'Remove',
                 'close'     => 'Close',
                 'import'    =>  'Import',
-                'upload'    =>  'Upload'
+                'upload'    =>  'Upload',
+                'upload_course_request' => 'Upload Course Request' // in course list page
             ],
         ],
         'words' =>[
