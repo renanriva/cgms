@@ -119,13 +119,12 @@ class TeacherController extends Controller
 
     /**
      * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|string
      */
     public function upload(Request $request){
 
 
         $cloud = Storage::disk('public');
-//            $disk = Storage::disk('gcs');
-//            $path = $cloud->putFile($event->short_name.'/'.$event->year.'/images/upload', $request->file('qqfile'));
         $path = $cloud->putFile('teacher', $request->file('qqfile'));
 
         $path = storage_path('app/public/'.$path);
@@ -190,18 +189,12 @@ class TeacherController extends Controller
 
             // @todo after adding all items into an array, add the array to database in batch
 
-
-
-
-            return response()->json(['rows' => $rows] );
+            return response()->json(['rows' => $rows, 'success' => true] );
 
         } catch (\Exception $e) {
 
             return response()->json(['error' => $e->getMessage(), 'file' => $path]);
         }
-
-
-        return $path;
 
     }
 

@@ -1,5 +1,6 @@
 <!-- Modal -->
-<div class="modal" id="edit-course-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal" id="edit-course-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -14,16 +15,16 @@
 
                 <div class="modal-body">
 
-                    <div class="row">
+                    <div class="row js-course-form">
 
                         <div class="col-lg-12 col-md-12 col-sm-12">
 
                             <input type="hidden" name="id" class="js-course-id" value=""/>
 
                             <div class="form-group">
-                                <label for="edit-course-id" class="col-md-2 control-label">{{ __('lms.page.course.form.course_id') }}</label>
+                                <label for="js-edit-course-code" class="col-md-2 control-label">{{ __('lms.page.course.form.course_id') }}</label>
                                 <div class="col-md-4">
-                                    <input id="edit-course-id" type="text" class="js-edit-course-id form-control" name="course_id"
+                                    <input id="js-edit-course-code" type="text" class="js-edit-course-code form-control" name="course_id"
                                            value="" required placeholder="{{ __('lms.page.course.form.course_id') }}" maxlength="100">
                                 </div>
                             </div>
@@ -104,21 +105,92 @@
                             </div>
 
                             <div class="form-group">
-
                                 <label for="js-edit-course-description"
                                        class="col-md-2 control-label">{{ __('lms.page.course.form.description') }}</label>
                                 <div    class="col-md-10">
                                     <textarea id="js-edit-course-description" type="text"
                                               class="js-edit-course-description form-control" name="course_description"
-                                               placeholder={{ __('lms.page.course.form.description') }} ></textarea>
+                                               placeholder="{{ __('lms.page.course.form.description') }}" ></textarea>
                                 </div>
 
+                            </div>
+
+                            <div class="form-group">
+                                <label for="js-edit-course-video"
+                                       class="col-md-2 control-label">{{ __('lms.page.course.form.video') }}</label>
+                                <div    class="col-md-10">
+                                    <textarea id="js-edit-course-video"
+                                              class="js-edit-course-video form-control" name="course_video"
+                                              placeholder="{{ __('lms.page.course.form.video') }}" ></textarea>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="js-edit-course-video_type"
+                                       class="col-md-2 control-label">{{ __('lms.page.course.form.video_type') }}</label>
+                                <div    class="col-md-4">
+                                    <select id="js-edit-course-video_type" name="video_type" style="width: 100%"
+                                            class="js-edit-course-video_type js-select-video_type form-control js-lms-select2" >
+                                        <option value="youtube">Youtube</option>
+                                        <option value="Vimeo">Vimeo</option>
+                                        <option value="Upload">Upload</option>
+                                    </select>
+                                </div>
+
+                                <label for="js-edit-course-video_embed_code"
+                                       class="col-md-2 control-label">{{ __('lms.page.course.form.video_embed') }}</label>
+                                <div    class="col-md-4">
+                                    <input id="js-edit-course-video_embed_code"
+                                           class="js-edit-course-video_embed_code form-control" name="video_embed_code"
+                                           value="" required placeholder="{{ __('lms.page.course.form.video_embed') }}" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="js-edit-course-terms_condition"
+                                       class="col-md-2 control-label">{{ __('lms.page.course.form.terms_condition') }}</label>
+                                <div    class="col-md-10">
+                                    <textarea id="js-edit-course-terms_condition"
+                                              class="js-edit-course-terms_condition form-control" name="course_terms_condition"
+                                              placeholder="{{ __('lms.page.course.form.terms_condition') }}" ></textarea>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="js-edit-course-data_update"
+                                       class="col-md-2 control-label">{{ __('lms.page.course.form.data_update') }}</label>
+                                <div    class="col-md-10">
+                                    <textarea id="js-edit-course-data_update"
+                                              class="js-edit-course-data_update form-control" name="course_data_update"
+                                              placeholder="{{ __('lms.page.course.form.data_update') }}" ></textarea>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"></label>
+                                <div class="col-md-10">
+                                    <i class="fa fa-info-circle"></i> <code>{{ __('lms.page.course.form.inspection_file_message')  }}</code>
+                                </div>
                             </div>
 
 
                         </div>
 
                     </div>
+
+                    <div class="row js-course-inspection-form hidden">
+
+                        <div class="col-md-12 col-md-12 col-sm-12">
+
+                            <div id="course-inspection-form-uploader-manual-trigger"></div>
+
+                        </div>
+
+                    </div>
+
                     <div class="row">
                         <div class="col-lg-12 js-errors">
                         </div>
@@ -134,3 +206,4 @@
         </div>
     </div>
 </div>
+@include('lms.admin.teacher.template')

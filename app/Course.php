@@ -20,14 +20,26 @@ class Course extends Model
      * @var array
      */
     protected $fillable = [
-        'course_id', 'course_type', 'modality',
+        'course_code', 'course_type', 'modality',
         'short_name', 'description',         'comment',
+        'video_text', 'video_code', 'video_type',
+        'terms_and_conditions', 'data_update_brief',
+        'inspection_form_url', 'inspection_form_generated',
         'hours',         'quota',
         'start_date', 'end_date',
         'university_id',
         'created_by', 'updated_by'
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function requests(){
+
+        return $this->belongsToMany('App\Teacher', 'course_requests',
+                                            'course_id', 'teacher_id');
+
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

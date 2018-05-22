@@ -1,5 +1,5 @@
-<script type="text/template" id="qq-template-manual-trigger">
-    <div class="qq-uploader-selector qq-uploader" qq-drop-area-text="Drop files here">
+<script type="text/template" id="qq-course-request-template-manual-trigger">
+    <div class="qq-uploader-selector qq-uploader" qq-drop-area-text="Drop files here.">
         <div class="qq-total-progress-bar-container-selector qq-total-progress-bar-container">
             <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-total-progress-bar-selector qq-progress-bar qq-total-progress-bar"></div>
         </div>
@@ -10,7 +10,7 @@
             <div class="qq-upload-button-selector qq-upload-button">
                 <div>Select files</div>
             </div>
-            <button type="button" id="trigger-upload" class="btn btn-primary">
+            <button type="button" id="btn-upload-course-request-list" class="btn btn-primary">
                 <i class="icon-upload icon-white"></i> Upload
             </button>
         </div>
