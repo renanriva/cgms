@@ -9,27 +9,237 @@
 @section('content')
 
     <div class="row" id="page_register">
-        <div class="col-lg-12 col-md-12 col-sm-12">
 
-            <div class="box">
-                <div class="box-header">
-                    <div class="pull-left">
-                        <h3 class="box-title">{{ __('lms.page.register.index.table_header') }}</h3>
-                    </div>
-                    <div class="pull-right">
-                    </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-12">
+
+
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">About Me</h3>
                 </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <strong><i class="fa fa-man margin-r-5"></i> Name</strong>
+
+                    <p class="">{{ $teacher->user->name }}</p>
+
+                    <hr>
+
+                    <strong><i class="fa fa-map-marker margin-r-5"></i> Social Id</strong>
+
+                    <p class="text-muted">{{ $teacher->social_id }}</p>
+
+                    <hr>
+
+                    <strong><i class="fa fa-pencil margin-r-5"></i> University</strong>
+
+                    <p>{{ $teacher->work_area }}, {{ $teacher->university_name }}</p>
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Course Details</h3>
+                </div>
+                <!-- /.box-header -->
                 <div class="box-body">
 
+                    <p class=""><strong><i class="fa fa-man margin-r-5"></i> Short Name: </strong> {{ $course->short_name }}</p>
 
+                    <hr>
+                    <p class=""><strong><i class="fa fa-map-marker margin-r-5"></i> Course Code</strong> {{ $course->course_code }}</p>
+
+                    <hr>
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>Hours</b> <a class="pull-right">{{ $course->hours }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Start Date</b> <a class="pull-right">{{ $course->start_date }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>End Date</b> <a class="pull-right">{{ $course->end_date }}</a>
+                        </li>
+                    </ul>
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12">
+
+            <div class="box box-info">
+
+                <div class="box-header with-border">
+                    <div class="box-title">Register</div>
+                </div>
+
+                <div class="box-body">
+
+                    <div class="" id="myWizard">
+                        <div class="navbar">
+                            <div class="navbar-inner">
+                                <ul class="nav nav-pills">
+                                    <li class="active"><a href="#step1" data-toggle="tab">Video</a></li>
+                                    <li><a href="#step2" data-toggle="tab">Description</a></li>
+                                    <li><a href="#step3" data-toggle="tab">Terms & Condition</a></li>
+                                    <li><a href="#step4" data-toggle="tab">Data Update</a></li>
+                                    <li><a href="#step5" data-toggle="tab">Registry</a></li>
+                                    <li><a href="#step6" data-toggle="tab">Registration Certificate</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="step1">
+                                <h3>Video</h3>
+                                <div class="box-layout">
+
+                                    <p>{{ $course->video_text }}</p>
+                                </div>
+
+                                {{--<hr/>--}}
+                                {{--<a class="btn btn-default next" href="#">Continue</a>--}}
+                            </div>
+                            <div class="tab-pane" id="step2">
+                                <h3>Description</h3>
+                                <div class="box-layout">
+                                    <p>{{ $course->description }}</p>
+                                </div>
+                                <hr/>
+
+                                {{--<a class="btn btn-default next" href="#">Continue</a>--}}
+                            </div>
+                            <div class="tab-pane" id="step3">
+                                <h3>Terms and Conditions</h3>
+                                <div class="box-layout">
+                                    <p class="">{{ $course->terms_and_conditions }}</p>
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox"> Accept
+                                            </label><br/>
+                                            <label class="small">{{ date('m/d/Y h:i a', strtotime('now')) }}</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                {{--<hr/>--}}
+                                {{--<a class="btn btn-default next" href="#">Continue</a>--}}
+                            </div>
+                            <div class="tab-pane" id="step4">
+                                <h3>Data Update</h3>
+                                <div class="box-layout">
+                                    <p>{{ $course->data_update_brief }}</p>
+
+                                    <table class="table table-responsive table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Social Id</th>
+                                                <th>First name</th>
+                                                <th>Last name</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                <th>T&C Accept</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    {{ $teacher->social_id }}
+                                                </td>
+                                                <td>
+                                                    {{ $teacher->user->name }}
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
+                                                    {{ $teacher->inst_email }}
+                                                </td>
+                                                <td>
+                                                    {{ $teacher->mobile }}
+                                                </td>
+                                                <td>
+                                                    Accept
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                                <hr/>
+                                {{--<a class="btn btn-default next" href="#">Continue</a>--}}
+                            </div>
+                            <div class="tab-pane" id="step5">
+                                <h3>Registration Inspection</h3>
+
+                                <div class="box-layout">
+                                    <p>Lorem ipsum</p>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                            <div id="registration_release_file_upload"></div>
+
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                            <h3><i class="fa fa-download"></i> Download file from here</h3>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                {{--<hr/>--}}
+                                {{--<a class="btn btn-default next" href="#">Continue</a>--}}
+                            </div>
+                            <div class="tab-pane" id="step6">
+                                <p>This is the last step. You're done.</p>
+                                {{--<hr/>--}}
+                                {{--<a class="btn btn-success first" href="#">Start over</a>--}}
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
             </div>
-
 
         </div>
 
 
     </div>
+
+    @include('lms.admin.course.registration_release_file_upload')
+
+    <style type="text/css">
+
+        #myWizard .navbar{
+            border: 1px solid #ccc;
+            border-bottom: none;
+            margin-bottom: 0;
+            border-radius: 0;
+            -webkit-border-radius: 0;
+            -moz-border-radius: 0;
+            min-height: 0;
+        }
+        .tab-content{
+            padding:10px 20px;
+            border: 1px solid #CCCCCC;
+        }
+
+        .box-layout{
+            border: 1px solid #000000;
+            padding:20px;
+        }
+
+    </style>
 
 @stop

@@ -33,7 +33,7 @@ class UpcomingController extends Controller
 
         ;
         return view('lms.admin.course.upcoming', ['title'=> $title,
-            'courses' => $user->teacher->requestedCourses]);
+            'courses' => $user->teacher->allUpcomingCourses]);
 
     }
 

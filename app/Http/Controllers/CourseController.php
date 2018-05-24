@@ -258,7 +258,22 @@ class CourseController extends Controller
     public function getRegister(Request $request, $course_id){
 
         $title = 'Register - '.env('APP_NAME') ;
-        return view('lms.admin.course.register', ['title'=> $title]);
+
+
+//        var_dump(Auth::user()->id);
+//        $user = Auth::user();
+//        dd($user->teacher->requestedCourses->toArray());
+
+//        $course  = Course::find($course_id);
+
+//        dd( $course->requests->toArray());
+        $teacher = Teacher::find(Auth::user()->id);
+
+//        dd($teacher->getRequestedCourse($course_id)->get());
+
+        return view('lms.admin.course.register', ['title'=> $title,
+            'teacher' => $teacher,
+            'course' => $teacher->getRequestedCourse($course_id)->first()]);
 
     }
 

@@ -53,17 +53,55 @@ class Teacher extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function requestedCourses(){
+    public function allUpcomingCourses(){
 
-        return $this->belongsToMany('App\Course', 'course_requests','teacher_id',
-            'course_id')
-            ->withPivot('teacher_id', 'course_id', 'course_code', 'teacher_social_id', 'status')
-            ->as('requestedCourse')
+        return $this->belongsToMany(Course::class, 'course_requests',
+            'teacher_id',
+            'course_id'
+            )->withPivot('teacher_id', 'course_id', 'course_code', 'teacher_social_id', 'status')
+            ->as('allUpcomingCourses')
             ->withTimestamps();
+
+
+//        return $this->belongsToMany('App\Course', 'course_requests',
+//            'teacher_id',
+//            'course_id')
+//            ->withPivot('teacher_id', 'course_id', 'course_code', 'teacher_social_id', 'status')
+//            ->as('requestedCourse')
+//            ->withTimestamps();
 
     }
 
+
+    /**
+     * @param $course_id
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function getRequestedCourse($course_id){
+
+        return $this->belongsToMany(Course::class, 'course_requests',
+            'teacher_id',
+            'course_id'
+            )
+            ->where('course_id', $course_id)
+            ->withPivot('teacher_id', 'course_id', 'course_code', 'teacher_social_id', 'status')
+            ->as('getRequestedCourse')
+            ->withTimestamps();
+
+
+//        return $this->belongsToMany('App\Course', 'course_requests',
+//            'teacher_id',
+//            'course_id')
+//            ->withPivot('teacher_id', 'course_id', 'course_code', 'teacher_social_id', 'status')
+//            ->as('requestedCourse')
+//            ->withTimestamps();
+
+    }
+
+
     public function registrations(){
+
+
 
     }
 

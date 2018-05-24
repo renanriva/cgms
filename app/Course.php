@@ -37,7 +37,10 @@ class Course extends Model
     public function requests(){
 
         return $this->belongsToMany('App\Teacher', 'course_requests',
-                                            'course_id', 'teacher_id');
+                                            'course_id', 'teacher_id')
+            ->withPivot('teacher_id', 'course_id', 'course_code', 'teacher_social_id', 'status')
+            ->as('requests')
+            ->withTimestamps();
 
     }
 
