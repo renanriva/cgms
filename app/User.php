@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'role' , 'status', 'creation_type',
     ];
 
     /**
@@ -34,5 +34,23 @@ class User extends Authenticatable
     public function teacher(){
 
         return $this->hasOne('App\Teacher');
+    }
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    public function getRoleAttribute($value){
+
+        return getUserRole($value);
+    }
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    public function getStatusAttribute($value){
+
+        return getUserStatus($value);
     }
 }

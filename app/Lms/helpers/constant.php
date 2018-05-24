@@ -15,11 +15,31 @@
     const USER_ROLE_STUDENT = 3;
     const USER_ROLE_VOID = 0;
 
+    const USER_ROLE  = [
+        0 => 'void',
+        3 => 'teacher',
+        4 => 'university',
+        5 => 'admin'
+    ];
+
+    function getUserRole($value){
+        return USER_ROLE[$value];
+    }
+
     /**
      * USER TYPE
      */
     const USER_STATUS_ACTIVE = 1;
     const USER_STATUS_INACTIVE = 0;
+
+    const USER_STATUS = [
+        0 => 'inactive',
+        1 => 'active'
+    ];
+
+    function getUserStatus($value){
+        return USER_STATUS[$value];
+    }
 
     /**
      * USER CREATION
