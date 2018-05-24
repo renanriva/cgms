@@ -56,8 +56,15 @@ Route::middleware(['auth'])->group(function (){
             Route::post('/ajax/{id}', 'CourseController@update');
             Route::delete('/ajax/{id}', 'CourseController@delete');
             Route::post('/upload/inspection-form', 'CourseController@uploadInspection');
-            Route::post('/upload/request-list', 'CourseController@uploadCourseRequest');
+            Route::post('/register/{id}', 'CourseController@getRegister');
 
+
+        });
+
+        Route::prefix('upcoming-courses')->group(function (){
+
+            Route::get('/', 'UpcomingController@index');
+            Route::get('/ajax/table', 'UpcomingController@getTableData');
 
         });
 

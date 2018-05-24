@@ -129,6 +129,13 @@ return [
 //            'label_color' => 'success',
         ],
         [
+            'text'        => 'lms.menu.upcoming_courses',
+            'url'         => 'admin/upcoming-courses',
+            'icon'        => 'list-ol',
+//            'label'       => 4,
+//            'label_color' => 'success',
+        ],
+        [
             'text'        => 'lms.menu.university',
             'url'         => 'admin/university',
             'icon'        => 'building',

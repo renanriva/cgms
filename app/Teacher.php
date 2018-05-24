@@ -55,7 +55,11 @@ class Teacher extends Model
      */
     public function requestedCourses(){
 
-        return $this->belongsToMany('App\Course', 'course_requests','teacher_id', 'course_id');
+        return $this->belongsToMany('App\Course', 'course_requests','teacher_id',
+            'course_id')
+            ->withPivot('teacher_id', 'course_id', 'course_code', 'teacher_social_id', 'status')
+            ->as('requestedCourse')
+            ->withTimestamps();
 
     }
 

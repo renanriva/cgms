@@ -15,6 +15,7 @@
             'course'            => 'Courses',
             'university'        => 'University',
             'profile'           => 'My Profile',
+            'upcoming_courses'  => 'Upcoming Courses',
             'settings'          => [
                                 'title' => 'Settings',
                                 'user_management' => 'User Management',
@@ -144,7 +145,31 @@
                     'data_update'       => 'Data Update Tab Info',
                     'inspection_file_message' => 'After creating the course, you can upload inspection file.'
 
+                ],
+            ],
+            'upcoming' => [
+                'index' => [
+                    'page_header'=> 'Upcoming Course',
+                    'table_header' => 'My registerable courses'
+                ],
+                'table' => [
+                    'course_code'       => 'Course Code',
+                    'course_type'       => 'Course Type',
+                    'short_name'        => 'Short Name',
+                    'institution'       => 'University',
+                    'modality'          => 'Modality',
+                    'start_date'        => 'Start Date',
+                    'end_date'          => 'End Date',
+                    'hours'             => 'Hours',
+                    'action'            => 'Register'
                 ]
+
+            ],
+            'register' => [
+                'index' => [
+                    'page_header'=> 'Register Course',
+                    'table_header' => 'Register Course'
+                ],
             ],
             'university' => [
                 'index' => [
