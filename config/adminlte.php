@@ -109,47 +109,42 @@ return [
 
     'menu' => [
         'lms.menu.main_nav',
-//        [
-//            'text' => 'Blog',
-//            'url'  => 'admin/blog',
-//            'can'  => 'manage-blog',
-//        ],
         [
-            'text'        => 'lms.menu.teachers',
-            'url'         => 'admin/teachers',
-            'icon'        => 'users',
-//            'label'       => 5,
-//            'label_color' => 'primary',
+            'text'      => 'lms.menu.teachers',
+            'url'       => 'admin/teachers',
+            'icon'      => 'users',
+            'can'       => 'admin-only',
+
         ],
         [
-            'text'        => 'lms.menu.course',
-            'url'         => 'admin/course',
-            'icon'        => 'book',
-//            'label'       => 4,
-//            'label_color' => 'success',
+            'text'          => 'lms.menu.course',
+            'url'           => 'admin/course',
+            'icon'          => 'book',
+            'can'           => 'admin-only',
+
         ],
         [
-            'text'        => 'lms.menu.upcoming_courses',
-            'url'         => 'admin/upcoming-courses',
-            'icon'        => 'list-ol',
-//            'label'       => 4,
-//            'label_color' => 'success',
+            'text'          => 'lms.menu.upcoming_courses',
+            'url'           => 'admin/upcoming-courses',
+            'icon'          => 'list-ol',
+            'can'           => 'browse-upcoming-course',
         ],
         [
-            'text'        => 'lms.menu.university',
-            'url'         => 'admin/university',
-            'icon'        => 'building',
-//            'label'       => 5,
-//            'label_color' => 'primary',
+            'text'          => 'lms.menu.university',
+            'url'           => 'admin/university',
+            'icon'          => 'building',
+            'can'           => 'admin-only',
         ],
         [
             'text'    => 'lms.menu.settings.title',
             'icon'    => 'cogs',
+            'can'       => 'admin-only',
             'submenu' => [
                 [
                     'text'  => 'lms.menu.settings.user_management',
                     'icon'  => 'user-secret',
                     'url'   => 'admin/users',
+                    'can'       => 'admin-only',
                 ],
                 [
                     'text'    => 'lms.menu.settings.location.title',

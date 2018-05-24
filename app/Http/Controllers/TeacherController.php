@@ -21,8 +21,18 @@ class TeacherController extends Controller
 {
     public function index(){
 
+
+
+        $user = Auth::user();
+//        dd(Auth::user()->role);
+        if ($user->can('browse', Teacher::class)) {
+
         $title = 'Teacher Management - '.env('APP_NAME') ;
         return view('lms.admin.teacher.index', ['title'=> $title]);
+
+        } else{
+            echo  'unauthorized';
+        }
 
     }
 
