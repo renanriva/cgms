@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Course;
 use App\Registration;
 use App\Teacher;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -231,6 +232,32 @@ class CourseController extends Controller
             'registration' => $registration,
             'course' => $teacher->getRequestedCourse($course_id)->first()]);
 
+    }
+
+    /**
+     * @param Request $request
+     * @param         $registrationId
+     * @param         $part
+     * @return array
+     */
+    public function updateRegistration(Request $request, $registrationId, $part)
+    {
+
+        $post = $request->all();
+
+        $registration = Registration::find($registrationId);
+
+        if ($part == 'accept'){
+
+            $registration->accept_tc = $post['accept_tc'] == true ? REGISTRATION_ACCEPT_TERMS_AND_CONDITION : REGISTRATION_ACCEPT_TERMS_AND_CONDITION_FALSE;
+
+            $current_time = Carbon::now()->toDateTimeString();
+            $registration->tc_accept_time = $current_time;
+            $registration->save();
+
+        }
+
+        return response()->json(['registration' => $registration]);
     }
 
 }

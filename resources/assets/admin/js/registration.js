@@ -12,15 +12,36 @@ $(document).ready(function () {
         var registrationId = $('#registration_id').val();
 
 
-        $('.btn-accept-tc').click(function () {
+        $('#page_register .btn-accept-tc').click(function () {
 
-            console.log('accept terms and condition');
-        //    @todo update the accept tc & tc time
+            var data = {
+                accept_tc : $('#chk-accept-registration-tc').is(':checked'),
+            };
 
+            updateRegistration(registrationId, data, 'accept');
 
         });
 
 
+        function updateRegistration(registrationId, data, part) {
+
+            var obj = {
+                url: '/admin/course/register/'+registrationId+'/update/'+part,
+                method: 'POST',
+                data: data,
+            };
+            $.ajax(obj)
+            .done(function (response, textStatus, jqXhr) {
+                $('.js-accept-time').html(response.registration.tc_accept_time);
+
+            }).fail(function (jqXhr, textStatus, errorThrown) {
+                console.log(' fail registration ' , jqXhr);
+
+                alert('Error : '+errorThrown);
+
+            });
+
+        }
 
 
 
