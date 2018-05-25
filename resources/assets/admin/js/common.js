@@ -21,7 +21,7 @@ $(document).ready(function () {
             selectCanton.append('<option>Loading...</option>');
 
             var provinceId = $(selectProvince).find('option:selected').val();
-            console.log('selected id ', provinceId);
+
 
             var ajaxObj = {
                 method: 'get',

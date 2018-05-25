@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\RegistrationApproved;
+use App\Listeners\GenerateInspectionCertificate;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -13,8 +15,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\Event' => [
-            'App\Listeners\EventListener',
+        RegistrationApproved::class => [
+            GenerateInspectionCertificate::class,
         ],
     ];
 

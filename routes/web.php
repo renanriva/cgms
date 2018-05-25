@@ -36,12 +36,6 @@ Route::middleware(['auth'])->group(function (){
 
             Route::post('/ajax/table', 'TeacherController@getTableData');
             Route::get('/profile/{id}', 'TeacherController@showProfile');
-
-//            Route::get('/ajax/{provinceId}', 'TeacherController@getByProvinceId');
-//            Route::post('/canton/{id}/ajax', 'TeacherController@update');
-//            Route::delete('/{id}/ajax', 'TeacherController@delete');
-//            Route::post('/ajax', 'TeacherController@store');
-
             Route::post('/upload', 'TeacherController@upload');
 
 
@@ -58,9 +52,30 @@ Route::middleware(['auth'])->group(function (){
             Route::delete('/ajax/{id}', 'CourseController@delete');
             Route::post('/upload/inspection-form', 'CourseController@uploadInspection');
 
+            Route::get('/search/ajax', 'CourseController@getSearch');
+
+//            @todo move those to Registration Controller
             Route::post('/register/{id}', 'CourseController@getRegister');
             Route::post('/register/{id}/upload/inspection', 'CourseController@uploadStudentInspection');
-            Route::post('/register/{id}/update/{part}', 'CourseController@updateRegistration');
+
+
+        });
+
+        Route::prefix('registration')->group(function(){
+
+            // by admin
+            Route::get('/', 'RegistrationController@index');
+            Route::get('/pending', 'RegistrationController@getPending');
+            Route::post('/approve/{id}', 'RegistrationController@postApprove');
+
+            Route::post('/{id}/update/{part}', 'RegistrationController@updateRegistration');
+
+
+            //by teacher
+//            Route::post('/register/{id}', 'CourseController@getRegister');
+//            Route::post('/register/{id}/upload/inspection', 'CourseController@uploadStudentInspection');
+//            Route::post('/register/{id}/update/{part}', 'CourseController@updateRegistration');
+
 
 
         });

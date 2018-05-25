@@ -66,7 +66,7 @@ $(document).ready(function () {
             template: 'qq-registration-release-file-template-manual-trigger',
             multiple: false,
             request: {
-                endpoint: '/admin/course/register/'+registrationId+'/upload/inspection',
+                endpoint: '/admin/registration/'+registrationId+'/upload/inspection',
                 params: {
                     teacher_id : function () {
                         return $('#teacher_social_id').val();

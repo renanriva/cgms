@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\RegistrationApproved;
+use App\Registration;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Province;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 use App\Canton;
 
@@ -17,8 +21,64 @@ class RegistrationController extends Controller
     public function index(){
 
         $title = 'Registration Management - '.env('APP_NAME') ;
-        return view('lms.admin.university.index', ['title'=> $title]);
 
+        return view('lms.admin.university.index',
+                ['title'=> $title]);
+
+    }
+
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getPending(){
+
+        $title = 'Pending Registration Management - '.env('APP_NAME') ;
+        $registrations = Registration::all();
+
+        return view('lms.admin.registration.pending',
+            ['title'=> $title, 'registrations' => $registrations]);
+
+    }
+
+    /**
+     * @param Request $request
+     * @param         $registrationId
+     * @param         $part
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateRegistration(Request $request, $registrationId, $part)
+    {
+
+        $post = $request->all();
+
+        $registration = Registration::find($registrationId);
+        $current_time = Carbon::now()->toDateTimeString();
+
+        if ($part == 'accept'){
+
+            $registration->accept_tc = $post['accept_tc'] == true ? REGISTRATION_ACCEPT_TERMS_AND_CONDITION : REGISTRATION_ACCEPT_TERMS_AND_CONDITION_FALSE;
+
+            $registration->tc_accept_time = $current_time;
+            $registration->status = REGISTRATION_STATUS_ACCEPT;
+            $registration->save();
+
+        } elseif( $part == 'approve'){
+
+            $registration->is_approved= REGISTRATION_IS_APPROVED;
+            $registration->approval_time= $current_time;
+            $registration->approved_by= Auth::user()->id;
+            $registration->status = REGISTRATION_STATUS_COMPLETE;
+
+            $registration->save();
+
+//            @TODO generate inspection certificate and update status
+            event(new RegistrationApproved($registration));
+
+        }
+
+        return response()->json(['registration' => $registration,
+            'adminUser' => Auth::user()->name]);
     }
 
 
@@ -29,25 +89,6 @@ class RegistrationController extends Controller
      */
     public function getTableData()
     {
-
-        $cantons = Canton::select([
-            'cantons.id as id',
-            'provinces.id as province_id',
-            'provinces.name as province_name',
-            'cantons.name as canton_name',
-            'cantons.capital as canton_capital',
-            'cantons.dist_name as canton_dist_name',
-            'cantons.dist_code as canton_dist_code',
-            'cantons.zone as canton_zone',
-            ])
-            ->join('provinces','cantons.province_id', '=' ,'provinces.id');
-
-        return Datatables::of($cantons)
-            ->editColumn('action', 'lms.admin.location.canton.action')
-            ->setRowId(function ($cantons){
-                return 'canton_id_'.$cantons->id;
-            })
-            ->make(true);
 
     }
 
@@ -104,29 +145,5 @@ class RegistrationController extends Controller
 
     }
 
-    /**
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getByProvinceId($id){
-
-        $cantons = Canton::where('province_id', $id)->get();
-
-        return response()->json(['cantons'=> $cantons])->setStatusCode(200);
-    }
-
-    /**
-     * @param $id
-     * @return $this
-     */
-    public function delete($id){
-
-        $canton = Canton::findOrFail($id);
-
-        $canton->delete();
-
-        return response()->json()->setStatusCode(204);
-
-    }
 
 }
