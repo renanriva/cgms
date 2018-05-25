@@ -58,17 +58,11 @@ class Teacher extends Model
         return $this->belongsToMany(Course::class, 'course_requests',
             'teacher_id',
             'course_id'
-            )->withPivot('teacher_id', 'course_id', 'course_code', 'teacher_social_id', 'status')
+            )
+            ->where('status', 1)
+            ->withPivot('teacher_id', 'course_id', 'course_code', 'teacher_social_id', 'status')
             ->as('allUpcomingCourses')
             ->withTimestamps();
-
-
-//        return $this->belongsToMany('App\Course', 'course_requests',
-//            'teacher_id',
-//            'course_id')
-//            ->withPivot('teacher_id', 'course_id', 'course_code', 'teacher_social_id', 'status')
-//            ->as('requestedCourse')
-//            ->withTimestamps();
 
     }
 
@@ -87,14 +81,6 @@ class Teacher extends Model
             ->withPivot('teacher_id', 'course_id', 'course_code', 'teacher_social_id', 'status')
             ->as('getRequestedCourse')
             ->withTimestamps();
-
-
-//        return $this->belongsToMany('App\Course', 'course_requests',
-//            'teacher_id',
-//            'course_id')
-//            ->withPivot('teacher_id', 'course_id', 'course_code', 'teacher_social_id', 'status')
-//            ->as('requestedCourse')
-//            ->withTimestamps();
 
     }
 

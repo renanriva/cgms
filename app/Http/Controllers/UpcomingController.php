@@ -31,7 +31,7 @@ class UpcomingController extends Controller
 
         $user = Auth::user();
 
-        ;
+//        dd($user->teacher->social_id);
         return view('lms.admin.course.upcoming', ['title'=> $title,
             'courses' => $user->teacher->allUpcomingCourses]);
 
