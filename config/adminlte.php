@@ -142,6 +142,24 @@ return [
 
         ],
         [
+            'text'          => 'lms.menu.registration.title',
+            'icon'          => 'folder',
+            'submenu'       => [
+                [
+                    'text'      => 'lms.menu.registration.all',
+                    'url'           => 'admin/registration',
+                    'can'           => 'admin-only',
+                    'icon'          => 'folder-open'
+                ],
+                [
+                    'text'      => 'lms.menu.registration.approval_pending',
+                    'url'           => 'admin/registration/pending',
+                    'can'           => 'admin-only',
+                    'icon'          => 'shield'
+                ],
+            ]
+        ],
+        [
             'text'          => 'lms.menu.university',
             'url'           => 'admin/university',
             'icon'          => 'building',

@@ -33,5 +33,28 @@ class Registration extends Model
     ];
 
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function approvedBy(){
+
+        return $this->belongsTo('App\User', 'approved_by', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function student(){
+        return $this->belongsTo('App\Teacher', 'teacher_id', 'id');
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function course(){
+
+        return $this->belongsTo('App\Course', 'course_id', 'id');
+    }
 
 }

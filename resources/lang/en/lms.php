@@ -19,6 +19,11 @@
                 'my_courses'        => 'My Courses',
 
             ],
+            'registration'        => [
+                'title'             => 'Registration',
+                'all'               => 'All Registrations',
+                'approval_pending'  => 'Approval Pending',
+            ],
             'university'        => 'University',
             'profile'           => 'My Profile',
             'settings'          => [
@@ -175,6 +180,50 @@
                     'page_header'=> 'Register Course',
                     'table_header' => 'Register Course'
                 ],
+            ],
+            'registration' => [
+                'all' => [
+                    'index' => [
+                        'page_header'=> 'Browse Registrations',
+                        'table_header' => 'Registrations List'
+                    ],
+                    'table' => [
+                        'id'                => 'Id',
+                        'security_id'       => 'Social Id',
+                        'name'              => 'Name',
+                        'email'             => 'Email',
+                        'moodle_id'          => 'Id Moodle',
+                        'university'        => 'University',
+                        'function'          => 'Function',
+                        'location'          => 'Address',
+                        'province'          => 'Province',
+                        'canton'            => 'Canton',
+                        'district'          => 'District',
+                        'action'            => 'Action'
+                    ]
+                ],
+                'pending' => [
+                    'index' => [
+                        'page_header'=> 'Search Course',
+                        'table_header' => 'Pending Registrations',
+
+                    ],
+                    'table' => [
+                        'course_code'       => 'Course Code',
+                        'short_name'        => 'Short Name',
+                        'institute'         => 'Institute',
+                        'start_date'        => 'Start Date',
+                        'end_date'          => 'End Date',
+                        'security_id'       => 'Social Id',
+                        'name'              => 'Name',
+                        'email'             => 'Email',
+                        'terms_condition'   => 'Terms & Condition',
+                        'record_uploaded'   => 'Record Uploaded',
+                        'is_approved'       => 'Approved',
+                        'approved_by'       => 'Approved By',
+                        'action'            => 'Action'
+                    ]
+                ]
             ],
             'university' => [
                 'index' => [
