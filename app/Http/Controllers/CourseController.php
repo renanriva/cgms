@@ -191,7 +191,7 @@ class CourseController extends Controller
 
         $title = 'Register - '.env('APP_NAME') ;
 
-        $teacher = Teacher::find(Auth::user()->id);
+        $teacher = Auth::user()->teacher;
 
         /**
          * find registration with course_id and teacher id
@@ -284,6 +284,14 @@ class CourseController extends Controller
         $registration->status = REGISTRATION_STATUS_SIGNED;
         $registration->save();
 
+
+        /**
+         * Update the course request status
+         */
+        DB::table('course_requests')
+            ->where('course_id', $registration->course_id)
+            ->where('teacher_id', $registration->teacher_id)
+            ->update(['status' => COURSE_REQUEST_ACCEPTED]);
 
         return response()->json(['path'=> $path, 'success' => true]);
 
