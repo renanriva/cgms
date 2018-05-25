@@ -53599,16 +53599,33 @@ $(document).ready(function () {
     var pageCourseLength = $('#page_register').length;
 
     if (pageCourseLength > 0) {
+        var updateRegistration = function updateRegistration(registrationId, data, part) {
+
+            var obj = {
+                url: '/admin/course/register/' + registrationId + '/update/' + part,
+                method: 'POST',
+                data: data
+            };
+            $.ajax(obj).done(function (response, textStatus, jqXhr) {
+                $('.js-accept-time').html(response.registration.tc_accept_time);
+            }).fail(function (jqXhr, textStatus, errorThrown) {
+                console.log(' fail registration ', jqXhr);
+
+                alert('Error : ' + errorThrown);
+            });
+        };
 
         console.log('register');
 
         var registrationId = $('#registration_id').val();
 
-        $('.btn-accept-tc').click(function () {
+        $('#page_register .btn-accept-tc').click(function () {
 
-            console.log('accept terms and condition');
-            //    @todo update the accept tc & tc time
+            var data = {
+                accept_tc: $('#chk-accept-registration-tc').is(':checked')
+            };
 
+            updateRegistration(registrationId, data, 'accept');
         });
 
         $('.next').click(function () {
@@ -53624,28 +53641,28 @@ $(document).ready(function () {
             $('#myWizard a:first').tab('show');
         });
 
-        // upload photo
+        // upload signed registration file
         $('#registration_release_file_upload').fineUploader({
             template: 'qq-registration-release-file-template-manual-trigger',
             multiple: false,
             request: {
-                endpoint: '/admin/course/upload/request-list',
+                endpoint: '/admin/course/register/' + registrationId + '/upload/inspection',
+                params: {
+                    teacher_id: function teacher_id() {
+                        return $('#teacher_social_id').val();
+                    }
+                },
                 customHeaders: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             },
             validation: {
                 itemLimit: 1,
-                allowedExtensions: ['csv', 'xls', 'xlsx']
+                allowedExtensions: ['doc', 'docx', 'pdf']
             },
             callbacks: {
                 onSubmit: function onSubmit(id, name) {},
-                onComplete: function onComplete(id, name, response, xhr) {
-
-                    if (response.error === undefined) {
-                        modal.modal('hide');
-                    }
-                },
+                onComplete: function onComplete(id, name, response, xhr) {},
                 onStatusChange: function onStatusChange(id, oldStatus, newStatus) {},
                 onCancel: function onCancel(id, name) {}
             },
@@ -53653,8 +53670,8 @@ $(document).ready(function () {
         });
 
         $('#btn-upload-registration-release-file').click(function () {
-            console.log('course-request-list-uploader-manual-trigger');
-            $('#qq-registration-release-file-template-manual-trigger').fineUploader('uploadStoredFiles');
+            console.log('#btn-upload-registration-release-file');
+            $('#registration_release_file_upload').fineUploader('uploadStoredFiles');
         });
     } //end page
 });

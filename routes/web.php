@@ -23,6 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 //    Route::get('/admin/location/ajax/province', 'ProvinceController@getTableData');
 
 
+
 Route::middleware(['auth'])->group(function (){
 
 
@@ -56,7 +57,10 @@ Route::middleware(['auth'])->group(function (){
             Route::post('/ajax/{id}', 'CourseController@update');
             Route::delete('/ajax/{id}', 'CourseController@delete');
             Route::post('/upload/inspection-form', 'CourseController@uploadInspection');
+
             Route::post('/register/{id}', 'CourseController@getRegister');
+            Route::post('/register/{id}/upload/inspection', 'CourseController@uploadStudentInspection');
+            Route::post('/register/{id}/update/{part}', 'CourseController@updateRegistration');
 
 
         });

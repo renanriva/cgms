@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Course;
 use App\Registration;
 use App\Teacher;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -230,6 +231,61 @@ class CourseController extends Controller
             'teacher' => $teacher,
             'registration' => $registration,
             'course' => $teacher->getRequestedCourse($course_id)->first()]);
+
+    }
+
+    /**
+     * @param Request $request
+     * @param         $registrationId
+     * @param         $part
+     * @return array
+     */
+    public function updateRegistration(Request $request, $registrationId, $part)
+    {
+
+        $post = $request->all();
+
+        $registration = Registration::find($registrationId);
+
+        if ($part == 'accept'){
+
+            $registration->accept_tc = $post['accept_tc'] == true ? REGISTRATION_ACCEPT_TERMS_AND_CONDITION : REGISTRATION_ACCEPT_TERMS_AND_CONDITION_FALSE;
+
+            $current_time = Carbon::now()->toDateTimeString();
+            $registration->tc_accept_time = $current_time;
+            $registration->status = REGISTRATION_STATUS_ACCEPT;
+            $registration->save();
+
+        }
+
+        return response()->json(['registration' => $registration]);
+    }
+
+    /**
+     * @param Request $request
+     * @param         $registrationId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function uploadStudentInspection(Request $request, $registrationId){
+
+        $cloud = Storage::disk('public');
+
+        $filename = "course_".$registrationId.'_teacher_'.$request->input('teacher_id').'_inspection_signed_certificate.'.$request->file('qqfile')->extension();
+        $path = $cloud->putFileAs('course/signed_certificates', $request->file('qqfile'), $filename);
+
+        $path = storage_path('app/'.$path);
+
+
+        $registration = Registration::find($registrationId);
+
+        $current_time = Carbon::now()->toDateTimeString();
+        $registration->inspection_certificate_signed = $path;
+        $registration->inspection_certificate_upload_time = $current_time;
+        $registration->status = REGISTRATION_STATUS_SIGNED;
+        $registration->save();
+
+
+        return response()->json(['path'=> $path, 'success' => true]);
 
     }
 
