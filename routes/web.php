@@ -65,6 +65,7 @@ Route::middleware(['auth'])->group(function (){
 
             Route::get('/', 'UpcomingController@index');
             Route::get('/ajax/table', 'UpcomingController@getTableData');
+            Route::post('/upload', 'UpcomingController@uploadCourseRequest');
 
         });
 

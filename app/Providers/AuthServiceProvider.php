@@ -43,9 +43,19 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
 
-        Gate::define('browse-upcoming-course', function ($user) {
+        Gate::define('teacher-only', function ($user) {
 
             if ($user->role == 'teacher'){
+                return true;
+            }
+
+            return false;
+
+        });
+
+        Gate::define('university-only', function ($user) {
+
+            if ($user->role == 'university'){
                 return true;
             }
 

@@ -21,6 +21,31 @@
                 </div>
                 <div class="box-body">
 
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">About Me</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <strong><i class="fa fa-man margin-r-5"></i> Name</strong>
+
+                            <p class="">{{ Auth::user()->name }}</p>
+
+                            <hr>
+
+                            <strong><i class="fa fa-map-marker margin-r-5"></i> Social Id</strong>
+
+                            <p class="">{{ Auth::user()->id }}</p>
+
+
+
+                            {{--<p>{{ $teacher->work_area }}, {{ $teacher->university_name }}</p>--}}
+
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+
+
                     <table class="table table-bordered table-responsive" id="upcoming-course">
                         <thead>
                             <tr>
@@ -40,7 +65,9 @@
                                 <tr>
                                     <td>{{ $course->course_code }}</td>
                                     <td>{{ $course->course_type }}</td>
-                                    <td>{{ $course->short_name }}</td>
+                                    <td>{{ $course->short_name }} <br/>
+                                    {{--{{ var_dump($course->allUpcomingCourses->status) }}--}}
+                                    </td>
                                     <td>{{ $course->university->name }}</td>
                                     <td>{{ $course->modality }}</td>
                                     <td>{{ date('d M Y', strtotime($course->start_date)) }}</td>

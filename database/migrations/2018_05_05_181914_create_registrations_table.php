@@ -18,14 +18,11 @@ class CreateRegistrationsTable extends Migration
             $table->engine = 'InnoDB';
 
             $table->bigIncrements('id');
-            $table->date('reg_date');
+            $table->date('reg_date')->nullable();
             $table->bigInteger('teacher_id')->unsigned();
+
             $table->bigInteger('course_id')->unsigned();
-            $table->string('reason')->nullabee();
-            $table->string('action_type')->nullabee();
-            $table->string('action_explanation')->nullabee();
-            $table->string('speciality')->nullabee();
-            $table->tinyInteger('is_approved')->default(REGISTRATION_IS_NOT_APPROVED);
+
 
             $table->string('user_social_id')->nullable();
             $table->string('user_first_name')->nullable();
@@ -35,13 +32,21 @@ class CreateRegistrationsTable extends Migration
             $table->tinyInteger('accept_tc')->nullable(REGISTRATION_NOT_ACCEPTED_TERMS_AND_CONDITION);
             $table->timestamp('tc_accept_time')->nullable();
 
-
             $table->string('inspection_certificate')->nullable();
             $table->string('inspection_certificate_signed')->nullable();
             $table->timestamp('inspection_certificate_upload_time')->nullable();
 
             $table->tinyInteger('registry_is_generated')->default(REGISTRATION_REGISTRY_IS_NOT_GENERATED);
 
+            $table->tinyInteger('status')->default(REGISTRATION_STATUS_INCOMPLETE);
+            $table->tinyInteger('is_approved')->default(REGISTRATION_IS_NOT_APPROVED);
+            $table->timestamp('approval_time')->nullable();
+
+            $table->bigInteger('approved_by')->unsigned()->nullable();
+
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
+            $table->foreign('approved_by')->references('id')->on('users')->onDelete('cascade');
 
 
             $table->timestamps();

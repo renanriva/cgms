@@ -469,7 +469,7 @@ $(document).ready(function () {
             template: 'qq-course-request-template-manual-trigger',
             multiple: false,
             request: {
-                endpoint: '/admin/course/upload/request-list',
+                endpoint: '/admin/upcoming-courses/upload',
                 customHeaders: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }

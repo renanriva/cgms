@@ -12,10 +12,15 @@
             'main_nav'          => 'MAIN NAVIGATION',
             'account_settings'  => 'ACCOUNT SETTINGS',
             'teachers'          => 'Teachers',
-            'course'            => 'Courses',
+            'course'            => [
+                'title'             => 'Courses',
+                'all'               => 'All Courses',
+                'upcoming_courses'  => 'Upcoming Courses',
+                'my_courses'        => 'My Courses',
+
+            ],
             'university'        => 'University',
             'profile'           => 'My Profile',
-            'upcoming_courses'  => 'Upcoming Courses',
             'settings'          => [
                                 'title' => 'Settings',
                                 'user_management' => 'User Management',

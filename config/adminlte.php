@@ -117,17 +117,29 @@ return [
 
         ],
         [
-            'text'          => 'lms.menu.course',
-            'url'           => 'admin/course',
+            'text'          => 'lms.menu.course.title',
             'icon'          => 'book',
-            'can'           => 'admin-only',
+            'submenu'       => [
+                [
+                    'text'      => 'lms.menu.course.all',
+                    'url'           => 'admin/course',
+                    'can'           => 'admin-only',
+                ],
+                [
+                    'text'      => 'lms.menu.course.my_courses',
+                    'url'           => 'admin/my-course',
+                    'can'           => 'teacher-only',
+                ],
+                [
+                    'text'      => 'lms.menu.course.upcoming_courses',
+                    'url'           => 'admin/upcoming-courses',
+                    'icon'          => 'list-ol',
+                    'can'           => 'teacher-only',
+                ]
 
-        ],
-        [
-            'text'          => 'lms.menu.upcoming_courses',
-            'url'           => 'admin/upcoming-courses',
-            'icon'          => 'list-ol',
-            'can'           => 'browse-upcoming-course',
+
+            ],
+
         ],
         [
             'text'          => 'lms.menu.university',

@@ -42,6 +42,7 @@ mix.autoload({
             'resources/assets/admin/js/teacher.js',
             'resources/assets/admin/js/university.js',
             'resources/assets/admin/js/upcoming.js',
+            'resources/assets/admin/js/registration.js',
             'resources/assets/admin/js/common.js'
         ],
         'public/admin/js/app.js')

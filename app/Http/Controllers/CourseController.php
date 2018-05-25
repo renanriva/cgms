@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Registration;
 use App\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -179,76 +180,6 @@ class CourseController extends Controller
 
     }
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse|string
-     */
-    public function uploadCourseRequest(Request $request) {
-
-        $cloud = Storage::disk('public');
-        $path = $cloud->putFile('course/request', $request->file('qqfile'));
-
-        $path = storage_path('app/public/'.$path);
-
-        try {
-            $rows = [];
-
-            Excel::load($path, function ($reader) use(&$rows){
-
-                foreach ($reader->toArray() as $row) {
-
-
-                    $teacher['course_id']       = $this->getCourseId($row['course_code']);
-                    $teacher['course_code']     = $row['course_code'];
-                    $teacher['teacher_id']      = $this->getTeacherId($row['teacher_social_id']);
-                    $teacher['teacher_social_id'] = $row['teacher_social_id'];
-                    $teacher['created_by']      = Auth::user()->id;
-                    $teacher['status']          = COURSE_REQUEST_CREATED;
-
-                    array_push($rows, $teacher);
-
-                }
-
-            });
-
-            // batch insert
-            DB::table('course_requests')->insert($rows);
-
-            // @todo after adding all items into an array, add the array to database in batch
-            return response()->json(['rows' => $rows, 'success' => true] );
-
-        } catch (\Exception $e) {
-
-            return response()->json(['error' => $e->getMessage(), 'file' => $path]);
-        }
-
-    }
-
-    /**
-     * @param $social_id
-     * @return mixed
-     */
-    private function getTeacherId($social_id) {
-
-
-        $teacher = Teacher::where('social_id', $social_id)->first();
-
-        return $teacher->id;
-
-    }
-
-    /**
-     * @param $course_code
-     * @return mixed
-     */
-    private function getCourseId($course_code) {
-
-        $course = Course::where('course_code', $course_code)->first();
-
-        return $course->id;
-
-    }
-
 
     /**
      * @param Request $request
@@ -258,7 +189,47 @@ class CourseController extends Controller
     public function getRegister(Request $request, $course_id){
 
         $title = 'Register - '.env('APP_NAME') ;
-        return view('lms.admin.course.register', ['title'=> $title]);
+
+        $teacher = Teacher::find(Auth::user()->id);
+
+        /**
+         * find registration with course_id and teacher id
+         *
+         * if found( return registration
+         * if not found, create registration and return code
+         */
+
+        $registration = Registration::where('teacher_id', $teacher->id)
+            ->where('course_id', $course_id)
+            ->first();
+
+
+        if ($registration == null){
+
+            $registration = new Registration();
+            $registration->course_id = $course_id;
+            $registration->teacher_id = $teacher->id;
+            $registration->user_social_id = $teacher->social_id;
+            $registration->user_first_name = $teacher->user->name;
+            $registration->inspection_certificate = '';
+            $registration->inspection_certificate_signed = '';
+            $registration->reg_date     = null;
+            $registration->accept_tc     = REGISTRATION_ACCEPT_TERMS_AND_CONDITION_FALSE;
+            $registration->registry_is_generated = REGISTRATION_REGISTRY_IS_NOT_GENERATED;
+            $registration->registry_is_generated = REGISTRATION_REGISTRY_IS_NOT_GENERATED;
+
+            $registration->status = REGISTRATION_STATUS_STARTED;
+            $registration->is_approved = REGISTRATION_IS_NOT_APPROVED;
+            $registration->is_approved = REGISTRATION_IS_NOT_APPROVED;
+
+            $registration->save();
+        }
+
+
+        return view('lms.admin.course.register', ['title'=> $title,
+            'teacher' => $teacher,
+            'registration' => $registration,
+            'course' => $teacher->getRequestedCourse($course_id)->first()]);
 
     }
 
