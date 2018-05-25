@@ -13,6 +13,38 @@
 
         <div class="col-lg-6 col-md-6 col-sm-12">
 
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Course Details</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    <p class=""><strong><i class="fa fa-man margin-r-5"></i> Short Name: </strong> {{ $course->short_name }}</p>
+
+                    <hr>
+                    <p class=""><strong><i class="fa fa-map-marker margin-r-5"></i> Course Code</strong> {{ $course->course_code }}</p>
+
+                    <hr>
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>Hours</b> <a class="pull-right">{{ $course->hours }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Start Date</b> <a class="pull-right">{{ $course->start_date }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>End Date</b> <a class="pull-right">{{ $course->end_date }}</a>
+                        </li>
+                    </ul>
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-12">
 
             <div class="box box-primary">
                 <div class="box-header with-border">
@@ -42,44 +74,9 @@
 
         </div>
 
-        <div class="col-lg-6 col-md-6 col-sm-12">
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Course Details</h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-
-                    <p class=""><strong><i class="fa fa-man margin-r-5"></i> Short Name: </strong> {{ $course->short_name }}</p>
-
-                    <hr>
-                    <p class=""><strong><i class="fa fa-map-marker margin-r-5"></i> Course Code</strong> {{ $course->course_code }}</p>
-
-                    <hr>
-                    <ul class="list-group list-group-unbordered">
-                        <li class="list-group-item">
-                            <b>Hours</b> <a class="pull-right">{{ $course->hours }}</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>Start Date</b> <a class="pull-right">{{ $course->start_date }}</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>End Date</b> <a class="pull-right">{{ $course->end_date }}</a>
-                        </li>
-                    </ul>
-
-                </div>
-                <!-- /.box-body -->
-            </div>
-        </div>
-
         <div class="col-lg-8 col-md-12">
 
             <div class="box box-info">
-
-                {{--<div class="box-header with-border">--}}
-                    {{--<div class="box-title">Register</div>--}}
-                {{--</div>--}}
 
                 <div class="box-body">
 
@@ -236,6 +233,7 @@
 
 
                     <input type="hidden" id="registration_id" value="{{ $registration->id }}">
+                    <input type="hidden" id="teacher_social_id" value="{{ $teacher->social_id }}">
 
                 </div>
             </div>

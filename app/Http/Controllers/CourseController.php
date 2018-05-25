@@ -260,4 +260,31 @@ class CourseController extends Controller
         return response()->json(['registration' => $registration]);
     }
 
+    /**
+     * @param Request $request
+     * @param         $registrationId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function uploadStudentInspection(Request $request, $registrationId){
+
+        $cloud = Storage::disk('public');
+
+        $filename = "course_".$registrationId.'_teacher_'.$request->input('teacher_id').'_'.'_inspection_signed_certificate.'.$request->file('qqfile')->extension();
+        $path = $cloud->putFileAs('course/signed_certificates', $request->file('qqfile'), $filename);
+
+        $path = storage_path('app/'.$path);
+
+
+        $registration = Registration::find($registrationId);
+
+        $current_time = Carbon::now()->toDateTimeString();
+        $registration->inspection_certificate_signed = $path;
+        $registration->inspection_certificate_upload_time = $current_time;
+        $registration->save();
+
+
+        return response()->json(['path'=> $path, 'success' => true]);
+
+    }
+
 }
