@@ -80,15 +80,20 @@ class UpcomingController extends Controller
 
                 foreach ($reader->toArray() as $row) {
 
+                    if (strlen($row['teacher_social_id']) > 0 && strlen($row['course_code']) >0){
+//                    var_dump($this->getCourseId($row['course_code']));
+//                    var_dump($this->getTeacherId($row['teacher_social_id']));
 
                     $teacher['course_id']       = $this->getCourseId($row['course_code']);
                     $teacher['course_code']     = $row['course_code'];
                     $teacher['teacher_id']      = $this->getTeacherId($row['teacher_social_id']);
                     $teacher['teacher_social_id'] = $row['teacher_social_id'];
                     $teacher['created_by']      = Auth::user()->id;
-                    $teacher['status']          = COURSE_REQUEST_CREATED;
+                    $teacher['status']          = $row['status'];
+
 
                     array_push($rows, $teacher);
+                    }
 
                 }
 
@@ -102,7 +107,8 @@ class UpcomingController extends Controller
 
         } catch (\Exception $e) {
 
-            return response()->json(['error' => $e->getMessage(), 'file' => $path]);
+            return response()->json(['error' => $e->getMessage(), 'file' => $path,
+                'user' => Auth::user()->id]);
         }
 
     }

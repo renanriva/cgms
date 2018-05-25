@@ -140,7 +140,7 @@ return [
 
             ],
 
-x        ],
+        ],
         [
             'text'          => 'lms.menu.university',
             'url'           => 'admin/university',

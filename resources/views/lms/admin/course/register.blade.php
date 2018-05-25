@@ -73,13 +73,13 @@
             </div>
         </div>
 
-        <div class="col-lg-12 col-md-12">
+        <div class="col-lg-8 col-md-12">
 
             <div class="box box-info">
 
-                <div class="box-header with-border">
-                    <div class="box-title">Register</div>
-                </div>
+                {{--<div class="box-header with-border">--}}
+                    {{--<div class="box-title">Register</div>--}}
+                {{--</div>--}}
 
                 <div class="box-body">
 
@@ -87,12 +87,16 @@
                         <div class="navbar">
                             <div class="navbar-inner">
                                 <ul class="nav nav-pills">
-                                    <li class="active"><a href="#step1" data-toggle="tab">Video</a></li>
-                                    <li><a href="#step2" data-toggle="tab">Description</a></li>
-                                    <li><a href="#step3" data-toggle="tab">Terms & Condition</a></li>
-                                    <li><a href="#step4" data-toggle="tab">Data Update</a></li>
-                                    <li><a href="#step5" data-toggle="tab">Registry</a></li>
-                                    <li><a href="#step6" data-toggle="tab">Registration Certificate</a></li>
+                                    <li class="active"><a href="#step1" data-toggle="tab">1. Video</a></li>
+                                    <li><a href="#step2" data-toggle="tab">2. Description</a></li>
+                                    <li><a href="#step3" data-toggle="tab">3. Terms & Condition</a></li>
+                                    <li><a href="#step4" data-toggle="tab">4. Data Update</a></li>
+                                    <li><a href="#step5" data-toggle="tab">5. Registry</a></li>
+                                    <li><a href="#step6" data-toggle="tab">6. Registration Certificate</a></li>
+
+                                    <li class="pull-right"><a href="javascript:void(0)"
+                                                              class="btn btn-success btn-submit-registration"
+                                        >Submit</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -102,19 +106,24 @@
                                 <div class="box-layout">
 
                                     <p>{{ $course->video_text }}</p>
+                                    <div class="next-layout">
+                                        <a class="btn btn-default btn-flat next" href="javascript:void(0)">Next</a>
+                                    </div>
                                 </div>
 
                                 {{--<hr/>--}}
-                                {{--<a class="btn btn-default next" href="#">Continue</a>--}}
                             </div>
                             <div class="tab-pane" id="step2">
                                 <h3>Description</h3>
                                 <div class="box-layout">
                                     <p>{{ $course->description }}</p>
-                                </div>
-                                <hr/>
 
-                                {{--<a class="btn btn-default next" href="#">Continue</a>--}}
+
+                                    <div class="next-layout">
+                                        <a class="btn btn-default btn-flat next" href="javascript:void(0)">Next</a>
+                                    </div>
+
+                                </div>
                             </div>
                             <div class="tab-pane" id="step3">
                                 <h3>Terms and Conditions</h3>
@@ -122,16 +131,22 @@
                                     <p class="">{{ $course->terms_and_conditions }}</p>
                                     <div class="form-group">
                                         <div class="checkbox">
-                                            <label>
+                                            <label class="btn-accept-tc">
                                                 <input type="checkbox"> Accept
                                             </label><br/>
                                             <label class="small">{{ date('m/d/Y h:i a', strtotime('now')) }}</label>
                                         </div>
 
+                                        <input type="hidden" id="teacher_id" value="{{ $teacher->user->id }}">
+                                        <input type="hidden" id="course_id" value="{{ $teacher->user->id }}">
+
                                     </div>
+
+                                    <div class="next-layout">
+                                        <a class="btn btn-default btn-flat next" href="javascript:void(0)">Next</a>
+                                    </div>
+
                                 </div>
-                                {{--<hr/>--}}
-                                {{--<a class="btn btn-default next" href="#">Continue</a>--}}
                             </div>
                             <div class="tab-pane" id="step4">
                                 <h3>Data Update</h3>
@@ -173,10 +188,10 @@
                                         </tbody>
                                     </table>
 
+                                    <div class="next-layout">
+                                        <a class="btn btn-default btn-flat next" href="javascript:void(0)">Next</a>
+                                    </div>
                                 </div>
-
-                                <hr/>
-                                {{--<a class="btn btn-default next" href="#">Continue</a>--}}
                             </div>
                             <div class="tab-pane" id="step5">
                                 <h3>Registration Inspection</h3>
@@ -190,24 +205,32 @@
 
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-12">
-                                            <h3><i class="fa fa-download"></i> Download file from here</h3>
+                                            <h3><i class="fa fa-download"></i> Download Letter of Registration</h3>
+                                            <hr/>
+                                            <p><a class="btn btn-link" href="#">01332423423.pdf</a>
+                                            <label><i class="fa fa-check-square-o"></i></label></p>
 
                                         </div>
                                     </div>
-
-
+                                    <div class="next-layout">
+                                        <a class="btn btn-default btn-flat next" href="javascript:void(0)">Next</a>
+                                    </div>
                                 </div>
-
-                                {{--<hr/>--}}
-                                {{--<a class="btn btn-default next" href="#">Continue</a>--}}
                             </div>
                             <div class="tab-pane" id="step6">
-                                <p>This is the last step. You're done.</p>
-                                {{--<hr/>--}}
-                                {{--<a class="btn btn-success first" href="#">Start over</a>--}}
+                                <div class="box-layout">
+                                    <p>This is the last step. You're done.</p>
+                                    <div class="next-layout">
+                                        <a class="btn btn-success first" href="javascript:void(0)">Start over</a>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
+
+
+                    <input type="hidden" id="registration_id" value="{{ $registration->id }}">
 
                 </div>
             </div>
@@ -230,14 +253,28 @@
             -moz-border-radius: 0;
             min-height: 0;
         }
-        .tab-content{
+        #myWizard h3{
+            margin-top: 10px;
+        }
+        #myWizard .tab-content{
             padding:10px 20px;
             border: 1px solid #CCCCCC;
+            min-height: 300px;
+            position: inherit;
         }
 
         .box-layout{
             border: 1px solid #000000;
             padding:20px;
+            min-height: 220px;
+            position: relative;
+        }
+        #myWizard .next-layout{
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            padding-right: 30px;
+            text-align: right;
         }
 
     </style>

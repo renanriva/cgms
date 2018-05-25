@@ -53016,7 +53016,7 @@ $(document).ready(function () {
             template: 'qq-course-request-template-manual-trigger',
             multiple: false,
             request: {
-                endpoint: '/admin/course/upload/request-list',
+                endpoint: '/admin/upcoming-courses/upload',
                 customHeaders: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
@@ -53602,21 +53602,29 @@ $(document).ready(function () {
 
         console.log('register');
 
-        // $('.next').click(function(){
-        //
-        //     var nextId = $(this).parents('.tab-pane').next().attr("id");
-        //     console.log('next ', nextId);
-        //     $('#'+nextId).tab('show');
-        //
-        // });
-        //
-        // $('.first').click(function(){
-        //
-        //     $('#myWizard a:first').tab('show');
-        //
-        // });
+        var registrationId = $('#registration_id').val();
 
+        $('.btn-accept-tc').click(function () {
 
+            console.log('accept terms and condition');
+            //    @todo update the accept tc & tc time
+
+        });
+
+        $('.next').click(function () {
+
+            var nextId = $(this).parents('.tab-pane').next().attr("id");
+            console.log('next ', nextId);
+            // $('#'+nextId).tab('show');
+            $('a[href="#' + nextId + '"]').tab('show');
+        });
+
+        $('.first').click(function () {
+
+            $('#myWizard a:first').tab('show');
+        });
+
+        // upload photo
         $('#registration_release_file_upload').fineUploader({
             template: 'qq-registration-release-file-template-manual-trigger',
             multiple: false,
