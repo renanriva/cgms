@@ -90,10 +90,6 @@
                                     <li><a href="#step4" data-toggle="tab">4. Data Update</a></li>
                                     <li><a href="#step5" data-toggle="tab">5. Registry</a></li>
                                     <li><a href="#step6" data-toggle="tab">6. Registration Certificate</a></li>
-
-                                    <li class="pull-right"><a href="javascript:void(0)"
-                                                              class="btn btn-success btn-submit-registration"
-                                        >Submit</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -202,9 +198,15 @@
                                     <p>Lorem ipsum</p>
 
                                     <div class="row">
+                                        <div class="col-sm-12">
+                                            <p>File <code>{{ basename($registration->inspection_certificate_signed)  }}</code>
+                                                uploaded at: {{ date('d M Y: h:i a', strtotime($registration->inspection_certificate_upload_time)) }}</p>
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                    <div class="row">
                                         <div class="col-lg-6 col-md-6 col-sm-12">
                                             <div id="registration_release_file_upload"></div>
-
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-12">
                                             <h3><i class="fa fa-download"></i> Download Letter of Registration</h3>

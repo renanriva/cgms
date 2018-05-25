@@ -253,6 +253,7 @@ class CourseController extends Controller
 
             $current_time = Carbon::now()->toDateTimeString();
             $registration->tc_accept_time = $current_time;
+            $registration->status = REGISTRATION_STATUS_ACCEPT;
             $registration->save();
 
         }
@@ -269,7 +270,7 @@ class CourseController extends Controller
 
         $cloud = Storage::disk('public');
 
-        $filename = "course_".$registrationId.'_teacher_'.$request->input('teacher_id').'_'.'_inspection_signed_certificate.'.$request->file('qqfile')->extension();
+        $filename = "course_".$registrationId.'_teacher_'.$request->input('teacher_id').'_inspection_signed_certificate.'.$request->file('qqfile')->extension();
         $path = $cloud->putFileAs('course/signed_certificates', $request->file('qqfile'), $filename);
 
         $path = storage_path('app/'.$path);
@@ -280,6 +281,7 @@ class CourseController extends Controller
         $current_time = Carbon::now()->toDateTimeString();
         $registration->inspection_certificate_signed = $path;
         $registration->inspection_certificate_upload_time = $current_time;
+        $registration->status = REGISTRATION_STATUS_SIGNED;
         $registration->save();
 
 
