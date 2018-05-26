@@ -261,5 +261,59 @@ $(document).ready(function () {
             });
         }
 
+        loadProvinces();
+        function loadProvinces() {
+
+            console.log('is province ');
+
+            var province = $('.js-province');
+
+            province.empty();
+            province.attr('disabled', 'disabled');
+            province.append('<option>Loading...</option>');
+
+            var ajaxObj = {
+                method: 'post',
+                url: '/admin/location/province/ajax/all'
+            };
+
+            $.ajax(ajaxObj)
+                .done(function (response, textStatus, jqXhr) {
+
+                    if (jqXhr.status === 200) {
+
+                        province.empty();
+
+                        $.each(response.provinces, function (key, value) {
+                            province.append('<option value="'+value.id+'">'+value.name+'</option>');
+                        });
+                        province.attr('disabled', false);
+
+                    }
+
+                }).fail(function (jqXhr, textStatus, errorThrown) {
+
+                    alert('Error: '+errorThrown);
+                    console.log('error ', jqXhr);
+                    province.empty();
+                    province.attr('disabled', false);
+
+            });
+
+
+            //select 2
+            province.select2({
+                // dropdownParent: cantonModal,
+                // width: 'resolve',
+                minimumResultsForSearch: 20,
+                // minimumInputLength: 1, // only start searching when the user has input 3 or more characters
+                maximumInputLength: 20 // only allow terms up to 20 characters long
+            });
+
+
+
+
+        }
+
     }// page
 });

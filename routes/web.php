@@ -27,6 +27,7 @@ Route::middleware(['auth'])->group(function (){
         Route::prefix('teachers')->group(function (){
 
             Route::get('/', 'TeacherController@index');
+            Route::get('/new', 'TeacherController@getNew');
 
             Route::post('/ajax/table', 'TeacherController@getTableData');
             Route::get('/profile/{id}', 'TeacherController@showProfile');

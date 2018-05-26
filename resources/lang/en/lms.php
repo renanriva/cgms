@@ -99,7 +99,12 @@
                     'canton'            => 'Canton',
                     'district'          => 'District',
                     'action'            => 'Action'
+                ],
+                'form' => [
+                    'edit_title'        => 'Edit Teacher',
+                    'add_title'         => 'Add New Teacher',
                 ]
+
             ],
             'teacher_profile' => [
                 'index' => [

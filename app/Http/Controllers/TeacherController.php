@@ -36,6 +36,24 @@ class TeacherController extends Controller
 
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getNew(){
+
+        $user = Auth::user();
+        if ($user->can('create', Teacher::class)) {
+
+            $title = 'Create New Teacher - ' . env('APP_NAME');
+
+            return view('lms.admin.teacher.form', ['title' => $title]);
+
+        } else{
+            echo  'unauthorized';
+        }
+
+    }
+
 
     /**
      * Process datatables ajax request.

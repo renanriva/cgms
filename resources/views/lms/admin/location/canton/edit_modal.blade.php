@@ -20,8 +20,8 @@
                             <div class="form-group">
                                 <label for="province" class="col-md-2 control-label">Province</label>
                                 <div class="col-md-4">
-                                    <select id="website" class="js-edit-canton-province form-control" name="province">
-                                    </select>
+                                    <select id="province"  style="width: 100%"
+                                            class="js-edit-canton-province js-province form-control" name="province"></select>
                                 </div>
 
                                 <label for="js-edit-canton-name" class="col-md-2 control-label">Canton Name</label>

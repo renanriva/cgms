@@ -20,8 +20,8 @@
                         <div class="btn-group">
                             <button class="btn btn-sm btn-success" id="btn-import-teachers" type="submit">
                                 <i class="fa fa-upload"></i> {{ __('lms.elements.button.upload') }}</button>
-                            <button class="btn btn-sm btn-primary" id="btn-create-canton">
-                                <i class="fa fa-plus"></i> {{ __('lms.elements.button.create') }}</button>
+                            <a href="/admin/teachers/new"  class="btn btn-sm btn-primary">
+                                <i class="fa fa-plus"></i> {{ __('lms.elements.button.create') }}</a>
                         </div>
                     </div>
                 </div>
@@ -53,9 +53,9 @@
         </div>
     </div>
 
-{{--    @include('lms.admin.location.canton.edit_modal')--}}
+    @include('lms.admin.teacher.edit_modal')
     @include('lms.admin.teacher.moodal_modal')
     @include('lms.admin.teacher.upload_form')
-    {{--@include('lms.admin.parts.modal_delete')--}}
+    @include('lms.admin.parts.modal_delete')
 
 @stop
