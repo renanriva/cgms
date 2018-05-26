@@ -47,6 +47,15 @@
     const USER_CREATION_TYPE_REGISTRATION = 1;
     const USER_CREATION_TYPE_CMS = 2;               // USER CREATED IN CMS BY SOMEONE
     const USER_CREATION_TYPE_IMPORT = 3;            // USER IMPORTED FROM EXCEL FILE
+    const USER_CREATION = [
+
+        1 => 'Registration',
+        2 => 'CMS',
+        3 => 'Import'
+    ];
+    function getUserCreationType($id){
+        return USER_CREATION[$id];
+    }
 
 
 

@@ -166,37 +166,38 @@ return [
             'can'           => 'admin-only',
         ],
         [
-            'text'    => 'lms.menu.settings.title',
-            'icon'    => 'cogs',
+            'text'  => 'lms.menu.settings.user_management',
+            'icon'  => 'user-secret',
+            'url'   => 'admin/users',
             'can'       => 'admin-only',
+        ],
+        [
+            'text'    => 'lms.menu.settings.location.title',
+            'icon'      => 'map',
+            'url'     => '#',
             'submenu' => [
                 [
-                    'text'  => 'lms.menu.settings.user_management',
-                    'icon'  => 'user-secret',
-                    'url'   => 'admin/users',
-                    'can'       => 'admin-only',
+                    'text' => 'lms.menu.settings.location.province',
+                    'url'  => '/admin/location/province',
                 ],
                 [
-                    'text'    => 'lms.menu.settings.location.title',
-                    'icon'      => 'map',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'lms.menu.settings.location.province',
-                            'url'  => '/admin/location/province',
-                        ],
-                        [
-                            'text'    => 'lms.menu.settings.location.canton',
-                            'url'     => '/admin/location/canton',
-                        ],
-                        [
-                            'text'    => 'lms.menu.settings.location.parroquia',
-                            'url'     => '/admin/location/parroquia',
-                        ],
-                    ],
+                    'text'    => 'lms.menu.settings.location.canton',
+                    'url'     => '/admin/location/canton',
+                ],
+                [
+                    'text'    => 'lms.menu.settings.location.parroquia',
+                    'url'     => '/admin/location/parroquia',
                 ],
             ],
         ],
+//        [
+//            'text'    => 'lms.menu.settings.title',
+//            'icon'    => 'cogs',
+//            'can'       => 'admin-only',
+//            'submenu' => [
+//
+//            ],
+//        ],
         'lms.menu.account_settings',
         [
             'text' => 'lms.menu.profile',

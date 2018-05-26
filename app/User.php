@@ -53,4 +53,12 @@ class User extends Authenticatable
 
         return getUserStatus($value);
     }
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    public function getCreationTypeAttribute($value){
+        return getUserCreationType($value);
+    }
 }

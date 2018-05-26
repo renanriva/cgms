@@ -77,7 +77,14 @@ Route::middleware(['auth'])->group(function (){
         /**
          * User management routes
          */
-        Route::prefix('user')->group(function() {
+        Route::prefix('users')->group(function() {
+
+
+            Route::get('/',             'UserController@index');
+            Route::post('/table/ajax',  'UserController@getTableData');
+            Route::post('/ajax',        'UserController@store');
+            Route::post('/{id}/ajax',   'UserController@update');
+            Route::delete('/{id}/ajax', 'UserController@delete');
 
 
         });

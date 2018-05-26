@@ -1,2 +1,5 @@
 data-id="{{ $id }}"
-data-university_name="{{$name}}"
+data-user_name="{{$name}}"
+data-user_email="{{$email}}"
+data-user_role="{{$role}}"
+data-user_status="{{$status}}"

@@ -17,7 +17,7 @@ var mix = require('laravel-mix');
  *  ADMIN
  */
 // .sass('resources/assets/sass/app.scss', 'public/admin/css/vendor.css')
-// .sass('resources/assets/admin/sass/admin.scss', 'public/admin/css/app.css')
+// mix.sass('resources/assets/admin/sass/admin.scss', 'public/admin/css/app.css');
 
 mix.autoload({
         jquery: ['$', 'window.jQuery',"jQuery","window.$","jquery","window.jquery"]
