@@ -21,7 +21,9 @@ $(document).ready(function () {
             },
             columns: [
                 { data: 'id', name: 'universities.id', searchable: true },
-                { data: 'name', name: 'name', searchable: true},
+                { data: 'name', name: 'name', searchable: true, render: function (item, type, data) {
+                    return '<a href="/admin/university/'+data.id+'">'+item+'</a>';
+                }},
                 { data: 'email', name: 'email', searchable: true},
                 { data: 'phone', name: 'phone', searchable: true},
                 { data: 'website', name: 'website', searchable: true},

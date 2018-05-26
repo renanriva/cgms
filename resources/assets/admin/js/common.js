@@ -5,6 +5,8 @@ $(document).ready(function () {
 
     console.log('Common');
 
+    $('.js-datepicker').datepicker();
+
 
     var selectProvinceLength = $('.js-select-province').length;
 

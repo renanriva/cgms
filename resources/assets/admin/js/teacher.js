@@ -12,7 +12,6 @@ $(document).ready(function () {
         /**
          * Datepicker
          */
-        // $('.js-edit-course-start_date, .js-edit-course-end_date').datepicker();
 
         $('#teacher-table').DataTable({
             processing: true,
@@ -58,6 +57,25 @@ $(document).ready(function () {
 
 
         var modal = $('#edit-teacher-modal');
+
+        showAddModal();
+        function showAddModal() {
+
+            $('#btn-create-teacher').click(function () {
+
+                modal.find('.js-modal-title-add').removeClass('hidden');
+                modal.find('.js-modal-title-edit').addClass('hidden');
+                modal.find('.js-login-section').removeClass('hidden');
+
+                modal.find('input').val('');
+
+                modal.find('#btn-store-teacher').text('Create');
+                modal.find('#btn-store-teacher').attr('data-type','create');
+                modal.modal('show');
+
+            });
+        }
+
 
         var importModal = $('#upload-teacher-modal');
 
@@ -173,6 +191,133 @@ $(document).ready(function () {
 
         }
 
+
+    }
+
+
+    var isTeacherForm = $('.teacher-form').length;
+
+    if (isTeacherForm > 0 ){
+
+
+
+        loadProvinces();
+        function loadProvinces() {
+
+            var provinceLength = $('.js-province').length;
+
+            if (provinceLength > 0){
+
+                var province = $('.js-province');
+
+                province.empty();
+                province.attr('disabled', 'disabled');
+                province.append('<option>Loading...</option>');
+
+                var ajaxObj = {
+                    method: 'post',
+                    url: '/admin/location/province/ajax/all'
+                };
+
+                $.ajax(ajaxObj)
+                    .done(function (response, textStatus, jqXhr) {
+
+                        if (jqXhr.status === 200) {
+
+                            province.empty();
+
+                            $.each(response.provinces, function (key, value) {
+                                province.append('<option value="'+value.id+'">'+value.name+'</option>');
+                            });
+                            province.attr('disabled', false);
+
+                        }
+
+                    }).fail(function (jqXhr, textStatus, errorThrown) {
+
+                        alert('Error: '+errorThrown);
+                        console.log('error ', jqXhr);
+                        province.empty();
+                        province.attr('disabled', false);
+
+                });
+
+
+                //select 2
+                province.select2({
+                    // dropdownParent: modal,
+                    width: 'resolve',
+                    minimumResultsForSearch: 20,
+                    // minimumInputLength: 1, // only start searching when the user has input 3 or more characters
+                    maximumInputLength: 20 // only allow terms up to 20 characters long
+                });
+
+
+            }
+
+        }
+
+        // on select 2 select, load canton
+        $('.js-province').on('select2:select', function (e) {
+
+            var data = e.params.data;
+            console.log(data);
+
+            loadCantons(data.id)
+        });
+
+        function loadCantons(provinceId) {
+
+
+            var canton = $('.js-canton');
+
+            canton.empty();
+            canton.attr('disabled', 'disabled');
+            canton.append('<option>Loading...</option>');
+
+            var ajaxObj = {
+                method: 'get',
+                url: '/admin/location/canton/ajax/'+provinceId
+            };
+
+            $.ajax(ajaxObj)
+                .done(function (response, textStatus, jqXhr) {
+
+                    if (jqXhr.status === 200) {
+
+                        canton.empty();
+
+                        $.each(response.cantons, function (key, value) {
+                            canton.append('<option value="'+value.id+'">'+value.name+'</option>');
+                        });
+
+                        canton.attr('disabled', false);
+
+                    }
+
+                }).fail(function (jqXhr, textStatus, errorThrown) {
+
+                    alert('Error: '+errorThrown);
+                    console.log('error ', jqXhr);
+                    canton.empty();
+                    canton.attr('disabled', false);
+
+            });
+
+
+            //select 2
+            canton.select2({
+                // dropdownParent: modal,
+                width: 'resolve',
+                minimumResultsForSearch: 20,
+                // minimumInputLength: 0, // only start searching when the user has input 3 or more characters
+                maximumInputLength: 20 // only allow terms up to 20 characters long
+            });
+
+
+
+
+        }// end function
 
     }
 

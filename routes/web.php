@@ -27,6 +27,7 @@ Route::middleware(['auth'])->group(function (){
         Route::prefix('teachers')->group(function (){
 
             Route::get('/', 'TeacherController@index');
+            Route::get('/new', 'TeacherController@getNew');
 
             Route::post('/ajax/table', 'TeacherController@getTableData');
             Route::get('/profile/{id}', 'TeacherController@showProfile');
@@ -109,6 +110,7 @@ Route::middleware(['auth'])->group(function (){
 
             Route::get('/', 'UniversityController@index');
             Route::get('/ajax', 'UniversityController@getUniversityList');
+            Route::get('/{id}', 'UniversityController@view');
 
             Route::post('/ajax/table', 'UniversityController@getTableData');
             Route::post('/ajax/{id}', 'UniversityController@update');

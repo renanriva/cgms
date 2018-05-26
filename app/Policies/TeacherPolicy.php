@@ -34,11 +34,25 @@ class TeacherPolicy
         return false;
     }
 
-    public function create(){
+    public function create(User $user){
+
+        if ($user->role == 'admin'){
+
+            return true;
+        }
+
+        return false;
 
     }
 
-    public function delete(){
+    public function delete(User $user){
+
+        if ($user->role == 'admin'){
+
+            return true;
+        }
+
+        return false;
 
     }
 

@@ -52534,6 +52534,8 @@ $(document).ready(function () {
 
     console.log('Common');
 
+    $('.js-datepicker').datepicker();
+
     var selectProvinceLength = $('.js-select-province').length;
 
     if (selectProvinceLength > 0) {
@@ -53306,6 +53308,50 @@ $(document).ready(function () {
             });
         };
 
+        var loadProvinces = function loadProvinces() {
+
+            console.log('is province ');
+
+            var province = $('.js-province');
+
+            province.empty();
+            province.attr('disabled', 'disabled');
+            province.append('<option>Loading...</option>');
+
+            var ajaxObj = {
+                method: 'post',
+                url: '/admin/location/province/ajax/all'
+            };
+
+            $.ajax(ajaxObj).done(function (response, textStatus, jqXhr) {
+
+                if (jqXhr.status === 200) {
+
+                    province.empty();
+
+                    $.each(response.provinces, function (key, value) {
+                        province.append('<option value="' + value.id + '">' + value.name + '</option>');
+                    });
+                    province.attr('disabled', false);
+                }
+            }).fail(function (jqXhr, textStatus, errorThrown) {
+
+                alert('Error: ' + errorThrown);
+                console.log('error ', jqXhr);
+                province.empty();
+                province.attr('disabled', false);
+            });
+
+            //select 2
+            province.select2({
+                // dropdownParent: cantonModal,
+                // width: 'resolve',
+                minimumResultsForSearch: 20,
+                // minimumInputLength: 1, // only start searching when the user has input 3 or more characters
+                maximumInputLength: 20 // only allow terms up to 20 characters long
+            });
+        };
+
         console.log('canton ready');
 
         $('#cantons-table').DataTable({
@@ -53345,6 +53391,9 @@ $(document).ready(function () {
 
 
         deleteItem();
+
+
+        loadProvinces();
     } // page
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))
@@ -53828,6 +53877,22 @@ $(document).ready(function () {
     var pageLength = $('#page_teacher').length;
 
     if (pageLength > 0) {
+        var showAddModal = function showAddModal() {
+
+            $('#btn-create-teacher').click(function () {
+
+                modal.find('.js-modal-title-add').removeClass('hidden');
+                modal.find('.js-modal-title-edit').addClass('hidden');
+                modal.find('.js-login-section').removeClass('hidden');
+
+                modal.find('input').val('');
+
+                modal.find('#btn-store-teacher').text('Create');
+                modal.find('#btn-store-teacher').attr('data-type', 'create');
+                modal.modal('show');
+            });
+        };
+
         var showImport = function showImport() {
 
             $('#btn-import-teachers').click(function () {
@@ -53887,7 +53952,6 @@ $(document).ready(function () {
         /**
          * Datepicker
          */
-        // $('.js-edit-course-start_date, .js-edit-course-end_date').datepicker();
 
         $('#teacher-table').DataTable({
             processing: true,
@@ -53923,6 +53987,9 @@ $(document).ready(function () {
         });
 
         var modal = $('#edit-teacher-modal');
+
+        showAddModal();
+
 
         var importModal = $('#upload-teacher-modal');
 
@@ -53969,6 +54036,112 @@ $(document).ready(function () {
         var createMoodleUser = $('#create-moodal-modal');
 
         showCreateModalModal();
+    }
+
+    var isTeacherForm = $('.teacher-form').length;
+
+    if (isTeacherForm > 0) {
+        var loadProvinces = function loadProvinces() {
+
+            var provinceLength = $('.js-province').length;
+
+            if (provinceLength > 0) {
+
+                var province = $('.js-province');
+
+                province.empty();
+                province.attr('disabled', 'disabled');
+                province.append('<option>Loading...</option>');
+
+                var ajaxObj = {
+                    method: 'post',
+                    url: '/admin/location/province/ajax/all'
+                };
+
+                $.ajax(ajaxObj).done(function (response, textStatus, jqXhr) {
+
+                    if (jqXhr.status === 200) {
+
+                        province.empty();
+
+                        $.each(response.provinces, function (key, value) {
+                            province.append('<option value="' + value.id + '">' + value.name + '</option>');
+                        });
+                        province.attr('disabled', false);
+                    }
+                }).fail(function (jqXhr, textStatus, errorThrown) {
+
+                    alert('Error: ' + errorThrown);
+                    console.log('error ', jqXhr);
+                    province.empty();
+                    province.attr('disabled', false);
+                });
+
+                //select 2
+                province.select2({
+                    // dropdownParent: modal,
+                    width: 'resolve',
+                    minimumResultsForSearch: 20,
+                    // minimumInputLength: 1, // only start searching when the user has input 3 or more characters
+                    maximumInputLength: 20 // only allow terms up to 20 characters long
+                });
+            }
+        };
+
+        // on select 2 select, load canton
+
+
+        var loadCantons = function loadCantons(provinceId) {
+
+            var canton = $('.js-canton');
+
+            canton.empty();
+            canton.attr('disabled', 'disabled');
+            canton.append('<option>Loading...</option>');
+
+            var ajaxObj = {
+                method: 'get',
+                url: '/admin/location/canton/ajax/' + provinceId
+            };
+
+            $.ajax(ajaxObj).done(function (response, textStatus, jqXhr) {
+
+                if (jqXhr.status === 200) {
+
+                    canton.empty();
+
+                    $.each(response.cantons, function (key, value) {
+                        canton.append('<option value="' + value.id + '">' + value.name + '</option>');
+                    });
+
+                    canton.attr('disabled', false);
+                }
+            }).fail(function (jqXhr, textStatus, errorThrown) {
+
+                alert('Error: ' + errorThrown);
+                console.log('error ', jqXhr);
+                canton.empty();
+                canton.attr('disabled', false);
+            });
+
+            //select 2
+            canton.select2({
+                // dropdownParent: modal,
+                width: 'resolve',
+                minimumResultsForSearch: 20,
+                // minimumInputLength: 0, // only start searching when the user has input 3 or more characters
+                maximumInputLength: 20 // only allow terms up to 20 characters long
+            });
+        }; // end function
+
+        loadProvinces();
+        $('.js-province').on('select2:select', function (e) {
+
+            var data = e.params.data;
+            console.log(data);
+
+            loadCantons(data.id);
+        });
     }
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))
@@ -54197,7 +54370,9 @@ $(document).ready(function () {
                 url: '/admin/university/ajax/table',
                 method: 'POST'
             },
-            columns: [{ data: 'id', name: 'universities.id', searchable: true }, { data: 'name', name: 'name', searchable: true }, { data: 'email', name: 'email', searchable: true }, { data: 'phone', name: 'phone', searchable: true }, { data: 'website', name: 'website', searchable: true }, { data: 'login_user_name', name: 'login_user_name', searchable: true }, { data: 'login_email', name: 'login_email', searchable: true }, { data: 'created_by_name', name: 'users.created_by_name', searchable: true }, { data: 'created_at', name: 'universities.created_by', searchable: true }, { data: 'action', searchable: false, orderable: false }],
+            columns: [{ data: 'id', name: 'universities.id', searchable: true }, { data: 'name', name: 'name', searchable: true, render: function render(item, type, data) {
+                    return '<a href="/admin/university/' + data.id + '">' + item + '</a>';
+                } }, { data: 'email', name: 'email', searchable: true }, { data: 'phone', name: 'phone', searchable: true }, { data: 'website', name: 'website', searchable: true }, { data: 'login_user_name', name: 'login_user_name', searchable: true }, { data: 'login_email', name: 'login_email', searchable: true }, { data: 'created_by_name', name: 'users.created_by_name', searchable: true }, { data: 'created_at', name: 'universities.created_by', searchable: true }, { data: 'action', searchable: false, orderable: false }],
             initComplete: function initComplete() {
                 this.api().columns().every(function () {
                     var column = this;
