@@ -35,23 +35,29 @@ class University extends Model
 
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user(){
 
-        return $this->hasOne('App\User',  'user_id', 'id');
+        return $this->belongsTo('App\User',  'user_id', 'id');
 
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function createdBy(){
 
-        return $this->hasOne('App\User',  'created_id', 'id');
+        return $this->belongsTo('App\User',  'created_by', 'id');
 
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function updatedBy(){
 
-        return $this->hasOne('App\User',  'updated_id', 'id');
+        return $this->belongsTo('App\User',  'updated_by', 'id');
 
     }
 

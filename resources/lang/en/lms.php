@@ -132,6 +132,8 @@
                     'end_date'          => 'End Date',
                     'quota'             => 'Quota',
                     'comment'           => 'Comment',
+                    'state'             => 'State',
+                    'upload_rating'     => 'Upload Rating',
                     'action'            => 'Editor'
                 ],
                 'form'  =>[
@@ -254,6 +256,9 @@
                     'note'              => 'Note',
                     'profile_photo'     => 'Profile Photo',
                     'login_message'     => 'These login information will be used to create login user for university.'
+                ],
+                'view' => [
+                    'table_header'      => 'Course list'
                 ]
 
             ],
