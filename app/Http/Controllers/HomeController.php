@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -28,8 +29,10 @@ class HomeController extends Controller
     public function index()
     {
 
-//        echo  __('menu.settings');
-//        echo  App::getLocale();
-        return view('home');
+        if (Auth::check()){
+            return view('home');
+        } else{
+            return response()->redirectTo('login');
+        }
     }
 }

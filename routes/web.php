@@ -11,17 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-
-//    Route::get('/admin/location/ajax/province', 'ProvinceController@getTableData');
-
 
 
 Route::middleware(['auth'])->group(function (){
@@ -76,6 +70,29 @@ Route::middleware(['auth'])->group(function (){
 //            Route::post('/register/{id}/upload/inspection', 'CourseController@uploadStudentInspection');
 //            Route::post('/register/{id}/update/{part}', 'CourseController@updateRegistration');
 
+
+
+        });
+
+        /**
+         * User management routes
+         */
+        Route::prefix('users')->group(function() {
+
+
+            Route::get('/',             'UserController@index');
+            Route::post('/table/ajax',  'UserController@getTableData');
+            Route::post('/ajax',        'UserController@store');
+            Route::post('/{id}/ajax',   'UserController@update');
+            Route::delete('/{id}/ajax', 'UserController@delete');
+
+
+        });
+
+        /**
+         * Profile routes
+         */
+        Route::prefix('profile')->group(function() {
 
 
         });

@@ -53587,6 +53587,37 @@ $(document).ready(function () {
 
 /***/ }),
 
+/***/ "./resources/assets/admin/js/profile.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {/**
+ * Created by ariful.haque on 09/05/2018.
+ */
+$(document).ready(function () {
+
+    console.log('Common');
+
+    var selectProvinceLength = $('.js-select-province').length;
+
+    if (selectProvinceLength > 0) {}
+
+    /**
+     * Close Delete Modal
+     */
+    var deleteModal = $('#delete-modal').length;
+
+    if (deleteModal) {
+
+        $('#delete-modal .btn-close').click(function () {
+            var table = $('.table');
+            $(table).find('tr').removeClass('danger').removeClass('warning');
+        });
+    }
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))
+
+/***/ }),
+
 /***/ "./resources/assets/admin/js/registration-approval.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -54247,6 +54278,266 @@ $(document).ready(function () {
 
 /***/ }),
 
+/***/ "./resources/assets/admin/js/user.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {/**
+ * Created by ariful.haque on 09/05/2018.
+ */
+$(document).ready(function () {
+
+    var isPage = $('#page_user').length;
+
+    if (isPage) {
+        var showAddModal = function showAddModal() {
+
+            $('#btn-create-user').click(function () {
+
+                modal.find('.js-modal-title-add').removeClass('hidden');
+                modal.find('.js-modal-title-edit').addClass('hidden');
+                modal.find('input').val('');
+
+                modal.find('#btn-edit-user').text('Create');
+                modal.find('#btn-edit-user').attr('data-type', 'create');
+                modal.find('.js-edit-user-role-group').removeClass('hidden');
+
+                modal.modal('show');
+            });
+        };
+
+        var showEditModal = function showEditModal() {
+
+            $('#user-table').on('click', '.btn-edit-user', function () {
+
+                modal.find('.js-modal-title-edit').removeClass('hidden');
+                modal.find('.js-modal-title-add').addClass('hidden');
+
+                var data = {
+                    id: $(this).attr('data-id'),
+                    name: $(this).attr('data-user_name'),
+                    email: $(this).attr('data-user_email'),
+                    status: $(this).attr('data-user_status')
+                };
+
+                modal.find('.js-edit-user-first-name').val(data.name);
+                modal.find('.js-edit-user-email').val(data.email);
+                modal.find('.js-edit-user-status option[value="' + data.status + '"]').attr('selected', true);
+                modal.find('.js-edit-user-role-group').addClass('hidden');
+                modal.find('#btn-edit-user').attr('data-id', data.id);
+                modal.find('#btn-edit-user').text('Update');
+                modal.find('#btn-edit-user').attr('data-type', 'update');
+                modal.modal('show');
+            });
+        };
+
+        /**
+         * Send data to server
+         */
+
+
+        var clickCreateUpdate = function clickCreateUpdate() {
+
+            $('#btn-edit-user').click(function (e) {
+
+                var data = {
+                    id: $(this).attr('data-id'),
+                    name: modal.find('.js-edit-user-first-name').val(),
+                    email: modal.find('.js-edit-user-email').val(),
+                    role: modal.find('.js-edit-user-role').val(),
+                    status: modal.find('.js-edit-user-status').val()
+                };
+
+                if ($(this).attr('data-type') === 'update') {
+                    update(data);
+                } else if ($(this).attr('data-type') === 'create') {
+                    insert(data);
+                }
+            });
+        };
+
+        /**
+         *
+         * @param data
+         */
+
+
+        var insert = function insert(data) {
+
+            var ajaxObj = {
+                method: 'post',
+                data: data,
+                url: '/admin/users/ajax'
+            };
+
+            $.ajax(ajaxObj).done(function (response, textStatus, jqXhr) {
+
+                if (jqXhr.status === 201) {
+
+                    var row = '<tr class="success"><td>' + response.user.id + '</td>' + '<td>' + data.name + '</td><' + 'td>' + response.user.email + '</td>' + '<td>' + response.user.role + '</td>' + '<td>' + response.user.status + '</td>' + '<td>' + response.user.creation_type + '</td>' + '<td>' + response.user.created_at + '</td>' + '<td>Actions</td></tr>';
+
+                    $('#user-table tr:last').after(row);
+
+                    modal.modal('hide');
+                }
+            }).fail(function (jqXhr, textStatus, errorThrown) {
+
+                alert('Error: ' + errorThrown);
+                console.log('error ', jqXhr);
+            });
+        };
+
+        /**
+         * Update User
+         *
+         * @param data
+         */
+
+
+        var update = function update(data) {
+
+            var ajaxObj = {
+                method: 'post',
+                data: data,
+                url: '/admin/users/' + data.id + '/ajax'
+            };
+            $.ajax(ajaxObj).done(function (response, textStatus, jqXhr) {
+
+                if (jqXhr.status === 200) {
+
+                    $('tr#user_id_' + data.id).each(function () {
+                        $(this).find('td').eq(1).text(data.name);
+                        $(this).find('td').eq(2).text(response.user.email);
+                        $(this).find('td').eq(4).text(response.user.status);
+                    });
+
+                    $('tr#user_id_' + data.id).addClass('success');
+
+                    modal.modal('hide');
+                }
+            }).fail(function (jqXhr, textStatus, errorThrown) {
+
+                alert('Error: ' + errorThrown);
+                console.log('error ', jqXhr);
+            });
+        };
+
+        console.log('user management');
+
+        $('#user-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: '/admin/users/table/ajax',
+                method: 'POST'
+            },
+            "order": [[0, "desc"]],
+            columns: [{ data: 'id', name: 'id', searchable: true }, { data: 'name', name: 'name', searchable: true }, { data: 'email', name: 'email', searchable: true }, { data: 'role', name: 'role', searchable: true, render: function render(item, data, meta) {
+                    return '<span class="uc-first">' + item + '</span>';
+                } }, { data: 'status', name: 'status', searchable: true }, { data: 'creation_type', name: 'creation_type', searchable: true }, { data: 'created_at', name: 'created_at', searchable: true }, { data: 'action', searchable: false, orderable: false }],
+            initComplete: function initComplete() {
+                this.api().columns().every(function () {
+                    var column = this;
+                    var input = document.createElement("input");
+                    $(input).appendTo($(column.footer()).empty()).on('change', function () {
+                        column.search($(this).val()).draw();
+                    });
+                });
+            }
+        });
+
+        var modal = $('#edit-user-modal');
+
+        /**
+         * Create University
+         */
+        showAddModal();
+
+
+        showEditModal();
+        clickCreateUpdate();
+    }
+
+    /**
+     * Close Delete Modal
+     */
+    var isDeleteModal = $('#delete-modal').length;
+
+    if (isDeleteModal) {
+        var showDelete = function showDelete() {
+
+            $('#user-table').on('click', '.btn-remove', function () {
+
+                var id = $(this).attr('data-id');
+                var name = $(this).attr('data-name');
+
+                deleteModal.find('.model-title').text('Delete User');
+                deleteModal.find('.js-message').text('Are you sure to delete User [' + name + ']?');
+                deleteModal.find('#btn-delete-confirm').attr('data-url', '/admin/users/' + id + '/ajax');
+                deleteModal.find('#btn-delete-confirm').attr('data-id', id);
+
+                $('tr#user_id_' + id).addClass('danger');
+
+                deleteModal.modal('show');
+            });
+        };
+
+        var deleteItem = function deleteItem() {
+
+            $('#page_user  #btn-delete-confirm').click(function () {
+
+                var data = {
+                    id: $(this).attr('data-id'),
+                    url: $(this).attr('data-url')
+                };
+
+                var ajaxObj = {
+                    method: 'delete',
+                    url: data.url
+                };
+
+                $('tr#user_id_' + data.id).addClass('warning');
+
+                $.ajax(ajaxObj).done(function (response, textStatus, jqXhr) {
+
+                    if (jqXhr.status === 204) {
+
+                        deleteModal.modal('hide');
+                        $('tr#user_id_' + data.id).find('td').eq(4).text('Removing...');
+
+                        (function () {
+                            setTimeout(function () {
+                                $('tr#user_id_' + data.id).remove();
+                            }, 1500);
+                        })(this);
+                    }
+                }).fail(function (jqXhr, textStatus, errorThrown) {
+
+                    alert('Error: ' + errorThrown);
+                    console.log('error ', jqXhr);
+                });
+            });
+        };
+
+        var deleteModal = $('#delete-modal');
+
+        /**
+         * Show Delete modal
+         */
+        showDelete();
+
+
+        $('#delete-modal .btn-close').click(function () {
+            var table = $('.table');
+            $(table).find('tr').removeClass('danger').removeClass('warning');
+        });
+
+        deleteItem();
+    }
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))
+
+/***/ }),
+
 /***/ "./resources/assets/sass/app.scss":
 /***/ (function(module, exports) {
 
@@ -54275,6 +54566,8 @@ __webpack_require__("./resources/assets/admin/js/university.js");
 __webpack_require__("./resources/assets/admin/js/upcoming.js");
 __webpack_require__("./resources/assets/admin/js/registration.js");
 __webpack_require__("./resources/assets/admin/js/registration-approval.js");
+__webpack_require__("./resources/assets/admin/js/user.js");
+__webpack_require__("./resources/assets/admin/js/profile.js");
 __webpack_require__("./resources/assets/admin/js/common.js");
 module.exports = __webpack_require__("./resources/assets/sass/app.scss");
 

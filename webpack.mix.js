@@ -17,7 +17,7 @@ var mix = require('laravel-mix');
  *  ADMIN
  */
 // .sass('resources/assets/sass/app.scss', 'public/admin/css/vendor.css')
-// .sass('resources/assets/admin/sass/admin.scss', 'public/admin/css/app.css')
+// mix.sass('resources/assets/admin/sass/admin.scss', 'public/admin/css/app.css');
 
 mix.autoload({
         jquery: ['$', 'window.jQuery',"jQuery","window.$","jquery","window.jquery"]
@@ -44,6 +44,8 @@ mix.autoload({
             'resources/assets/admin/js/upcoming.js',
             'resources/assets/admin/js/registration.js',
             'resources/assets/admin/js/registration-approval.js',
+            'resources/assets/admin/js/user.js',
+            'resources/assets/admin/js/profile.js',
             'resources/assets/admin/js/common.js'
         ],
         'public/admin/js/app.js')

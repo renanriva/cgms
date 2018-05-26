@@ -243,7 +243,35 @@
                     'name'              => 'Name',
                 ]
 
+            ],
+            'user' => [
+                'index' => [
+                    'page_header'=> 'User Management',
+                    'table_header' => 'All Users List'
+                ],
+                'table' => [
+                    'id'                => 'Id',
+                    'first_name'        => 'First Name',
+                    'last_name'         => 'Last Name',
+                    'email'             => 'Email',
+                    'role'              => 'Role',
+                    'status'            => 'Status',
+                    'creation_type'     => 'Creation Type',
+                    'created_at'        => 'Created At',
+                    'action'            => 'Action'
+                ],
+                'form'  =>[
+                    'edit_title'        => 'Edit User',
+                    'add_title'         => 'Add New User',
+                    'first_name'        => 'First Name',
+                    'last_name'         => 'Last Name',
+                    'email'             => 'Email',
+                    'role'              => 'Role',
+                    'status'            => 'Status',
+                ]
+
             ]
+
 
         ],
         'elements' => [
