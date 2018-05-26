@@ -20,7 +20,7 @@ class Canton extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'capital', 'province_id'
+        'name', 'capital', 'province_id', 'dist_name', 'dist_code', 'zone'
     ];
 
 

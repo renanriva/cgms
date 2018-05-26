@@ -53310,8 +53310,6 @@ $(document).ready(function () {
 
         var loadProvinces = function loadProvinces() {
 
-            console.log('is province ');
-
             var province = $('.js-province');
 
             province.empty();
@@ -54082,7 +54080,6 @@ $(document).ready(function () {
                     // dropdownParent: modal,
                     width: 'resolve',
                     minimumResultsForSearch: 20,
-                    // minimumInputLength: 1, // only start searching when the user has input 3 or more characters
                     maximumInputLength: 20 // only allow terms up to 20 characters long
                 });
             }
@@ -54134,13 +54131,19 @@ $(document).ready(function () {
             });
         }; // end function
 
+
         loadProvinces();
         $('.js-province').on('select2:select', function (e) {
 
             var data = e.params.data;
-            console.log(data);
-
             loadCantons(data.id);
+        });
+
+        $('.js-canton').on('select2:select', function (e) {
+
+            var data = e.params.data;
+            console.log('canton ', data);
+            // loadCantons(data.id);
         });
     }
 });
