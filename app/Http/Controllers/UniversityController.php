@@ -95,7 +95,6 @@ class UniversityController extends Controller
          * create user and update university with user_id
          */
         event(new UniversityCreated($university));
-//        $university->created_by_name = Auth::user()->name;
 
 
         return response()->json(['university' => $university])->setStatusCode(201);
@@ -116,19 +115,12 @@ class UniversityController extends Controller
 
             $university->name           = $post['name'];
             $university->email          = $post['email'];
-            /**
-             * Login Details not updatable in update
-             */
-//            $university->login_email    = $post['login_email'];
-//            $university->login_user_name= $post['login_name'];
             $university->website        = $post['website'];
             $university->phone          = $post['phone'];
             $university->note           = $post['note'];
 
             $university->updated_by     = Auth::user()->id;
             $university->save();
-//            $university->created_by_name    = Auth::user()->name;
-
 
             return response()->json(['university' => $university])->setStatusCode(200);
         } else{
