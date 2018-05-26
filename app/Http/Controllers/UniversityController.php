@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UniversityCreated;
 use App\University;
 use Illuminate\Http\Request;
 use App\Province;
@@ -44,6 +45,12 @@ class UniversityController extends Controller
         $universities = University::select([
             'universities.id as id',
             'universities.name as name',
+            'universities.email as email',
+            'universities.website as website',
+            'universities.phone as phone',
+            'universities.note as note',
+            'universities.login_email as login_email',
+            'universities.login_user_name as login_user_name',
             'universities.created_by as created_by_id',
             'users.name as created_by_name',
             'universities.created_at as created_at',
@@ -73,10 +80,23 @@ class UniversityController extends Controller
         $post = $request->all();
 
         $university->name           = $post['name'];
+        $university->email          = $post['email'];
+        $university->login_email    = $post['login_email'];
+        $university->login_user_name= $post['login_name'];
+        $university->website        = $post['website'];
+        $university->phone        = $post['phone'];
+        $university->note           = $post['note'];
+        $university->name           = $post['name'];
         $university->created_by        = Auth::user()->id;
         $university->updated_by        = Auth::user()->id;
         $university->save();
-        $university->created_by_name = Auth::user()->name;
+
+        /**
+         * create user and update university with user_id
+         */
+        event(new UniversityCreated($university));
+//        $university->created_by_name = Auth::user()->name;
+
 
         return response()->json(['university' => $university])->setStatusCode(201);
     }
@@ -92,13 +112,22 @@ class UniversityController extends Controller
 
         if ($university){
 
-            // todo add university update validation
             $post = $request->all();
 
-            $university->name               = $post['name'];
-            $university->updated_by         = Auth::user()->id;
+            $university->name           = $post['name'];
+            $university->email          = $post['email'];
+            /**
+             * Login Details not updatable in update
+             */
+//            $university->login_email    = $post['login_email'];
+//            $university->login_user_name= $post['login_name'];
+            $university->website        = $post['website'];
+            $university->phone          = $post['phone'];
+            $university->note           = $post['note'];
+
+            $university->updated_by     = Auth::user()->id;
             $university->save();
-            $university->created_by_name    = Auth::user()->name;
+//            $university->created_by_name    = Auth::user()->name;
 
 
             return response()->json(['university' => $university])->setStatusCode(200);

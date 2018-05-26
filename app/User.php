@@ -37,6 +37,14 @@ class User extends Authenticatable
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function university(){
+
+        return $this->hasOne('App\University');
+    }
+
+    /**
      * @param $value
      * @return mixed
      */

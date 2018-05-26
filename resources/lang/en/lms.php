@@ -233,6 +233,11 @@
                 'table' => [
                     'id'                => 'Id',
                     'name'              => 'Name',
+                    'email'             => 'Email',
+                    'login_name'        => 'Login Name',
+                    'login_email'       => 'Login Email',
+                    'website'           => 'Website',
+                    'phone'             => 'Phone',
                     'created_by'        => 'Created By',
                     'created_at'        => 'Created At',
                     'action'            => 'Action'
@@ -241,6 +246,14 @@
                     'edit_title'        => 'Edit University',
                     'add_title'         => 'Add New University',
                     'name'              => 'Name',
+                    'email'             => 'Email',
+                    'login_name'        => 'Login Name',
+                    'login_email'       => 'Login Email',
+                    'website'           => 'Website',
+                    'phone'             => 'Phone',
+                    'note'              => 'Note',
+                    'profile_photo'     => 'Profile Photo',
+                    'login_message'     => 'These login information will be used to create login user for university.'
                 ]
 
             ],
