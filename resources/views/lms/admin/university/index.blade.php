@@ -28,6 +28,11 @@
                             <tr>
                                 <th>{{ __('lms.page.university.table.id') }}</th>
                                 <th>{{ __('lms.page.university.table.name') }}</th>
+                                <th>{{ __('lms.page.university.table.email') }}</th>
+                                <th>{{ __('lms.page.university.table.phone') }}</th>
+                                <th>{{ __('lms.page.university.table.website') }}</th>
+                                <th>{{ __('lms.page.university.table.login_name') }}</th>
+                                <th>{{ __('lms.page.university.table.login_email') }}</th>
                                 <th>{{ __('lms.page.university.table.created_by') }}</th>
                                 <th>{{ __('lms.page.university.table.created_at') }}</th>
                                 <th>{{ __('lms.page.university.table.action') }}</th>
