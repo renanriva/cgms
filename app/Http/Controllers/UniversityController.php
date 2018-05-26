@@ -131,6 +131,19 @@ class UniversityController extends Controller
 
     }
 
+    public function view($id){
+
+        $university = University::find($id);
+
+        $title = $university->name.' - '.env('APP_NAME') ;
+
+        return view('lms.admin.university.view', ['title'=> $title,
+            'university' => $university]);
+
+
+
+    }
+
     /**
      * @param $id
      * @return \Illuminate\Http\JsonResponse

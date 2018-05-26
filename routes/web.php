@@ -109,6 +109,7 @@ Route::middleware(['auth'])->group(function (){
 
             Route::get('/', 'UniversityController@index');
             Route::get('/ajax', 'UniversityController@getUniversityList');
+            Route::get('/{id}', 'UniversityController@view');
 
             Route::post('/ajax/table', 'UniversityController@getTableData');
             Route::post('/ajax/{id}', 'UniversityController@update');
