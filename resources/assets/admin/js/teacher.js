@@ -201,6 +201,92 @@ $(document).ready(function () {
 
 
 
+        insertTeacher();
+        function insertTeacher() {
+
+            var btnSubmit = $('.btn-submit-teacher');
+
+            btnSubmit.click(function () {
+
+
+                var id = btnSubmit.attr('data-id');
+                if (id === undefined){
+                    id = '';
+                }
+                var type = btnSubmit.attr('data-type');
+
+                var form = $('.teacher-form');
+
+                // var province = form.find('.js-province').select2('data')[0].text;
+                // var canton = form.find('.js-canton').select2('data');
+                // console.log(province, canton);
+
+
+                var data = {
+
+                    first_name  : form.find('input[name=first_name]').val(),
+                    last_name   : form.find('input[name=last_name]').val(),
+                    social_id   : form.find('input[name=social_id]').val(),
+                    cc          : form.find('input[name=cc]').val(),
+                    email       : form.find('input[name=email]').val(),
+                    telephone   : form.find('input[name=telephone]').val(),
+                    mobile      : form.find('input[name=mobile]').val(),
+                    gender      : form.find('input[name=gender]').val(),
+                    date_of_birth: form.find('input[name=date_of_birth]').val(),
+
+                    university  : form.find('input[name=university]').val(),
+                    join_date   : form.find('input[name=join_date]').val(),
+                    end_date    : form.find('input[name=end_date]').val(),
+                    amie        : form.find('input[name=amie]').val(),
+
+                    inst_email        : form.find('input[name=inst_email]').val(),
+                    work_area        : form.find('input[name=work_area]').val(),
+                    teacher_function        : form.find('input[name=teacher_function]').val(),
+                    category        : form.find('input[name=category]').val(),
+
+                    province        : form.find('.js-province').select2('data')[0].text,
+                    canton        : form.find('.js-canton').select2('data')[0].text,
+                    parroquia        : form.find('input[name=parroquia]').val(),
+                    zone        : form.find('.js-zone option:selected').val(),
+                    district        : form.find('input[name=district]').val(),
+                    dist_code        : form.find('input[name=dist_code]').val(),
+
+                    reason_type        : form.find('input[name=reason_type]').val(),
+                    speciality        : form.find('input[name=speciality]').val(),
+                    action_type        : form.find('input[name=action_type]').val(),
+                    action_description        : form.find('input[name=action_description]').val(),
+                    disability        : form.find('input[name=disability]').val(),
+                    ethnic_group        : form.find('input[name=ethnic_group]').val(),
+
+                };
+
+                // console.log('data ', data);
+
+                var ajaxObj = {
+                    url: '/admin/teachers',
+                    method: 'post',
+                    data: data
+                };
+
+                console.log('ajaxobj ', ajaxObj);
+
+
+                $.ajax(ajaxObj)
+                    .done(function (response, textStatus, xhr) {
+
+                        console.log('response ', response);
+
+                    }).fail(function (xhr, textStatus, errorThrown) {
+                    console.log('error ', xhr);
+
+                });
+
+
+
+            });
+
+        }
+
         loadProvinces();
         function loadProvinces() {
 
@@ -231,6 +317,18 @@ $(document).ready(function () {
                             });
                             province.attr('disabled', false);
 
+                            // select first province manually
+                            province.trigger({
+                                type: 'select2:select',
+                                params: {
+                                    data: {
+                                        'id': response.provinces[0].id,
+                                        'text': response.provinces[0].name,
+                                    }
+                                }
+                            });
+
+
                         }
 
                     }).fail(function (jqXhr, textStatus, errorThrown) {
@@ -250,7 +348,6 @@ $(document).ready(function () {
                     minimumResultsForSearch: 20,
                     maximumInputLength: 20 // only allow terms up to 20 characters long
                 });
-
 
             }
 

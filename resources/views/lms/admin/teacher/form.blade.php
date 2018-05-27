@@ -5,7 +5,7 @@
 @section('content_header')
     {{--<h1>{{ $title }}</h1>--}}
 {{--<h1>{{ $teacher->user->name }}</h1>--}}
-    <h1>
+    <h1> <i class="fa fa-user-plus"></i>
         <span class="js-modal-title-edit hidden">{{ __('lms.page.teacher.form.edit_title') }}</span>
         <span class="js-modal-title-add">{{ __('lms.page.teacher.form.add_title') }}</span>
     </h1>
@@ -14,7 +14,7 @@
 
 @section('content')
 
-    <form class="form-horizontal teacher-form" role="form" method="post" action="/admin/teachers">
+    <form class="form-horizontal teacher-form" role="form">
 
         <div class="row">
 
@@ -95,15 +95,14 @@
                             <label for="js-edit-canton-name" class="col-md-2 control-label">Photo</label>
                             <div class="col-md-4">
 
-                                <div class="text-center">
-                                    <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">
-                                    <h6>Upload a different photo...</h6>
-                                </div>
+                                {{--<div class="text-center">--}}
+                                    {{--<img src="//placehold.it/100" class="avatar img-circle" alt="avatar">--}}
+                                    {{--<h6>Upload a different photo...</h6>--}}
+                                {{--</div>--}}
 
                             </div>
                             <div class="col-md-4">
-                                <input type="file" class="form-control">
-
+                                {{--<input type="file" class="form-control">--}}
                             </div>
 
                         </div>
@@ -112,18 +111,18 @@
                             <label class="col-md-2 control-label" for="Gender">Gender</label>
                             <div class="col-md-4">
                                 <label class="radio-inline" for="Gender-0">
-                                    <input type="radio" name="gender" id="Gender-0" value="1" checked="checked">
+                                    <input type="radio" name="gender" id="Gender-0" value="m" checked="checked">
                                     Male
                                 </label>
                                 <label class="radio-inline" for="Gender-1">
-                                    <input type="radio" name="Gender" id="Gender-1" value="2">
+                                    <input type="radio" name="Gender" id="Gender-1" value="f">
                                     Female
                                 </label>
                             </div>
                             <label for="teacher-dob" class="col-md-2 control-label">Date of Birth</label>
                             <div class="col-md-4">
                                 <input id="teacher-dob" type="text" class="js-datepicker form-control" name="date_of_birth"
-                                       value="" required placeholder="Date of Birth" maxlength="100">
+                                       value="" required placeholder="Date of Birth" maxlength="20">
                             </div>
                         </div>
                     </div>
@@ -249,15 +248,15 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="parroquea" class="col-md-2 control-label">Parroquea</label>
+                            <label for="Parroquia" class="col-md-2 control-label">Parroquia</label>
                             <div class="col-md-4">
-                                <input id="parroquea" type="text" class="form-control" name="parroquea"
-                                       value="" required placeholder="Parroquea" maxlength="50">
+                                <input id="Parroquia" type="text" class="form-control" name="parroquia"
+                                       value="" required placeholder="Parroquia" maxlength="50">
                             </div>
 
                             <label for="Zone" class="col-md-2 control-label">Zone</label>
                             <div class="col-md-4">
-                                <select id="zone" class="form-control" name="zone">
+                                <select id="zone" class="form-control js-zone" name="zone">
                                     <option value="Zona 1">{{ __('lms.words.zone') }} 1</option>
                                     <option value="Zona 2">{{ __('lms.words.zone') }} 2</option>
                                     <option value="Zona 3">{{ __('lms.words.zone') }} 3</option>
@@ -350,7 +349,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="col-md-4">
-                    <button type="submit" class="btn btn-block btn-info">Submit</button>
+                    <button type="button" class="btn btn-submit-teacher btn-block btn-info" data-type="insert"
+                    data-id=""><i class="fa fa-upload"></i> Submit</button>
                 </div>
             </div>
         </div>

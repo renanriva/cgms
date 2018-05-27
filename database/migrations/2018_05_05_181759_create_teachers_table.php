@@ -20,6 +20,8 @@ class CreateTeachersTable extends Migration
 
             $table->bigIncrements('id');
 
+            $table->string('first_name', 100);  // first_name
+            $table->string('last_name', 100);  // last_name
             $table->string('social_id')->unique();  // CEDULA
             $table->string('moodle_id', 20)->nullable();
             $table->string('username', 30)->nullable();
@@ -27,9 +29,10 @@ class CreateTeachersTable extends Migration
             $table->string('cc')->nullable();       // c_c
             $table->date('date_of_birth')->nullable();       // DOB
 
-            $table->string('gender')->nullable();       // gender
-            $table->string('telephone')->nullable();       // gender
-            $table->string('mobile')->nullable();       // gender
+            $table->string('email', 50)->nullable();       // this will be used to create login email
+            $table->string('gender')->nullable();
+            $table->string('telephone')->nullable();
+            $table->string('mobile')->nullable();
 
             $table->string('inst_email',100)->nullable();       // column k
             $table->string('university_name', 255)->nullable();       // column z
@@ -54,7 +57,7 @@ class CreateTeachersTable extends Migration
             $table->string('zone', 10)->nullable();       // ab
             $table->integer('parroquia_id')->nullable();       // parroquia
 
-            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->bigInteger('created_by')->unsigned();

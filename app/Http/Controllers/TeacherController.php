@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TeacherStoreRequest;
+use App\Repository\TeacherRepository;
 use App\Teacher;
 use App\User;
 use Illuminate\Http\Request;
@@ -95,23 +97,58 @@ class TeacherController extends Controller
 
     /**
      * @todo add validation rule
-     * @param Request $request
-     * @return $this
+     * @param TeacherStoreRequest|Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request){
+    public function store(TeacherStoreRequest $request){
 
-        $canton = new Canton();
-        $post = $request->all();
 
-        $canton->province_id    = $post['province_id'];
-        $canton->name           = $post['name'];
-        $canton->capital        = $post['capital'];
-        $canton->dist_name        = $post['dist_name'];
-        $canton->dist_code        = $post['dist_code'];
-        $canton->zone        = $post['zone'];
-        $canton->save();
+            $post = $request->all();
 
-        return response()->json(['canton' => $canton])->setStatusCode(201);
+            $teacher['first_name'] = $post['first_name'];
+            $teacher['last_name'] = $post['last_name'];
+
+            $teacher['social_id'] = $post['social_id'];
+            $teacher['cc'] = $post['cc'];
+            $teacher['date_of_birth'] = date('Y-m-d', strtotime($post['date_of_birth']));
+
+            $teacher['email'] = $post['email'];
+            $teacher['gender'] = ucfirst($post['gender']);
+            $teacher['telephone'] = $post['telephone'];
+            $teacher['mobile'] = $post['mobile'];
+
+            $teacher['inst_email'] = $post['inst_email'];
+            $teacher['university_name'] = $post['university'];
+            $teacher['function'] = $post['teacher_function'];
+            $teacher['work_area'] = $post['work_area'];
+            $teacher['category'] = $post['category'];
+
+            $teacher['reason_type'] = $post['reason_type'];
+            $teacher['action_type'] = $post['action_type'];
+            $teacher['action_description'] = $post['action_description'];
+            $teacher['speciality'] = $post['speciality'];
+            $teacher['join_date'] = isset($post['join_date']) ? date('Y-m-d', strtotime($post['join_date'])) : null;
+            $teacher['end_date'] = isset($post['end_date']) ? date('Y-m-d', strtotime($post['end_date'])) : null;
+            $teacher['amie'] = $post['amie'];
+            $teacher['disability'] = $post['disability'];
+            $teacher['ethnic_group'] = $post['ethnic_group'];
+
+
+            $teacher['province'] = $post['province'];
+            $teacher['canton'] = $post['canton'];
+            $teacher['parroquia'] = $post['parroquia'];
+            $teacher['district'] = $post['district'];
+            $teacher['dist_code'] = $post['dist_code'];
+            $teacher['zone'] = $post['zone'];
+
+
+            $teacher_repo = new TeacherRepository();
+
+            $new_teacher = $teacher_repo->insert($teacher, USER_CREATION_TYPE_CMS);
+
+
+        return response()->json(['teacher' => $new_teacher])->setStatusCode(201);
+
     }
 
     /**
@@ -245,16 +282,16 @@ class TeacherController extends Controller
      */
     private function insertNewTeacher($teacher){
 
-        $user = new User();
-        $user->name = $teacher['name'];
-        $user->email    = $teacher['inst_email'];
-        $user->password = bcrypt($teacher['inst_email']);
-        $user->role     = USER_ROLE_STUDENT;
-        $user->status   = USER_STATUS_ACTIVE;
-        $user->creation_type = USER_CREATION_TYPE_IMPORT;
-        $user->created_by = Auth::user()->id;
-        $user->updated_by = Auth::user()->id;
-        $user->save();
+//        $user = new User();
+//        $user->name = $teacher['name'];
+//        $user->email    = $teacher['inst_email'];
+//        $user->password = bcrypt($teacher['inst_email']);
+//        $user->role     = USER_ROLE_STUDENT;
+//        $user->status   = USER_STATUS_ACTIVE;
+//        $user->creation_type = USER_CREATION_TYPE_IMPORT;
+//        $user->created_by = Auth::user()->id;
+//        $user->updated_by = Auth::user()->id;
+//        $user->save();
 
         $newTeacher = new Teacher();
         $newTeacher->social_id = $teacher['social_id'];

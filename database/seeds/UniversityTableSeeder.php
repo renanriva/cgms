@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use Illuminate\Database\Seeder;
 use App\University;
 use App\Events\UniversityCreated;
@@ -14,6 +15,8 @@ class UniversityTableSeeder extends Seeder
     public function run()
     {
 
+        $user = User::find(1);
+
         $university = new University();
         $university->name = 'Universidad de Cuenca';
         $university->email = 'cuenca@test.com';
@@ -22,7 +25,7 @@ class UniversityTableSeeder extends Seeder
         $university->created_by = 1;
         $university->updated_by = 1;
         $university->save();
-        event(new UniversityCreated($university));
+        event(new UniversityCreated($university, $user));
 
 
         $university = new University();
@@ -33,7 +36,7 @@ class UniversityTableSeeder extends Seeder
         $university->created_by = 1;
         $university->updated_by = 1;
         $university->save();
-        event(new UniversityCreated($university));
+        event(new UniversityCreated($university, $user));
 
 
 
@@ -45,7 +48,7 @@ class UniversityTableSeeder extends Seeder
         $university->created_by = 1;
         $university->updated_by = 1;
         $university->save();
-        event(new UniversityCreated($university));
+        event(new UniversityCreated($university, $user));
 
     }
 }
