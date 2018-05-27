@@ -58,7 +58,6 @@
                                     <select id="js-edit-user-status" class="js-edit-user-status form-control" placeholder="{{ __('lms.page.user.table.status') }}" >
                                         <option value="active">Active</option>
                                         <option value="inactive">Inactive</option>
-                                        <option value="teacher">teacher</option>
                                     </select>
                                 </div>
                             </div>

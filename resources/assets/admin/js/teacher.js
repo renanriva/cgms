@@ -20,7 +20,9 @@ $(document).ready(function () {
                 url:'/admin/teachers/ajax/table',
                 method: 'POST'
             },
+            "order": [[ 0, "desc" ]],
             columns: [
+                { data: 'id', name: 'teachers.id', searchable: false },
                 { data: 'social_id', name: 'teachers.social_id', searchable: true },
                 { data: 'teacher_name', name: 'teacher_name', searchable: true,
                     render:function (item, data, meta) {
@@ -201,6 +203,104 @@ $(document).ready(function () {
 
 
 
+        insertTeacher();
+        function insertTeacher() {
+
+            var btnSubmit = $('.btn-submit-teacher');
+
+            btnSubmit.click(function () {
+
+                var jsErrorBlock = $('.js-error-block');
+
+                jsErrorBlock.find('.help-block').html("");
+                jsErrorBlock.removeClass('has-error');
+
+
+                var id = btnSubmit.attr('data-id');
+                if (id === undefined){
+                    id = '';
+                }
+                var type = btnSubmit.attr('data-type');
+
+                var form = $('.teacher-form');
+
+                var data = {
+
+                    first_name  : form.find('input[name=first_name]').val(),
+                    last_name   : form.find('input[name=last_name]').val(),
+                    social_id   : form.find('input[name=social_id]').val(),
+                    cc          : form.find('input[name=cc]').val(),
+                    email       : form.find('input[name=email]').val(),
+                    telephone   : form.find('input[name=telephone]').val(),
+                    mobile      : form.find('input[name=mobile]').val(),
+                    gender      : form.find('input[name=gender]').val(),
+                    date_of_birth: form.find('input[name=date_of_birth]').val(),
+
+                    university  : form.find('input[name=university]').val(),
+                    join_date   : form.find('input[name=join_date]').val(),
+                    end_date    : form.find('input[name=end_date]').val(),
+                    amie        : form.find('input[name=amie]').val(),
+
+                    inst_email        : form.find('input[name=inst_email]').val(),
+                    work_area        : form.find('input[name=work_area]').val(),
+                    teacher_function        : form.find('input[name=teacher_function]').val(),
+                    category        : form.find('input[name=category]').val(),
+
+                    province        : form.find('.js-province').select2('data')[0].text,
+                    canton        : form.find('.js-canton').select2('data')[0].text,
+                    parroquia        : form.find('input[name=parroquia]').val(),
+                    zone        : form.find('.js-zone option:selected').val(),
+                    district        : form.find('input[name=district]').val(),
+                    dist_code        : form.find('input[name=dist_code]').val(),
+
+                    reason_type        : form.find('input[name=reason_type]').val(),
+                    speciality        : form.find('input[name=speciality]').val(),
+                    action_type        : form.find('input[name=action_type]').val(),
+                    action_description        : form.find('input[name=action_description]').val(),
+                    disability        : form.find('input[name=disability]').val(),
+                    ethnic_group        : form.find('input[name=ethnic_group]').val(),
+
+                };
+
+                // console.log('data ', data);
+
+                var ajaxObj = {
+                    url: '/admin/teachers',
+                    method: 'post',
+                    data: data
+                };
+
+                $.ajax(ajaxObj)
+                    .done(function (response, textStatus, xhr) {
+
+                        // console.log('response ', response);
+
+                        if (xhr.status === 201){
+                            redirect('/admin/teachers');
+                        }
+
+                    }).fail(function (xhr, textStatus, errorThrown) {
+
+
+                        if (xhr.status === 422){
+
+                            $.each(xhr.responseJSON.errors, function (key, errors) {
+                                $('.js-'+key+'-block').addClass('has-error');
+
+                                $.each(errors, function (index, error) {
+                                    $('.js-'+key+'-block').find('.help-block').append(error+'<br/>');
+                                });
+                            });
+                        }
+
+                });
+
+
+
+            });
+
+        }
+
         loadProvinces();
         function loadProvinces() {
 
@@ -231,6 +331,18 @@ $(document).ready(function () {
                             });
                             province.attr('disabled', false);
 
+                            // select first province manually
+                            province.trigger({
+                                type: 'select2:select',
+                                params: {
+                                    data: {
+                                        'id': response.provinces[0].id,
+                                        'text': response.provinces[0].name,
+                                    }
+                                }
+                            });
+
+
                         }
 
                     }).fail(function (jqXhr, textStatus, errorThrown) {
@@ -248,10 +360,8 @@ $(document).ready(function () {
                     // dropdownParent: modal,
                     width: 'resolve',
                     minimumResultsForSearch: 20,
-                    // minimumInputLength: 1, // only start searching when the user has input 3 or more characters
                     maximumInputLength: 20 // only allow terms up to 20 characters long
                 });
-
 
             }
 
@@ -261,9 +371,8 @@ $(document).ready(function () {
         $('.js-province').on('select2:select', function (e) {
 
             var data = e.params.data;
-            console.log(data);
+            loadCantons(data.id);
 
-            loadCantons(data.id)
         });
 
         function loadCantons(provinceId) {
@@ -319,7 +428,34 @@ $(document).ready(function () {
 
         }// end function
 
+
+        $('.js-canton').on('select2:select', function (e) {
+
+            var data = e.params.data;
+            console.log('canton ', data);
+            // loadCantons(data.id);
+
+        })
     }
 
+
+    function redirect (url) {
+        var ua        = navigator.userAgent.toLowerCase(),
+            isIE      = ua.indexOf('msie') !== -1,
+            version   = parseInt(ua.substr(4, 2), 10);
+
+        // Internet Explorer 8 and lower
+        if (isIE && version < 9) {
+            var link = document.createElement('a');
+            link.href = url;
+            document.body.appendChild(link);
+            link.click();
+        }
+
+        // All other browsers can use the standard window.location.href (they don't lose HTTP_REFERER like Internet Explorer 8 & lower does)
+        else {
+            window.location.href = url;
+        }
+    }
 
 });

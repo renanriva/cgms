@@ -3,7 +3,10 @@
 namespace App\Providers;
 
 use App\Events\RegistrationApproved;
+use App\Events\TeacherCreated;
 use App\Events\UniversityCreated;
+use App\Listeners\AddTeacherUser;
+use App\Listeners\CreateTeacherUser;
 use App\Listeners\CreateUniversityUser;
 use App\Listeners\GenerateInspectionCertificate;
 use Illuminate\Support\Facades\Event;
@@ -17,6 +20,10 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
+
+        TeacherCreated::class => [
+            CreateTeacherUser::class
+        ],
 
         RegistrationApproved::class => [
             GenerateInspectionCertificate::class,

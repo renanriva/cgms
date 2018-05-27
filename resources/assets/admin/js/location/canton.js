@@ -264,8 +264,6 @@ $(document).ready(function () {
         loadProvinces();
         function loadProvinces() {
 
-            console.log('is province ');
-
             var province = $('.js-province');
 
             province.empty();

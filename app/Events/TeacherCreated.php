@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\University;
+use App\Teacher;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -11,22 +11,23 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class UniversityCreated
+class TeacherCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $university;
-    public $user;
+    public $teacher;
+    public $creation_type;
 
     /**
      * Create a new event instance.
      *
-     * @param University $university
+     * @param Teacher $teacher
+     * @param int   $creation_type
      */
-    public function __construct(University $university, $user)
+    public function __construct(Teacher $teacher, $creation_type)
     {
-        $this->university = $university;
-        $this->user = $user;
+        $this->teacher = $teacher;
+        $this->creation_type = $creation_type;
     }
 
     /**

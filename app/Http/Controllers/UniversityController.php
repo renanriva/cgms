@@ -94,7 +94,7 @@ class UniversityController extends Controller
         /**
          * create user and update university with user_id
          */
-        event(new UniversityCreated($university));
+        event(new UniversityCreated($university, Auth::user()));
 
 
         return response()->json(['university' => $university])->setStatusCode(201);
