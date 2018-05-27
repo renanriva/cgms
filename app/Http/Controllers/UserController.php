@@ -48,12 +48,15 @@ class UserController extends Controller
 
         $post = $request->all();
 
-        $user->name           = $post['name'];
-        $user->email        = $post['email'];
-        $user->role        = $post['role'];
-        $user->status        = $post['status'];
-        $user->password     = bcrypt($post['email']);
-        $user->creation_type        = USER_CREATION_TYPE_CMS;
+        $role = array_keys(USER_ROLE, $post['role']);
+        $status = array_keys(USER_STATUS, $post['status']);
+
+        $user->name             = $post['name'];
+        $user->email            = $post['email'];
+        $user->role             = $role[0];
+        $user->status           = $status[0];
+        $user->password         = bcrypt($post['email']);
+        $user->creation_type    = USER_CREATION_TYPE_CMS;
         $user->save();
 
         return response()->json(['user' => $user])->setStatusCode(201);
