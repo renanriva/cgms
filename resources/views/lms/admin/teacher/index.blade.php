@@ -30,7 +30,7 @@
                     <table class="table table-bordered table-responsive" id="teacher-table">
                         <thead>
                             <tr>
-                                {{--<th>{{ __('lms.page.teacher.table.id') }}</th>--}}
+                                <th>{{ __('lms.page.teacher.table.id') }}</th>
                                 <th>{{ __('lms.page.teacher.table.security_id') }}</th>
                                 <th width="18%">{{ __('lms.page.teacher.table.name') }}</th>
                                 <th>{{ __('lms.page.teacher.table.email') }}</th>
@@ -53,7 +53,7 @@
         </div>
     </div>
 
-    @include('lms.admin.teacher.edit_modal')
+    {{--@include('lms.admin.teacher.edit_modal')--}}
     @include('lms.admin.teacher.moodal_modal')
     @include('lms.admin.teacher.upload_form')
     @include('lms.admin.parts.modal_delete')

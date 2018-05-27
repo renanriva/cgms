@@ -20,7 +20,9 @@ $(document).ready(function () {
                 url:'/admin/teachers/ajax/table',
                 method: 'POST'
             },
+            "order": [[ 0, "desc" ]],
             columns: [
+                { data: 'id', name: 'teachers.id', searchable: false },
                 { data: 'social_id', name: 'teachers.social_id', searchable: true },
                 { data: 'teacher_name', name: 'teacher_name', searchable: true,
                     render:function (item, data, meta) {
@@ -208,6 +210,11 @@ $(document).ready(function () {
 
             btnSubmit.click(function () {
 
+                var jsErrorBlock = $('.js-error-block');
+
+                jsErrorBlock.find('.help-block').html("");
+                jsErrorBlock.removeClass('has-error');
+
 
                 var id = btnSubmit.attr('data-id');
                 if (id === undefined){
@@ -216,11 +223,6 @@ $(document).ready(function () {
                 var type = btnSubmit.attr('data-type');
 
                 var form = $('.teacher-form');
-
-                // var province = form.find('.js-province').select2('data')[0].text;
-                // var canton = form.find('.js-canton').select2('data');
-                // console.log(province, canton);
-
 
                 var data = {
 
@@ -268,16 +270,28 @@ $(document).ready(function () {
                     data: data
                 };
 
-                console.log('ajaxobj ', ajaxObj);
-
-
                 $.ajax(ajaxObj)
                     .done(function (response, textStatus, xhr) {
 
-                        console.log('response ', response);
+                        // console.log('response ', response);
+
+                        if (xhr.status === 201){
+                            redirect('/admin/teachers');
+                        }
 
                     }).fail(function (xhr, textStatus, errorThrown) {
-                    console.log('error ', xhr);
+
+
+                        if (xhr.status === 422){
+
+                            $.each(xhr.responseJSON.errors, function (key, errors) {
+                                $('.js-'+key+'-block').addClass('has-error');
+
+                                $.each(errors, function (index, error) {
+                                    $('.js-'+key+'-block').find('.help-block').append(error+'<br/>');
+                                });
+                            });
+                        }
 
                 });
 
@@ -424,5 +438,24 @@ $(document).ready(function () {
         })
     }
 
+
+    function redirect (url) {
+        var ua        = navigator.userAgent.toLowerCase(),
+            isIE      = ua.indexOf('msie') !== -1,
+            version   = parseInt(ua.substr(4, 2), 10);
+
+        // Internet Explorer 8 and lower
+        if (isIE && version < 9) {
+            var link = document.createElement('a');
+            link.href = url;
+            document.body.appendChild(link);
+            link.click();
+        }
+
+        // All other browsers can use the standard window.location.href (they don't lose HTTP_REFERER like Internet Explorer 8 & lower does)
+        else {
+            window.location.href = url;
+        }
+    }
 
 });

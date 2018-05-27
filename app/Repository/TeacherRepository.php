@@ -84,6 +84,25 @@ class TeacherRepository
     }
 
 
+    /**
+     * @param $social_id
+     * @param $inst_email
+     * @return bool
+     */
+    public function isTeacherExist($social_id, $inst_email){
+
+        $teacher = Teacher::where([
+            'social_id' => $social_id,
+            'inst_email'    => $inst_email
+        ])->count();
+
+        if ($teacher > 0){
+            return true;
+        }
+
+        return false;
+
+    }
 
 
 }
