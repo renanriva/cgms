@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TeacherStoreRequest;
+use App\Http\Requests\TeacherUpdateRequest;
 use App\Repository\TeacherRepository;
 use App\Teacher;
 use App\User;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use App\Province;
 use Illuminate\Support\Facades\Auth;
@@ -93,6 +96,27 @@ class TeacherController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @param         $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit(Request $request, $id){
+
+        $user = Auth::user();
+        if ($user->can('edit', Teacher::class)) {
+
+            $title = 'Edit Teacher - ' . env('APP_NAME');
+
+            $teacher = Teacher::find($id);
+
+            return view('lms.admin.teacher.form', ['title' => $title, 'teacher' => $teacher]);
+
+        } else{
+            echo  'unauthorized';
+        }
+
+    }
 
     /**
      * @todo add validation rule
@@ -109,7 +133,7 @@ class TeacherController extends Controller
 
             $teacher['social_id'] = $post['social_id'];
             $teacher['cc'] = $post['cc'];
-            $teacher['date_of_birth'] = date('Y-m-d', strtotime($post['date_of_birth']));
+            $teacher['date_of_birth'] = isset($post['date_of_birth']) ? date('Y-m-d', strtotime($post['date_of_birth'])) : null;
 
             $teacher['email'] = $post['email'];
             $teacher['gender'] = ucfirst($post['gender']);
@@ -151,32 +175,74 @@ class TeacherController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param         $id
+     * @param TeacherUpdateRequest|Request $request
+     * @param                              $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id){
+    public function update(TeacherUpdateRequest $request, $id){
 
-//        $canton = Canton::find($id);
-//
-//        if ($canton){
-//
-//            // todo add canton update validation
-//            $post = $request->all();
-//
-//            $canton->province_id    = $post['province_id'];
-//            $canton->name           = $post['name'];
-//            $canton->capital        = $post['capital'];
-//            $canton->dist_name        = $post['dist_name'];
-//            $canton->dist_code        = $post['dist_code'];
-//            $canton->zone        = $post['zone'];
-//            $canton->save();
-//
-//            return response()->json(['canton' => $canton])->setStatusCode(200);
-//        } else{
-//
-//            return response()->json(['error' => 'Not found'])->setStatusCode(404);
-//        }
+        $post = $request->all();
+
+        $teacher['first_name'] = $post['first_name'];
+        $teacher['last_name'] = $post['last_name'];
+
+        $teacher['social_id'] = $post['social_id'];
+        $teacher['cc'] = $post['cc'];
+
+        if (isset($post['date_of_birth'])){
+            $dob = DateTime::createFromFormat('d/m/Y', $post['date_of_birth']);
+            $teacher['date_of_birth'] = $dob->format('Y-m-d');
+        } else {
+            $teacher['date_of_birth'] = null;
+        }
+
+
+        $teacher['gender'] = ucfirst($post['gender']);
+        $teacher['telephone'] = $post['telephone'];
+        $teacher['mobile'] = $post['mobile'];
+
+        $teacher['inst_email'] = $post['inst_email'];
+        $teacher['university_name'] = $post['university'];
+        $teacher['function'] = $post['teacher_function'];
+        $teacher['work_area'] = $post['work_area'];
+        $teacher['category'] = $post['category'];
+
+        $teacher['reason_type'] = $post['reason_type'];
+        $teacher['action_type'] = $post['action_type'];
+        $teacher['action_description'] = $post['action_description'];
+        $teacher['speciality'] = $post['speciality'];
+
+        if (isset($post['join_date'])) {
+            $joinDate = DateTime::createFromFormat('d/m/Y', $post['join_date']);
+            $teacher['join_date'] = $joinDate->format('Y-m-d');
+        } else{
+            $teacher['join_date'] =  null;
+        }
+
+        if (isset($post['end_date'])) {
+            $endDate = DateTime::createFromFormat('d/m/Y', $post['end_date']);
+            $teacher['end_date'] = $endDate->format('Y-m-d');
+        }{
+            $teacher['end_date'] = null;
+        }
+
+        $teacher['amie'] = $post['amie'];
+        $teacher['disability'] = $post['disability'];
+        $teacher['ethnic_group'] = $post['ethnic_group'];
+
+        $teacher['province'] = $post['province'];
+        $teacher['canton'] = $post['canton'];
+        $teacher['parroquia'] = $post['parroquia'];
+        $teacher['district'] = $post['district'];
+        $teacher['dist_code'] = $post['dist_code'];
+        $teacher['zone'] = $post['zone'];
+
+
+        $teacher_repo = new TeacherRepository();
+        $new_teacher = $teacher_repo->update($teacher, $id);
+
+
+        return response()->json(['teacher' => $new_teacher])->setStatusCode(200);
 
 
     }

@@ -29,6 +29,8 @@ Route::middleware(['auth'])->group(function (){
             Route::get('/', 'TeacherController@index');
             Route::post('/', 'TeacherController@store');
             Route::get('/new', 'TeacherController@getNew');
+            Route::get('/{id}/edit', 'TeacherController@edit');
+            Route::post('/{id}', 'TeacherController@update');
 
             Route::post('/ajax/table', 'TeacherController@getTableData');
             Route::get('/profile/{id}', 'TeacherController@showProfile');
