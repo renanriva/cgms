@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Events\RegistrationApproved;
 use App\Registration;
+use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Province;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 use App\Canton;
@@ -142,6 +144,30 @@ class RegistrationController extends Controller
             return response()->json(['error' => 'Not found'])->setStatusCode(404);
         }
 
+
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getCertificate(){
+//
+//        $pdf = App::make('dompdf.wrapper');
+//        $pdf->loadView('lms.admin.registration.pdf.certificate');
+//        return $pdf->stream();
+
+
+        $certificateFilename = 'laravel-5.1_certificate_of_bh0161256.pdf';
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('lms.admin.registration.pdf.certificate');
+        $pdf->save(storage_path('app/public/course/certificate/' . $certificateFilename));
+
+        echo 'done';
+//        return $pdf->download('invoice.pdf');
+
+
+//        return view('lms.admin.registration.pdf.certificate',
+//            ['title'=> 'Test']);
 
     }
 

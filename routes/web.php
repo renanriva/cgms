@@ -68,6 +68,8 @@ Route::middleware(['auth'])->group(function (){
 
             Route::post('/{id}/update/{part}', 'RegistrationController@updateRegistration');
 
+            Route::get('/certificate',  'RegistrationController@getCertificate');
+
 
             //by teacher
 //            Route::post('/register/{id}', 'CourseController@getRegister');

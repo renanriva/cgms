@@ -13,9 +13,9 @@ return [
     |
     */
 
-    'title' => 'LMS',
+    'title' => 'Course Grade Management System',
 
-    'title_prefix' => '',
+    'title_prefix' => 'CGMS',
 
     'title_postfix' => '',
 
@@ -30,9 +30,9 @@ return [
     |
     */
 
-    'logo' => 'LMS <b>Admin</b>',
+    'logo' => 'CGMS <b>Admin</b>',
 
-    'logo_mini' => '<b>L</b>MS',
+    'logo_mini' => '<b>CG</b>MS',
 
     /*
     |--------------------------------------------------------------------------
