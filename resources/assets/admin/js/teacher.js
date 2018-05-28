@@ -216,13 +216,12 @@ $(document).ready(function () {
                 jsErrorBlock.removeClass('has-error');
 
 
-                var id = btnSubmit.attr('data-id');
-                if (id === undefined){
-                    id = '';
-                }
                 var type = btnSubmit.attr('data-type');
 
                 var form = $('.teacher-form');
+
+                form.find('input, select').attr('disabled', true);
+                $(this).attr('disabled', true);
 
                 var data = {
 
@@ -264,8 +263,14 @@ $(document).ready(function () {
 
                 // console.log('data ', data);
 
+                var url = '/admin/teachers';
+                if (type === 'update'){
+                    var id = btnSubmit.attr('data-id');
+                    url = '/admin/teachers/'+id;
+                }
+
                 var ajaxObj = {
-                    url: '/admin/teachers',
+                    url: url,
                     method: 'post',
                     data: data
                 };
@@ -277,6 +282,16 @@ $(document).ready(function () {
 
                         if (xhr.status === 201){
                             redirect('/admin/teachers');
+                        } else if (xhr.status === 200){
+                            // alert('updated');
+                            var alert = '<div class="alert alert-success alert-dismissible">' +
+                                '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>'+
+                            'Record updated successfully</div>';
+                            form.find('.js-message').html(alert);
+
+                            // $(".data-dismiss").fadeTo(2000, 500).slideUp(500, function(){
+                            //     $(".data-dismiss").alert('close');
+                            // });
                         }
 
                     }).fail(function (xhr, textStatus, errorThrown) {
@@ -292,6 +307,18 @@ $(document).ready(function () {
                                 });
                             });
                         }
+
+                }).always(function () {
+
+                    form.find('input, select').attr('disabled', false);
+                    btnSubmit.attr('disabled', false);
+
+                    if(type === 'update'){
+
+                        form.find('#teacher-inst-email').attr('disabled', true);
+                        form.find('#teacher-social-id').attr('disabled', true);
+
+                    }
 
                 });
 
@@ -326,22 +353,24 @@ $(document).ready(function () {
 
                             province.empty();
 
+                            var editProvince = $('.js-edit-province').val();
+
+                            var paramData = {
+                                id: response.provinces[0].id,
+                                name: response.provinces[0].name
+                            };
+
                             $.each(response.provinces, function (key, value) {
                                 province.append('<option value="'+value.id+'">'+value.name+'</option>');
                             });
-                            province.attr('disabled', false);
 
                             // select first province manually
                             province.trigger({
                                 type: 'select2:select',
-                                params: {
-                                    data: {
-                                        'id': response.provinces[0].id,
-                                        'text': response.provinces[0].name,
-                                    }
-                                }
+                                params: {data: paramData}
                             });
 
+                            province.attr('disabled', false);
 
                         }
 
@@ -432,7 +461,7 @@ $(document).ready(function () {
         $('.js-canton').on('select2:select', function (e) {
 
             var data = e.params.data;
-            console.log('canton ', data);
+            // console.log('canton ', data);
             // loadCantons(data.id);
 
         })

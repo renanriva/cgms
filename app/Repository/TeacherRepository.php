@@ -83,6 +83,56 @@ class TeacherRepository
 
     }
 
+    public function update($teacher, $id){
+
+
+        $newTeacher = Teacher::find($id);
+
+        $newTeacher->first_name = $teacher['first_name'];
+        $newTeacher->last_name = $teacher['last_name'];
+//        $newTeacher->social_id = $teacher['social_id'];
+        $newTeacher->cc = $teacher['cc'];
+
+        $newTeacher->gender = $teacher['gender'];
+        $newTeacher->date_of_birth = $teacher['date_of_birth'];
+
+//        $newTeacher->email = $teacher['email'];
+        $newTeacher->telephone = $teacher['telephone'];
+        $newTeacher->mobile = $teacher['mobile'];
+
+//        $newTeacher->inst_email = $teacher['inst_email'];
+        $newTeacher->university_name = $teacher['university_name'];
+        $newTeacher->join_date = $teacher['join_date'];
+        $newTeacher->end_date = $teacher['end_date'];
+        $newTeacher->amie= $teacher['amie'];
+
+        $newTeacher->function = $teacher['function'] ;
+        $newTeacher->work_area = $teacher['work_area'];
+
+        $newTeacher->category = $teacher['category'];
+        $newTeacher->reason_type = $teacher['reason_type'];
+        $newTeacher->action_type = $teacher['action_type'] ;
+        $newTeacher->action_description = $teacher['action_description'];
+        $newTeacher->speciality= $teacher['speciality'];
+
+        $newTeacher->disability = $teacher['disability'];
+        $newTeacher->ethnic_group = $teacher['ethnic_group'];
+
+        $newTeacher->province = $teacher['province'];
+        $newTeacher->canton = $teacher['canton'];
+        $newTeacher->parroquia = $teacher['parroquia'];
+        $newTeacher->district = $teacher['district'];
+        $newTeacher->district_code = $teacher['dist_code'];
+        $newTeacher->zone = $teacher['zone'];
+
+        $newTeacher->updated_by = Auth::user()->id;
+
+        $newTeacher->save();
+
+        return $newTeacher;
+
+    }
+
 
     /**
      * @param $social_id

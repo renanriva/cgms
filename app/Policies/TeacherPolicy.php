@@ -45,6 +45,29 @@ class TeacherPolicy
 
     }
 
+    public function edit(User $user){
+
+        if ($user->role == 'admin'){
+
+            return true;
+        }
+
+        return false;
+
+    }
+
+    public function update(User $user){
+
+        if ($user->role == 'admin'){
+
+            return true;
+        }
+
+        return false;
+
+    }
+
+
     public function delete(User $user){
 
         if ($user->role == 'admin'){
