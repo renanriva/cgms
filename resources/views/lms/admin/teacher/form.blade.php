@@ -85,7 +85,7 @@
 
                         </div>
 
-                        @unless($teacher)
+                        {{--@unless($is)--}}
 
                         <div class="row">
                             <div class="col-lg-6 col-sm-12">
@@ -112,7 +112,7 @@
                                 </div>
                             </div>
                         </div>
-                        @endunless
+                        {{--@endunless--}}
 
 
                         <div class="row">
@@ -401,6 +401,7 @@
                                 <div class="form-group js-error-block js-province-block">
                                     <label for="province" class="col-md-3 control-label">Province</label>
                                     <div class="col-md-9">
+                                        <input type="hidden" class="js-edit-province" value="{{ isset($teacher) ? $teacher->province : '' }}">
                                         <select id="province" class="form-control js-province" name="province"></select>
                                         <div class="help-block"></div>
                                     </div>
@@ -440,20 +441,21 @@
                                     <label for="Zone" class="col-md-3 control-label">Zone</label>
                                     <div class="col-md-9">
                                         <select id="zone" class="form-control js-zone" name="zone">
-                                            <option {{ isset($teacher) ? $teacher->zone =='Zona 1' : '' }}
+                                            <option {{ isset($teacher) ? $teacher->zone =='Zona 1' ? 'SELECTED' : '' : '' }}
                                                     value="Zona 1">{{ __('lms.words.zone') }} 1</option>
-                                            <option {{ isset($teacher) ? $teacher->zone =='Zona 2' : '' }}
+                                            <option {{ isset($teacher) ? $teacher->zone =='Zona 2' ? 'SELECTED' : '' : '' }}
                                                     value="Zona 2">{{ __('lms.words.zone') }} 2</option>
-                                            <option {{ isset($teacher) ? $teacher->zone =='Zona 3' : '' }}
+                                            <option {{ isset($teacher) ? $teacher->zone =='Zona 3' ? 'SELECTED' : '' : '' }}
                                                     value="Zona 3">{{ __('lms.words.zone') }} 3</option>
-                                            <option {{ isset($teacher) ? $teacher->zone =='Zona 4' : '' }}
+                                            <option {{ isset($teacher) ? $teacher->zone == 'Zona 4' ? 'SELECTED' : '' : '' }}
                                                     value="Zona 4">{{ __('lms.words.zone') }} 4</option>
-                                            <option {{ isset($teacher) ? $teacher->zone =='Zona 5' : '' }}
+                                            <option {{ isset($teacher) ? $teacher->zone =='Zona 5' ? 'SELECTED' : '' : '' }}
                                                     value="Zona 5">{{ __('lms.words.zone') }} 5</option>
-                                            <option {{ isset($teacher) ? $teacher->zone =='Zona 6' : '' }}
+                                            <option {{ isset($teacher) ? $teacher->zone =='Zona 6' ? 'SELECTED' : '' : '' }}
                                                     value="Zona 6">{{ __('lms.words.zone') }} 6</option>
-                                            <option{{ isset($teacher) ? $teacher->zone =='Zona 7' : '' }}
+                                            <option {{ isset($teacher) ? $teacher->zone =='Zona 7' ? 'SELECTED' : '' : '' }}
                                                     value="Zona 7">{{ __('lms.words.zone') }} 7</option>
+
                                         </select>
                                         <div class="help-block"></div>
                                     </div>

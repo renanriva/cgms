@@ -54176,21 +54176,24 @@ $(document).ready(function () {
 
                         province.empty();
 
+                        var editProvince = $('.js-edit-province').val();
+
+                        var paramData = {
+                            id: response.provinces[0].id,
+                            name: response.provinces[0].name
+                        };
+
                         $.each(response.provinces, function (key, value) {
                             province.append('<option value="' + value.id + '">' + value.name + '</option>');
                         });
-                        province.attr('disabled', false);
 
                         // select first province manually
                         province.trigger({
                             type: 'select2:select',
-                            params: {
-                                data: {
-                                    'id': response.provinces[0].id,
-                                    'text': response.provinces[0].name
-                                }
-                            }
+                            params: { data: paramData }
                         });
+
+                        province.attr('disabled', false);
                     }
                 }).fail(function (jqXhr, textStatus, errorThrown) {
 
@@ -54270,7 +54273,7 @@ $(document).ready(function () {
         $('.js-canton').on('select2:select', function (e) {
 
             var data = e.params.data;
-            console.log('canton ', data);
+            // console.log('canton ', data);
             // loadCantons(data.id);
         });
     }
