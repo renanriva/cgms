@@ -52,6 +52,7 @@ Route::middleware(['auth'])->group(function (){
             Route::post('/ajax/{id}', 'CourseController@update');
             Route::delete('/ajax/{id}', 'CourseController@delete');
             Route::post('/upload/inspection-form', 'CourseController@uploadInspection');
+            Route::post('/upload/new-course', 'CourseController@uploadCourseList');
 
             Route::get('/search/ajax', 'CourseController@getSearch');
 

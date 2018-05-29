@@ -26,7 +26,7 @@ $(document).ready(function () {
             template: 'qq-new-course-template-manual-trigger',
             multiple: false,
             request: {
-                endpoint: '/admin/upcoming-courses/upload',
+                endpoint: '/admin/course/upload/new-course',
                 customHeaders: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
@@ -41,9 +41,10 @@ $(document).ready(function () {
                 },
                 onComplete: function (id, name, response, xhr ) {
 
-                    if(response.error === undefined){
-                        modal.modal('hide');
-                    }
+                    console.log('response ', response);
+                    // if(response.error === undefined){
+                    //     modal.modal('hide');
+                    // }
 
                 },
                 onStatusChange: function (id, oldStatus, newStatus) {

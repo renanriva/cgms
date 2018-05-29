@@ -52,7 +52,7 @@ class CourseRepository
         $course->video_type             = $post['video_type'];
         $course->video_code             = $post['video_code'];
         $course->terms_and_conditions   = $post['terms_condition'];
-        $course->data_update_brief    = $post['data_update_text'];
+        $course->data_update_brief      = $post['data_update_text'];
 
         $course->inspection_form_generated = false;
 
