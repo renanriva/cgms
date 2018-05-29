@@ -9,6 +9,8 @@ $(document).ready(function () {
         format: 'dd/mm/yyyy',
     });
 
+    $("[rel=tooltip]").tooltip({ placement: 'top'});
+
 
     var selectProvinceLength = $('.js-select-province').length;
 

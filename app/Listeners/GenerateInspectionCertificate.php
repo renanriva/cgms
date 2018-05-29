@@ -39,9 +39,10 @@ class GenerateInspectionCertificate
 
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadView('lms.admin.registration.pdf.certificate', ['registration' => $approved->registration]);
-        $pdf->save(storage_path('app/public/course/certificate/' . $certificateFilename));
+        $pdf->save(storage_path('app/course/certificate/' . $certificateFilename));
 
         $approved->registration->registry_is_generated = true;
+        $approved->registration->certificate_path = storage_path('app/course/certificate/' . $certificateFilename);
         $approved->registration->save();
 
     }

@@ -74,10 +74,10 @@ class UpcomingController extends Controller
      */
     public function uploadCourseRequest(Request $request) {
 
-        $cloud = Storage::disk('public');
+        $cloud = Storage::disk();
         $path = $cloud->putFile('course/request', $request->file('qqfile'));
 
-        $path = storage_path('app/public/'.$path);
+        $path = storage_path('app/'.$path);
 
         try {
             $rows = [];

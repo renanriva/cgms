@@ -28,7 +28,7 @@ class Registration extends Model
         'reg_date', 'teacher_id', 'course_id', 'user_social_id', 'user_first_name', 'user_last_name',
         'email', 'cell_phone', 'accept_tc', 'tc_accept_time',
         'inspection_certificate', 'inspection_certificate_signed', 'inspection_certificate_upload_time',
-        'registry_is_generated', 'is_approved',
+        'registry_is_generated', 'is_approved', 'certificate_path',
         'approval_time', 'approved_by',
     ];
 

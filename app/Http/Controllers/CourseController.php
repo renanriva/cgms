@@ -182,10 +182,10 @@ class CourseController extends Controller
     public function uploadCourseList(Request $request){
 
 //        @todo cloud_storage_path
-        $cloud = Storage::disk('public');
+        $cloud = Storage::disk();
         $path = $cloud->putFile('course/new_course_list', $request->file('qqfile'));
 
-        $path = storage_path('app/public/'.$path);
+        $path = storage_path('app/'.$path);
 
         $uniRepo = new UniversityRepository();
 
@@ -249,7 +249,7 @@ class CourseController extends Controller
     public function uploadInspection(Request $request) {
 
 
-        $cloud = Storage::disk('public');
+        $cloud = Storage::disk();
 
         $filename = "course_".$request->input('course_id').'_inspection_form.'.$request->file('qqfile')->extension();
         $path = $cloud->putFileAs('course/inspection', $request->file('qqfile'), $filename);
@@ -296,7 +296,7 @@ class CourseController extends Controller
             $registration->user_social_id = $teacher->social_id;
             $registration->user_first_name = $teacher->user->name;
             $registration->inspection_certificate = '';
-            $registration->inspection_certificate_signed = '';
+            $registration->inspection_certificate_signed = false;
             $registration->reg_date     = null;
             $registration->accept_tc     = REGISTRATION_ACCEPT_TERMS_AND_CONDITION_FALSE;
             $registration->registry_is_generated = REGISTRATION_REGISTRY_IS_NOT_GENERATED;
