@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Http\Requests\CourseInsertRequest;
 use App\Registration;
 use App\Repository\CourseRepository;
 use App\Teacher;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -58,11 +60,12 @@ class CourseController extends Controller
 
 
     /**
-     * @todo add validation rule
-     * @param Request $request
+     * Insert new course from web request
+     *
+     * @param CourseInsertRequest|Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request){
+    public function store(CourseInsertRequest $request){
 
         // @todo add authorization check
 
@@ -77,9 +80,21 @@ class CourseController extends Controller
         $course['university_id']                = $post['university_id'];
         $course['short_name']                   = $post['short_name'];
 
-//        @todo check date format
-        $course['start_date']                   = date('Y-m-d', strtotime($post['start_date']));
-        $course['end_date']                     = date('Y-m-d', strtotime($post['end_date']));
+        if (isset($post['start_date'])) {
+            $startDate = DateTime::createFromFormat('d/m/Y', $post['start_date']);
+            $course['start_date'] = $startDate->format('Y-m-d');
+        } else{
+            $course['start_date'] =  null;
+        }
+
+        if (isset($post['end_date'])) {
+            $startDate = DateTime::createFromFormat('d/m/Y', $post['end_date']);
+            $course['end_date'] = $startDate->format('Y-m-d');
+        } else{
+            $course['end_date'] =  null;
+        }
+//        $course['start_date']                   = date('Y-m-d', strtotime($post['start_date']));
+//        $course['end_date']                     = date('Y-m-d', strtotime($post['end_date']));
 
         $course['hours']                        = $post['hours'];
         $course['quota']                        = $post['quota'];
@@ -93,8 +108,7 @@ class CourseController extends Controller
         $course['data_update_brief']            = $post['data_update_text'];
 
         $course['inspection_form_generated']    = false;
-//        $course->save();
-        
+
         $courseRepo = new CourseRepository();
 
         $newCourse = $courseRepo->insert($course);

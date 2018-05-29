@@ -28,6 +28,22 @@ class CoursePolicy
      * @param User $user
      * @return bool
      */
+    public function create(User $user){
+
+        if ($user->role == 'admin'){
+
+            return true;
+        }
+
+        return false;
+    }
+
+
+
+    /**
+     * @param User $user
+     * @return bool
+     */
     public function upcoming(User $user){
 
         if ($user->role == 'teacher'){
