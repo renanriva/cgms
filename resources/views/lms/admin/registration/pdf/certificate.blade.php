@@ -22,10 +22,11 @@
             <div class="col-1"></div>
             <div class="col-10">
                 <p> <span>25 July, 2016</span><br/>Estimado/a Docente,</p>
-                <p><span class="teacher-name">Ariful Haque</span><br/> <span class="teacher-id">BH0161257</span></p>
+                <p><span class="teacher-name">{{ $registration->student->first_name . ' '.$registration->student->last_name  }}</span>
+                    <br/> <span class="teacher-id">{{ $registration->student->social_id }}</span></p>
                 <p class="text-justify">El Ministerio de Educación tiene el agrado de comunicarle que usted ha realizado su inscripción de
-                    manera exitosa para participar en el Curso de Capacitación de <span class="course-name">INCLUSIÓN EDUCATIVA Y APRENDIZAJE SOSTENIBLE</span>,
-                    con beca del Ministerio de Educación, a través la <span class="university-name">Universidad de Melbourne</span> y ALATA.
+                    manera exitosa para participar en el Curso de Capacitación de <span class="course-name">{{ $registration->course->short_name }}</span>,
+                    con beca del Ministerio de Educación, a través la <span class="university-name">{{ $registration->course->university->name }}</span> y ALATA.
                 </p>
                 <br/>
                 <p class="text-justify">Estamos seguros que la actualización de sus conocimientos pedagógicos contribuirá a su mejoramiento
