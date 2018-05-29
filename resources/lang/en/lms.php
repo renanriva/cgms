@@ -24,6 +24,10 @@
                 'my_courses'        => 'My Courses',
 
             ],
+            'user'              => [
+                'my_portfolio'  => 'My Portfolio',
+                'my_requests'  => 'Registration Requests'
+            ],
             'university'        => 'University',
             'profile'           => 'My Profile',
             'settings'          => [
