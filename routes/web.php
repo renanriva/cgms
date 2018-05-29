@@ -24,6 +24,9 @@ Route::middleware(['auth'])->group(function (){
     Route::prefix('admin')->group(function(){
 
 
+        Route::get('/unauthorized', 'HomeController@unauthorized');
+
+
         Route::prefix('teachers')->group(function (){
 
             Route::get('/', 'TeacherController@index');

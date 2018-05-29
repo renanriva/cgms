@@ -27,13 +27,19 @@ class UpcomingController extends Controller
      */
     public function index(){
 
-        $title = 'Upcoming Course List - '.env('APP_NAME') ;
-
         $user = Auth::user();
 
-//        dd($user->teacher->social_id);
-        return view('lms.admin.course.upcoming', ['title'=> $title,
-            'courses' => $user->teacher->allUpcomingCourses]);
+        if ($user->can('upcoming', Course::class)){
+
+            $title = 'Upcoming Course List - '.env('APP_NAME') ;
+
+
+            return view('lms.admin.course.upcoming', ['title'=> $title,
+                'courses' => $user->teacher->allUpcomingCourses]);
+        } else {
+
+            return response()->redirectTo('admin/unauthorized');
+        }
 
     }
 

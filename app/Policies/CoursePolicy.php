@@ -5,6 +5,11 @@ namespace App\Policies;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
+/**
+ * Class CoursePolicy
+ *
+ * @package App\Policies
+ */
 class CoursePolicy
 {
     use HandlesAuthorization;
@@ -12,10 +17,25 @@ class CoursePolicy
     /**
      * Create a new policy instance.
      *
-     * @return void
      */
     public function __construct()
     {
         //
     }
+
+
+    /**
+     * @param User $user
+     * @return bool
+     */
+    public function upcoming(User $user){
+
+        if ($user->role == 'teacher'){
+
+            return true;
+        }
+
+        return false;
+    }
+
 }

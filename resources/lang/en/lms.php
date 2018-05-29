@@ -11,18 +11,18 @@
         'menu' => [
             'main_nav'          => 'MAIN NAVIGATION',
             'account_settings'  => 'ACCOUNT SETTINGS',
-            'teachers'          => 'Teachers',
+            'teachers'          => [
+                'title'         => 'Teachers',
+                'all'            => 'Teachers List',
+                'portfolio'     => 'Teacher Portfolio',
+                'registration_inspection'  => 'Registration Inspection',
+            ],
             'course'            => [
                 'title'             => 'Courses',
-                'all'               => 'All Courses',
+                'all'               => 'Courses List',
                 'upcoming_courses'  => 'Upcoming Courses',
                 'my_courses'        => 'My Courses',
 
-            ],
-            'registration'        => [
-                'title'             => 'Registration',
-                'all'               => 'All Registrations',
-                'approval_pending'  => 'Approval Pending',
             ],
             'university'        => 'University',
             'profile'           => 'My Profile',
