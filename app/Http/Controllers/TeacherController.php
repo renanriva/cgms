@@ -254,10 +254,10 @@ class TeacherController extends Controller
     public function upload(Request $request){
 
 
-        $cloud = Storage::disk('public');
+        $cloud = Storage::disk();
         $path = $cloud->putFile('teacher', $request->file('qqfile'));
 
-        $path = storage_path('app/public/'.$path);
+        $path = storage_path('app/'.$path);
 
         $teacherRepo = new TeacherRepository();
 

@@ -22,14 +22,12 @@
 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css">
 
-    {{--@if(config('adminlte.plugins.select2'))--}}
-        {{--<!-- Select2 -->--}}
-    {{--@endif--}}
-
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/AdminLTE.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/custom.css') }}">
 
-    @if(config('adminlte.plugins.datatables'))
+
+@if(config('adminlte.plugins.datatables'))
         <!-- DataTables -->
         <link rel="stylesheet" href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
     @endif
@@ -47,12 +45,7 @@
 
 @yield('body')
 
-
-
-@if(config('adminlte.plugins.chartjs'))
-    <!-- ChartJS -->
     {{--<script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>--}}
-@endif
 
 
 <script type="text/javascript" src="{{ mix('/admin/js/app.js') }}"></script>

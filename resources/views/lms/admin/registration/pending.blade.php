@@ -84,9 +84,15 @@
                                                     {{ date('d M, Y - h:i a', strtotime($registration->tc_accept_time)) }}</small>
                                             @endif
                                         </td>
-                                        <td>    @if(strlen($registration->inspection_certificate_signed) > 1)
-                                                    <i class="fa fa-file-pdf-o"></i>
-                                                    <a class="" href="javascript:void(0)"> Download</a>
+                                        <td>    @if($registration->inspection_certificate_signed == REGISTRATION_INSPECTION_CERTIFICATE_SIGNED)
+                                                    <form method="post" action="{{ url("/admin/registration/$registration->id/download/student-inspection-form") }}">
+                                                        {{ csrf_field() }}
+                                                        <i class="fa fa-file-pdf-o"></i>
+                                                        <button type="submit"
+                                                                class="btn btn-link btn-link-download"  rel="tooltip"
+                                                           title="{{ basename($registration->inspection_certificate) }}"
+                                                        > Download</button>
+                                                    </form>
                                                     <br/>
                                                 <small><i class="fa fa-clock-o"></i>
                                                     {{ date('d M, Y - h:i a', strtotime($registration->inspection_certificate_upload_time)) }}</small>
@@ -132,7 +138,6 @@
 
             </div>
         </div>
-
 
 
     </div>

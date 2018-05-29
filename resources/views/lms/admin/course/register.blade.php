@@ -199,7 +199,7 @@
 
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <p>File <code>{{ basename($registration->inspection_certificate_signed)  }}</code>
+                                            <p>File <code>{{ basename($registration->inspection_certificate)  }}</code>
                                                 uploaded at: {{ date('d M Y: h:i a', strtotime($registration->inspection_certificate_upload_time)) }}</p>
                                         </div>
                                     </div>

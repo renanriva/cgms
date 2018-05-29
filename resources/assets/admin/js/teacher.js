@@ -102,7 +102,7 @@ $(document).ready(function () {
         $('#fine-uploader-manual-trigger').fineUploader({
             template: 'qq-template-manual-trigger',
             request: {
-                endpoint: '/admin/teachers/upload',
+                endpoint: '/admin/teachers/upload/teachers-list',
                 customHeaders: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
@@ -226,8 +226,6 @@ $(document).ready(function () {
 
                 };
 
-                // console.log('data ', data);
-
                 var url = '/admin/teachers';
                 if (type === 'update'){
                     var id = btnSubmit.attr('data-id');
@@ -243,20 +241,13 @@ $(document).ready(function () {
                 $.ajax(ajaxObj)
                     .done(function (response, textStatus, xhr) {
 
-                        // console.log('response ', response);
-
                         if (xhr.status === 201){
                             redirect('/admin/teachers');
                         } else if (xhr.status === 200){
-                            // alert('updated');
                             var alert = '<div class="alert alert-success alert-dismissible">' +
                                 '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>'+
                             'Record updated successfully</div>';
                             form.find('.js-message').html(alert);
-
-                            // $(".data-dismiss").fadeTo(2000, 500).slideUp(500, function(){
-                            //     $(".data-dismiss").alert('close');
-                            // });
                         }
 
                     }).fail(function (xhr, textStatus, errorThrown) {
@@ -426,8 +417,7 @@ $(document).ready(function () {
         $('.js-canton').on('select2:select', function (e) {
 
             var data = e.params.data;
-            // console.log('canton ', data);
-            // loadCantons(data.id);
+            loadCantons(data.id);
 
         })
     }

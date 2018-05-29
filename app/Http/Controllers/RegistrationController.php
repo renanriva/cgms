@@ -65,6 +65,7 @@ class RegistrationController extends Controller
 
             $registration->accept_tc = $post['accept_tc'] == true ? REGISTRATION_ACCEPT_TERMS_AND_CONDITION : REGISTRATION_ACCEPT_TERMS_AND_CONDITION_FALSE;
 
+            $registration->reg_date = date('Y-m-d', strtotime('now'));
             $registration->tc_accept_time = $current_time;
             $registration->status = REGISTRATION_STATUS_ACCEPT;
             $registration->save();
@@ -95,7 +96,7 @@ class RegistrationController extends Controller
      */
     public function uploadStudentInspection(Request $request, $registrationId){
 
-        $cloud = Storage::disk('public');
+        $cloud = Storage::disk();
 
         $filename = "course_".$registrationId.'_teacher_'.$request->input('teacher_id').'_inspection_signed_certificate.'.$request->file('qqfile')->extension();
         $path = $cloud->putFileAs('course/signed_certificates', $request->file('qqfile'), $filename);
@@ -106,7 +107,8 @@ class RegistrationController extends Controller
         $registration = Registration::find($registrationId);
 
         $current_time = Carbon::now()->toDateTimeString();
-        $registration->inspection_certificate_signed = $path;
+        $registration->inspection_certificate = $path;
+        $registration->inspection_certificate_signed = REGISTRATION_INSPECTION_CERTIFICATE_SIGNED;
         $registration->inspection_certificate_upload_time = $current_time;
         $registration->status = REGISTRATION_STATUS_SIGNED;
         $registration->save();
@@ -139,7 +141,7 @@ class RegistrationController extends Controller
     /**
      * @todo add validation rule
      * @param Request $request
-     * @return $this
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request){
 
@@ -162,55 +164,29 @@ class RegistrationController extends Controller
      * @param         $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id){
-
-        $canton = Canton::find($id);
-
-        if ($canton){
-
-            // todo add canton update validation
-            $post = $request->all();
-
-            $canton->province_id    = $post['province_id'];
-            $canton->name           = $post['name'];
-            $canton->capital        = $post['capital'];
-            $canton->dist_name        = $post['dist_name'];
-            $canton->dist_code        = $post['dist_code'];
-            $canton->zone        = $post['zone'];
-            $canton->save();
-
-            return response()->json(['canton' => $canton])->setStatusCode(200);
-        } else{
-
-            return response()->json(['error' => 'Not found'])->setStatusCode(404);
-        }
-
-
-    }
+//    public function update(Request $request, $id){
+//
+//    }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @todo add registration policy
+     *
+     * @param $registrationId
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function getCertificate(){
-//
-//        $pdf = App::make('dompdf.wrapper');
-//        $pdf->loadView('lms.admin.registration.pdf.certificate');
-//        return $pdf->stream();
+    public function downloadStudentInspectionCertificate($registrationId){
 
+        $registration = Registration::find($registrationId);
 
-        $certificateFilename = 'laravel-5.1_certificate_of_bh0161256.pdf';
-        $pdf = App::make('dompdf.wrapper');
-        $pdf->loadView('lms.admin.registration.pdf.certificate');
-        $pdf->save(storage_path('app/public/course/certificate/' . $certificateFilename));
+        if ($registration){
 
-        echo 'done';
-//        return $pdf->download('invoice.pdf');
+            return response()->file($registration->inspection_certificate);
 
+        } else {
+            return response()->redirectTo('admin/unauthorized');
 
-//        return view('lms.admin.registration.pdf.certificate',
-//            ['title'=> 'Test']);
+        }
 
     }
-
 
 }

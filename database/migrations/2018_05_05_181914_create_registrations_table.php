@@ -29,14 +29,15 @@ class CreateRegistrationsTable extends Migration
             $table->string('user_last_name')->nullable();
             $table->string('email')->nullable();
             $table->string('cell_phone')->nullable();
-            $table->tinyInteger('accept_tc')->nullable(REGISTRATION_NOT_ACCEPTED_TERMS_AND_CONDITION);
+            $table->tinyInteger('accept_tc')->nullable()->default(REGISTRATION_NOT_ACCEPTED_TERMS_AND_CONDITION);
             $table->timestamp('tc_accept_time')->nullable();
 
             $table->string('inspection_certificate')->nullable();
-            $table->string('inspection_certificate_signed')->nullable();
+            $table->boolean('inspection_certificate_signed')->nullable()->default(REGISTRATION_INSPECTION_CERTIFICATE_NOT_SIGNED);
             $table->timestamp('inspection_certificate_upload_time')->nullable();
 
             $table->tinyInteger('registry_is_generated')->default(REGISTRATION_REGISTRY_IS_NOT_GENERATED);
+            $table->string('certificate_path', 255)->nullable();
 
             $table->tinyInteger('status')->default(REGISTRATION_STATUS_INCOMPLETE);
             $table->tinyInteger('is_approved')->default(REGISTRATION_IS_NOT_APPROVED);

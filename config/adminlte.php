@@ -138,27 +138,40 @@ return [
         [
             'text'          => 'lms.menu.course.title',
             'icon'          => 'book',
+            'can'           => 'admin-only',
             'submenu'       => [
                 [
                     'text'      => 'lms.menu.course.all',
                     'url'           => 'admin/course',
                     'can'           => 'admin-only',
                 ],
-                [
-                    'text'      => 'lms.menu.course.my_courses',
-                    'url'           => 'admin/my-course',
-                    'can'           => 'teacher-only',
-                ],
-                [
-                    'text'      => 'lms.menu.course.upcoming_courses',
-                    'url'           => 'admin/upcoming-courses',
-                    'icon'          => 'list-ol',
-                    'can'           => 'teacher-only',
-                ]
+//                [
+//                    'text'      => 'lms.menu.course.my_courses',
+//                    'url'           => 'admin/my-course',
+//                    'can'           => 'teacher-only',
+//                ],
+//                [
+//                    'text'      => 'lms.menu.course.upcoming_courses',
+//                    'url'           => 'admin/upcoming-courses',
+//                    'icon'          => 'list-ol',
+//                    'can'           => 'teacher-only',
+//                ]
 
 
             ],
 
+        ],
+        [
+            'text'          => 'lms.menu.user.my_portfolio',
+            'icon'          => 'folder-open',
+            'url'           => '#', // my/portfolio
+            'can'           => 'teacher-only'
+        ],
+        [
+            'text'          => 'lms.menu.user.my_requests',
+            'icon'          => 'list-ol',
+            'url'           => 'admin/upcoming-courses',
+            'can'           => 'teacher-only'
         ],
         [
             'text'          => 'lms.menu.university',
@@ -192,23 +205,15 @@ return [
                 ],
             ],
         ],
-//        [
-//            'text'    => 'lms.menu.settings.title',
-//            'icon'    => 'cogs',
-//            'can'       => 'admin-only',
-//            'submenu' => [
-//
-//            ],
-//        ],
         'lms.menu.account_settings',
         [
             'text' => 'lms.menu.profile',
-            'url'  => 'admin/settings',
+            'url'  => '#', // admin/settings
             'icon' => 'user',
         ],
         [
             'text' => 'Change Password',
-            'url'  => 'admin/settings',
+            'url'  => '#', //admin/settings
             'icon' => 'lock',
         ],
     ],

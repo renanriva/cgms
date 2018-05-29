@@ -37,7 +37,7 @@ Route::middleware(['auth'])->group(function (){
 
             Route::post('/ajax/table', 'TeacherController@getTableData');
             Route::get('/profile/{id}', 'TeacherController@showProfile');
-            Route::post('/upload', 'TeacherController@upload');
+            Route::post('/upload/teachers-list', 'TeacherController@upload');
 
 
         });
@@ -68,12 +68,11 @@ Route::middleware(['auth'])->group(function (){
             Route::get('/', 'RegistrationController@index');
             Route::get('/pending', 'RegistrationController@getPending');
             Route::post('/approve/{id}', 'RegistrationController@postApprove');
-
             Route::post('/{id}/update/{part}', 'RegistrationController@updateRegistration');
-
-            Route::get('/certificate',  'RegistrationController@getCertificate');
-
             Route::post('/{id}/upload/inspection', 'RegistrationController@uploadStudentInspection');
+
+
+            Route::post('/{id}/download/student-inspection-form', 'RegistrationController@downloadStudentInspectionCertificate');
 
 
 
