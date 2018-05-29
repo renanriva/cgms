@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\Http\Requests\CourseInsertRequest;
+use App\Http\Requests\CourseUpdateRequest;
 use App\Registration;
 use App\Repository\CourseRepository;
 use App\Teacher;
@@ -117,21 +118,20 @@ class CourseController extends Controller
     }
 
     /**
-     * @todo add authorization check
-     * @param Request $request
-     * @param         $id
+     * @param CourseUpdateRequest|Request $request
+     * @param                             $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id){
+    public function update(CourseUpdateRequest $request, $id){
 
         $course = Course::find($id);
 
         if ($course){
 
-            // todo add course update validation
             $post = $request->all();
 
-            $course->course_code      = $post['course_code'];
+            // add different procedure to update course code
+//            $course->course_code      = $post['course_code'];
             $course->course_type    = $post['course_type'];
             $course->modality       = $post['modality'];
 
@@ -151,6 +151,7 @@ class CourseController extends Controller
             $course->save();
 
             return response()->json(['course' => $course])->setStatusCode(200);
+
         } else{
 
             return response()->json(['error' => 'Not found'])->setStatusCode(404);

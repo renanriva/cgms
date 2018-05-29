@@ -38,6 +38,16 @@ class CoursePolicy
         return false;
     }
 
+    public function update(User $user){
+
+        if ($user->role == 'admin'){
+
+            return true;
+        }
+
+        return false;
+    }
+
 
 
     /**

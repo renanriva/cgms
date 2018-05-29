@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Course;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CourseInsertRequest extends FormRequest
+class CourseUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,8 @@ class CourseInsertRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->user()->can('create', Course::class);
+        return $this->user()->can('update', Course::class);
+
     }
 
     /**
@@ -25,7 +26,7 @@ class CourseInsertRequest extends FormRequest
     public function rules()
     {
         return [
-            'course_code'           => 'required|unique:courses|string|max:50',
+//            'course_code'           => 'required|unique:courses|string|max:50',
             'course_type'           => 'required|string|max:50',
             'modality'              => 'required|string|max:50|min:1',
             'short_name'            => 'required|string|max:255',
@@ -50,5 +51,4 @@ class CourseInsertRequest extends FormRequest
         ];
 
     }
-
 }
