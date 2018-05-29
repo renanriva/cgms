@@ -53900,7 +53900,7 @@ $(document).ready(function () {
         var updateRegistration = function updateRegistration(registrationId, data, part) {
 
             var obj = {
-                url: '/admin/course/register/' + registrationId + '/update/' + part,
+                url: '/admin/registration/' + registrationId + '/update/' + part,
                 method: 'POST',
                 data: data
             };

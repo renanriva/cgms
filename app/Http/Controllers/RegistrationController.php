@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use App\Province;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 use App\Canton;
 
@@ -81,6 +83,43 @@ class RegistrationController extends Controller
 
         return response()->json(['registration' => $registration,
             'adminUser' => Auth::user()->name]);
+    }
+
+
+    /**
+     * @param Request $request
+     * @param         $registrationId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function uploadStudentInspection(Request $request, $registrationId){
+
+        $cloud = Storage::disk('public');
+
+        $filename = "course_".$registrationId.'_teacher_'.$request->input('teacher_id').'_inspection_signed_certificate.'.$request->file('qqfile')->extension();
+        $path = $cloud->putFileAs('course/signed_certificates', $request->file('qqfile'), $filename);
+
+        $path = storage_path('app/'.$path);
+
+
+        $registration = Registration::find($registrationId);
+
+        $current_time = Carbon::now()->toDateTimeString();
+        $registration->inspection_certificate_signed = $path;
+        $registration->inspection_certificate_upload_time = $current_time;
+        $registration->status = REGISTRATION_STATUS_SIGNED;
+        $registration->save();
+
+
+        /**
+         * Update the course request status
+         */
+        DB::table('course_requests')
+            ->where('course_id', $registration->course_id)
+            ->where('teacher_id', $registration->teacher_id)
+            ->update(['status' => COURSE_REQUEST_ACCEPTED]);
+
+        return response()->json(['path'=> $path, 'success' => true]);
+
     }
 
 
