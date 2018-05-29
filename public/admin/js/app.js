@@ -53636,6 +53636,67 @@ $(document).ready(function () {
 
 /***/ }),
 
+/***/ "./resources/assets/admin/js/new_course_upload.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {/**
+ * Created by ariful.haque on 09/05/2018.
+ */
+$(document).ready(function () {
+
+    var pageCourseLength = $('#course-upload-modal').length;
+
+    if (pageCourseLength > 0) {
+
+        console.log('New Course Upload');
+
+        var requestListModal = $('#course-upload-modal');
+        /**
+         * Course Request List Upload for course & teachers
+         */
+        $('#btn-new-course-upload').click(function () {
+
+            console.log('course upload modal');
+            requestListModal.modal('show');
+        });
+
+        $('#new-course-list-uploader-manual-trigger').fineUploader({
+            template: 'qq-new-course-template-manual-trigger',
+            multiple: false,
+            request: {
+                endpoint: '/admin/upcoming-courses/upload',
+                customHeaders: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            },
+            validation: {
+                itemLimit: 1,
+                allowedExtensions: ['csv', 'xls', 'xlsx']
+            },
+            callbacks: {
+                onSubmit: function onSubmit(id, name) {},
+                onComplete: function onComplete(id, name, response, xhr) {
+
+                    if (response.error === undefined) {
+                        modal.modal('hide');
+                    }
+                },
+                onStatusChange: function onStatusChange(id, oldStatus, newStatus) {},
+                onCancel: function onCancel(id, name) {}
+            },
+            autoUpload: false
+        });
+
+        $('#btn-upload-new-course-list').click(function () {
+            console.log('course-request-list-uploader-manual-trigger');
+            $('#new-course-list-uploader-manual-trigger').fineUploader('uploadStoredFiles');
+        });
+    } //end page
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))
+
+/***/ }),
+
 /***/ "./resources/assets/admin/js/profile.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -54901,6 +54962,7 @@ __webpack_require__("./resources/assets/admin/js/location.js");
 __webpack_require__("./resources/assets/admin/js/location/canton.js");
 __webpack_require__("./resources/assets/admin/js/location/parroquia.js");
 __webpack_require__("./resources/assets/admin/js/course.js");
+__webpack_require__("./resources/assets/admin/js/new_course_upload.js");
 __webpack_require__("./resources/assets/admin/js/teacher.js");
 __webpack_require__("./resources/assets/admin/js/university.js");
 __webpack_require__("./resources/assets/admin/js/upcoming.js");

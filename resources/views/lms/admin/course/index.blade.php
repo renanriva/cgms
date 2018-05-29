@@ -20,6 +20,8 @@
                         <div class="btn-group">
                             <button class="btn btn-sm btn-info" id="btn-upload-course-request">
                                 <i class="fa fa-upload"></i> {{ __('lms.elements.button.upload_course_request') }}</button>
+                            <button class="btn btn-sm btn-success" id="btn-new-course-upload">
+                                <i class="fa fa-cloud-upload"></i> {{ __('lms.elements.button.new_course_upload') }}</button>
                             <button class="btn btn-sm btn-primary" id="btn-create-course">
                                 <i class="fa fa-plus"></i> {{ __('lms.elements.button.create') }}</button>
                         </div>
@@ -51,6 +53,7 @@
 
         @include('lms.admin.course.edit_modal')
         @include('lms.admin.course.request_list_modal')
+        @include('lms.admin.course.course_upload_modal')
         @include('lms.admin.parts.modal_delete')
 
     </div>

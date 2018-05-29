@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\Registration;
+use App\Repository\CourseRepository;
 use App\Teacher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -69,34 +70,36 @@ class CourseController extends Controller
 
         $post = $request->all();
 
-        $course->course_code      = $post['course_code'];
-        $course->course_type    = $post['course_type'];
-        $course->modality       = $post['modality'];
+        $course['course_code']    = $post['course_code'];
+        $course['course_type']    = $post['course_type'];
+        $course['modality']       = $post['modality'];
 
-        $course->university_id  = $post['university_id'];
-        $course->short_name     = $post['short_name'];
+        $course['university_id']                = $post['university_id'];
+        $course['short_name']                   = $post['short_name'];
 
-        $course->start_date     = date('Y-m-d', strtotime($post['start_date']));
-        $course->end_date       = date('Y-m-d', strtotime($post['end_date']));
+//        @todo check date format
+        $course['start_date']                   = date('Y-m-d', strtotime($post['start_date']));
+        $course['end_date']                     = date('Y-m-d', strtotime($post['end_date']));
 
-        $course->hours          = $post['hours'];
-        $course->quota          = $post['quota'];
+        $course['hours']                        = $post['hours'];
+        $course['quota']                        = $post['quota'];
 
-        $course->comment        = $post['comment'];
-        $course->description    = $post['description'];
-        $course->video_text     = $post['video_text'];
-        $course->video_type     = $post['video_type'];
-        $course->video_code     = $post['video_code'];
-        $course->terms_and_conditions    = $post['terms_condition'];
-        $course->data_update_brief    = $post['data_update_text'];
+        $course['comment']                      = $post['comment'];
+        $course['description']                  = $post['description'];
+        $course['video_text']                   = $post['video_text'];
+        $course['video_type']                   = $post['video_type'];
+        $course['video_code']                   = $post['video_code'];
+        $course['terms_and_conditions']         = $post['terms_condition'];
+        $course['data_update_brief']            = $post['data_update_text'];
 
-        $course->inspection_form_generated = false;
+        $course['inspection_form_generated']    = false;
+//        $course->save();
+        
+        $courseRepo = new CourseRepository();
 
-        $course->created_by     = Auth::user()->id;
-        $course->updated_by     = Auth::user()->id;
-        $course->save();
+        $newCourse = $courseRepo->insert($course);
 
-        return response()->json(['course' => $course])->setStatusCode(201);
+        return response()->json(['course' => $newCourse])->setStatusCode(201);
     }
 
     /**
@@ -157,6 +160,90 @@ class CourseController extends Controller
 
     }
 
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function uploadCourseList(Request $request){
+
+//        @todo cloud_storage_path
+        $cloud = Storage::disk('public');
+        $path = $cloud->putFile('course/new_course_list', $request->file('qqfile'));
+
+        $path = storage_path('app/public/'.$path);
+
+        $teacherRepo = new TeacherRepository();
+
+        try {
+            $rows = [];
+
+            Excel::load($path, function ($reader) use(&$rows, $teacherRepo){
+
+                foreach ($reader->toArray() as $row) {
+
+
+                    $teacher['first_name'] = $row['nombres'];
+                    $teacher['last_name'] = "";
+                    $teacher['gender'] = ucfirst($row['genero']);
+                    $teacher['social_id'] = $row['cedula'];
+
+                    $teacher['cc'] = $row['c_c'];
+
+                    $teacher['date_of_birth'] = date('Y-m-d', strtotime($row['fecha_nacimiento']));
+                    $teacher['telephone'] = $row['telefono'];
+                    $teacher['mobile'] = $row['celular'];
+                    $teacher['moodle_id'] = '';
+                    $teacher['inst_email'] = $row['correo_electronico'];
+                    $teacher['email'] = $row['correo_electronico'];
+                    $teacher['university_name'] = $row['institucion_educativa'];
+                    $teacher['function'] = $row['funcion'];
+                    $teacher['work_area'] = $row['regimen_laboral'];
+                    $teacher['category'] = $row['categoria'];
+                    $teacher['reason_type'] = $row['tipo_razon'];
+                    $teacher['action_type'] = $row['tipo_accion'];
+                    $teacher['action_description'] = $row['explicacion_accion'];
+                    $teacher['speciality'] = $row['especialidad'];
+                    $teacher['join_date'] = date('Y-m-d', strtotime($row['fecha_inicio']));
+                    $teacher['end_date'] = isset($row['fecha_fin']) ? date('Y-m-d', strtotime($row['fecha_fin'])) : null;
+                    $teacher['amie'] = $row['amie'];
+                    $teacher['disability'] = $row['discapacidad'];
+                    $teacher['ethnic_group'] = $row['etnia'];
+
+                    $teacher['province'] = $row['provincia'];
+                    $teacher['canton'] = $row['canton'];
+                    $teacher['parroquia'] = $row['parroquia'];
+                    $teacher['district'] = $row['distrito'];
+                    $teacher['dist_code'] = $row['cod_distrito'];
+                    $teacher['zone'] = $row['zona'];
+
+                    /**
+                     * if social_id + inst_email found in teacher table
+                     * -> update the data
+                     * else
+                     * -> create a user with the name, inst_email + add teacher data
+                     */
+                    $is_teacher_exist = $teacherRepo->isTeacherExist($teacher['social_id'], $teacher['inst_email']);
+
+                    if ($is_teacher_exist == false){
+
+                        $teacherRepo->insert($teacher, USER_CREATION_TYPE_IMPORT);
+                        array_push($rows, $teacher);
+                    }
+//                    @todo update the data on else
+
+                }
+
+            });
+
+            return response()->json(['rows' => $rows, 'success' => true] );
+
+        } catch (\Exception $e) {
+
+            return response()->json(['error' => $e->getMessage(), 'file' => $path]);
+        }
+
+    }
 
     /**
      *

@@ -306,7 +306,8 @@
                 'close'     => 'Close',
                 'import'    =>  'Import',
                 'upload'    =>  'Upload',
-                'upload_course_request' => 'Upload Course Request' // in course list page
+                'upload_course_request' => 'Upload Course Request', // in course list page
+                'new_course_upload' => 'Upload New Course' // in course list page
             ],
         ],
         'words' =>[
