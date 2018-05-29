@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Events\RegistrationApproved;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\App;
 
 /**
  * Class GenerateInspectionCertificate
@@ -33,11 +34,15 @@ class GenerateInspectionCertificate
     {
         //@todo generate file and update the registration
 
+
+        $certificateFilename =$approved->registration->course->course_code . '_certificate_of_'.$approved->registration->student->social_id.'.pdf';
+
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('lms.admin.registration.pdf.certificate', ['registration' => $approved->registration]);
+        $pdf->save(storage_path('app/public/course/certificate/' . $certificateFilename));
+
         $approved->registration->registry_is_generated = true;
         $approved->registration->save();
 
-//        $update = Registration::find($approved->registration->id);
-//        $update->registry_is_generated = true;
-//        $update->save();
     }
 }

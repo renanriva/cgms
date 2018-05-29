@@ -11,7 +11,6 @@ class HomeController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @return void
      */
     public function __construct()
     {
@@ -34,5 +33,13 @@ class HomeController extends Controller
         } else{
             return response()->redirectTo('login');
         }
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function unauthorized(){
+
+        return view('lms.admin.error.403');
     }
 }

@@ -11,7 +11,7 @@ $(document).ready(function () {
         /**
          * Datepicker
          */
-        $('.js-edit-course-start_date, .js-edit-course-end_date').datepicker();
+        // $('.js-edit-course-start_date, .js-edit-course-end_date').datepicker();
 
 
         console.log('Course');
@@ -154,8 +154,8 @@ $(document).ready(function () {
                     start_date  : modal.find('.js-edit-course-start_date').val(),
                     end_date    : modal.find('.js-edit-course-end_date').val(),
 
-                    hours       : modal.find('.js-edit-course-hours').val(),
-                    quota       : modal.find('.js-edit-course-quota').val(),
+                    hours       : parseInt(modal.find('.js-edit-course-hours').val()),
+                    quota       : parseInt(modal.find('.js-edit-course-quota').val()),
 
                     comment     : modal.find('.js-edit-course-comment').val(),
                     description : modal.find('.js-edit-course-description').val(),
@@ -246,37 +246,64 @@ $(document).ready(function () {
          */
         function insertCourse(data) {
 
+            var form = $('.js-edit-course-form');
+
+            form.find('input, select').attr('disabled', true);
+            form.find('.btn').attr('disabled', true);
+
+            var jsErrorBlock = $('.js-error-block');
+            jsErrorBlock.find('.help-block').html("");
+            jsErrorBlock.removeClass('has-error');
+
+
+
             var ajaxObj = {
                 method: 'post',
                 data: data,
                 url: '/admin/course/ajax'
             };
             $.ajax(ajaxObj)
-                .done(function (response, textStatus, jqXhr) {
+            .done(function (response, textStatus, jqXhr) {
 
-                    if (jqXhr.status === 201) {
+                if (jqXhr.status === 201) {
 
-                        // after insert, hide form and show upload
+                    // after insert, hide form and show upload
 
-                        modal.find('.js-course-code').val(response.course.id);
+                    modal.find('.js-course-code').val(response.course.id);
 
-                        modal.find('.js-course-form').addClass('hidden');
-                        modal.find('.js-course-inspection-form').removeClass('hidden');
-                        modal.find('#btn-edit-course').attr('disabled', true);
+                    modal.find('.js-course-form').addClass('hidden');
+                    modal.find('.js-course-inspection-form').removeClass('hidden');
+                    modal.find('#btn-edit-course').attr('disabled', true);
 
-                        var row = '<tr class="success"><td>'+data.course_code+'</td><td>'+data.short_name+'</td><td>'+data.hours
-                            +'</td><td>'+data.start_date+'</td><td>'+data.end_date+'</td><td>'+data.quota+'</td>+' +
-                            '<td>'+data.comment+'</td><td>Actions</td></tr>';
+                    var row = '<tr class="success"><td>'+data.course_code+'</td><td>'+data.short_name+'</td><td>'+data.hours
+                        +'</td><td>'+data.start_date+'</td><td>'+data.end_date+'</td><td>'+data.quota+'</td>+' +
+                        '<td>'+data.comment+'</td><td>Actions</td></tr>';
 
-                        $('#course-table tr:last').after(row);
+                    $('#course-table tr:last').after(row);
 
-                    }
+                }
 
-                }).fail(function (jqXhr, textStatus, errorThrown) {
+            }).fail(function (xhr, textStatus, errorThrown) {
 
+                if (xhr.status === 422){
+
+                    $.each(xhr.responseJSON.errors, function (key, errors) {
+                        $('.js-'+key+'-block').addClass('has-error');
+
+                        $.each(errors, function (index, error) {
+                            $('.js-'+key+'-block').find('.help-block').append(error+'<br/>');
+                        });
+                    });
+                } else{
                     alert('Error: '+errorThrown);
-                    console.log('error ', jqXhr);
+                    console.log('errors ', xhr.responseJSON);
+                }
 
+
+            }).always(function () {
+
+                form.find('input, select').attr('disabled', false);
+                form.find('.btn').attr('disabled', false);
             });
 
         }
@@ -286,6 +313,16 @@ $(document).ready(function () {
          * @param data
          */
         function update(data) {
+
+            var form = $('.js-edit-course-form');
+
+            form.find('input, select').attr('disabled', true);
+            form.find('.btn').attr('disabled', true);
+
+            var jsErrorBlock = $('.js-error-block');
+            jsErrorBlock.find('.help-block').html("");
+            jsErrorBlock.removeClass('has-error');
+
 
             var ajaxObj = {
                 method: 'post',
@@ -317,11 +354,27 @@ $(document).ready(function () {
                         modal.modal('hide');
                     }
 
-                }).fail(function (jqXhr, textStatus, errorThrown) {
+                }).fail(function (xhr, textStatus, errorThrown) {
 
-                alert('Error: '+errorThrown);
-                console.log('error ', jqXhr);
+                if (xhr.status === 422){
 
+                    $.each(xhr.responseJSON.errors, function (key, errors) {
+                        $('.js-'+key+'-block').addClass('has-error');
+
+                        $.each(errors, function (index, error) {
+                            $('.js-'+key+'-block').find('.help-block').append(error+'<br/>');
+                        });
+                    });
+                } else{
+                    alert('Error: '+errorThrown);
+                    console.log('errors ', xhr.responseJSON);
+                }
+
+
+            }).always(function () {
+
+                form.find('input, select').attr('disabled', false);
+                form.find('.btn').attr('disabled', false);
             });
 
         }

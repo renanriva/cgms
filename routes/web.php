@@ -24,6 +24,9 @@ Route::middleware(['auth'])->group(function (){
     Route::prefix('admin')->group(function(){
 
 
+        Route::get('/unauthorized', 'HomeController@unauthorized');
+
+
         Route::prefix('teachers')->group(function (){
 
             Route::get('/', 'TeacherController@index');
@@ -49,12 +52,12 @@ Route::middleware(['auth'])->group(function (){
             Route::post('/ajax/{id}', 'CourseController@update');
             Route::delete('/ajax/{id}', 'CourseController@delete');
             Route::post('/upload/inspection-form', 'CourseController@uploadInspection');
+            Route::post('/upload/new-course', 'CourseController@uploadCourseList');
 
             Route::get('/search/ajax', 'CourseController@getSearch');
 
 //            @todo move those to Registration Controller
             Route::post('/register/{id}', 'CourseController@getRegister');
-            Route::post('/register/{id}/upload/inspection', 'CourseController@uploadStudentInspection');
 
 
         });
@@ -67,6 +70,11 @@ Route::middleware(['auth'])->group(function (){
             Route::post('/approve/{id}', 'RegistrationController@postApprove');
 
             Route::post('/{id}/update/{part}', 'RegistrationController@updateRegistration');
+
+            Route::get('/certificate',  'RegistrationController@getCertificate');
+
+            Route::post('/{id}/upload/inspection', 'RegistrationController@uploadStudentInspection');
+
 
 
             //by teacher

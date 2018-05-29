@@ -13,9 +13,9 @@ return [
     |
     */
 
-    'title' => 'LMS',
+    'title' => 'Course Grade Management System',
 
-    'title_prefix' => '',
+    'title_prefix' => 'CGMS',
 
     'title_postfix' => '',
 
@@ -30,9 +30,9 @@ return [
     |
     */
 
-    'logo' => 'LMS <b>Admin</b>',
+    'logo' => 'CGMS <b>Admin</b>',
 
-    'logo_mini' => '<b>L</b>MS',
+    'logo_mini' => '<b>CG</b>MS',
 
     /*
     |--------------------------------------------------------------------------
@@ -110,11 +110,30 @@ return [
     'menu' => [
         'lms.menu.main_nav',
         [
-            'text'      => 'lms.menu.teachers',
-            'url'       => 'admin/teachers',
-            'icon'      => 'users',
-            'can'       => 'admin-only',
+            'text'          => 'lms.menu.teachers.title',
+            'icon'          => 'users',
+            'can'           => 'admin-only',
+            'submenu'       => [
+                [
+                    'text'      => 'lms.menu.teachers.all',
+                    'url'       => 'admin/teachers',
+                    'icon'      => 'users',
+                    'can'       => 'admin-only',
 
+                ],
+                [
+                    'text'      => 'lms.menu.teachers.portfolio',
+                    'url'           => 'admin/registration',
+                    'can'           => 'admin-only',
+                    'icon'          => 'folder-open'
+                ],
+                [
+                    'text'      => 'lms.menu.teachers.registration_inspection',
+                    'url'           => 'admin/registration/pending',
+                    'can'           => 'admin-only',
+                    'icon'          => 'check-square'
+                ],
+            ]
         ],
         [
             'text'          => 'lms.menu.course.title',
@@ -142,24 +161,6 @@ return [
 
         ],
         [
-            'text'          => 'lms.menu.registration.title',
-            'icon'          => 'folder',
-            'submenu'       => [
-                [
-                    'text'      => 'lms.menu.registration.all',
-                    'url'           => 'admin/registration',
-                    'can'           => 'admin-only',
-                    'icon'          => 'folder-open'
-                ],
-                [
-                    'text'      => 'lms.menu.registration.approval_pending',
-                    'url'           => 'admin/registration/pending',
-                    'can'           => 'admin-only',
-                    'icon'          => 'shield'
-                ],
-            ]
-        ],
-        [
             'text'          => 'lms.menu.university',
             'url'           => 'admin/university',
             'icon'          => 'building',
@@ -174,6 +175,7 @@ return [
         [
             'text'    => 'lms.menu.settings.location.title',
             'icon'      => 'map',
+            'can'           => 'admin-only',
             'url'     => '#',
             'submenu' => [
                 [

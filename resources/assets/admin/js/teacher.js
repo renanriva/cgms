@@ -152,42 +152,7 @@ $(document).ready(function () {
 
             $('#teacher-table').on('click','.btn-create-modal-user', function () {
 
-                // modal.find('.js-modal-title-edit').removeClass('hidden');
-                // modal.find('.js-modal-title-add').addClass('hidden');
-                //
-                // var data = {
-                //     id              : $(this).attr('data-id'),
-                //     course_id       : $(this).attr('data-course_id'),
-                //     course_type     : $(this).attr('data-course_type'),
-                //     modality        : $(this).attr('data-modality'),
-                //     short_name      : $(this).attr('data-short_name'),
-                //     description     : $(this).attr('data-description'),
-                //     comment         : $(this).attr('data-comment'),
-                //     hours           : $(this).attr('data-hours'),
-                //     quota           : $(this).attr('data-quota'),
-                //     start_date      : $(this).attr('data-start_date'),
-                //     end_date        : $(this).attr('data-end_date'),
-                //     university_id   : $(this).attr('data-university_id')
-                // };
-                //
-                //
-                // modal.find('.js-edit-course-id').val(data.course_id);
-                // modal.find('.js-edit-course-type option[value="'+data.course_type+'"]').attr('selected', true);
-                // modal.find('.js-edit-course-modality option[value="'+data.modality+'"]').attr('selected', true);
-                // modal.find('.js-edit-course-university option[value="'+data.university_id+'"]').attr('selected', true);
-                // modal.find('.js-edit-course-short_name').val(data.short_name);
-                // modal.find('.js-edit-course-description').val(data.description);
-                // modal.find('.js-edit-course-comment').val(data.comment);
-                // modal.find('.js-edit-course-hours').val(data.hours);
-                // modal.find('.js-edit-course-quota').val(data.quota);
-                // modal.find('.js-edit-course-start_date').val(data.start_date);
-                // modal.find('.js-edit-course-end_date').val(data.end_date);
-                //
-                // modal.find('#btn-edit-course').attr('data-id', data.id);
-                // modal.find('#btn-edit-course').text('Update');
-                // modal.find('#btn-edit-course').attr('data-type','update');
                 createMoodleUser.modal('show');
-
 
             });
 

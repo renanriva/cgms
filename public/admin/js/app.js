@@ -52700,8 +52700,8 @@ $(document).ready(function () {
                     start_date: modal.find('.js-edit-course-start_date').val(),
                     end_date: modal.find('.js-edit-course-end_date').val(),
 
-                    hours: modal.find('.js-edit-course-hours').val(),
-                    quota: modal.find('.js-edit-course-quota').val(),
+                    hours: parseInt(modal.find('.js-edit-course-hours').val()),
+                    quota: parseInt(modal.find('.js-edit-course-quota').val()),
 
                     comment: modal.find('.js-edit-course-comment').val(),
                     description: modal.find('.js-edit-course-description').val(),
@@ -52786,6 +52786,15 @@ $(document).ready(function () {
 
         var insertCourse = function insertCourse(data) {
 
+            var form = $('.js-edit-course-form');
+
+            form.find('input, select').attr('disabled', true);
+            form.find('.btn').attr('disabled', true);
+
+            var jsErrorBlock = $('.js-error-block');
+            jsErrorBlock.find('.help-block').html("");
+            jsErrorBlock.removeClass('has-error');
+
             var ajaxObj = {
                 method: 'post',
                 data: data,
@@ -52807,10 +52816,25 @@ $(document).ready(function () {
 
                     $('#course-table tr:last').after(row);
                 }
-            }).fail(function (jqXhr, textStatus, errorThrown) {
+            }).fail(function (xhr, textStatus, errorThrown) {
 
-                alert('Error: ' + errorThrown);
-                console.log('error ', jqXhr);
+                if (xhr.status === 422) {
+
+                    $.each(xhr.responseJSON.errors, function (key, errors) {
+                        $('.js-' + key + '-block').addClass('has-error');
+
+                        $.each(errors, function (index, error) {
+                            $('.js-' + key + '-block').find('.help-block').append(error + '<br/>');
+                        });
+                    });
+                } else {
+                    alert('Error: ' + errorThrown);
+                    console.log('errors ', xhr.responseJSON);
+                }
+            }).always(function () {
+
+                form.find('input, select').attr('disabled', false);
+                form.find('.btn').attr('disabled', false);
             });
         };
 
@@ -52821,6 +52845,15 @@ $(document).ready(function () {
 
 
         var update = function update(data) {
+
+            var form = $('.js-edit-course-form');
+
+            form.find('input, select').attr('disabled', true);
+            form.find('.btn').attr('disabled', true);
+
+            var jsErrorBlock = $('.js-error-block');
+            jsErrorBlock.find('.help-block').html("");
+            jsErrorBlock.removeClass('has-error');
 
             var ajaxObj = {
                 method: 'post',
@@ -52849,10 +52882,25 @@ $(document).ready(function () {
 
                     modal.modal('hide');
                 }
-            }).fail(function (jqXhr, textStatus, errorThrown) {
+            }).fail(function (xhr, textStatus, errorThrown) {
 
-                alert('Error: ' + errorThrown);
-                console.log('error ', jqXhr);
+                if (xhr.status === 422) {
+
+                    $.each(xhr.responseJSON.errors, function (key, errors) {
+                        $('.js-' + key + '-block').addClass('has-error');
+
+                        $.each(errors, function (index, error) {
+                            $('.js-' + key + '-block').find('.help-block').append(error + '<br/>');
+                        });
+                    });
+                } else {
+                    alert('Error: ' + errorThrown);
+                    console.log('errors ', xhr.responseJSON);
+                }
+            }).always(function () {
+
+                form.find('input, select').attr('disabled', false);
+                form.find('.btn').attr('disabled', false);
             });
         };
 
@@ -52920,7 +52968,8 @@ $(document).ready(function () {
         /**
          * Datepicker
          */
-        $('.js-edit-course-start_date, .js-edit-course-end_date').datepicker();
+        // $('.js-edit-course-start_date, .js-edit-course-end_date').datepicker();
+
 
         console.log('Course');
 
@@ -53636,6 +53685,68 @@ $(document).ready(function () {
 
 /***/ }),
 
+/***/ "./resources/assets/admin/js/new_course_upload.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {/**
+ * Created by ariful.haque on 09/05/2018.
+ */
+$(document).ready(function () {
+
+    var pageCourseLength = $('#course-upload-modal').length;
+
+    if (pageCourseLength > 0) {
+
+        console.log('New Course Upload');
+
+        var requestListModal = $('#course-upload-modal');
+        /**
+         * Course Request List Upload for course & teachers
+         */
+        $('#btn-new-course-upload').click(function () {
+
+            console.log('course upload modal');
+            requestListModal.modal('show');
+        });
+
+        $('#new-course-list-uploader-manual-trigger').fineUploader({
+            template: 'qq-new-course-template-manual-trigger',
+            multiple: false,
+            request: {
+                endpoint: '/admin/course/upload/new-course',
+                customHeaders: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            },
+            validation: {
+                itemLimit: 1,
+                allowedExtensions: ['csv', 'xls', 'xlsx']
+            },
+            callbacks: {
+                onSubmit: function onSubmit(id, name) {},
+                onComplete: function onComplete(id, name, response, xhr) {
+
+                    console.log('response ', response);
+                    // if(response.error === undefined){
+                    //     modal.modal('hide');
+                    // }
+                },
+                onStatusChange: function onStatusChange(id, oldStatus, newStatus) {},
+                onCancel: function onCancel(id, name) {}
+            },
+            autoUpload: false
+        });
+
+        $('#btn-upload-new-course-list').click(function () {
+            console.log('course-request-list-uploader-manual-trigger');
+            $('#new-course-list-uploader-manual-trigger').fineUploader('uploadStoredFiles');
+        });
+    } //end page
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))
+
+/***/ }),
+
 /***/ "./resources/assets/admin/js/profile.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -53789,7 +53900,7 @@ $(document).ready(function () {
         var updateRegistration = function updateRegistration(registrationId, data, part) {
 
             var obj = {
-                url: '/admin/course/register/' + registrationId + '/update/' + part,
+                url: '/admin/registration/' + registrationId + '/update/' + part,
                 method: 'POST',
                 data: data
             };
@@ -53909,40 +54020,6 @@ $(document).ready(function () {
 
             $('#teacher-table').on('click', '.btn-create-modal-user', function () {
 
-                // modal.find('.js-modal-title-edit').removeClass('hidden');
-                // modal.find('.js-modal-title-add').addClass('hidden');
-                //
-                // var data = {
-                //     id              : $(this).attr('data-id'),
-                //     course_id       : $(this).attr('data-course_id'),
-                //     course_type     : $(this).attr('data-course_type'),
-                //     modality        : $(this).attr('data-modality'),
-                //     short_name      : $(this).attr('data-short_name'),
-                //     description     : $(this).attr('data-description'),
-                //     comment         : $(this).attr('data-comment'),
-                //     hours           : $(this).attr('data-hours'),
-                //     quota           : $(this).attr('data-quota'),
-                //     start_date      : $(this).attr('data-start_date'),
-                //     end_date        : $(this).attr('data-end_date'),
-                //     university_id   : $(this).attr('data-university_id')
-                // };
-                //
-                //
-                // modal.find('.js-edit-course-id').val(data.course_id);
-                // modal.find('.js-edit-course-type option[value="'+data.course_type+'"]').attr('selected', true);
-                // modal.find('.js-edit-course-modality option[value="'+data.modality+'"]').attr('selected', true);
-                // modal.find('.js-edit-course-university option[value="'+data.university_id+'"]').attr('selected', true);
-                // modal.find('.js-edit-course-short_name').val(data.short_name);
-                // modal.find('.js-edit-course-description').val(data.description);
-                // modal.find('.js-edit-course-comment').val(data.comment);
-                // modal.find('.js-edit-course-hours').val(data.hours);
-                // modal.find('.js-edit-course-quota').val(data.quota);
-                // modal.find('.js-edit-course-start_date').val(data.start_date);
-                // modal.find('.js-edit-course-end_date').val(data.end_date);
-                //
-                // modal.find('#btn-edit-course').attr('data-id', data.id);
-                // modal.find('#btn-edit-course').text('Update');
-                // modal.find('#btn-edit-course').attr('data-type','update');
                 createMoodleUser.modal('show');
             });
         };
@@ -54901,6 +54978,7 @@ __webpack_require__("./resources/assets/admin/js/location.js");
 __webpack_require__("./resources/assets/admin/js/location/canton.js");
 __webpack_require__("./resources/assets/admin/js/location/parroquia.js");
 __webpack_require__("./resources/assets/admin/js/course.js");
+__webpack_require__("./resources/assets/admin/js/new_course_upload.js");
 __webpack_require__("./resources/assets/admin/js/teacher.js");
 __webpack_require__("./resources/assets/admin/js/university.js");
 __webpack_require__("./resources/assets/admin/js/upcoming.js");

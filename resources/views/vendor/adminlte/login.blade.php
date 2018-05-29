@@ -10,8 +10,9 @@
 
 @section('body')
     <div class="login-box">
-        <div class="login-logo">
+        <div class="login-logo" style="margin-bottom: 1px;">
             <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}">{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}</a>
+            <img src="{{ url('/images/ministerio_de_education_logo.jpg') }}" width="360" align="{{ config('adminlte.title') }}"/>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
