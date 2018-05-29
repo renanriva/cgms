@@ -124,6 +124,9 @@
                         </table>
 
                     </div>
+                    <div class="box-footer text-center">
+                        {{ $registrations->links() }}
+                    </div>
                 </div>
 
 

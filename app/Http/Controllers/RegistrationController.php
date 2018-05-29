@@ -38,7 +38,9 @@ class RegistrationController extends Controller
     public function getPending(){
 
         $title = 'Pending Registration Management - '.env('APP_NAME') ;
-        $registrations = Registration::all();
+        $registrations = Registration::orderBy('id', 'desc')
+                        ->orderBy('is_approved', 'desc')
+                        ->paginate(10);
 
         return view('lms.admin.registration.pending',
             ['title'=> $title, 'registrations' => $registrations]);
