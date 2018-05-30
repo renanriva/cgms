@@ -123,7 +123,7 @@ return [
                 ],
                 [
                     'text'      => 'lms.menu.teachers.portfolio',
-                    'url'           => 'admin/registration',
+                    'url'           => 'admin/portfolio',
                     'can'           => 'admin-only',
                     'icon'          => 'folder-open'
                 ],
@@ -164,7 +164,7 @@ return [
         [
             'text'          => 'lms.menu.user.my_portfolio',
             'icon'          => 'folder-open',
-            'url'           => '#', // my/portfolio
+            'url'           => 'admin/portfolio', // my/portfolio
             'can'           => 'teacher-only'
         ],
         [

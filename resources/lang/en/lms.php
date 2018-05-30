@@ -102,7 +102,16 @@
                     'province'          => 'Province',
                     'canton'            => 'Canton',
                     'district'          => 'District',
-                    'action'            => 'Action'
+                    'course_type'       => 'Course Type',
+                    'course_name'       => 'Course Name',
+                    'modality'          => 'modality',
+                    'hours'             => 'Hours',
+                    'start_date'        => 'Start Date',
+                    'end_date'          => 'End Date',
+                    'approved'          => 'Approved',
+                    'certificate'       => 'Certificate',
+
+                    'action'            => 'Action',
                 ],
                 'form' => [
                     'edit_title'        => 'Edit Teacher',

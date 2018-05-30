@@ -189,4 +189,25 @@ class RegistrationController extends Controller
 
     }
 
+    /**
+     * @todo add registration policy
+     *
+     * @param $registrationId
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function downloadStudentCertificate($registrationId){
+
+        $registration = Registration::find($registrationId);
+
+        if ($registration){
+
+            return response()->file($registration->certificate_path);
+
+        } else {
+            return response()->redirectTo('admin/unauthorized');
+
+        }
+
+    }
+
 }
