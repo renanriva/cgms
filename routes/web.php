@@ -39,8 +39,11 @@ Route::middleware(['auth'])->group(function (){
             Route::get('/profile/{id}', 'TeacherController@showProfile');
             Route::post('/upload/teachers-list', 'TeacherController@upload');
 
-
         });
+
+        // teacher portfolio
+        Route::get('/portfolio', 'PortfolioController@teachers');
+
 
         Route::prefix('course')->group(function (){
 
@@ -73,6 +76,7 @@ Route::middleware(['auth'])->group(function (){
 
 
             Route::post('/{id}/download/student-inspection-form', 'RegistrationController@downloadStudentInspectionCertificate');
+            Route::post('/{id}/download/certificate', 'RegistrationController@downloadStudentCertificate');
 
 
 

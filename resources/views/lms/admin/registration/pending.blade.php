@@ -68,7 +68,6 @@
                             </thead>
                             <tbody>
                                 @foreach($registrations as $registration)
-{{--                                    {{var_dump($registration->teacher->toArray()) }}--}}
                                     <tr id="row-{{ $registration->id }}">
                                         <td>{{ $registration->course->course_code }}</td>
                                         <td>{{ $registration->course->short_name }}</td>
@@ -78,44 +77,27 @@
                                         <td>{{ $registration->student->social_id }}</td>
                                         <td>{{ $registration->student->user->name }}</td>
                                         <td>{{ $registration->student->user->email }}</td>
-                                        <td>{{ $registration->accept_tc == 1 ? 'Yes' : 'No' }}
-                                            @if ($registration->accept_tc == REGISTRATION_ACCEPT_TERMS_AND_CONDITION_TRUE)
-                                                <br/><small><i class="fa fa-clock-o"></i>
-                                                    {{ date('d M, Y - h:i a', strtotime($registration->tc_accept_time)) }}</small>
-                                            @endif
-                                        </td>
-                                        <td>    @if($registration->inspection_certificate_signed == REGISTRATION_INSPECTION_CERTIFICATE_SIGNED)
-                                                    <form method="post" action="{{ url("/admin/registration/$registration->id/download/student-inspection-form") }}">
-                                                        {{ csrf_field() }}
-                                                        <i class="fa fa-file-pdf-o"></i>
-                                                        <button type="submit"
-                                                                class="btn btn-link btn-link-download"  rel="tooltip"
-                                                           title="{{ basename($registration->inspection_certificate) }}"
-                                                        > Download</button>
-                                                    </form>
-                                                    <br/>
-                                                <small><i class="fa fa-clock-o"></i>
-                                                    {{ date('d M, Y - h:i a', strtotime($registration->inspection_certificate_upload_time)) }}</small>
-                                                @endif
-                                        </td>
-                                        <td class="js-td-is-approved">
-                                            @if($registration->is_approved == REGISTRATION_IS_NOT_APPROVED)
-                                                <div class="form-group">
-                                                    <div class="checked">
-                                                        <label>
-                                                            <input type="checkbox"
-                                                                   class="js-approve-check-{{ $registration->id }}" /> Approve
-                                                        </label>
-                                                    </div>
-                                                    <button class="btn btn-xs btn-primary btn-flat btn-approve-confirm"
-                                                    data-id="{{ $registration->id }}">Confirm</button>
-                                                </div>
-                                            @else
-                                                <i class="fa fa-check"></i> Yes <br/>
-                                                <small><i class="fa fa-clock-o"></i>
-                                                    {{ date('d M, Y - h:i a', strtotime($registration->approval_time)) }}</small>
-                                            @endif
-                                        </td>
+                                        @include('lms.admin.registration.parts.table.td.terms_condition')
+                                        @include('lms.admin.registration.parts.table.td.student_inspection_form')
+                                        @include('lms.admin.registration.parts.table.td.is_approved')
+                                        {{--<td class="js-td-is-approved">--}}
+                                            {{--@if($registration->is_approved == REGISTRATION_IS_NOT_APPROVED)--}}
+                                                {{--<div class="form-group">--}}
+                                                    {{--<div class="checked">--}}
+                                                        {{--<label>--}}
+                                                            {{--<input type="checkbox"--}}
+                                                                   {{--class="js-approve-check-{{ $registration->id }}" /> Approve--}}
+                                                        {{--</label>--}}
+                                                    {{--</div>--}}
+                                                    {{--<button class="btn btn-xs btn-primary btn-flat btn-approve-confirm"--}}
+                                                    {{--data-id="{{ $registration->id }}">Confirm</button>--}}
+                                                {{--</div>--}}
+                                            {{--@else--}}
+                                                {{--<i class="fa fa-check"></i> Yes <br/>--}}
+                                                {{--<small><i class="fa fa-clock-o"></i>--}}
+                                                    {{--{{ date('d M, Y - h:i a', strtotime($registration->approval_time)) }}</small>--}}
+                                            {{--@endif--}}
+                                        {{--</td>--}}
                                         <td class="js-td-approved-by">
 
                                             @if ($registration->is_approved == REGISTRATION_IS_APPROVED)
