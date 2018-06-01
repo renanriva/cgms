@@ -53907,7 +53907,10 @@ $(document).ready(function () {
                 data: data
             };
             $.ajax(obj).done(function (response, textStatus, jqXhr) {
-                $('.js-accept-time').html(response.registration.tc_accept_time);
+
+                $('.js-accept-time').removeClass('hidden').html(response.registration.tc_accept_time);
+
+                $('.btn-accept-tc').remove();
             }).fail(function (jqXhr, textStatus, errorThrown) {
                 console.log(' fail registration ', jqXhr);
 

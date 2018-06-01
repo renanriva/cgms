@@ -125,14 +125,21 @@
                                     <div class="form-group">
                                         <div class="checkbox col-lg-3 col-md-3">
                                             <label class="">
-                                                <input type="checkbox" id="chk-accept-registration-tc" checked="{{ $registration->accept_tc == 1 ? true: false }}"> Accept
+                                                @if($registration->accept_tc == 0)
+                                                    <input type="checkbox" id="chk-accept-registration-tc"
+                                                       checked="{{ $registration->accept_tc == 1 ? true: false }}"> Accept
+                                                @endif
                                             </label><br/>
-                                            <label class="small js-accept-time">{{ date('m/d/Y h:i a', strtotime($registration->tc_accept_time)) }}</label>
+                                            <label class="small js-accept-time">
+{{--                                                {{ date('m/d/Y h:i a', strtotime($registration->tc_accept_time)) }}--}}
+                                            </label>
                                         </div>
                                         <div class="col-lg-2 col-md-2">
 
-                                            <button type="button"
+                                            @if($registration->accept_tc == 0)
+                                                <button type="button"
                                                     class="btn-accept-tc btn-primary btn btn-flat">Accept</button>
+                                            @endif
                                         </div>
 
                                         <input type="hidden" id="teacher_id" value="{{ $teacher->user->id }}">
@@ -141,6 +148,13 @@
                                     </div>
 
                                     <div class="next-layout">
+
+                                        @if($registration->accept_tc == 1)
+                                            <div class="pull-left">
+                                                <i class="fa fa-check"></i> Accepted at
+                                                {{ date('m/d/Y h:i a', strtotime($registration->tc_accept_time)) }}
+                                            </div>
+                                        @endif
                                         <a class="btn btn-default btn-flat next" href="javascript:void(0)">Next</a>
                                     </div>
 
