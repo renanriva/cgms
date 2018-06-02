@@ -41,7 +41,6 @@ class CourseController extends Controller
 
 
     /**
-     * @todo add authorization check
      * Process datatables ajax request.
      *
      * @return \Illuminate\Http\JsonResponse
@@ -49,7 +48,17 @@ class CourseController extends Controller
     public function getTableData()
     {
 
-        $course = Course::get();
+        $user = Auth::user();
+
+        if ($user->role == 'admin'){
+
+            $course = Course::get();
+
+        } elseif ($user->role == 'university'){
+
+            $course = Course::where('university_id', $user->university->id)
+                            ->get();
+        }
 
         return Datatables::of($course)
             ->editColumn('action', 'lms.admin.course.action')
@@ -181,7 +190,6 @@ class CourseController extends Controller
      */
     public function uploadCourseList(Request $request){
 
-//        @todo cloud_storage_path
         $cloud = Storage::disk();
         $path = $cloud->putFile('course/new_course_list', $request->file('qqfile'));
 
@@ -325,5 +333,92 @@ class CourseController extends Controller
 
         return ['request'=> $request->all()];
     }
+
+
+    /**
+     * @param $courseId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getAddMarkPage($courseId){
+
+
+        $user = Auth::user();
+        $course = Course::find($courseId);
+
+        if ($user->can('addmark', $course)){
+
+            $title = 'Course Grade Upload - '.env('APP_NAME') ;
+            return view('lms.admin.course.grade', ['title' => $title, 'course' => $course]);
+
+        } else {
+
+            return response()->redirectTo('unauthorized');
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param         $course_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function postAddMark(Request $request, $course_id){
+
+        $user = Auth::user();
+        $course = Course::find($course_id);
+
+        if ($user->can('addmark', $course)){
+
+            $cloud = Storage::disk();
+
+            $filename = 'grade_of_'.$course->course_code.'_'.date('Ymdhi', strtotime('now'));
+            $path = $cloud->putFileAs('course/grade/university_'.$course->university->id,
+                        $request->file('qqfile'), $filename.'.'.$request->file('qqfile')->extension());
+
+            $path = storage_path('app/'.$path);
+
+
+            $courseRepository = new CourseRepository();
+
+            try {
+                $rows = [];
+
+                Excel::load($path, function ($reader) use(&$rows, $courseRepository, $user){
+
+                    foreach ($reader->toArray() as $row) {
+
+                        $getCourse = Course::where('course_code', trim($row['course_code']))->first();
+
+
+                        // if the course id received from the file has permission for this user to update mark
+                        if ($user->can('update_grade', $getCourse)){
+
+                            $newRegistration = $courseRepository->updateGrade(
+                                trim($getCourse->id),
+                                trim($row['cedula']),
+                                $row['grade'],
+                                $row['approved'],
+                                $user);
+
+                            array_push($rows, $newRegistration);
+                        }
+
+                    }
+
+                });
+
+                return response()->json(['rows' => $rows, 'success' => true] );
+
+            } catch (\Exception $e) {
+
+                return response()->json(['error' => $e->getMessage(),'rows' => $rows, 'file' => $path])->setStatusCode(422);
+            }
+
+        } else {
+            //send 403 json response
+            return response()->json(['error'=> 'Unauthorized'])->setStatusCode(403);
+        }
+
+    }
+
 
 }

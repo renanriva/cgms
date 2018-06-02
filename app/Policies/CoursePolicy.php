@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Course;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -64,4 +65,61 @@ class CoursePolicy
         return false;
     }
 
+    /**
+     * Only admin can delete a course.
+     * Course owner can't delete the course
+     *
+     * @param User   $user
+     * @param Course $course
+     * @return bool
+     */
+    public function delete(User $user, Course $course){
+
+
+
+        if ($user->role == 'admin'){
+
+            return true;
+        }
+
+        return false;
+
+    }
+
+
+    /**
+     * Only owner of the course can add mark. Admin cant add mark
+     *
+     * @param User   $user
+     * @param Course $course
+     * @return bool
+     */
+    public function addmark(User $user, Course $course){
+
+        if ($user->role == 'university' &&
+            $user->id == $course->university->user_id ){
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param User   $user
+     * @param Course $course
+     * @return bool
+     */
+    public function update_grade(User $user, Course $course){
+
+
+        if ($user->role == 'university' &&
+            $user->id == $course->university->user_id ){
+
+            return true;
+        }
+
+        return false;
+
+    }
 }

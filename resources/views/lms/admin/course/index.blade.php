@@ -54,7 +54,10 @@
         @include('lms.admin.course.edit_modal')
         @include('lms.admin.course.request_list_modal')
         @include('lms.admin.course.course_upload_modal')
-        @include('lms.admin.parts.modal_delete')
+
+        @if(Auth::user()->role == 'admin')
+            @include('lms.admin.parts.modal_delete')
+        @endif
 
     </div>
 

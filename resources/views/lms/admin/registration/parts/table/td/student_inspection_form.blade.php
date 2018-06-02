@@ -8,7 +8,6 @@
             title="{{ basename($registration->inspection_certificate) }}"
     > Download</button>
     </form>
-    <br/>
     <small><i class="fa fa-clock-o"></i>
         {{ date('d M, Y - h:i a', strtotime($registration->inspection_certificate_upload_time)) }}</small>
     @endif

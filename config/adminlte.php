@@ -145,19 +145,6 @@ return [
                     'url'           => 'admin/course',
                     'can'           => 'admin-only',
                 ],
-//                [
-//                    'text'      => 'lms.menu.course.my_courses',
-//                    'url'           => 'admin/my-course',
-//                    'can'           => 'teacher-only',
-//                ],
-//                [
-//                    'text'      => 'lms.menu.course.upcoming_courses',
-//                    'url'           => 'admin/upcoming-courses',
-//                    'icon'          => 'list-ol',
-//                    'can'           => 'teacher-only',
-//                ]
-
-
             ],
 
         ],
@@ -178,6 +165,12 @@ return [
             'url'           => 'admin/university',
             'icon'          => 'building',
             'can'           => 'admin-only',
+        ],
+        [
+            'text'          => 'lms.menu.course.title',
+            'icon'          => 'book',
+            'url'           => 'admin/course',
+            'can'           => 'university-only'
         ],
         [
             'text'  => 'lms.menu.settings.user_management',

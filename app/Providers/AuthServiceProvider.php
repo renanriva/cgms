@@ -9,9 +9,11 @@ use App\Policies\CantonPolicy;
 use App\Policies\CoursePolicy;
 use App\Policies\ParroquiaPolicy;
 use App\Policies\ProvincePolicy;
+use App\Policies\RegistrationPolicy;
 use App\Policies\TeacherPolicy;
 use App\Policies\UniversityPolicy;
 use App\Province;
+use App\Registration;
 use App\Teacher;
 use App\University;
 use Illuminate\Support\Facades\Gate;
@@ -31,6 +33,7 @@ class AuthServiceProvider extends ServiceProvider
         Canton::class => CantonPolicy::class,
         Parroquia::class => ParroquiaPolicy::class,
         University::class => UniversityPolicy::class,
+        Registration::class => RegistrationPolicy::class,
     ];
 
     /**

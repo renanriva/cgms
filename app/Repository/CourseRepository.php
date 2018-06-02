@@ -11,6 +11,9 @@ namespace App\Repository;
 
 use App\Course;
 use App\Events\TeacherCreated;
+use App\Registration;
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -142,4 +145,35 @@ class CourseRepository
     }
 
 
+    /**
+     * Update Grade and grade details
+     *
+     * @param string    $courseId
+     * @param string    $student_social_id
+     * @param float     $grade
+     * @param integer   $approved
+     * @param User      $user
+     * @return mixed
+     */
+    public function updateGrade($courseId, $student_social_id, $grade, $approved, $user){
+
+        $registration = Registration::where('course_id', $courseId)
+                        ->where('user_social_id', $student_social_id)
+                        ->first();
+
+        if ($registration){
+            $registration->mark = $grade;
+            $registration->mark_approved = $approved;
+            $registration->mark_approved_by = $user->id;
+            $registration->mark_upload_time = Carbon::now();
+            $registration->save();
+
+            return $registration;
+
+        } else {
+            return null;
+        }
+
+
+    }
 }

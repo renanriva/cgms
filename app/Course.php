@@ -53,6 +53,30 @@ class Course extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function registrations(){
+        return $this->hasMany('App\Registration', 'course_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function approvedRegistrations(){
+        return $this->hasMany('App\Registration', 'course_id', 'id')
+            ->where('is_approved', REGISTRATION_IS_APPROVED);
+    }
+
+    /**
+     * @return mixed
+     */
+//    public function getTotalRegistrationsAttribute()
+//    {
+//        return $this->hasMany('registrations')->count();
+//
+//    }
+
+    /**
      * The attributes that should be mutated to dates.
      *
      * @var array
