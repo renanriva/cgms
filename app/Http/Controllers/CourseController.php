@@ -371,7 +371,7 @@ class CourseController extends Controller
             $cloud = Storage::disk();
 
             $filename = 'grade_of_'.$course->course_code.'_'.date('Ymdhi', strtotime('now'));
-            $path = $cloud->putFileAs('course/university_'.$course->university->id.'/grade',
+            $path = $cloud->putFileAs('course/grade/university_'.$course->university->id,
                         $request->file('qqfile'), $filename.'.'.$request->file('qqfile')->extension());
 
             $path = storage_path('app/'.$path);
