@@ -53107,6 +53107,63 @@ $(document).ready(function () {
 
 /***/ }),
 
+/***/ "./resources/assets/admin/js/course_grade.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {var grade_page = $('#course_grade_page').length;
+
+console.log(' size ', grade_page);
+if (grade_page > 0) {
+    var showAddMark = function showAddMark() {
+        console.log('click for modal');
+        $('.btn-upload-grade').click(function () {
+
+            courseId = $(this).attr('data-id');
+            console.log('course id ', courseId);
+            addMark.modal('show');
+            $('#btn-upload-course-mark-list').attr('data-id', courseId);
+        });
+    };
+
+    console.log('course_grade_page');
+
+    var addMark = $('#course-add-mark-modal');
+    var courseId = null;
+
+    showAddMark();
+
+
+    $('#course-mark-add-uploader-manual-trigger').fineUploader({
+        template: 'qq-course-mark-upload-template',
+        multiple: false,
+        request: {
+            endpoint: '/admin/course/' + $('.btn-upload-grade').attr('data-id') + '/add-grade',
+            customHeaders: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        },
+        validation: {
+            itemLimit: 1,
+            allowedExtensions: ['csv', 'xls', 'xlsx']
+        },
+        callbacks: {
+            onSubmit: function onSubmit(id, name) {},
+            onComplete: function onComplete(id, name, response, xhr) {},
+            onStatusChange: function onStatusChange(id, oldStatus, newStatus) {},
+            onCancel: function onCancel(id, name) {}
+        },
+        autoUpload: false
+    });
+
+    $('#btn-upload-course-mark-list').click(function () {
+        console.log('course-request-list-uploader-manual-trigger');
+        $('#course-mark-add-uploader-manual-trigger').fineUploader('uploadStoredFiles');
+    });
+}
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))
+
+/***/ }),
+
 /***/ "./resources/assets/admin/js/location.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -54981,6 +55038,7 @@ __webpack_require__("./resources/assets/admin/js/registration.js");
 __webpack_require__("./resources/assets/admin/js/registration-approval.js");
 __webpack_require__("./resources/assets/admin/js/user.js");
 __webpack_require__("./resources/assets/admin/js/profile.js");
+__webpack_require__("./resources/assets/admin/js/course_grade.js");
 __webpack_require__("./resources/assets/admin/js/common.js");
 module.exports = __webpack_require__("./resources/assets/sass/app.scss");
 

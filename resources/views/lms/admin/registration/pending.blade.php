@@ -69,7 +69,7 @@
                             <tbody>
                                 @foreach($registrations as $registration)
                                     <tr id="row-{{ $registration->id }}">
-                                        <td>{{ $registration->course->course_code }}</td>
+                                        @include('lms.admin.registration.parts.table.td.course_code')
                                         <td>{{ $registration->course->short_name }}</td>
                                         <td>{{ $registration->course->university->name }}</td>
                                         <td>{{ $registration->course->start_date }}</td>

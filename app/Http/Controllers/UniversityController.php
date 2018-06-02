@@ -157,4 +157,25 @@ class UniversityController extends Controller
 
     }
 
+    /**
+     * @param $id
+     */
+    public function uploadMark($id){
+
+        $user = Auth::user();
+        $university = University::find($id);
+
+        if ($user->can('uploadmark', $university )){
+
+            echo  'allowed';
+
+        } else{
+
+            echo  'deni';
+
+        }
+
+
+    }
+
 }

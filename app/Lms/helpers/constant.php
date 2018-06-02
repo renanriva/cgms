@@ -101,3 +101,9 @@
     const COURSE_REQUEST_CREATED    = 1;
     const COURSE_REQUEST_ACCEPTED   = 2;
     const COURSE_REQUEST_REJECTED   = 3;
+
+    /**
+     * Mark Approved
+     */
+    const REGISTRATION_MARK_APPROVED = 1;
+    const REGISTRATION_MARK_NOT_APPROVED = 0;
