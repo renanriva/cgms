@@ -162,7 +162,7 @@ $(document).ready(function () {
                     video_text  : modal.find('.js-edit-course-video').val(),
                     video_type  : modal.find('.js-edit-course-video_type option:selected').val(),
                     video_code : modal.find('.js-edit-course-video_embed_code').val(),
-                    terms_condition : modal.find('.js-edit-course-terms_condition').val(),
+                    // terms_condition : modal.find('.js-edit-course-terms_condition').val(),
                     data_update_text : modal.find('.js-edit-course-data_update').val()
 
                 };
@@ -274,6 +274,7 @@ $(document).ready(function () {
                     modal.find('.js-course-form').addClass('hidden');
                     modal.find('.js-course-inspection-form').removeClass('hidden');
                     modal.find('#btn-edit-course').attr('disabled', true);
+                    // form.addClass('hidden');
 
                     var row = '<tr class="success"><td>'+data.course_code+'</td><td>'+data.short_name+'</td><td>'+data.hours
                         +'</td><td>'+data.start_date+'</td><td>'+data.end_date+'</td><td>'+data.quota+'</td>+' +

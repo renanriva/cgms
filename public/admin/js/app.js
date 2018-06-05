@@ -52720,7 +52720,7 @@ $(document).ready(function () {
                     video_text: modal.find('.js-edit-course-video').val(),
                     video_type: modal.find('.js-edit-course-video_type option:selected').val(),
                     video_code: modal.find('.js-edit-course-video_embed_code').val(),
-                    terms_condition: modal.find('.js-edit-course-terms_condition').val(),
+                    // terms_condition : modal.find('.js-edit-course-terms_condition').val(),
                     data_update_text: modal.find('.js-edit-course-data_update').val()
 
                 };
@@ -52823,6 +52823,7 @@ $(document).ready(function () {
                     modal.find('.js-course-form').addClass('hidden');
                     modal.find('.js-course-inspection-form').removeClass('hidden');
                     modal.find('#btn-edit-course').attr('disabled', true);
+                    // form.addClass('hidden');
 
                     var row = '<tr class="success"><td>' + data.course_code + '</td><td>' + data.short_name + '</td><td>' + data.hours + '</td><td>' + data.start_date + '</td><td>' + data.end_date + '</td><td>' + data.quota + '</td>+' + '<td>' + data.comment + '</td><td>Actions</td></tr>';
 
@@ -52876,16 +52877,13 @@ $(document).ready(function () {
 
                 if (jqXhr.status === 200) {
 
-                    var startDate = new Date(data.start_date).toLocaleDateString();
-                    var endDate = new Date(data.end_date).toLocaleDateString();
-
                     $('tr#course_id_' + data.id).each(function () {
 
                         $(this).find('td').eq(0).text(data.course_code);
                         $(this).find('td').eq(1).text(data.short_name);
                         $(this).find('td').eq(2).text(data.hours);
-                        $(this).find('td').eq(3).text(startDate);
-                        $(this).find('td').eq(4).text(endDate);
+                        $(this).find('td').eq(3).text(data.start_date);
+                        $(this).find('td').eq(4).text(data.end_date);
                         $(this).find('td').eq(5).text(data.quota);
                         $(this).find('td').eq(6).text(data.comment);
                     });
