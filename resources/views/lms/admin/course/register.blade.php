@@ -101,9 +101,15 @@
                                     <p>{{ $course->video_text }}</p>
 
                                     @if($course->video_type == 'youtube')
+                                        @if($course->video_code !== null)
                                         <iframe width="560" height="315"
                                                 src="https://www.youtube.com/embed/{{ $course->video_code }}">
                                         </iframe>
+                                        @else
+                                            <div class="js-error">
+                                                <h3 class="text-warning"><strong class="text-danger">Sorry</strong>! Video code is not found.</h3>
+                                            </div>
+                                        @endif
                                     @endif
                                     <div class="next-layout">
                                         <a class="btn btn-default btn-flat next" href="javascript:void(0)">Next</a>
@@ -129,11 +135,17 @@
                                 <div class="box-layout">
                                     <p class=""></p>
                                     <div class="form-group">
+                                        @if($course->tc_file_path !== null)
                                         <div class="js-pdf-viewer" style="margin-bottom: 75px;">
                                             <embed src="{{ asset('storage/'.$course->tc_file_path) }}"
                                                    width="100%" height="350" alt="pdf"
                                                    pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
                                         </div>
+                                        @else
+                                            <div class="js-error">
+                                                <h3 class="text-warning"><strong class="text-danger" >Sorry</strong>! Terms and Condition not found.</h3>
+                                            </div>
+                                        @endif
 
                                         <input type="hidden" id="teacher_id" value="{{ $teacher->user->id }}">
                                         <input type="hidden" id="course_id" value="{{ $teacher->user->id }}">

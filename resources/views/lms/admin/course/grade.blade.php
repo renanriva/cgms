@@ -124,7 +124,7 @@
                                 <th>Name</th>
                                 <th>Institute</th>
                                 <th>Email</th>
-                                <th>Terms & Condition</th>
+                                {{--<th>Terms & Condition</th>--}}
                                 <th>Inspection Form</th>
                                 <th>Approve</th>
                                 <th>Grade</th>
@@ -139,17 +139,10 @@
                                     <td>{{ $registration->student->first_name }}</td>
                                     <td>{{ $registration->student->university_name }}</td>
                                     <td>{{ $registration->student->inst_email }}</td>
-                                    @include('lms.admin.registration.parts.table.td.terms_condition')
+                                    {{--@include('lms.admin.registration.parts.table.td.terms_condition')--}}
                                     @include('lms.admin.registration.parts.table.td.student_inspection_form')
                                     @include('lms.admin.registration.parts.table.td.is_approved')
-                                    <td>{{ $registration->mark == null ? '' : $registration->mark }} / 100</td>
-                                    <td>
-                                        @if($registration->mark_approved == REGISTRATION_MARK_APPROVED)
-                                            <span class="label label-success">Yes</span>
-                                            <small>By <span class="text-info js-mark-approved-by">{{ $registration->markApprovedBy->name }}</span></small><br/>
-                                            <small><i class="fa fa-clock-o">&nbsp;{{ date('d M Y h:i a', strtotime($registration->mark_upload_time)) }}</i></small>
-                                        @endif
-                                    </td>
+                                    @include('lms.admin.registration.parts.table.td.mark_approved')
 
                                 </tr>
                             @endforeach
