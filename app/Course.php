@@ -28,7 +28,7 @@ class Course extends Model
         'hours',         'quota',
         'start_date', 'end_date',
         'university_id',
-        'tc_file_path',
+        'lor_file_path', 'tc_file_path',
         'created_by', 'updated_by'
     ];
 

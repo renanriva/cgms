@@ -60,10 +60,11 @@
                                 <th>{{ __('lms.page.teacher.table.hours') }}</th>
                                 <th>{{ __('lms.page.teacher.table.start_date') }}</th>
                                 <th>{{ __('lms.page.teacher.table.end_date') }}</th>
-                                <th>{{ __('lms.page.registration.pending.table.terms_condition') }}</th>
+                                {{--<th>{{ __('lms.page.registration.pending.table.terms_condition') }}</th>--}}
                                 <th>{{ __('lms.page.registration.pending.table.record_uploaded') }}</th>
                                 <th>{{ __('lms.page.teacher.table.approved') }}</th>
                                 <th>{{ __('lms.page.teacher.table.certificate') }}</th>
+                                <th>Grade</th>
                             </tr>
                         </thead>
                         <tbody>

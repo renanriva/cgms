@@ -52973,6 +52973,8 @@ $(document).ready(function () {
 
         /**
          * Inspection form Upload for course
+         *
+         * From registration page
          */
 
 
@@ -53028,19 +53030,12 @@ $(document).ready(function () {
             template: 'qq-template-manual-trigger',
             multiple: false,
             request: {
-                endpoint: '/admin/course/upload/file',
+                endpoint: '/admin/course/upload/inspection-form',
                 params: {
                     course_id: function course_id() {
                         return modal.find('.js-course-id').val();
-                    },
-                    type: 'lor'
+                    }
                 },
-                // endpoint: '/admin/course/upload/inspection-form',
-                // params: {
-                //     course_id : function () {
-                //         return modal.find('.js-course-id').val();
-                //     }
-                // },
                 customHeaders: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
@@ -53156,48 +53151,38 @@ $(document).ready(function () {
         /**
          * Upload Letter of Registration
          */
-        // $('#course-letter_of_registration-uploader-manual-trigger').fineUploader({
-        //     template: 'qq-terms_condition_upload_template-trigger',
-        //     multiple: false,
-        //     request: {
-        //         endpoint: '/admin/course/upload/file',
-        //         params: {
-        //             course_id : function () {
-        //                 return modal.find('.js-course-id').val();
-        //             },
-        //             type: 'lor'
-        //         },
-        //         customHeaders: {
-        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //         }
-        //     },
-        //     validation: {
-        //         itemLimit: 1,
-        //         allowedExtensions:  ['pdf', 'doc', 'docx'],
-        //     },
-        //     callbacks: {
-        //         onSubmit: function (id, name) {
-        //
-        //         },
-        //         onComplete: function (id, name, response, xhr ) {
-        //
-        //
-        //         },
-        //         onStatusChange: function (id, oldStatus, newStatus) {
-        //
-        //         },
-        //         onCancel: function (id, name) {
-        //
-        //         }
-        //     },
-        //     autoUpload: false
-        // });
-        //
-        // $('#btn-trigger-lor-upload').click(function() {
-        //     console.log('course-letter_of_registration-uploader-manual-trigger');
-        //     $('#course-letter_of_registration-uploader-manual-trigger').fineUploader('uploadStoredFiles');
-        // });
+        $('#course-letter_of_registration-uploader-manual-trigger').fineUploader({
+            template: 'letter_of_registration_template-trigger',
+            multiple: false,
+            request: {
+                endpoint: '/admin/course/upload/file',
+                params: {
+                    course_id: function course_id() {
+                        return modal.find('.js-course-id').val();
+                    },
+                    type: 'lor'
+                },
+                customHeaders: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            },
+            validation: {
+                itemLimit: 1,
+                allowedExtensions: ['pdf', 'doc', 'docx']
+            },
+            callbacks: {
+                onSubmit: function onSubmit(id, name) {},
+                onComplete: function onComplete(id, name, response, xhr) {},
+                onStatusChange: function onStatusChange(id, oldStatus, newStatus) {},
+                onCancel: function onCancel(id, name) {}
+            },
+            autoUpload: false
+        });
 
+        $('#btn-trigger-lor-upload').click(function () {
+            console.log('course-letter_of_registration-uploader-manual-trigger');
+            $('#course-letter_of_registration-uploader-manual-trigger').fineUploader('uploadStoredFiles');
+        });
     } //end page
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))

@@ -130,7 +130,7 @@
                                     <p class=""></p>
                                     <div class="form-group">
                                         <div class="js-pdf-viewer">
-
+                                            {{ $course->tc_file_path }}
                                         </div>
 
                                         <input type="hidden" id="teacher_id" value="{{ $teacher->user->id }}">
@@ -241,10 +241,15 @@
                                         <div class="col-lg-6 col-md-6 col-sm-12">
                                             <h3><i class="fa fa-download"></i> Download Letter of Registration</h3>
                                             <hr/>
-                                            <p><a class="btn btn-link" href="{{ url('/asset/letter_of_registration.pdf') }}"
-                                                target="_blank"
-                                                >lor_{{ $teacher->social_id }}.pdf</a>
-                                            <label><i class="fa fa-check-square-o"></i></label></p>
+                                            <p>
+                                                <form method="post" target="_blank"
+                                                    action="/admin/course/{{ $registration->course->id }}/download/lor">
+                                                    {{ csrf_field() }}
+                                                    <button type="submit" class="btn btn-link" href="{{ url('/asset/letter_of_registration.pdf') }}"
+                                                    target="_blank">{{ $teacher->social_id }}</button>
+                                                    <label><i class="fa fa-check-square-o"></i></label>
+                                                </form>
+                                            </p>
 
                                         </div>
                                     </div>

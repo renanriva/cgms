@@ -15,6 +15,7 @@ class AddTcLorFiledsInCourse extends Migration
     {
         Schema::table('courses', function($table) {
             $table->string('lor_file_path', 255)->after('inspection_form_generated')->nullable();
+            $table->string('tc_file_path', 255)->after('inspection_form_generated')->nullable();
 
             $table->dropColumn('terms_and_conditions');
 
@@ -29,6 +30,8 @@ class AddTcLorFiledsInCourse extends Migration
     public function down()
     {
         Schema::table('courses', function($table) {
+            $table->dropColumn('lor_file_path');
+            $table->dropColumn('tc_file_path');
             $table->text('terms_and_conditions')->nullable();
         });
     }

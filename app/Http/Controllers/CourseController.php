@@ -269,23 +269,22 @@ class CourseController extends Controller
      * @param Request $request
      * @return array
      */
-//    public function uploadInspection(Request $request) {
-//
-//
-//        $cloud = Storage::disk();
-//
-//        $filename = "course_".$request->input('course_id').'_inspection_form.'.$request->file('qqfile')->extension();
-//        $path = $cloud->putFileAs('course/inspection', $request->file('qqfile'), $filename);
-//
-//        $path = storage_path('app/'.$path);
-//        $course = Course::find($request->input('course_id'));
-//        $course->inspection_form_generated  = true;
-//        $course->save();
-//
-//        return response()->json(['path'=> $path, 'success' => true]);
-//
-//
-//    }
+    public function uploadInspection(Request $request) {
+
+
+        $cloud = Storage::disk();
+
+        $filename = "course_".$request->input('course_id').'_inspection_form.'.$request->file('qqfile')->extension();
+        $path = $cloud->putFileAs('course/inspection', $request->file('qqfile'), $filename);
+
+        $path = storage_path('app/'.$path);
+        $course = Course::find($request->input('course_id'));
+        $course->inspection_form_generated  = true;
+        $course->save();
+
+        return response()->json(['path'=> $path, 'success' => true]);
+
+    }
 
 
     /**
@@ -298,7 +297,7 @@ class CourseController extends Controller
         $cloud = Storage::disk();
         $course = Course::find($request->input('course_id'));
 
-        $root_path = 'app/course/university_'.$course->university->id;
+        $root_path = 'course/university_'.$course->university->id;
         $path = '';
 
         $type = $request->input('type');
@@ -308,9 +307,9 @@ class CourseController extends Controller
             $path = $root_path.'/terms_and_condition';
             $filename = "course_".$request->input('course_id').'_tnc.'.$request->file('qqfile')->extension();
 
-            $path = $cloud->putFileAs(storage_path($path), $request->file('qqfile'), $filename);
+            $path = $cloud->putFileAs($path, $request->file('qqfile'), $filename);
 
-            $course->tc_file_path  = $path;
+            $course->tc_file_path  = storage_path('app/'.$path);
             $course->save();
 
 
@@ -319,10 +318,9 @@ class CourseController extends Controller
             $path = $root_path.'/lor';
             $filename = "course_".$request->input('course_id').'_lor.'.$request->file('qqfile')->extension();
 
-            $path = $cloud->putFileAs(storage_path($path), $request->file('qqfile'), $filename);
+            $path = $cloud->putFileAs($path, $request->file('qqfile'), $filename);
 
-            $course->inspection_form_url  = $path;
-            $course->inspection_form_generated  = true;
+            $course->lor_file_path  = storage_path('app/'.$path);
             $course->save();
 
         }
@@ -477,6 +475,30 @@ class CourseController extends Controller
         } else {
             //send 403 json response
             return response()->json(['error'=> 'Unauthorized'])->setStatusCode(403);
+        }
+
+    }
+
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function downloadLor($id){
+
+        if(Auth::check()) {
+
+            $course = Course::find($id);
+
+            if ($course) {
+
+                return response()->file($course->lor_file_path);
+
+            } else {
+                return response()->redirectTo('admin/unauthorized');
+
+            }
+
         }
 
     }

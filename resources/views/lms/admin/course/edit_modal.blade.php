@@ -326,8 +326,8 @@
                             <code>Upload Terms and Condition</code>
                             <div id="course-terms_condition-uploader-manual-trigger"></div>
 
-                            {{--<code>Upload Letter of Registration</code>--}}
-                            {{--<div id="course-letter_of_registration-uploader-manual-trigger"></div>--}}
+                            <code>Upload Letter of Registration</code>
+                            <div id="course-letter_of_registration-uploader-manual-trigger"></div>
 
                         </div>
 
@@ -346,4 +346,4 @@
 </div>
 @include('lms.admin.teacher.template')
 @include('lms.admin.course.templates.terms_condition_upload_template')
-{{--@include('lms.admin.course.templates.letter_of_registration_template')--}}
+@include('lms.admin.course.templates.letter_of_registration_template')
