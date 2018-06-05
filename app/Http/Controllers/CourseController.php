@@ -113,7 +113,6 @@ class CourseController extends Controller
         $course['video_text']                   = $post['video_text'];
         $course['video_type']                   = $post['video_type'];
         $course['video_code']                   = $post['video_code'];
-        $course['terms_and_conditions']         = $post['terms_condition'];
         $course['data_update_brief']            = $post['data_update_text'];
 
         $course['inspection_form_generated']    = false;
@@ -138,7 +137,7 @@ class CourseController extends Controller
 
             $post = $request->all();
 
-            // add different procedure to update course code
+            // @todo add different procedure to update course code
 //            $course->course_code      = $post['course_code'];
             $course->course_type    = $post['course_type'];
             $course->modality       = $post['modality'];
@@ -146,14 +145,31 @@ class CourseController extends Controller
             $course->university_id  = $post['university_id'];
             $course->short_name     = $post['short_name'];
 
-            $course->start_date     = date('Y-m-d', strtotime($post['start_date']));
-            $course->end_date       = date('Y-m-d', strtotime($post['end_date']));
+            if (isset($post['start_date'])) {
+                $startDate = DateTime::createFromFormat('d/m/Y', $post['start_date']);
+                $course->start_date = $startDate->format('Y-m-d');
+            } else{
+                $course->start_date =  null;
+            }
+
+            if (isset($post['end_date'])) {
+                $startDate = DateTime::createFromFormat('d/m/Y', $post['end_date']);
+                $course->end_date = $startDate->format('Y-m-d');
+            } else{
+                $course->end_date =  null;
+            }
 
             $course->hours          = $post['hours'];
             $course->quota          = $post['quota'];
 
             $course->comment        = $post['comment'];
             $course->description    = $post['description'];
+
+            $course->comment                      = $post['comment'];
+            $course->video_text                   = $post['video_text'];
+            $course->video_type                   = $post['video_type'];
+            $course->video_code                   = $post['video_code'];
+            $course->data_update_brief            = $post['data_update_text'];
 
             $course->updated_by     = Auth::user()->id;
             $course->save();
@@ -228,7 +244,6 @@ class CourseController extends Controller
                     $course['video_text']           = $row['video_information'];
                     $course['video_type']           = $row['video_type'];
                     $course['video_code']           = $row['embed_code'];
-                    $course['terms_condition']      = $row['terms_and_conditions'];
                     $course['data_update_text']     = $row['data_update'];
 
 
@@ -269,8 +284,52 @@ class CourseController extends Controller
 
         return response()->json(['path'=> $path, 'success' => true]);
 
+    }
+
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function uploadFile(Request $request) {
+
+
+        $cloud = Storage::disk();
+        $course = Course::find($request->input('course_id'));
+
+        $root_path = 'course/university_'.$course->university->id;
+        $path = '';
+
+        $type = $request->input('type');
+
+        if ($type == 'terms_and_condition'){
+
+            $path = $root_path.'/terms_and_condition';
+            $filename = "course_".$request->input('course_id').'_tnc.'.$request->file('qqfile')->extension();
+
+            $path = $cloud->putFileAs($path, $request->file('qqfile'), $filename);
+
+            $course->tc_file_path  = storage_path('app/'.$path);
+            $course->save();
+
+
+        } elseif ($type == 'lor'){
+
+            $path = $root_path.'/lor';
+            $filename = "course_".$request->input('course_id').'_lor.'.$request->file('qqfile')->extension();
+
+            $path = $cloud->putFileAs($path, $request->file('qqfile'), $filename);
+
+            $course->lor_file_path  = storage_path('app/'.$path);
+            $course->save();
+
+        }
+
+        return response()->json(['path'=> $path, 'success' => true]);
+
 
     }
+
 
 
     /**
@@ -416,6 +475,30 @@ class CourseController extends Controller
         } else {
             //send 403 json response
             return response()->json(['error'=> 'Unauthorized'])->setStatusCode(403);
+        }
+
+    }
+
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function downloadLor($id){
+
+        if(Auth::check()) {
+
+            $course = Course::find($id);
+
+            if ($course) {
+
+                return response()->file($course->lor_file_path);
+
+            } else {
+                return response()->redirectTo('admin/unauthorized');
+
+            }
+
         }
 
     }

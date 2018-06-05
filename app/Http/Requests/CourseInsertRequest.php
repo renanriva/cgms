@@ -45,7 +45,6 @@ class CourseInsertRequest extends FormRequest
             'video_code'            => 'sometimes|string|nullable|max:1000',
 
             'data_update_brief'     => 'sometimes|nullable|string:max:100',
-            'terms_and_conditions'  => 'sometimes|nullable|string:max:100',
 
         ];
 

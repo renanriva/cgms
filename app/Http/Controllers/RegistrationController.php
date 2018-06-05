@@ -137,28 +137,6 @@ class RegistrationController extends Controller
 
     }
 
-
-    /**
-     * @todo add validation rule
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function store(Request $request){
-
-        $canton = new Canton();
-        $post = $request->all();
-
-        $canton->province_id    = $post['province_id'];
-        $canton->name           = $post['name'];
-        $canton->capital        = $post['capital'];
-        $canton->dist_name        = $post['dist_name'];
-        $canton->dist_code        = $post['dist_code'];
-        $canton->zone        = $post['zone'];
-        $canton->save();
-
-        return response()->json(['canton' => $canton])->setStatusCode(201);
-    }
-
     /**
      * @param Request $request
      * @param         $id

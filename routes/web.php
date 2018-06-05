@@ -56,6 +56,7 @@ Route::middleware(['auth'])->group(function (){
             Route::delete('/ajax/{id}', 'CourseController@delete');
             Route::post('/upload/inspection-form', 'CourseController@uploadInspection');
             Route::post('/upload/new-course', 'CourseController@uploadCourseList');
+            Route::post('/upload/file', 'CourseController@uploadFile');
 
             Route::get('/search/ajax', 'CourseController@getSearch');
 
@@ -64,6 +65,9 @@ Route::middleware(['auth'])->group(function (){
 
             Route::get('/{id}/add-grade', 'CourseController@getAddMarkPage');
             Route::post('/{id}/add-grade', 'CourseController@postAddMark');
+
+
+            Route::post('/{id}/download/lor', 'CourseController@downloadLor');
 
 
 

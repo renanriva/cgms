@@ -162,7 +162,7 @@ $(document).ready(function () {
                     video_text  : modal.find('.js-edit-course-video').val(),
                     video_type  : modal.find('.js-edit-course-video_type option:selected').val(),
                     video_code : modal.find('.js-edit-course-video_embed_code').val(),
-                    terms_condition : modal.find('.js-edit-course-terms_condition').val(),
+                    // terms_condition : modal.find('.js-edit-course-terms_condition').val(),
                     data_update_text : modal.find('.js-edit-course-data_update').val()
 
                 };
@@ -269,11 +269,13 @@ $(document).ready(function () {
 
                     // after insert, hide form and show upload
 
-                    modal.find('.js-course-code').val(response.course.id);
+                    modal.find('.js-course-id').val(response.course.id);
 
                     modal.find('.js-course-form').addClass('hidden');
                     modal.find('.js-course-inspection-form').removeClass('hidden');
                     modal.find('#btn-edit-course').attr('disabled', true);
+                    modal.find('#btn-edit-course').addClass('hidden');
+                    // form.addClass('hidden');
 
                     var row = '<tr class="success"><td>'+data.course_code+'</td><td>'+data.short_name+'</td><td>'+data.hours
                         +'</td><td>'+data.start_date+'</td><td>'+data.end_date+'</td><td>'+data.quota+'</td>+' +
@@ -334,16 +336,13 @@ $(document).ready(function () {
 
                     if (jqXhr.status === 200) {
 
-                        var startDate = new Date(data.start_date).toLocaleDateString();
-                        var endDate = new Date(data.end_date).toLocaleDateString();
-
                         $('tr#course_id_'+data.id).each(function(){
 
                             $(this).find('td').eq(0).text(data.course_code);
                             $(this).find('td').eq(1).text(data.short_name);
                             $(this).find('td').eq(2).text(data.hours);
-                            $(this).find('td').eq(3).text(startDate);
-                            $(this).find('td').eq(4).text(endDate);
+                            $(this).find('td').eq(3).text(data.start_date);
+                            $(this).find('td').eq(4).text(data.end_date);
                             $(this).find('td').eq(5).text(data.quota);
                             $(this).find('td').eq(6).text(data.comment);
 
@@ -455,6 +454,8 @@ $(document).ready(function () {
 
         /**
          * Inspection form Upload for course
+         *
+         * From registration page
          */
         $('#course-inspection-form-uploader-manual-trigger').fineUploader({
             template: 'qq-template-manual-trigger',
@@ -482,9 +483,9 @@ $(document).ready(function () {
 
                     // $('.js-message').empty();
 
-                    if(response.error === undefined){
-                        modal.modal('hide');
-                    }
+                    // if(response.error === undefined){
+                    //     modal.modal('hide');
+                    // }
 
                 },
                 onStatusChange: function (id, oldStatus, newStatus) {
@@ -537,9 +538,9 @@ $(document).ready(function () {
                 },
                 onComplete: function (id, name, response, xhr ) {
 
-                    if(response.error === undefined){
-                        modal.modal('hide');
-                    }
+                    // if(response.error === undefined){
+                    //     modal.modal('hide');
+                    // }
 
                 },
                 onStatusChange: function (id, oldStatus, newStatus) {
@@ -559,8 +560,97 @@ $(document).ready(function () {
 
 
         /**
-         * Upload course request
+         * Upload terms and conditions
          */
+        $('#course-terms_condition-uploader-manual-trigger').fineUploader({
+            template: 'qq-terms_condition_upload_template-trigger',
+            multiple: false,
+            request: {
+                endpoint: '/admin/course/upload/file',
+                params: {
+                    course_id : function () {
+                        return modal.find('.js-course-id').val();
+                    },
+                    type: 'terms_and_condition'
+                },
+                customHeaders: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            },
+            validation: {
+                itemLimit: 1,
+                allowedExtensions:  ['pdf', 'doc', 'docx'],
+
+            },
+            callbacks: {
+                onSubmit: function (id, name) {
+
+                },
+                onComplete: function (id, name, response, xhr ) {
+
+
+                },
+                onStatusChange: function (id, oldStatus, newStatus) {
+
+                },
+                onCancel: function (id, name) {
+
+                }
+            },
+            autoUpload: false
+        });
+
+        $('#btn-trigger-terms-upload').click(function() {
+            console.log('course-request-list-uploader-manual-trigger');
+            $('#course-terms_condition-uploader-manual-trigger').fineUploader('uploadStoredFiles');
+        });
+
+
+        /**
+         * Upload Letter of Registration
+         */
+        $('#course-letter_of_registration-uploader-manual-trigger').fineUploader({
+            template: 'letter_of_registration_template-trigger',
+            multiple: false,
+            request: {
+                endpoint: '/admin/course/upload/file',
+                params: {
+                    course_id : function () {
+                        return modal.find('.js-course-id').val();
+                    },
+                    type: 'lor'
+                },
+                customHeaders: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            },
+            validation: {
+                itemLimit: 1,
+                allowedExtensions:  ['pdf', 'doc', 'docx'],
+            },
+            callbacks: {
+                onSubmit: function (id, name) {
+
+                },
+                onComplete: function (id, name, response, xhr ) {
+
+
+                },
+                onStatusChange: function (id, oldStatus, newStatus) {
+
+                },
+                onCancel: function (id, name) {
+
+                }
+            },
+            autoUpload: false
+        });
+
+        $('#btn-trigger-lor-upload').click(function() {
+            console.log('course-letter_of_registration-uploader-manual-trigger');
+            $('#course-letter_of_registration-uploader-manual-trigger').fineUploader('uploadStoredFiles');
+        });
+
 
     }//end page
 

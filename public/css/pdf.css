@@ -47,3 +47,50 @@ address{
 .university-name{
     font-weight: 600;
 }
+
+.lor .header{
+    margin: 20px 0 0 0;
+}
+.lor .no-margin{
+    margin: 0;
+}
+.lor .ol {
+    counter-reset: foo;
+    padding:0 0 0 0;
+}
+.lor .ol li {
+    list-style-type: none;
+    margin: 0;
+}
+.lor .ol li::before {
+    counter-increment: foo;
+    content: "1." counter(foo) " ";
+}
+.lor div{
+    margin: 0px;
+    padding: 0px;
+    line-height: 1em;
+}
+.lor h1, .lor h3{
+    text-align: center;
+    line-height: 1em;
+}
+.lor h1{
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0 0 10px 0;
+    padding: 0px;
+}
+
+.lor h3{
+    font-size: 12px;
+    font-weight: bold;
+    margin: 0 0 10px 0;
+    padding: 0px;
+}
+
+.lor p, .lor ol, .lor li{
+    font-size: 10px;
+    text-align: justify;
+    color: black;
+}
