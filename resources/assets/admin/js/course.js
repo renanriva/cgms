@@ -334,16 +334,13 @@ $(document).ready(function () {
 
                     if (jqXhr.status === 200) {
 
-                        var startDate = new Date(data.start_date).toLocaleDateString();
-                        var endDate = new Date(data.end_date).toLocaleDateString();
-
                         $('tr#course_id_'+data.id).each(function(){
 
                             $(this).find('td').eq(0).text(data.course_code);
                             $(this).find('td').eq(1).text(data.short_name);
                             $(this).find('td').eq(2).text(data.hours);
-                            $(this).find('td').eq(3).text(startDate);
-                            $(this).find('td').eq(4).text(endDate);
+                            $(this).find('td').eq(3).text(data.start_date);
+                            $(this).find('td').eq(4).text(data.end_date);
                             $(this).find('td').eq(5).text(data.quota);
                             $(this).find('td').eq(6).text(data.comment);
 

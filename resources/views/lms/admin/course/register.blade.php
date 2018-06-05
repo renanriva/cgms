@@ -99,6 +99,12 @@
                                 <div class="box-layout">
 
                                     <p>{{ $course->video_text }}</p>
+
+                                    @if($course->video_type == 'youtube')
+                                        <iframe width="560" height="315"
+                                                src="https://www.youtube.com/embed/{{ $course->video_code }}">
+                                        </iframe>
+                                    @endif
                                     <div class="next-layout">
                                         <a class="btn btn-default btn-flat next" href="javascript:void(0)">Next</a>
                                     </div>
@@ -225,7 +231,9 @@
                                         <div class="col-lg-6 col-md-6 col-sm-12">
                                             <h3><i class="fa fa-download"></i> Download Letter of Registration</h3>
                                             <hr/>
-                                            <p><a class="btn btn-link" href="#">01332423423.pdf</a>
+                                            <p><a class="btn btn-link" href="{{ url('/asset/letter_of_registration.pdf') }}"
+                                                target="_blank"
+                                                >lor_{{ $teacher->social_id }}.pdf</a>
                                             <label><i class="fa fa-check-square-o"></i></label></p>
 
                                         </div>

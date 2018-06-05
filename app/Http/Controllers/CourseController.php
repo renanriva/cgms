@@ -138,7 +138,7 @@ class CourseController extends Controller
 
             $post = $request->all();
 
-            // add different procedure to update course code
+            // @todo add different procedure to update course code
 //            $course->course_code      = $post['course_code'];
             $course->course_type    = $post['course_type'];
             $course->modality       = $post['modality'];
@@ -146,14 +146,32 @@ class CourseController extends Controller
             $course->university_id  = $post['university_id'];
             $course->short_name     = $post['short_name'];
 
-            $course->start_date     = date('Y-m-d', strtotime($post['start_date']));
-            $course->end_date       = date('Y-m-d', strtotime($post['end_date']));
+            if (isset($post['start_date'])) {
+                $startDate = DateTime::createFromFormat('d/m/Y', $post['start_date']);
+                $course->start_date = $startDate->format('Y-m-d');
+            } else{
+                $course->start_date =  null;
+            }
+
+            if (isset($post['end_date'])) {
+                $startDate = DateTime::createFromFormat('d/m/Y', $post['end_date']);
+                $course->end_date = $startDate->format('Y-m-d');
+            } else{
+                $course->end_date =  null;
+            }
 
             $course->hours          = $post['hours'];
             $course->quota          = $post['quota'];
 
             $course->comment        = $post['comment'];
             $course->description    = $post['description'];
+
+            $course->comment                      = $post['comment'];
+            $course->video_text                   = $post['video_text'];
+            $course->video_type                   = $post['video_type'];
+            $course->video_code                   = $post['video_code'];
+            $course->terms_and_conditions         = $post['terms_condition'];
+            $course->data_update_brief            = $post['data_update_text'];
 
             $course->updated_by     = Auth::user()->id;
             $course->save();
