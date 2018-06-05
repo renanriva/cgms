@@ -294,7 +294,6 @@ class CourseController extends Controller
     public function uploadFile(Request $request) {
 
 
-        $cloud = Storage::disk();
         $course = Course::find($request->input('course_id'));
 
         $root_path = 'course/university_'.$course->university->id;
@@ -307,9 +306,11 @@ class CourseController extends Controller
             $path = $root_path.'/terms_and_condition';
             $filename = "course_".$request->input('course_id').'_tnc.'.$request->file('qqfile')->extension();
 
+            $cloud = Storage::disk('public');
             $path = $cloud->putFileAs($path, $request->file('qqfile'), $filename);
 
-            $course->tc_file_path  = storage_path('app/'.$path);
+//            $course->tc_file_path  = storage_path('app/'.$path);
+            $course->tc_file_path  = $path;
             $course->save();
 
 
@@ -318,6 +319,7 @@ class CourseController extends Controller
             $path = $root_path.'/lor';
             $filename = "course_".$request->input('course_id').'_lor.'.$request->file('qqfile')->extension();
 
+            $cloud = Storage::disk();
             $path = $cloud->putFileAs($path, $request->file('qqfile'), $filename);
 
             $course->lor_file_path  = storage_path('app/'.$path);
