@@ -56,15 +56,16 @@
                                 <th>{{ __('lms.page.teacher.table.course_type') }}</th>
                                 <th>{{ __('lms.page.teacher.table.course_name') }}</th>
                                 <th>{{ __('lms.page.teacher.table.university') }}</th>
-                                <th>{{ __('lms.page.teacher.table.modality') }}</th>
-                                <th>{{ __('lms.page.teacher.table.hours') }}</th>
+                                {{--<th>{{ __('lms.page.teacher.table.modality') }}</th>--}}
+                                {{--<th>{{ __('lms.page.teacher.table.hours') }}</th>--}}
                                 <th>{{ __('lms.page.teacher.table.start_date') }}</th>
                                 <th>{{ __('lms.page.teacher.table.end_date') }}</th>
                                 {{--<th>{{ __('lms.page.registration.pending.table.terms_condition') }}</th>--}}
                                 <th>{{ __('lms.page.registration.pending.table.record_uploaded') }}</th>
                                 <th>{{ __('lms.page.teacher.table.approved') }}</th>
-                                <th>{{ __('lms.page.teacher.table.certificate') }}</th>
                                 <th>Grade</th>
+                                <th>Grade Approved</th>
+                                <th>{{ __('lms.page.teacher.table.certificate') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -75,13 +76,13 @@
                                     <td>{{ $registration->student->social_id }}</td>
                                     <td>{{ $registration->student->first_name }}</td>
                                     <td>{{ $registration->course->course_type }}</td>
-                                    <td>{{ $registration->course->short_name }}</td>
+                                    <td>{{ $registration->course->short_name }}<br/>
+                                        <small>({{ $registration->course->hours }} hours)</small></td>
                                     <td>{{ $registration->course->university->name }}</td>
-                                    <td>{{ $registration->course->modality }}</td>
-                                    <td>{{ $registration->course->hours }}
+{{--                                    <td>{{ $registration->course->modality }}</td>--}}
+{{--                                    <td>{{ $registration->course->hours }}--}}
                                     <td>{{ date('d M Y', strtotime($registration->course->start_date)) }}</td>
                                     <td>{{ date('d M Y', strtotime($registration->course->end_date)) }}</td>
-                                    @include('lms.admin.registration.parts.table.td.terms_condition')
                                     @include('lms.admin.registration.parts.table.td.student_inspection_form')
                                     <td>
                                         @if($registration->is_approved == REGISTRATION_IS_APPROVED)
@@ -92,6 +93,7 @@
 
                                         @endif
                                     </td>
+                                    @include('lms.admin.registration.parts.table.td.mark_approved')
                                     <td class="js-certificate">
                                         @if($registration->is_approved == REGISTRATION_IS_APPROVED)
 
