@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddLorFilePathToRegistrations extends Migration
+class AddTcLorFiledsInCourse extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddLorFilePathToRegistrations extends Migration
      */
     public function up()
     {
-        Schema::table('registrations', function($table) {
-            $table->string('lor_file_path', 255)->after('certificate_path')->nullable();
+        Schema::table('courses', function($table) {
+            $table->string('lor_file_path', 255)->after('inspection_form_generated')->nullable();
+
+            $table->dropColumn('terms_and_conditions');
+
         });
     }
 
@@ -25,8 +28,8 @@ class AddLorFilePathToRegistrations extends Migration
      */
     public function down()
     {
-        Schema::table('registrations', function($table) {
-            $table->dropColumn('lor_file_path');
+        Schema::table('courses', function($table) {
+            $table->text('terms_and_conditions')->nullable();
         });
     }
 }

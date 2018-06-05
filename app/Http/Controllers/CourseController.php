@@ -113,7 +113,6 @@ class CourseController extends Controller
         $course['video_text']                   = $post['video_text'];
         $course['video_type']                   = $post['video_type'];
         $course['video_code']                   = $post['video_code'];
-//        $course['terms_and_conditions']         = $post['terms_condition'];
         $course['data_update_brief']            = $post['data_update_text'];
 
         $course['inspection_form_generated']    = false;
@@ -170,7 +169,6 @@ class CourseController extends Controller
             $course->video_text                   = $post['video_text'];
             $course->video_type                   = $post['video_type'];
             $course->video_code                   = $post['video_code'];
-//            $course->terms_and_conditions         = $post['terms_condition'];
             $course->data_update_brief            = $post['data_update_text'];
 
             $course->updated_by     = Auth::user()->id;
@@ -246,7 +244,6 @@ class CourseController extends Controller
                     $course['video_text']           = $row['video_information'];
                     $course['video_type']           = $row['video_type'];
                     $course['video_code']           = $row['embed_code'];
-                    $course['terms_condition']      = $row['terms_and_conditions'];
                     $course['data_update_text']     = $row['data_update'];
 
 
@@ -272,23 +269,69 @@ class CourseController extends Controller
      * @param Request $request
      * @return array
      */
-    public function uploadInspection(Request $request) {
+//    public function uploadInspection(Request $request) {
+//
+//
+//        $cloud = Storage::disk();
+//
+//        $filename = "course_".$request->input('course_id').'_inspection_form.'.$request->file('qqfile')->extension();
+//        $path = $cloud->putFileAs('course/inspection', $request->file('qqfile'), $filename);
+//
+//        $path = storage_path('app/'.$path);
+//        $course = Course::find($request->input('course_id'));
+//        $course->inspection_form_generated  = true;
+//        $course->save();
+//
+//        return response()->json(['path'=> $path, 'success' => true]);
+//
+//
+//    }
+
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function uploadFile(Request $request) {
 
 
         $cloud = Storage::disk();
-
-        $filename = "course_".$request->input('course_id').'_inspection_form.'.$request->file('qqfile')->extension();
-        $path = $cloud->putFileAs('course/inspection', $request->file('qqfile'), $filename);
-
-        $path = storage_path('app/'.$path);
         $course = Course::find($request->input('course_id'));
-        $course->inspection_form_generated  = true;
-        $course->save();
+
+        $root_path = 'app/course/university_'.$course->university->id;
+        $path = '';
+
+        $type = $request->input('type');
+
+        if ($type == 'terms_and_condition'){
+
+            $path = $root_path.'/terms_and_condition';
+            $filename = "course_".$request->input('course_id').'_tnc.'.$request->file('qqfile')->extension();
+
+            $path = $cloud->putFileAs(storage_path($path), $request->file('qqfile'), $filename);
+
+            $course->tc_file_path  = $path;
+            $course->save();
+
+
+        } elseif ($type == 'lor'){
+
+            $path = $root_path.'/lor';
+            $filename = "course_".$request->input('course_id').'_lor.'.$request->file('qqfile')->extension();
+
+            $path = $cloud->putFileAs(storage_path($path), $request->file('qqfile'), $filename);
+
+            $course->inspection_form_url  = $path;
+            $course->inspection_form_generated  = true;
+            $course->save();
+
+        }
 
         return response()->json(['path'=> $path, 'success' => true]);
 
 
     }
+
 
 
     /**

@@ -127,7 +127,7 @@
                             <div class="tab-pane" id="step3">
                                 <h3>Terms and Conditions</h3>
                                 <div class="box-layout">
-                                    <p class="">{{ $course->terms_and_conditions }}</p>
+                                    <p class=""></p>
                                     <div class="form-group">
                                         <div class="js-pdf-viewer">
 

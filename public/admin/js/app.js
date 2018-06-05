@@ -52818,11 +52818,12 @@ $(document).ready(function () {
 
                     // after insert, hide form and show upload
 
-                    modal.find('.js-course-code').val(response.course.id);
+                    modal.find('.js-course-id').val(response.course.id);
 
                     modal.find('.js-course-form').addClass('hidden');
                     modal.find('.js-course-inspection-form').removeClass('hidden');
                     modal.find('#btn-edit-course').attr('disabled', true);
+                    modal.find('#btn-edit-course').addClass('hidden');
                     // form.addClass('hidden');
 
                     var row = '<tr class="success"><td>' + data.course_code + '</td><td>' + data.short_name + '</td><td>' + data.hours + '</td><td>' + data.start_date + '</td><td>' + data.end_date + '</td><td>' + data.quota + '</td>+' + '<td>' + data.comment + '</td><td>Actions</td></tr>';
@@ -53027,12 +53028,19 @@ $(document).ready(function () {
             template: 'qq-template-manual-trigger',
             multiple: false,
             request: {
-                endpoint: '/admin/course/upload/inspection-form',
+                endpoint: '/admin/course/upload/file',
                 params: {
                     course_id: function course_id() {
                         return modal.find('.js-course-id').val();
-                    }
+                    },
+                    type: 'lor'
                 },
+                // endpoint: '/admin/course/upload/inspection-form',
+                // params: {
+                //     course_id : function () {
+                //         return modal.find('.js-course-id').val();
+                //     }
+                // },
                 customHeaders: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
@@ -53047,9 +53055,10 @@ $(document).ready(function () {
 
                     // $('.js-message').empty();
 
-                    if (response.error === undefined) {
-                        modal.modal('hide');
-                    }
+                    // if(response.error === undefined){
+                    //     modal.modal('hide');
+                    // }
+
                 },
                 onStatusChange: function onStatusChange(id, oldStatus, newStatus) {},
                 onCancel: function onCancel(id, name) {}
@@ -53091,9 +53100,10 @@ $(document).ready(function () {
                 onSubmit: function onSubmit(id, name) {},
                 onComplete: function onComplete(id, name, response, xhr) {
 
-                    if (response.error === undefined) {
-                        modal.modal('hide');
-                    }
+                    // if(response.error === undefined){
+                    //     modal.modal('hide');
+                    // }
+
                 },
                 onStatusChange: function onStatusChange(id, oldStatus, newStatus) {},
                 onCancel: function onCancel(id, name) {}
@@ -53107,8 +53117,87 @@ $(document).ready(function () {
         });
 
         /**
-         * Upload course request
+         * Upload terms and conditions
          */
+        $('#course-terms_condition-uploader-manual-trigger').fineUploader({
+            template: 'qq-terms_condition_upload_template-trigger',
+            multiple: false,
+            request: {
+                endpoint: '/admin/course/upload/file',
+                params: {
+                    course_id: function course_id() {
+                        return modal.find('.js-course-id').val();
+                    },
+                    type: 'terms_and_condition'
+                },
+                customHeaders: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            },
+            validation: {
+                itemLimit: 1,
+                allowedExtensions: ['pdf', 'doc', 'docx']
+
+            },
+            callbacks: {
+                onSubmit: function onSubmit(id, name) {},
+                onComplete: function onComplete(id, name, response, xhr) {},
+                onStatusChange: function onStatusChange(id, oldStatus, newStatus) {},
+                onCancel: function onCancel(id, name) {}
+            },
+            autoUpload: false
+        });
+
+        $('#btn-trigger-terms-upload').click(function () {
+            console.log('course-request-list-uploader-manual-trigger');
+            $('#course-terms_condition-uploader-manual-trigger').fineUploader('uploadStoredFiles');
+        });
+
+        /**
+         * Upload Letter of Registration
+         */
+        // $('#course-letter_of_registration-uploader-manual-trigger').fineUploader({
+        //     template: 'qq-terms_condition_upload_template-trigger',
+        //     multiple: false,
+        //     request: {
+        //         endpoint: '/admin/course/upload/file',
+        //         params: {
+        //             course_id : function () {
+        //                 return modal.find('.js-course-id').val();
+        //             },
+        //             type: 'lor'
+        //         },
+        //         customHeaders: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         }
+        //     },
+        //     validation: {
+        //         itemLimit: 1,
+        //         allowedExtensions:  ['pdf', 'doc', 'docx'],
+        //     },
+        //     callbacks: {
+        //         onSubmit: function (id, name) {
+        //
+        //         },
+        //         onComplete: function (id, name, response, xhr ) {
+        //
+        //
+        //         },
+        //         onStatusChange: function (id, oldStatus, newStatus) {
+        //
+        //         },
+        //         onCancel: function (id, name) {
+        //
+        //         }
+        //     },
+        //     autoUpload: false
+        // });
+        //
+        // $('#btn-trigger-lor-upload').click(function() {
+        //     console.log('course-letter_of_registration-uploader-manual-trigger');
+        //     $('#course-letter_of_registration-uploader-manual-trigger').fineUploader('uploadStoredFiles');
+        // });
+
     } //end page
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))

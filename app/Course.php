@@ -23,11 +23,12 @@ class Course extends Model
         'course_code', 'course_type', 'modality',
         'short_name', 'description',         'comment',
         'video_text', 'video_code', 'video_type',
-        'terms_and_conditions', 'data_update_brief',
+        'data_update_brief',
         'inspection_form_url', 'inspection_form_generated',
         'hours',         'quota',
         'start_date', 'end_date',
         'university_id',
+        'tc_file_path',
         'created_by', 'updated_by'
     ];
 
