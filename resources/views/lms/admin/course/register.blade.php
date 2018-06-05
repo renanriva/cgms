@@ -129,8 +129,10 @@
                                 <div class="box-layout">
                                     <p class=""></p>
                                     <div class="form-group">
-                                        <div class="js-pdf-viewer">
-                                            {{ $course->tc_file_path }}
+                                        <div class="js-pdf-viewer" style="margin-bottom: 75px;">
+                                            <embed src="{{ asset('storage/'.$course->tc_file_path) }}"
+                                                   width="100%" height="350" alt="pdf"
+                                                   pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
                                         </div>
 
                                         <input type="hidden" id="teacher_id" value="{{ $teacher->user->id }}">
