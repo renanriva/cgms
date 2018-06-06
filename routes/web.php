@@ -43,6 +43,7 @@ Route::middleware(['auth'])->group(function (){
 
         // teacher portfolio
         Route::get('/portfolio', 'PortfolioController@teachers');
+        Route::get('/portfolio/download', 'PortfolioController@download');
 
 
         Route::prefix('course')->group(function (){

@@ -8,31 +8,57 @@
 
 @section('content')
 
+    @if(Auth::user()->role == 'admin')
     <div class="row">
-        <div class="col-xs-8 col-xs-offset-2">
-            <div class="input-group">
-                <div class="input-group-btn search-panel">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <span id="search_concept">Filter by</span> <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#contains">Contains</a></li>
-                        <li><a href="#its_equal">It's equal</a></li>
-                        <li><a href="#greather_than">Greather than ></a></li>
-                        <li><a href="#less_than">Less than < </a></li>
-                        <li class="divider"></li>
-                        <li><a href="#all">Anything</a></li>
-                    </ul>
+        <form class="form-horizontal" method="get" action="/admin/portfolio">
+            <div class="col-xs-6">
+                <div class="input-group">
+                    <div class="input-group-btn search-panel">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span id="search_concept">{{  ucfirst(str_replace('_', ' ', app('request')->input('search_param')))   }}</span> <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#course_code">Course Code</a></li>
+                            <li><a href="#course_name">Course Name</a></li>
+                            {{--<li class="divider"></li>--}}
+                            <li><a href="#teachers_name">Teachers Name</a></li>
+                        </ul>
+                    </div>
+                    <input type="hidden" name="search_param" id="search_param"
+                           value="{{ app('request')->input('search_param') }}" >
+                    <input type="text" class="form-control" name="x" placeholder="Search term..." value="{{ app('request')->input('x') }}">
                 </div>
-                <input type="hidden" name="search_param" value="all" id="search_param">
-                <input type="text" class="form-control" name="x" placeholder="Search term...">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                </span>
             </div>
-        </div>
+            <div class="col-xs-2">
+                <div class="input-group">
+
+                    <select class="form-control" name="registration">
+                        <option
+                                disabled="">Registration</option>
+                        <option {{ app('request')->input('registration') == 1 ? 'selected' : '' }}
+                                value="1">Approved</option>
+                        <option {{ app('request')->input('registration') == 0 ? 'selected' : '' }}
+                                value="0">Not Approved</option>
+                        <option {{ app('request')->input('registration') == 3 ? 'selected' : '' }}
+                                value="3">All</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-2">
+                <div class="btn-group-sm">
+                    <button class="btn btn-primary btn-search btn-flat"
+                            formaction="/admin/portfolio"
+                            type="submit"><i class="fa fa-search"></i> Search</button>
+                    <button class="btn btn-success btn-download btn-flat"
+                            formaction="/admin/portfolio/download" formtarget="_blank"
+                            type="submit"><i class="fa fa-cloud-download"></i> Download</button>
+
+                </div>
+            </div>
+        </form>
     </div>
     <br/>
+    @endif
 
     <div class="row" id="portfolio">
         <div class="col-lg-12 col-md-12 col-sm-12">
@@ -77,7 +103,7 @@
                                     <td>{{ $registration->student->first_name }}</td>
                                     <td>{{ $registration->course->course_type }}</td>
                                     <td>{{ $registration->course->short_name }}<br/>
-                                        <small>({{ $registration->course->hours }} hours)</small></td>
+                                        <small class="text-warning">{{ $registration->course->course_code }}</small></td>
                                     <td>{{ $registration->course->university->name }}</td>
 {{--                                    <td>{{ $registration->course->modality }}</td>--}}
 {{--                                    <td>{{ $registration->course->hours }}--}}
@@ -116,7 +142,7 @@
 
                 </div>
                 <div class="box-footer text-center">
-                    {{ $registrations->links() }}
+                    {{ $registrations->appends(request()->query())->links() }}
                 </div>
             </div>
 
