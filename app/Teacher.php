@@ -20,6 +20,7 @@ class Teacher extends Model
      * @var array
      */
     protected $fillable = [
+        'first_name', 'last_name',
         'social_id', 'cc', 'date_of_birth', 'gender', 'telephone', 'mobile', 'moodle_id',
         'inst_email', 'university_name', 'function', 'work_area', 'category',
         'reason_type', 'action_type', 'action_description', 'speciality',

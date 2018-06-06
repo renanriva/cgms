@@ -19,3 +19,7 @@
     -moz-border-radius: 0;
     -webkit-border-radius: 0;
 }
+
+.register-box{
+    width: 600px;
+}
