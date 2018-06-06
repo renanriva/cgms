@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Registration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class PortfolioController
@@ -36,40 +37,54 @@ class PortfolioController extends Controller
 
                 $title = 'Teacher Portfolio - '.env('APP_NAME') ;
 
-                $registrations = Registration::where(function ($query) use($search_in, $search_keyword, $registration){
+                $minutes = 15;
+                $page = $request->input('page') == null ? 1: $request->input('page');
+                $cache_key = 'portfolio_search_in_'.$search_in. '_with_'.$search_keyword .
+                    '_with_registration_'.$registration .
+                    '_in_page_'.$page;
+                $registrations = Cache::remember($cache_key, $minutes, function () use($search_in, $search_keyword, $registration){
 
 
+                    return Registration::where(function ($query) use($search_in, $search_keyword, $registration){
 
-                    if($registration !== 3){
-                        if ($registration == 1 || $registration == 0){
-                            $query->where('is_approved', $registration);
+                        // if not all == 3 , then search registration with id
+                        if($registration !== 3){
+                            if ($registration == 1 || $registration == 0){
+                                $query->where('is_approved', $registration);
+                            }
                         }
-                    }
 
-                    if ($search_in == 'teachers_name'){
-                        // teacher name search
+                        if ($search_in == 'teachers_name'){
+                            // teacher name search
 
-                        $query->whereHas('student', function ($cQuery) use ($search_keyword){
-                            $cQuery->where('first_name', 'LIKE', '%' . $search_keyword . '%')
-                            ->orWhere('last_name', 'LIKE', '%'.$search_keyword.'%');
-                        });
+                            $query->whereHas('student', function ($cQuery) use ($search_keyword){
+                                $cQuery->where('first_name', 'LIKE', '%' . $search_keyword . '%')
+                                    ->orWhere('last_name', 'LIKE', '%'.$search_keyword.'%');
+                            });
 
-                    } elseif ($search_in == 'course_name'){
+                        } elseif ($search_in == 'course_name'){
 
-                        $query->whereHas('course', function ($cQuery) use ($search_keyword){
-                            $cQuery->where('short_name', 'LIKE', '%' . $search_keyword . '%');
-                        });
+                            $query->whereHas('course', function ($cQuery) use ($search_keyword){
+                                $cQuery->where('short_name', 'LIKE', '%' . $search_keyword . '%');
+                            });
 
-                    } elseif ($search_in == 'course_code'){
+                        } elseif ($search_in == 'course_code'){
 
-                        $query->whereHas('course', function ($cQuery) use ($search_keyword){
-                            $cQuery->where('course_code',  $search_keyword );
-                        });
+                            $query->whereHas('course', function ($cQuery) use ($search_keyword){
+                                $cQuery->where('course_code',  $search_keyword );
+                            });
 
-                    }
+                        }
 
-                })->orderBy('id', 'desc')
-                ->paginate(10);
+                    })->orderBy('id', 'desc')
+                        ->paginate(10);
+
+
+//                    return DB::table('users')->get();
+                });
+
+
+
 
             } elseif ($user->role == 'teacher'){
 
@@ -87,6 +102,54 @@ class PortfolioController extends Controller
 //            echo  'unauthorized';
 //        }
 
+
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function download(Request $request){
+
+
+
+        $search_in = $request->input('search_param');
+        $search_keyword = $request->input('x');
+        $registration = $request->input('registration') == null ? 3 : $request->input('registration');
+        $minutes = 15;
+        $page = $request->input('page') == null ? 1: $request->input('page');
+        $cache_key = 'portfolio_search_in_'.$search_in. '_with_'.$search_keyword .
+            '_with_registration_'.$registration .
+            '_in_page_'.$page;
+
+
+//        $storage = Cache::getStore(); // will return instance of FileStore
+//        $filesystem = $storage->getFilesystem(); // will return instance of Filesystem
+//
+//        $dir = (\Cache::getDirectory());
+//        $keys = [];
+//        foreach ($filesystem->allFiles($dir) as $file1) {
+//
+//            if (is_dir($file1->getPath())) {
+//
+//                foreach ($filesystem->allFiles($file1->getPath()) as $file2) {
+//                    $keys = array_merge($keys, [$file2->getRealpath() => unserialize(substr(\File::get($file2->getRealpath()), 10))]);
+//                }
+//            }
+//            else {
+//
+//            }
+//        }
+
+        echo '<pre>';
+//        var_dump($cache_key);
+//
+//        var_dump(Cache::get($cache_key));
+
+//        var_dump($keys);
+
+        echo '</pre>';
+
+        var_dump($request->all());
 
     }
 

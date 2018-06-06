@@ -46,8 +46,13 @@
             </div>
             <div class="col-xs-2">
                 <div class="btn-group-sm">
-                    <button class="btn btn-primary btn-search btn-flat " type="submit"><i class="fa fa-search"></i> Search</button>
-                    <button class="btn btn-success btn-download btn-flat" type="submit"><i class="fa fa-cloud-download"></i> Download</button>
+                    <button class="btn btn-primary btn-search btn-flat"
+                            formaction="/admin/portfolio"
+                            type="submit"><i class="fa fa-search"></i> Search</button>
+                    <button class="btn btn-success btn-download btn-flat"
+                            formaction="/admin/portfolio/download" formtarget="_blank"
+                            type="submit"><i class="fa fa-cloud-download"></i> Download</button>
+
                 </div>
             </div>
         </form>
@@ -137,7 +142,7 @@
 
                 </div>
                 <div class="box-footer text-center">
-                    {{ $registrations->links() }}
+                    {{ $registrations->appends(request()->query())->links() }}
                 </div>
             </div>
 
