@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Teacher;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -48,10 +49,16 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+//        @todo register validation for new
+//        dd($data);
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'full_name' => 'required|string|max:255|min:2',
+            'email'     => 'required|string|email|max:255|unique:users',
+            'social_id' => 'required|string|max:30|unique:teachers',
+            'amie'      => 'required|string|max:50',
+            'canton'    => 'nullable|sometimes|sometimes|string|max:100',
+            'work_area' => 'nullable|sometimes|string|max:100',
+            'password'  => 'required|string|min:6|confirmed',
         ]);
     }
 
@@ -63,10 +70,33 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
+        $user =  User::create([
+            'name' => $data['full_name'],
             'email' => $data['email'],
+            'role'  => USER_ROLE_STUDENT,
+            'status' => USER_STATUS_ACTIVE,
+            'creation_type' => USER_CREATION_TYPE_REGISTRATION,
             'password' => Hash::make($data['password']),
         ]);
+
+        $teacher = new Teacher();
+        $teacher->first_name = $user->name;
+        $teacher->last_name = '';
+        $teacher->social_id = $data['social_id'];
+        $teacher->amie = $data['amie'];
+        $teacher->inst_email = $data['email'];
+        $teacher->canton = $data['canton'];
+//        $teacher->date_of_birth = $data['dob'];
+        $teacher->work_area = $data['work_area'];
+
+        $teacher->user_id = $user->id;
+        $teacher->created_by = $user->id;
+        $teacher->updated_by = $user->id;
+
+        $teacher->save();
+
+        return $user;
+
+
     }
 }
