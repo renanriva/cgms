@@ -13,6 +13,7 @@
         <form class="form-horizontal" method="get" action="/admin/portfolio">
             <div class="col-xs-6">
                 <div class="input-group">
+
                     <div class="input-group-btn search-panel">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             <span id="search_concept">{{  ucfirst(str_replace('_', ' ', app('request')->input('search_param')))   }}</span> <span class="caret"></span>
@@ -24,10 +25,10 @@
                             <li><a href="#teachers_name">Teachers Name</a></li>
                             <li class="divider"></li>
                             <li><a href="#all">All Fields</a></li>
-
-
                         </ul>
+
                     </div>
+
                     <input type="hidden" name="search_param" id="search_param"
                            value="{{ app('request')->input('search_param') }}">
                     <input type="text" class="form-control" name="x" placeholder="Search term..." value="{{ app('request')->input('x') }}">
