@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Registration;
+use App\Repository\TeacherRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -26,86 +27,39 @@ class PortfolioController extends Controller
 
         $user = Auth::user();
 
+        $page           = $request->input('page') == null ? 1: $request->input('page');
+
         if ($user->role == 'admin'){
-
-
-            $search_in = $request->input('search_param');
-            $search_keyword = $request->input('x');
-            $registration = $request->input('registration') == null ? 3 : $request->input('registration');
 
 
             $title = 'Teacher Portfolio - '.env('APP_NAME') ;
 
-            $minutes = 15;
-            $page = $request->input('page') == null ? 1: $request->input('page');
-            $cache_key = 'portfolio_search_in_'.$search_in. '_with_'.$search_keyword .
-                '_with_registration_'.$registration .
-                '_in_page_'.$page;
-            $registrations = Cache::remember($cache_key, $minutes, function () use($search_in, $search_keyword, $registration){
+
+            $search_in      = $request->input('search_param');
+            $search_keyword = $request->input('x');
+            $registration   = $request->input('registration') == null ? 3 : $request->input('registration');
 
 
-                return Registration::where(function ($query) use($search_in, $search_keyword, $registration){
+            $teacher_repo = new TeacherRepository();
 
-                    // if not all == 3 , then search registration with id
-                    if($registration !== 3){
-                        if ($registration == 1 || $registration == 0){
-                            $query->where('is_approved', $registration);
-                        }
-                    }
 
-                    if ($search_in == 'teachers_name'){
-                        // teacher name search
-                        $query->whereHas('student', function ($cQuery) use ($search_keyword){
-                            $cQuery->where('first_name', 'LIKE', '%' . $search_keyword . '%')
-                                ->orWhere('last_name', 'LIKE', '%'.$search_keyword.'%');
-                        });
-
-                    } elseif ($search_in == 'social_id'){
-                        // teacher social_id search
-                        $query->whereHas('student', function ($cQuery) use ($search_keyword){
-                            $cQuery->where('social_id', $search_keyword );
-                        });
-
-                    } elseif ($search_in == 'course_name'){
-
-                        $query->whereHas('course', function ($cQuery) use ($search_keyword){
-                            $cQuery->where('short_name', 'LIKE', '%' . $search_keyword . '%');
-                        });
-
-                    } elseif ($search_in == 'course_code'){
-
-                        $query->whereHas('course', function ($cQuery) use ($search_keyword){
-                            $cQuery->where('course_code',  $search_keyword );
-                        });
-
-                    }elseif ($search_in == 'all'){
-                        
-                        $query->whereHas('student', function ($cQuery) use ($search_keyword){
-                            $cQuery->where('first_name', 'LIKE', '%' . $search_keyword . '%')
-                                ->orWhere('last_name', 'LIKE', '%'.$search_keyword.'%')
-                                ->orWhere('social_id', $search_keyword);
-                        });
-
-                        $query->orWhereHas('course', function ($cQuery) use ($search_keyword){
-
-                            $cQuery->where('short_name', 'LIKE', '%' . $search_keyword . '%')
-                                    ->orWhere('course_code',  $search_keyword );
-                        });
-
-                    }
-
-                })->orderBy('id', 'desc')
-                    ->paginate(10);
-
-            });
+            $registrations = $teacher_repo->filter($search_in, $search_keyword, $registration, $page);
 
         } elseif ($user->role == 'teacher'){
 
-                $title = 'My Portfolio - '.env('APP_NAME') ;
+            $title = 'My Portfolio - '.env('APP_NAME') ;
 
-                $registrations = Registration::where('teacher_id', $user->teacher->id)
+            $minutes = 20;
+            $cache_key = 'portfolio_of_teacher_'.$user->teacher->id.'_of_page_'.$page;
+
+            $registrations = Cache::remember($cache_key, $minutes, function () use($user){
+
+                return Registration::with(['student', 'course', 'markApprovedBy', 'approvedBy'])
+                    ->where('teacher_id', $user->teacher->id)
                     ->orderBy('id', 'desc')
                     ->paginate(10);
+            });
+
         }
 
         return view('lms.admin.portfolio.all', ['title'=> $title,
