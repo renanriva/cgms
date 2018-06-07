@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Registration;
+use App\Repository\TeacherRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Maatwebsite\Excel\Facades\Excel;
 
 /**
  * Class PortfolioController
@@ -25,83 +27,42 @@ class PortfolioController extends Controller
 
 
         $user = Auth::user();
-//        if ($user->can('browse', Teacher::class)) {
 
-            if ($user->role == 'admin'){
+        $page           = $request->input('page') == null ? 1: $request->input('page');
 
-
-                $search_in = $request->input('search_param');
-                $search_keyword = $request->input('x');
-                $registration = $request->input('registration') == null ? 3 : $request->input('registration');
+        if ($user->role == 'admin'){
 
 
-                $title = 'Teacher Portfolio - '.env('APP_NAME') ;
-
-                $minutes = 15;
-                $page = $request->input('page') == null ? 1: $request->input('page');
-                $cache_key = 'portfolio_search_in_'.$search_in. '_with_'.$search_keyword .
-                    '_with_registration_'.$registration .
-                    '_in_page_'.$page;
-                $registrations = Cache::remember($cache_key, $minutes, function () use($search_in, $search_keyword, $registration){
+            $title = 'Teacher Portfolio - '.env('APP_NAME') ;
 
 
-                    return Registration::where(function ($query) use($search_in, $search_keyword, $registration){
+            $search_in      = $request->input('search_param');
+            $search_keyword = $request->input('x');
+            $registration   = $request->input('registration') == null ? 3 : $request->input('registration');
 
-                        // if not all == 3 , then search registration with id
-                        if($registration !== 3){
-                            if ($registration == 1 || $registration == 0){
-                                $query->where('is_approved', $registration);
-                            }
-                        }
+            $teacher_repo = new TeacherRepository();
 
-                        if ($search_in == 'teachers_name'){
-                            // teacher name search
+            $registrations = $teacher_repo->filter($search_in, $search_keyword, $registration, $page);
 
-                            $query->whereHas('student', function ($cQuery) use ($search_keyword){
-                                $cQuery->where('first_name', 'LIKE', '%' . $search_keyword . '%')
-                                    ->orWhere('last_name', 'LIKE', '%'.$search_keyword.'%');
-                            });
+        } elseif ($user->role == 'teacher'){
 
-                        } elseif ($search_in == 'course_name'){
+            $title = 'My Portfolio - '.env('APP_NAME') ;
 
-                            $query->whereHas('course', function ($cQuery) use ($search_keyword){
-                                $cQuery->where('short_name', 'LIKE', '%' . $search_keyword . '%');
-                            });
+            $minutes = 20;
+            $cache_key = 'portfolio_of_teacher_'.$user->teacher->id.'_of_page_'.$page;
 
-                        } elseif ($search_in == 'course_code'){
+            $registrations = Cache::remember($cache_key, $minutes, function () use($user){
 
-                            $query->whereHas('course', function ($cQuery) use ($search_keyword){
-                                $cQuery->where('course_code',  $search_keyword );
-                            });
-
-                        }
-
-                    })->orderBy('id', 'desc')
-                        ->paginate(10);
-
-
-//                    return DB::table('users')->get();
-                });
-
-
-
-
-            } elseif ($user->role == 'teacher'){
-
-                $title = 'My Portfolio - '.env('APP_NAME') ;
-
-                $registrations = Registration::where('teacher_id', $user->teacher->id)
+                return Registration::with(['student', 'course', 'markApprovedBy', 'approvedBy'])
+                    ->where('teacher_id', $user->teacher->id)
                     ->orderBy('id', 'desc')
                     ->paginate(10);
-            }
+            });
 
-            return view('lms.admin.portfolio.all', ['title'=> $title,
-                            'registrations' => $registrations]);
+        }
 
-//        } else{
-//            echo  'unauthorized';
-//        }
-
+        return view('lms.admin.portfolio.all', ['title'=> $title,
+                        'registrations' => $registrations]);
 
     }
 
@@ -110,46 +71,76 @@ class PortfolioController extends Controller
      */
     public function download(Request $request){
 
-
-
-        $search_in = $request->input('search_param');
+        $search_in      = $request->input('search_param');
         $search_keyword = $request->input('x');
-        $registration = $request->input('registration') == null ? 3 : $request->input('registration');
-        $minutes = 15;
-        $page = $request->input('page') == null ? 1: $request->input('page');
-        $cache_key = 'portfolio_search_in_'.$search_in. '_with_'.$search_keyword .
-            '_with_registration_'.$registration .
-            '_in_page_'.$page;
+        $registration   = $request->input('registration') == null ? 3 : $request->input('registration');
 
 
-//        $storage = Cache::getStore(); // will return instance of FileStore
-//        $filesystem = $storage->getFilesystem(); // will return instance of Filesystem
-//
-//        $dir = (\Cache::getDirectory());
-//        $keys = [];
-//        foreach ($filesystem->allFiles($dir) as $file1) {
-//
-//            if (is_dir($file1->getPath())) {
-//
-//                foreach ($filesystem->allFiles($file1->getPath()) as $file2) {
-//                    $keys = array_merge($keys, [$file2->getRealpath() => unserialize(substr(\File::get($file2->getRealpath()), 10))]);
-//                }
-//            }
-//            else {
-//
-//            }
-//        }
+        $teacher_repo = new TeacherRepository();
+        $registrations = $teacher_repo->downloadPortfolio($search_in, $search_keyword, $registration);
 
-        echo '<pre>';
-//        var_dump($cache_key);
-//
-//        var_dump(Cache::get($cache_key));
+        $header = [
+            'Id',
+            'Social Id',
+            'Name',
+            'Course Type',
+            'Course Name',
+            'University',
+            'Start Date',
+            'End Date',
+            'Form Uploaded',
+            'Approve',
+            'Approve By',
+            'Grade',
+            'Grade Approved At',
+            'Grade Approved By',
+        ];
 
-//        var_dump($keys);
+        $rows = [];
 
-        echo '</pre>';
+        array_push($rows, $header);
 
-        var_dump($request->all());
+        foreach($registrations as $registration){
+
+            $row = [
+                $registration->id,
+                $registration->student->social_id,
+                $registration->student->first_name,
+                $registration->course->course_type,
+                $registration->course->short_name,
+                $registration->course->university->name,
+                date('d/m/Y', strtotime($registration->course->start_date)),
+                date('d/m/Y', strtotime($registration->course->end_date)),
+                $registration->inspection_certificate == REGISTRATION_INSPECTION_CERTIFICATE_SIGNED ? $registration->inspection_certificate_upload_time: '',
+                $registration->is_approved == REGISTRATION_IS_APPROVED ? 'YES': 'NO',
+                $registration->approvedBy !== null ? $registration->approvedBy->name : '',
+                $registration->mark !== null ? $registration->mark.'/100' : '',
+                $registration->mark_upload_time !== null ? date('d/m/Y', strtotime($registration->mark_upload_time))  : '',
+                $registration->markApprovedBy !== null ? $registration->markApprovedBy->name : '',
+            ];
+
+            array_push($rows, $row);
+
+        }
+
+        Excel::create('teacher_portfolio', function($excel) use($rows) {
+
+            $excel->sheet('Sheet 1', function($sheet) use($rows) {
+
+                $sheet->fromArray($rows);
+
+                $sheet->setOrientation('landscape');
+
+            });
+
+            $excel->setTitle('Teacher Portfolio - CGMS');
+
+            // Chain the setters
+            $excel->setCreator('Ariful Haque <arifulhb@gmail.com>')
+                ->setCompany('AppioLab');
+
+        })->export('xls');
+
 
     }
 

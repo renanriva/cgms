@@ -61,8 +61,8 @@ return array(
         'creator'        => 'Ariful Haque <arifulhb@gmail.com>',
         'lastModifiedBy' => 'Ariful Haque <arifulhb@gmail.com>',
         'title'          => 'Spreadsheet',
-        'description'    => 'LMS spreadsheet export',
-        'subject'        => 'LMS export',
+        'description'    => 'CGMS spreadsheet export',
+        'subject'        => 'CGMS export',
         'keywords'       => 'arifulhb, excel, export',
         'category'       => 'Excel',
         'manager'        => 'Ariful Haque <arifulhb@gmail.com>',
@@ -190,7 +190,7 @@ return array(
         | will automatically be used as first row (table heading)
         |
         */
-        'generate_heading_by_indices' => true,
+        'generate_heading_by_indices' => false,
 
         /*
         |--------------------------------------------------------------------------
@@ -463,7 +463,7 @@ return array(
         |
         */
 
-        'ignoreEmpty'             => false,
+        'ignoreEmpty'             => true,
 
         /*
         |--------------------------------------------------------------------------
