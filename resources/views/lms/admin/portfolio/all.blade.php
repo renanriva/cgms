@@ -20,12 +20,16 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#course_code">Course Code</a></li>
                             <li><a href="#course_name">Course Name</a></li>
-                            {{--<li class="divider"></li>--}}
+                            <li><a href="#social_id">Social Id</a></li>
                             <li><a href="#teachers_name">Teachers Name</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#all">All Fields</a></li>
+
+
                         </ul>
                     </div>
                     <input type="hidden" name="search_param" id="search_param"
-                           value="{{ app('request')->input('search_param') }}" >
+                           value="{{ app('request')->input('search_param') }}">
                     <input type="text" class="form-control" name="x" placeholder="Search term..." value="{{ app('request')->input('x') }}">
                 </div>
             </div>
