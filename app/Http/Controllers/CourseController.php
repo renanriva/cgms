@@ -3,17 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Events\DiplomaUploaded;
 use App\Http\Requests\CourseInsertRequest;
 use App\Http\Requests\CourseUpdateRequest;
 use App\Registration;
 use App\Repository\CourseRepository;
 use App\Repository\UniversityRepository;
-use App\Teacher;
-use Carbon\Carbon;
-use Chumper\Zipper\Zipper;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -336,10 +335,8 @@ class CourseController extends Controller
 
             if ($request->file('qqfile')->extension() == 'zip'){
 
-                $zip = new Zipper;
-                $zip->make(storage_path('app/'.$pathFile))
-                    ->extractTo(storage_path('app/'.$path));
-
+                // extract the file in the event
+                event(new DiplomaUploaded($path, $pathFile, $course->id));
 
                 return response()->json(['path'=> $path, 'success' => true]);
             }
