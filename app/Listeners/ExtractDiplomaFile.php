@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Storage;
  *
  * @package App\Listeners
  */
-class ExtractDiplomaFile
+class ExtractDiplomaFile implements ShouldQueue
+
 {
     /**
      * Create the event listener.
