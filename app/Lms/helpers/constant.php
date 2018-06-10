@@ -5,6 +5,8 @@
      * Date: 06/05/2018
      * Time: 2:39 PM
      */
+    use Illuminate\Support\Facades\Auth;
+    use Illuminate\Support\Facades\Cache;
 
 
     /**
@@ -107,3 +109,16 @@
      */
     const REGISTRATION_MARK_APPROVED = 1;
     const REGISTRATION_MARK_NOT_APPROVED = 0;
+
+
+    /**
+     * Always return auth user
+     *
+     * @return mixed
+     */
+    function getAuthUser(){
+
+        return Cache::remember('auth_user', 20, function () {
+            return Auth::user();
+        });
+    }
