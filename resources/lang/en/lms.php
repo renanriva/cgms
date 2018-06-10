@@ -110,6 +110,7 @@
                     'end_date'          => 'End Date',
                     'approved'          => 'Approved',
                     'certificate'       => 'Certificate',
+                    'diploma'           => 'Diploma',
 
                     'action'            => 'Action',
                 ],

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Province;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
@@ -33,14 +34,24 @@ class RegistrationController extends Controller
 
 
     /**
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getPending(){
+    public function getPending(Request $request){
 
         $title = 'Pending Registration Management - '.env('APP_NAME') ;
-        $registrations = Registration::orderBy('id', 'desc')
-                        ->orderBy('is_approved', 'desc')
-                        ->paginate(10);
+
+        $posts = $request->all();
+        $minutes = 15;
+        $page = isset( $posts['page'] ) ? $posts['page'] : 1 ;
+
+        $registrations = Cache::remember('pending_registrations_by_page_'.$page, $minutes, function () {
+
+                 return Registration::orderBy('id', 'desc')
+                    ->orderBy('is_approved', 'desc')
+                    ->paginate(10);
+
+        });
 
         return view('lms.admin.registration.pending',
             ['title'=> $title, 'registrations' => $registrations]);
@@ -78,6 +89,7 @@ class RegistrationController extends Controller
             $registration->status = REGISTRATION_STATUS_COMPLETE;
 
             $registration->save();
+//            @todo invalidate registration_by_id cache
 
 //            @TODO generate inspection certificate and update status
             event(new RegistrationApproved($registration));
@@ -128,25 +140,6 @@ class RegistrationController extends Controller
 
 
     /**
-     * Process datatables ajax request.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getTableData()
-    {
-
-    }
-
-    /**
-     * @param Request $request
-     * @param         $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-//    public function update(Request $request, $id){
-//
-//    }
-
-    /**
      * @todo add registration policy
      *
      * @param $registrationId
@@ -154,7 +147,15 @@ class RegistrationController extends Controller
      */
     public function downloadStudentInspectionCertificate($registrationId){
 
-        $registration = Registration::find($registrationId);
+        $minutes = 15;
+
+        $registration = Cache::remember('registration_by_id_'.$registrationId, $minutes,
+            function () use($registrationId){
+
+                return Registration::find($registrationId);
+
+            });
+
 
         if ($registration){
 
@@ -175,11 +176,40 @@ class RegistrationController extends Controller
      */
     public function downloadStudentCertificate($registrationId){
 
-        $registration = Registration::find($registrationId);
+        $minutes = 15;
+
+        $registration = Cache::remember('registration_by_id_'.$registrationId, $minutes,
+            function () use($registrationId){
+
+            return Registration::find($registrationId);
+
+        });
 
         if ($registration){
 
             return response()->file($registration->certificate_path);
+
+        } else {
+            return response()->redirectTo('admin/unauthorized');
+
+        }
+
+    }
+
+    public function downloadStudentDiploma($registrationId){
+
+        $minutes = 15;
+
+        $registration = Cache::remember('registration_by_id_'.$registrationId, $minutes,
+            function () use($registrationId){
+
+                return Registration::find($registrationId);
+
+            });
+
+        if ($registration){
+
+            return response()->file($registration->diploma_path);
 
         } else {
             return response()->redirectTo('admin/unauthorized');
