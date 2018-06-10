@@ -11,4 +11,12 @@
         <a href="/admin/course/{{ $id }}/add-grade" class="btn btn-success" data-id="{{ $id }}">
             <i class="fa fa-plus"></i> Add Grade</a>
     @endif
+
+{{--    @can('upload_diploma', $course)--}}
+        <button class="btn btn-upload-diploma btn-info" data-id="{{ $id }}"
+                title="{{ __('lms.elements.button.upload_diploma') }}"
+                data-name="{{ $short_name }}" data-course_id="{{ $id }}">
+            <i class="fa fa-cloud-upload"></i> {{ __('lms.elements.button.upload_diploma') }}
+        </button>
+    {{--@endcan--}}
 </div>

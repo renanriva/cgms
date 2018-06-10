@@ -53183,6 +53183,52 @@ $(document).ready(function () {
             console.log('course-letter_of_registration-uploader-manual-trigger');
             $('#course-letter_of_registration-uploader-manual-trigger').fineUploader('uploadStoredFiles');
         });
+
+        /**
+         * Diploma upload
+         * @type {*}
+         */
+        var modalUploadDiploma = $('#modal_upload_diploma');
+        $('#course-table').on('click', '.btn-upload-diploma', function () {
+
+            modalUploadDiploma.modal('show');
+            var courseId = $(this).attr('data-id');
+            console.log('course id: ', courseId);
+            modalUploadDiploma.find('.js-course-diploma-id').val(courseId);
+        });
+
+        $('#course-diploma-upload-placeholder').fineUploader({
+            template: 'qq_course_diploma_upload_manual_template',
+            multiple: false,
+            request: {
+                endpoint: '/admin/course/upload/file',
+                params: {
+                    course_id: function course_id() {
+                        // var courseId =  modalUploadDiploma.find('.js-course-diploma-id').val();
+                        return modalUploadDiploma.find('.js-course-diploma-id').val();
+                    },
+                    type: 'diploma'
+                },
+                customHeaders: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            },
+            validation: {
+                itemLimit: 1,
+                allowedExtensions: ['zip']
+            },
+            callbacks: {
+                onSubmit: function onSubmit(id, name) {},
+                onComplete: function onComplete(id, name, response, xhr) {},
+                onStatusChange: function onStatusChange(id, oldStatus, newStatus) {},
+                onCancel: function onCancel(id, name) {}
+            },
+            autoUpload: false
+        });
+
+        $('#btn_upload_diploma').click(function () {
+            $('#course-diploma-upload-placeholder').fineUploader('uploadStoredFiles');
+        });
     } //end page
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))

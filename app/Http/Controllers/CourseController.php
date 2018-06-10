@@ -10,6 +10,7 @@ use App\Repository\CourseRepository;
 use App\Repository\UniversityRepository;
 use App\Teacher;
 use Carbon\Carbon;
+use Chumper\Zipper\Zipper;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
 use App\Canton;
+use ZipArchive;
 
 /**
  * Class CourseController
@@ -309,7 +311,6 @@ class CourseController extends Controller
             $cloud = Storage::disk('public');
             $path = $cloud->putFileAs($path, $request->file('qqfile'), $filename);
 
-//            $course->tc_file_path  = storage_path('app/'.$path);
             $course->tc_file_path  = $path;
             $course->save();
 
@@ -325,7 +326,26 @@ class CourseController extends Controller
             $course->lor_file_path  = storage_path('app/'.$path);
             $course->save();
 
+        } elseif ($type == 'diploma'){
+
+            $path = $root_path.'/course_'.$course->id.'/diploma';
+            $filename = "course_".$request->input('course_id').'_diploma.'.$request->file('qqfile')->extension();
+
+            $cloud = Storage::disk();
+            $pathFile = $cloud->putFileAs($path, $request->file('qqfile'), $filename);
+
+            if ($request->file('qqfile')->extension() == 'zip'){
+
+                $zip = new Zipper;
+                $zip->make(storage_path('app/'.$pathFile))
+                    ->extractTo(storage_path('app/'.$path));
+
+
+                return response()->json(['path'=> $path, 'success' => true]);
+            }
+
         }
+
 
         return response()->json(['path'=> $path, 'success' => true]);
 

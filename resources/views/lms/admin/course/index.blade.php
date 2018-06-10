@@ -59,6 +59,33 @@
             @include('lms.admin.parts.modal_delete')
         @endif
 
+        @if(Auth::user()->role == 'admin' || Auth::user()->role == 'university')
+
+            @component('lms.admin.components.bootstrap.modal.modal', [
+                        'modal_id' => 'modal_upload_diploma',
+                        'form_id' =>'form_upload_diploma' , 'form_class' => 'js-upload-diploma-zip'])
+
+                @slot('modal_title')
+                    Upload Diploma Zip File
+                @endslot
+
+                @slot('modal_body')
+
+                    <input type="hidden" class="js-course-diploma-id"/>
+                        <div id="course-diploma-upload-placeholder"></div>
+                        @component('lms.admin.components.fineuploader',[
+                                   'template_name' => 'qq_course_diploma_upload_manual_template',
+                                    'upload_button_id' => 'btn_upload_diploma']);
+                        @endcomponent
+
+                @endslot
+
+                @slot('footer_action_button')
+                @endslot
+
+            @endcomponent
+
+        @endif
     </div>
 
 @stop

@@ -122,4 +122,26 @@ class CoursePolicy
         return false;
 
     }
+
+
+    /**
+     * @param User   $user
+     * @param Course $course
+     * @return bool
+     */
+    public function upload_diploma(User $user, Course $course){
+
+
+        if ( (  $user->role == 'university' && $user->id == $course->university->user_id ) ||
+                $user->role == 'admin'){
+
+            return true;
+
+        } else{
+
+            return false;
+        }
+
+    }
+
 }
