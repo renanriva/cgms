@@ -97,6 +97,7 @@
                                 <th>Grade</th>
                                 <th>Grade Approved</th>
                                 <th>{{ __('lms.page.teacher.table.certificate') }}</th>
+                                <th>{{ __('lms.page.teacher.table.diploma') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -133,6 +134,19 @@
                                                 {{ csrf_field() }}
                                                 <button type="submit" class="btn btn-link btn-link-download" rel="tooltip"
                                                         title="{{ basename($registration->certificate_path) }}"
+                                                ><i class="fa fa-cloud-download"></i> Download</button>
+                                            </form>
+
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if(isset($registration->diploma_path))
+
+                                            <form method="post" target="_blank"
+                                                  action="{{ url("/admin/registration/$registration->id/download/diploma") }}">
+                                                {{ csrf_field() }}
+                                                <button type="submit" class="btn btn-link btn-link-download" rel="tooltip"
+                                                        title="{{ basename($registration->diploma) }}"
                                                 ><i class="fa fa-cloud-download"></i> Download</button>
                                             </form>
 

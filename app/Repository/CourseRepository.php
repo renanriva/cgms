@@ -15,6 +15,7 @@ use App\Registration;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class CourseRepository
@@ -173,6 +174,36 @@ class CourseRepository
             return null;
         }
 
+
+    }
+
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getById($id){
+
+
+        $key = 'course_by_id'.$id;
+
+        $course = Cache::remember($key, 20, function () use($id){
+
+             return Course::find($id);
+
+        });
+
+        return $course;
+
+    }
+
+    /**
+     * @param $id
+     */
+    public function invalidateCache($id){
+
+        $key = 'course_by_id'.$id;
+        Cache::forever($key);
 
     }
 }

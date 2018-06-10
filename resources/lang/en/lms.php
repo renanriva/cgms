@@ -110,6 +110,7 @@
                     'end_date'          => 'End Date',
                     'approved'          => 'Approved',
                     'certificate'       => 'Certificate',
+                    'diploma'           => 'Diploma',
 
                     'action'            => 'Action',
                 ],
@@ -319,6 +320,7 @@
                 'close'     => 'Close',
                 'import'    =>  'Import',
                 'upload'    =>  'Upload',
+                'upload_diploma' => 'Diploma',
                 'upload_course_request' => 'Upload Course Request', // in course list page
                 'new_course_upload' => 'Upload New Course' // in course list page
             ],

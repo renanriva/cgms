@@ -178,7 +178,7 @@ class TeacherRepository
         $registrations = Cache::remember($cache_key, $minutes, function () use($search_in, $search_keyword, $registration){
 
 
-            return Registration::with(['student', 'course', 'markApprovedBy','approvedBy'])
+            return Registration::with(['student', 'course', 'course.university', 'markApprovedBy','approvedBy'])
                 ->where(function ($query) use($search_in, $search_keyword, $registration){
 
                 // if not all == 3 , then search registration with id

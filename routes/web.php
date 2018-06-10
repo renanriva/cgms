@@ -86,13 +86,8 @@ Route::middleware(['auth'])->group(function (){
 
             Route::post('/{id}/download/student-inspection-form', 'RegistrationController@downloadStudentInspectionCertificate');
             Route::post('/{id}/download/certificate', 'RegistrationController@downloadStudentCertificate');
+            Route::post('/{id}/download/diploma', 'RegistrationController@downloadStudentDiploma');
 
-
-
-            //by teacher
-//            Route::post('/register/{id}', 'CourseController@getRegister');
-//            Route::post('/register/{id}/upload/inspection', 'CourseController@uploadStudentInspection');
-//            Route::post('/register/{id}/update/{part}', 'CourseController@updateRegistration');
 
 
 

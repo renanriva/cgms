@@ -26,7 +26,7 @@ class PortfolioController extends Controller
     public function teachers(Request $request){
 
 
-        $user = Auth::user();
+        $user = getAuthUser();
 
         $page           = $request->input('page') == null ? 1: $request->input('page');
 
@@ -53,7 +53,7 @@ class PortfolioController extends Controller
 
             $registrations = Cache::remember($cache_key, $minutes, function () use($user){
 
-                return Registration::with(['student', 'course', 'markApprovedBy', 'approvedBy'])
+                return Registration::with(['student', 'course', 'course.university', 'markApprovedBy', 'approvedBy'])
                     ->where('teacher_id', $user->teacher->id)
                     ->orderBy('id', 'desc')
                     ->paginate(10);

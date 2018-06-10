@@ -3,22 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Events\DiplomaUploaded;
 use App\Http\Requests\CourseInsertRequest;
 use App\Http\Requests\CourseUpdateRequest;
 use App\Registration;
 use App\Repository\CourseRepository;
 use App\Repository\UniversityRepository;
-use App\Teacher;
-use Carbon\Carbon;
 use DateTime;
+use Dompdf\Image\Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
 use App\Canton;
+use ZipArchive;
 
 /**
  * Class CourseController
@@ -27,6 +29,16 @@ use App\Canton;
  */
 class CourseController extends Controller
 {
+
+    private  $repo;
+
+    /**
+     * CourseController constructor.
+     */
+    public function __construct()
+    {
+        $this->repo = new CourseRepository();
+    }
 
     /**
      * @todo add authorization check
@@ -48,7 +60,7 @@ class CourseController extends Controller
     public function getTableData()
     {
 
-        $user = Auth::user();
+        $user = getAuthUser();
 
         if ($user->role == 'admin'){
 
@@ -117,9 +129,7 @@ class CourseController extends Controller
 
         $course['inspection_form_generated']    = false;
 
-        $courseRepo = new CourseRepository();
-
-        $newCourse = $courseRepo->insert($course);
+        $newCourse = $this->repo->insert($course);
 
         return response()->json(['course' => $newCourse])->setStatusCode(201);
     }
@@ -131,7 +141,7 @@ class CourseController extends Controller
      */
     public function update(CourseUpdateRequest $request, $id){
 
-        $course = Course::find($id);
+        $course = $this->repo->getById($id);
 
         if ($course){
 
@@ -195,6 +205,8 @@ class CourseController extends Controller
         $course = Course::findOrFail($id);
         $course->delete();
 
+        $this->repo->invalidateCache($id);
+
         return response()->json()->setStatusCode(204);
 
     }
@@ -213,7 +225,7 @@ class CourseController extends Controller
 
         $uniRepo = new UniversityRepository();
 
-        $courseRepository = new CourseRepository();
+        $courseRepository = $this->repo;
 
         try {
             $rows = [];
@@ -278,7 +290,9 @@ class CourseController extends Controller
         $path = $cloud->putFileAs('course/inspection', $request->file('qqfile'), $filename);
 
         $path = storage_path('app/'.$path);
-        $course = Course::find($request->input('course_id'));
+
+        $course = $this->repo->getById($request->input('course_id'));
+
         $course->inspection_form_generated  = true;
         $course->save();
 
@@ -293,8 +307,7 @@ class CourseController extends Controller
      */
     public function uploadFile(Request $request) {
 
-
-        $course = Course::find($request->input('course_id'));
+        $course = $this->repo->getById($request->input('course_id'));
 
         $root_path = 'course/university_'.$course->university->id;
         $path = '';
@@ -309,7 +322,6 @@ class CourseController extends Controller
             $cloud = Storage::disk('public');
             $path = $cloud->putFileAs($path, $request->file('qqfile'), $filename);
 
-//            $course->tc_file_path  = storage_path('app/'.$path);
             $course->tc_file_path  = $path;
             $course->save();
 
@@ -325,7 +337,24 @@ class CourseController extends Controller
             $course->lor_file_path  = storage_path('app/'.$path);
             $course->save();
 
+        } elseif ($type == 'diploma'){
+
+            $path = $root_path.'/course_'.$course->id.'/diploma';
+            $filename = "course_".$request->input('course_id').'_diploma.'.$request->file('qqfile')->extension();
+
+            $cloud = Storage::disk();
+            $pathFile = $cloud->putFileAs($path, $request->file('qqfile'), $filename);
+
+            if ($request->file('qqfile')->extension() == 'zip'){
+
+                // extract the file in the event
+                event(new DiplomaUploaded($path, $pathFile, $course->id));
+
+                return response()->json(['path'=> $path, 'success' => true]);
+            }
+
         }
+
 
         return response()->json(['path'=> $path, 'success' => true]);
 
@@ -343,7 +372,8 @@ class CourseController extends Controller
 
         $title = 'Register - '.env('APP_NAME') ;
 
-        $teacher = Auth::user()->teacher;
+        $authUser = getAuthUser();
+        $teacher = $authUser->teacher;
 
         /**
          * find registration with course_id and teacher id
@@ -403,8 +433,9 @@ class CourseController extends Controller
     public function getAddMarkPage($courseId){
 
 
-        $user = Auth::user();
-        $course = Course::find($courseId);
+        $user = getAuthUser();
+        $course = $this->repo->getById($courseId);
+
 
         if ($user->can('addmark', $course)){
 
@@ -424,8 +455,8 @@ class CourseController extends Controller
      */
     public function postAddMark(Request $request, $course_id){
 
-        $user = Auth::user();
-        $course = Course::find($course_id);
+        $user = getAuthUser();
+        $course = $this->repo->getById($course_id);
 
         if ($user->can('addmark', $course)){
 
@@ -490,7 +521,7 @@ class CourseController extends Controller
 
         if(Auth::check()) {
 
-            $course = Course::find($id);
+            $course = $this->repo->getById($id);
 
             if ($course) {
 
