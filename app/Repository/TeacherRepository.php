@@ -170,10 +170,11 @@ class TeacherRepository
 
 
         $minutes = 20;
+        $user = getAuthUser();
 
         $cache_key = 'portfolio_search_in_'.$search_in. '_with_'.$search_keyword .
             '_with_registration_'.$registration .
-            '_in_page_'.$page;
+            '_in_page_'.$page.'for_user_'.$user->id;
 
         $registrations = Cache::tags(['portfolio'])->remember($cache_key, $minutes, function () use($search_in, $search_keyword, $registration){
 
