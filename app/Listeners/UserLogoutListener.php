@@ -32,6 +32,8 @@ class UserLogoutListener
     public function handle(Logout $event)
     {
         Cache::forget('auth_user');
+        Cache::tags('portfolio')->flush();
+        Cache::flush();
 
     }
 }
