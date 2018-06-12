@@ -29,6 +29,7 @@ class Course extends Model
         'start_date', 'end_date',
         'university_id',
         'lor_file_path', 'tc_file_path',
+        'diploma_uploaded_by_id', 'diploma_upload_time', 'diploma_uploaded',
         'created_by', 'updated_by'
     ];
 
@@ -66,6 +67,15 @@ class Course extends Model
     public function approvedRegistrations(){
         return $this->hasMany('App\Registration', 'course_id', 'id')
             ->where('is_approved', REGISTRATION_IS_APPROVED);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function diplomaUploadedBy(){
+
+        return $this->belongsTo('App\User', 'diploma_uploaded_by_id', 'id');
+
     }
 
     /**
