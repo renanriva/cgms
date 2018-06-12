@@ -51,13 +51,13 @@ class PortfolioController extends Controller
             $minutes = 20;
             $cache_key = 'portfolio_of_teacher_'.$user->teacher->id.'_of_page_'.$page;
 
-            $registrations = Cache::remember($cache_key, $minutes, function () use($user){
+//            $registrations = Cache::remember($cache_key, $minutes, function () use($user){
 
-                return Registration::with(['student', 'course', 'course.university', 'markApprovedBy', 'approvedBy'])
+            $registrations = Registration::with(['student', 'course', 'course.university', 'markApprovedBy', 'approvedBy'])
                     ->where('teacher_id', $user->teacher->id)
                     ->orderBy('id', 'desc')
                     ->paginate(10);
-            });
+//            });
 
         }
 
