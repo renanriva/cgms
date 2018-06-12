@@ -147,7 +147,7 @@ class RegistrationController extends Controller
      */
     public function downloadStudentInspectionCertificate($registrationId){
 
-        $minutes = 15;
+        $minutes = 20;
 
         $registration = Cache::remember('registration_by_id_'.$registrationId, $minutes,
             function () use($registrationId){
@@ -176,7 +176,7 @@ class RegistrationController extends Controller
      */
     public function downloadStudentCertificate($registrationId){
 
-        $minutes = 15;
+        $minutes = 20;
 
         $registration = Cache::remember('registration_by_id_'.$registrationId, $minutes,
             function () use($registrationId){
@@ -198,7 +198,7 @@ class RegistrationController extends Controller
 
     public function downloadStudentDiploma($registrationId){
 
-        $minutes = 15;
+        $minutes = 20;
 
         $registration = Cache::remember('registration_by_id_'.$registrationId, $minutes,
             function () use($registrationId){
@@ -208,6 +208,15 @@ class RegistrationController extends Controller
             });
 
         if ($registration){
+
+            // if user  = teacher update download time
+            $user = getAuthUser();
+
+            if ($user->role == 'teacher'){
+                $registration->diploma_download_time = now();
+                $registration->save();
+            }
+
 
             return response()->file($registration->diploma_path);
 
