@@ -6,6 +6,7 @@ use Illuminate\Auth\Events\Logout;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class UserLogoutListener
@@ -31,9 +32,11 @@ class UserLogoutListener
      */
     public function handle(Logout $event)
     {
+
         Cache::forget('auth_user');
         Cache::tags('portfolio')->flush();
         Cache::flush();
 
+        Log::info('Clearing all cache on Logout', ['event' => $event]);
     }
 }
