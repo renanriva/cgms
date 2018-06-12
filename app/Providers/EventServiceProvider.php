@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Auth\Events\Logout;
 use App\Events\DiplomaUploaded;
 use App\Events\RegistrationApproved;
 use App\Events\TeacherCreated;
@@ -11,6 +12,7 @@ use App\Listeners\CreateTeacherUser;
 use App\Listeners\CreateUniversityUser;
 use App\Listeners\ExtractDiplomaFile;
 use App\Listeners\GenerateInspectionCertificate;
+use App\Listeners\UserLogoutListener;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -36,7 +38,13 @@ class EventServiceProvider extends ServiceProvider
         ],
         DiplomaUploaded::class => [
             ExtractDiplomaFile::class
+        ],
+        Logout::class => [
+          UserLogoutListener::class
         ]
+//        'Illuminate\Auth\Events\Logout' => [
+//            'App\Listeners\UserLoggedOut',
+//        ],
 
     ];
 
