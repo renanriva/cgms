@@ -92,6 +92,7 @@ class PortfolioController extends Controller
             'Grade',
             'Grade Approved At',
             'Grade Approved By',
+            'Diploma Downloaded At',
         ];
 
         $rows = [];
@@ -115,6 +116,7 @@ class PortfolioController extends Controller
                 $registration->mark !== null ? $registration->mark.'/100' : '',
                 $registration->mark_upload_time !== null ? date('d/m/Y', strtotime($registration->mark_upload_time))  : '',
                 $registration->markApprovedBy !== null ? $registration->markApprovedBy->name : '',
+                $registration->diploma_download_time !== null ? date('d/m/Y h:ia', strtotime($registration->diploma_download_time)) : ''
             ];
 
             array_push($rows, $row);
