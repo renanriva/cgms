@@ -32,9 +32,7 @@ class PortfolioController extends Controller
 
         if ($user->role == 'admin'){
 
-
             $title = 'Teacher Portfolio - '.env('APP_NAME') ;
-
 
             $search_in      = $request->input('search_param');
             $search_keyword = $request->input('x');
@@ -51,13 +49,13 @@ class PortfolioController extends Controller
             $minutes = 20;
             $cache_key = 'portfolio_of_teacher_'.$user->teacher->id.'_of_page_'.$page;
 
-//            $registrations = Cache::remember($cache_key, $minutes, function () use($user){
+            $registrations = Cache::tags(['portfolio'])->remember($cache_key, $minutes, function () use($user){
 
-            $registrations = Registration::with(['student', 'course', 'course.university', 'markApprovedBy', 'approvedBy'])
+             return Registration::with(['student', 'course', 'course.university', 'markApprovedBy', 'approvedBy'])
                     ->where('teacher_id', $user->teacher->id)
                     ->orderBy('id', 'desc')
                     ->paginate(10);
-//            });
+            });
 
         }
 

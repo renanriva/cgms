@@ -355,6 +355,7 @@ class CourseController extends Controller
 
         }
 
+        Cache::tags(['portfolio'])->flush();
 
         return response()->json(['path'=> $path, 'success' => true]);
 

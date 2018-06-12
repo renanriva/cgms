@@ -26,9 +26,8 @@ class TeacherController extends Controller
 {
     public function index(){
 
+        $user = getAuthUser();
 
-
-        $user = Auth::user();
         if ($user->can('browse', Teacher::class)) {
 
         $title = 'Teacher Management - '.env('APP_NAME') ;
@@ -45,7 +44,8 @@ class TeacherController extends Controller
      */
     public function getNew(){
 
-        $user = Auth::user();
+        $user = getAuthUser();
+
         if ($user->can('create', Teacher::class)) {
 
             $title = 'Create New Teacher - ' . env('APP_NAME');
@@ -103,7 +103,8 @@ class TeacherController extends Controller
      */
     public function edit(Request $request, $id){
 
-        $user = Auth::user();
+        $user = getAuthUser();
+
         if ($user->can('edit', Teacher::class)) {
 
             $title = 'Edit Teacher - ' . env('APP_NAME');
