@@ -151,6 +151,20 @@
                                             </form>
 
                                         @endif
+
+                                        @if(Auth::user()->role == 'admin')
+                                            @isset($registration->diploma_download_time)
+                                                <small>
+                                                    <span>Last download  </span><br/>
+                                                    <span class="text-info">
+                                                        {{ date('d M Y', strtotime($registration->diploma_download_time)) }}<br/>
+                                                        {{ date('h:i a', strtotime($registration->diploma_download_time)) }}
+
+                                                    </span>
+                                                </small>
+                                            @endisset
+                                        @endif
+
                                     </td>
                                 </tr>
                             @endforeach
