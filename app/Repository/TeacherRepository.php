@@ -175,7 +175,7 @@ class TeacherRepository
             '_with_registration_'.$registration .
             '_in_page_'.$page;
 
-        $registrations = Cache::remember($cache_key, $minutes, function () use($search_in, $search_keyword, $registration){
+        $registrations = Cache::tags(['portfolio'])->remember($cache_key, $minutes, function () use($search_in, $search_keyword, $registration){
 
 
             return Registration::with(['student', 'course', 'course.university', 'markApprovedBy','approvedBy'])
