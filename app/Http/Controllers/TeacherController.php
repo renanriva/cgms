@@ -24,6 +24,14 @@ use App\Canton;
  */
 class TeacherController extends Controller
 {
+    private $repo = null;
+
+    public function __construct()
+    {
+        $this->repo = new TeacherRepository();
+    }
+
+
     public function index(){
 
         $user = getAuthUser();
@@ -109,9 +117,11 @@ class TeacherController extends Controller
 
             $title = 'Edit Teacher - ' . env('APP_NAME');
 
-            $teacher = Teacher::find($id);
+            $teacher = $this->repo->findById($id);
+            $portfolio = $this->repo->getPortfolioById($id);
 
-            return view('lms.admin.teacher.form', ['title' => $title, 'teacher' => $teacher]);
+            return view('lms.admin.teacher.form', ['title' => $title, 'teacher' => $teacher,
+                'portfolios' => $portfolio]);
 
         } else{
             echo  'unauthorized';

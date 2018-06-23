@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Province;
+use Illuminate\Support\Facades\Cache;
 use Yajra\DataTables\Facades\DataTables;
 
 class ProvinceController extends Controller
@@ -15,11 +16,17 @@ class ProvinceController extends Controller
     }
 
     /**
-     * @return $this
+     * @return \Illuminate\Http\JsonResponse
      */
     public function getAllData(){
 
-        $allProvinces = Province::get();
+        $allProvinces = Cache::tags(['GET_PROVINCE_LIST'])->remember('GET_PROVINCE_LIST', 120,
+
+            function () {
+
+                return Province::get();
+
+        });
 
         return response()->json(['provinces' => $allProvinces])->setStatusCode(200);
 

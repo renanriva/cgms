@@ -115,56 +115,10 @@
                                     <td>{{ date('d M Y', strtotime($registration->course->start_date)) }}</td>
                                     <td>{{ date('d M Y', strtotime($registration->course->end_date)) }}</td>
                                     @include('lms.admin.registration.parts.table.td.student_inspection_form')
-                                    <td>
-                                        @if($registration->is_approved == REGISTRATION_IS_APPROVED)
-                                            <i class="fa fa-check-square-o"></i> Approved<br/>
-                                            <small>by {{ $registration->approvedBy->name }} at <br/>{{ date('d m Y - h:i a', strtotime($registration->approval_time)) }}</small>
-                                        @else
-                                            <i class="fa fa-times"></i> Not Approved
-
-                                        @endif
-                                    </td>
+                                    @include('lms.admin.registration.parts.table.td.is_approved')
                                     @include('lms.admin.registration.parts.table.td.mark_approved')
-                                    <td class="js-certificate">
-                                        @if($registration->is_approved == REGISTRATION_IS_APPROVED)
-
-                                            <form method="post" target="_blank"
-                                                  action="{{ url("/admin/registration/$registration->id/download/certificate") }}">
-                                                {{ csrf_field() }}
-                                                <button type="submit" class="btn btn-link btn-link-download" rel="tooltip"
-                                                        title="{{ basename($registration->certificate_path) }}"
-                                                ><i class="fa fa-cloud-download"></i> Download</button>
-                                            </form>
-
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if(isset($registration->diploma_path))
-
-                                            <form method="post" target="_blank"
-                                                  action="{{ url("/admin/registration/$registration->id/download/diploma") }}">
-                                                {{ csrf_field() }}
-                                                <button type="submit" class="btn btn-link btn-link-download" rel="tooltip"
-                                                        title="{{ basename($registration->diploma) }}"
-                                                ><i class="fa fa-cloud-download"></i> Download</button>
-                                            </form>
-
-                                        @endif
-
-                                        @if(Auth::user()->role == 'admin')
-                                            @isset($registration->diploma_download_time)
-                                                <small>
-                                                    <span>Last download  </span><br/>
-                                                    <span class="text-info">
-                                                        {{ date('d M Y', strtotime($registration->diploma_download_time)) }}<br/>
-                                                        {{ date('h:i a', strtotime($registration->diploma_download_time)) }}
-
-                                                    </span>
-                                                </small>
-                                            @endisset
-                                        @endif
-
-                                    </td>
+                                    @include('lms.admin.registration.parts.table.td.certificate')
+                                    @include('lms.admin.registration.parts.table.td.diploma')
                                 </tr>
                             @endforeach
 

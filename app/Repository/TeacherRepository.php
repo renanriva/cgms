@@ -88,7 +88,7 @@ class TeacherRepository
     public function update($teacher, $id){
 
 
-        $newTeacher = Teacher::find($id);
+        $newTeacher = $this->findById($id);
 
         $newTeacher->first_name = $teacher['first_name'];
         $newTeacher->last_name = $teacher['last_name'];
@@ -319,6 +319,53 @@ class TeacherRepository
 
 
         return $registrations;
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getPortfolioById($id){
+
+        $teacher = Cache::tags(['PORTFOLIO_BY_ID'])->remember('PORTFOLIO_BY_ID_'.$id, 10, function () use($id){
+
+            return Registration::with(['student', 'course', 'course.university', 'markApprovedBy', 'approvedBy'])
+                ->where('teacher_id', $id)
+                ->orderBy('id', 'desc')
+                ->paginate(50);
+
+        }) ;
+
+
+        return $teacher;
+
+    }
+
+    /**
+     *
+     */
+    public function findById($id){
+
+        $teacher = Cache::tags(['FIND_BY_ID'])->remember('FIND_BY_ID_'.$id, 10, function () use($id){
+
+            return Teacher::find($id);
+
+        }) ;
+
+
+        return $teacher;
+
+
+    }
+
+
+    /**
+     * @param $id
+     */
+    public function flushCacheById($id){
+
+        Cache::tags(['FIND_BY_ID'])->flush('FIND_BY_ID_'.$id);
+
     }
 
 
