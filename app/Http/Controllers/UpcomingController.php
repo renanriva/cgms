@@ -34,8 +34,8 @@ class UpcomingController extends Controller
             $title = 'Upcoming Course List - '.env('APP_NAME') ;
 
 
-            return view('lms.admin.course.upcoming', ['title'=> $title,
-                'courses' => $user->teacher->allUpcomingCourses]);
+            return view('lms.admin.teacher.upcoming', ['title'=> $title,
+                'teacher' => $user->teacher]);
         } else {
 
             return response()->redirectTo('admin/unauthorized');

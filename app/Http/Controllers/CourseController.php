@@ -373,7 +373,7 @@ class CourseController extends Controller
 
         $title = 'Register - '.env('APP_NAME') ;
 
-        $authUser = getAuthUser();
+        $authUser = Auth::user();
         $teacher = $authUser->teacher;
 
         /**

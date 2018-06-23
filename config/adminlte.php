@@ -73,6 +73,12 @@ return [
 
     'collapse_sidebar' => false,
 
+
+    /**
+     * General cache time
+     */
+    'cache_time' => 20,
+
     /*
     |--------------------------------------------------------------------------
     | URLs

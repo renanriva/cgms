@@ -53978,7 +53978,7 @@ $(document).ready(function () {
     searchCourses();
     function searchCourses() {
 
-        var search_pending_approval_length = $('#search-pending-approval').length;
+        var search_pending_approval_length = $('#pending-table').length;
 
         if (search_pending_approval_length > 0) {
 

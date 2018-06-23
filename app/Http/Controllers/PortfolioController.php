@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Registration;
+use App\Repository\RegistrationRepository;
 use App\Repository\TeacherRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +18,14 @@ use Maatwebsite\Excel\Facades\Excel;
 class PortfolioController extends Controller
 {
 
+    private $repo;
+
+    public function __construct()
+    {
+        $this->repo = new RegistrationRepository();
+    }
+
+
 
     /**
      * @todo add guard policy
@@ -26,7 +35,7 @@ class PortfolioController extends Controller
     public function teachers(Request $request){
 
 
-        $user = getAuthUser();
+        $user = Auth::user();
 
         $page           = $request->input('page') == null ? 1: $request->input('page');
 
@@ -38,22 +47,25 @@ class PortfolioController extends Controller
             $search_keyword = $request->input('x');
             $registration   = $request->input('registration') == null ? 3 : $request->input('registration');
 
-            $teacher_repo = new TeacherRepository();
-
-            $registrations = $teacher_repo->filter($search_in, $search_keyword, $registration, $page);
+            $this->repo->flushPortfolioAdmin();
+            $registrations = $this->repo->filter($search_in, $search_keyword, $registration, $page);
 
         } elseif ($user->role == 'teacher'){
 
             $title = 'My Portfolio - '.env('APP_NAME') ;
 
-            $minutes = 20;
-            $cache_key = 'portfolio_of_teacher_'.$user->teacher->id.'_of_page_'.$page;
+            $this->repo->flushPortfolioTeacherCache();
 
-            $registrations = Cache::tags(['portfolio'])->remember($cache_key, $minutes, function () use($user){
+            // @todo move this to registration repository
+            $minutes = config('adminlte.cache_time');
+            $cache_key = 'PORTFOLIO_OF_TEACHER_'.$user->teacher->id.'_of_page_'.$page;
 
-             return Registration::with(['student', 'course', 'course.university', 'markApprovedBy', 'approvedBy'])
+            $registrations = Cache::tags(['PORTFOLIO_TEACHER'])->remember($cache_key, $minutes, function () use($user){
+
+             return Registration::with(['student', 'course', 'course.university', 'student.user', 'markApprovedBy', 'approvedBy'])
                     ->where('teacher_id', $user->teacher->id)
-                    ->orderBy('id', 'desc')
+                    ->orderBy('is_approved', 'desc')
+                    ->orderBy('tc_accept_time', 'desc')
                     ->paginate(10);
             });
 

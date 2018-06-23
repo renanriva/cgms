@@ -110,12 +110,21 @@
                                     <td>{{ $registration->course->short_name }}<br/>
                                         <small class="text-warning">{{ $registration->course->course_code }}</small></td>
                                     <td>{{ $registration->course->university->name }}</td>
-{{--                                    <td>{{ $registration->course->modality }}</td>--}}
-{{--                                    <td>{{ $registration->course->hours }}--}}
                                     <td>{{ date('d M Y', strtotime($registration->course->start_date)) }}</td>
                                     <td>{{ date('d M Y', strtotime($registration->course->end_date)) }}</td>
                                     @include('lms.admin.registration.parts.table.td.student_inspection_form')
-                                    @include('lms.admin.registration.parts.table.td.is_approved')
+                                    {{--@include('lms.admin.registration.parts.table.td.is_approved')--}}
+                                    <td class="js-td-is-approved">
+                                        @if($registration->is_approved == REGISTRATION_IS_NOT_APPROVED)
+                                            <span class="label label-warning">Not approved</span>
+                                        @else
+                                            <span class="label label-success"><i class="fa fa-check"></i> Yes</span>
+                                            <small><i class="fa fa-clock-o"></i>
+                                                {{ date('h:i a', strtotime($registration->approval_time)) }}<br/>
+                                                {{ date('d M, Y', strtotime($registration->approval_time)) }}</small>
+                                            </small>
+                                        @endif
+                                    </td>
                                     @include('lms.admin.registration.parts.table.td.mark_approved')
                                     @include('lms.admin.registration.parts.table.td.certificate')
                                     @include('lms.admin.registration.parts.table.td.diploma')

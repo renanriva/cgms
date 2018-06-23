@@ -23,6 +23,14 @@ use Illuminate\Support\Facades\Cache;
 class TeacherRepository
 {
 
+    public $registrationRepo ;
+    public function __construct()
+    {
+        $this->registrationRepo = new RegistrationRepository();
+
+    }
+
+
     /**
      * @param array $teacher
      * @param int      $creation_type
@@ -166,6 +174,7 @@ class TeacherRepository
      * @param $page
      * @return mixed
      */
+    /*
     public function filter($search_in, $search_keyword, $registration, $page){
 
 
@@ -176,7 +185,7 @@ class TeacherRepository
             '_with_registration_'.$registration .
             '_in_page_'.$page.'for_user_'.$user->id;
 
-        $registrations = Cache::tags(['portfolio'])->remember($cache_key, $minutes, function () use($search_in, $search_keyword, $registration){
+        $registrations = Cache::tags(['PORTFOLIO_ADMIN'])->remember($cache_key, $minutes, function () use($search_in, $search_keyword, $registration){
 
 
             return Registration::with(['student', 'course', 'course.university', 'markApprovedBy','approvedBy'])
@@ -231,7 +240,8 @@ class TeacherRepository
                 }
 
             })
-            ->orderBy('id', 'desc')
+                ->orderBy('is_approved', 'desc')
+                ->orderBy('tc_accept_time', 'desc')
             ->paginate(10);
 
         });
@@ -240,7 +250,7 @@ class TeacherRepository
         return $registrations;
 
     }
-
+ /*
 
     /**
      *
@@ -250,6 +260,7 @@ class TeacherRepository
      * @param $registration
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
+  /*
     public function downloadPortfolio($search_in, $search_keyword, $registration){
 
         $minutes = 20;
@@ -320,7 +331,7 @@ class TeacherRepository
 
         return $registrations;
     }
-
+/*
     /**
      * @param $id
      * @return mixed

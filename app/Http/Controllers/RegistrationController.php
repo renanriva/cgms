@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\RegistrationApproved;
 use App\Registration;
+use App\Repository\RegistrationRepository;
 use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -23,6 +24,14 @@ use App\Canton;
  */
 class RegistrationController extends Controller
 {
+    private  $repo;
+
+    public function __construct()
+    {
+        $this->repo = new RegistrationRepository();
+    }
+
+
     public function index(){
 
         $title = 'Registration Management - '.env('APP_NAME') ;
@@ -34,6 +43,8 @@ class RegistrationController extends Controller
 
 
     /**
+     * @TODO move to a repository and clear cache accordingly
+     *
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -42,14 +53,17 @@ class RegistrationController extends Controller
         $title = 'Pending Registration Management - '.env('APP_NAME') ;
 
         $posts = $request->all();
-        $minutes = 15;
+        $minutes = config('adminlte.cache_time');
         $page = isset( $posts['page'] ) ? $posts['page'] : 1 ;
 
-        $registrations = Cache::remember('pending_registrations_by_page_'.$page, $minutes, function () {
+        $registrations = Cache::tags(['PENDING_REGISTRATION'])->remember('pending_registrations_by_page_'.$page, $minutes, function () {
 
-                 return Registration::orderBy('id', 'desc')
-                    ->orderBy('is_approved', 'desc')
-                    ->paginate(10);
+                 return Registration::with(['approvedBy', 'markApprovedBy', 'student', 'student.user',
+                     'course', 'course.university'])
+                     ->orderBy('is_approved', 'asc')
+                     ->orderBy('accept_tc', 'desc')
+                     ->orderBy('id', 'desc')
+                     ->paginate(10);
 
         });
 
@@ -69,7 +83,8 @@ class RegistrationController extends Controller
 
         $post = $request->all();
 
-        $registration = Registration::find($registrationId);
+        $registration = $this->repo->findById($registrationId);;
+
         $current_time = Carbon::now()->toDateTimeString();
 
         if ($part == 'accept'){
@@ -89,12 +104,14 @@ class RegistrationController extends Controller
             $registration->status = REGISTRATION_STATUS_COMPLETE;
 
             $registration->save();
-//            @todo invalidate registration_by_id cache
 
-//            @TODO generate inspection certificate and update status
             event(new RegistrationApproved($registration));
 
         }
+
+        $this->repo->flushRegistrationById($registrationId);
+        $this->repo->flushAllCache();
+
 
         return response()->json(['registration' => $registration,
             'adminUser' => Auth::user()->name]);
@@ -116,7 +133,7 @@ class RegistrationController extends Controller
         $path = storage_path('app/'.$path);
 
 
-        $registration = Registration::find($registrationId);
+        $registration = $this->repo->findById($registrationId);
 
         $current_time = Carbon::now()->toDateTimeString();
         $registration->inspection_certificate = $path;
@@ -124,6 +141,8 @@ class RegistrationController extends Controller
         $registration->inspection_certificate_upload_time = $current_time;
         $registration->status = REGISTRATION_STATUS_SIGNED;
         $registration->save();
+
+        $this->repo->flushRegistrationById($registrationId);
 
 
         /**
@@ -147,14 +166,8 @@ class RegistrationController extends Controller
      */
     public function downloadStudentInspectionCertificate($registrationId){
 
-        $minutes = 20;
 
-        $registration = Cache::remember('registration_by_id_'.$registrationId, $minutes,
-            function () use($registrationId){
-
-                return Registration::find($registrationId);
-
-            });
+        $registration  = $this->repo->findById($registrationId);
 
 
         if ($registration){
@@ -176,14 +189,7 @@ class RegistrationController extends Controller
      */
     public function downloadStudentCertificate($registrationId){
 
-        $minutes = 20;
-
-        $registration = Cache::remember('registration_by_id_'.$registrationId, $minutes,
-            function () use($registrationId){
-
-            return Registration::find($registrationId);
-
-        });
+        $registration  = $this->repo->findById($registrationId);
 
         if ($registration){
 
@@ -196,11 +202,15 @@ class RegistrationController extends Controller
 
     }
 
+    /**
+     * @param $registrationId
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function downloadStudentDiploma($registrationId){
 
-        $minutes = 20;
+        $minutes = config('adminlte.cache_time');
 
-        $registration = Cache::remember('registration_by_id_'.$registrationId, $minutes,
+        $registration = Cache::tags(['REGISTRATION_BY_ID'])->remember('REGISTRATION_BY_ID_'.$registrationId, $minutes,
             function () use($registrationId){
 
                 return Registration::find($registrationId);
@@ -216,6 +226,9 @@ class RegistrationController extends Controller
                 $registration->diploma_download_time = now();
                 $registration->save();
             }
+
+            $this->repo->flushRegistrationById($registrationId);
+            $this->repo->flushAllCache();
 
 
             return response()->file($registration->diploma_path);

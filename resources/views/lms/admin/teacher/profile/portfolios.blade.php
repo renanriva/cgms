@@ -17,7 +17,7 @@
                         <tr>
                             <th>Course Type</th>
                             <th>Course</th>
-                            <th>Institute</th>
+                            <th>University</th>
                             <th>Modalidad</th>
                             <th>Hours</th>
                             <th>Start Date</th>
@@ -39,7 +39,17 @@
                                 <td>{{ $registration->course->hours }}</td>
                                 <td>{{ date('d M Y', strtotime($registration->course->start_date)) }}</td>
                                 <td>{{ date('d M Y', strtotime($registration->course->end_date)) }}</td>
-                                @include('lms.admin.registration.parts.table.td.is_approved')
+                                {{--@include('lms.admin.registration.parts.table.td.is_approved')--}}
+                                <td>
+                                    @if($registration->is_approved == REGISTRATION_IS_APPROVED)
+                                        <i class="fa fa-check-square-o"></i> Approved<br/>
+                                        <small>by {{ $registration->approvedBy->name }} at <br/>
+                                            {{ date('d m Y - h:i a', strtotime($registration->approval_time)) }}</small>
+                                    @else
+                                     <i class="fa fa-times"></i> Not Approved
+
+                                    @endif
+                                </td>
                                 @include('lms.admin.registration.parts.table.td.mark_approved')
                                 @include('lms.admin.registration.parts.table.td.certificate')
                                 @include('lms.admin.registration.parts.table.td.diploma')

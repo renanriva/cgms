@@ -144,4 +144,18 @@ class CoursePolicy
 
     }
 
+    public function register(User $user, Course $course){
+
+        if ($user->role == 'teacher'){
+
+            return true;
+
+        } else{
+
+            return false;
+
+        }
+
+    }
+
 }

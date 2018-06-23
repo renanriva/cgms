@@ -186,7 +186,7 @@
                 'table' => [
                     'course_code'       => 'Course Code',
                     'course_type'       => 'Course Type',
-                    'short_name'        => 'Short Name',
+                    'short_name'        => 'Course',
                     'institution'       => 'University',
                     'modality'          => 'Modality',
                     'start_date'        => 'Start Date',

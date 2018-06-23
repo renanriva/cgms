@@ -612,5 +612,8 @@
     <br/>
     @include('lms.admin.teacher.profile.portfolios')
 
+    @include('lms.admin.teacher.profile.upcoming')
+
+
 
 @stop
