@@ -11,7 +11,7 @@
     @if(Auth::user()->role == 'admin')
     <div class="row">
         <form class="form-horizontal" method="get" action="/admin/portfolio">
-            <div class="col-xs-6">
+            <div class="col-xs-6 col-lg-6">
                 <div class="input-group">
 
                     <div class="input-group-btn search-panel">
@@ -34,10 +34,9 @@
                     <input type="text" class="form-control" name="x" placeholder="Search term..." value="{{ app('request')->input('x') }}">
                 </div>
             </div>
-            <div class="col-xs-2">
-                <div class="input-group">
-
-                    <select class="form-control" name="registration">
+            <div class="col-xs-3 col-lg-2">
+                <div class="input-group"  style="width: 100%;">
+                    <select class="form-control" name="registration" style="width: 100%;">
                         <option
                                 disabled="">Registration</option>
                         <option {{ app('request')->input('registration') == 1 ? 'selected' : '' }}
@@ -45,7 +44,7 @@
                         <option {{ app('request')->input('registration') == 0 ? 'selected' : '' }}
                                 value="0">Not Approved</option>
                         <option {{ app('request')->input('registration') == 3 ? 'selected' : '' }}
-                                value="3">All</option>
+                                value="3">All Registrations</option>
                     </select>
                 </div>
             </div>
