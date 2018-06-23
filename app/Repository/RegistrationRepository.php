@@ -144,7 +144,7 @@
             $cache_key = 'portfolio_search_in_'.$search_in. '_with_'.$search_keyword .
                 '_with_registration_'.$registration;
 
-            $registrations = Cache::tags(['portfolio'])->remember($cache_key, $minutes, function ()
+            $registrations = Cache::tags(['PORTFOLIO_ADMIN'])->remember($cache_key, $minutes, function ()
             use($search_in, $search_keyword, $registration) {
 
                 return  Registration::with(['student', 'course', 'markApprovedBy','approvedBy'])
