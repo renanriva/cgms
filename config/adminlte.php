@@ -123,7 +123,7 @@ return [
                 ],
                 [
                     'text'      => 'lms.menu.teachers.portfolio',
-                    'url'           => 'admin/portfolio?search_param=all',
+                    'url'           => 'admin/portfolio?search_param=all&registration=3',
                     'can'           => 'admin-only',
                     'icon'          => 'folder-open'
                 ],
