@@ -10,11 +10,10 @@
 
     @if(Auth::user()->role == 'admin')
     <div class="row">
-        <form class="form-horizontal" method="get" action="/admin/portfolio">
-            <div class="col-xs-6">
-                <div class="input-group">
-
-                    <div class="input-group-btn search-panel">
+        <form class="form-inline" method="get" action="/admin/portfolio">
+            <div class="col-xs-6 col-lg-5">
+                <div class="input-group" style="width: 100%;">
+                    <div class="input-group-btn search-panel" style="text-align: right;width: 20%">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             <span id="search_concept">{{  ucfirst(str_replace('_', ' ', app('request')->input('search_param')))   }}</span> <span class="caret"></span>
                         </button>
@@ -29,15 +28,15 @@
 
                     </div>
 
-                    <input type="hidden" name="search_param" id="search_param"
+                    <input type="hidden" name="search_param" id="search_param" style="width: 100%;"
                            value="{{ app('request')->input('search_param') }}">
                     <input type="text" class="form-control" name="x" placeholder="Search term..." value="{{ app('request')->input('x') }}">
                 </div>
             </div>
-            <div class="col-xs-2">
-                <div class="input-group">
-
-                    <select class="form-control" name="registration">
+            <div class="col-xs-3 col-lg-2">
+                <div class="form-group" >
+                    <label for="registration">Approved Type</label>
+                    <select class="form-control" id="registration" name="registration">
                         <option
                                 disabled="">Registration</option>
                         <option {{ app('request')->input('registration') == 1 ? 'selected' : '' }}
@@ -45,7 +44,7 @@
                         <option {{ app('request')->input('registration') == 0 ? 'selected' : '' }}
                                 value="0">Not Approved</option>
                         <option {{ app('request')->input('registration') == 3 ? 'selected' : '' }}
-                                value="3">All</option>
+                                value="3">All Registrations</option>
                     </select>
                 </div>
             </div>
