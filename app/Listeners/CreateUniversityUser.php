@@ -31,7 +31,7 @@ class CreateUniversityUser
         $user = new User();
         $user->name = $universityCreated->university->login_user_name;
         $user->email = $universityCreated->university->login_email;
-        $user->password = bcrypt($universityCreated->university->login_email);
+        $user->password = bcrypt($universityCreated->password);
         $user->role = USER_ROLE_UNIVERSITY;
         $user->status = USER_STATUS_ACTIVE;
         $user->creation_type = USER_CREATION_TYPE_REGISTRATION;

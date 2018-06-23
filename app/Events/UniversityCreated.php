@@ -16,16 +16,20 @@ class UniversityCreated
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $university;
+    public $password;
     public $user;
 
     /**
      * Create a new event instance.
      *
      * @param University $university
+     * @param            $password
+     * @param            $user
      */
-    public function __construct(University $university, $user)
+    public function __construct(University $university, $password, $user)
     {
         $this->university = $university;
+        $this->password = $password;
         $this->user = $user;
     }
 
