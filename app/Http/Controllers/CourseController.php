@@ -309,7 +309,7 @@ class CourseController extends Controller
 
         $course = $this->repo->getById($request->input('course_id'));
 
-        $root_path = 'course/university_'.$course->university->id;
+        $root_path = 'course/university_'.$course->university->id.'/course_'.$request->input('course_id');
         $path = '';
 
         $type = $request->input('type');
@@ -339,7 +339,7 @@ class CourseController extends Controller
 
         } elseif ($type == 'diploma'){
 
-            $path = $root_path.'/course_'.$course->id.'/diploma';
+            $path = $root_path.'/diploma';
             $filename = "course_".$request->input('course_id').'_diploma.'.$request->file('qqfile')->extension();
 
             $cloud = Storage::disk();
