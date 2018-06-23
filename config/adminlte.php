@@ -207,12 +207,12 @@ return [
         'lms.menu.account_settings',
         [
             'text' => 'lms.menu.profile',
-            'url'  => '#', // admin/settings
+            'url'  => '/admin/profile',
             'icon' => 'user',
         ],
         [
             'text' => 'Change Password',
-            'url'  => '#', //admin/settings
+            'url'  => '/admin/profile/change-password', //admin/settings
             'icon' => 'lock',
         ],
     ],
