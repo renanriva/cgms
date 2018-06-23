@@ -110,61 +110,24 @@
                                     <td>{{ $registration->course->short_name }}<br/>
                                         <small class="text-warning">{{ $registration->course->course_code }}</small></td>
                                     <td>{{ $registration->course->university->name }}</td>
-{{--                                    <td>{{ $registration->course->modality }}</td>--}}
-{{--                                    <td>{{ $registration->course->hours }}--}}
                                     <td>{{ date('d M Y', strtotime($registration->course->start_date)) }}</td>
                                     <td>{{ date('d M Y', strtotime($registration->course->end_date)) }}</td>
                                     @include('lms.admin.registration.parts.table.td.student_inspection_form')
-                                    <td>
-                                        @if($registration->is_approved == REGISTRATION_IS_APPROVED)
-                                            <i class="fa fa-check-square-o"></i> Approved<br/>
-                                            <small>by {{ $registration->approvedBy->name }} at <br/>{{ date('d m Y - h:i a', strtotime($registration->approval_time)) }}</small>
+                                    {{--@include('lms.admin.registration.parts.table.td.is_approved')--}}
+                                    <td class="js-td-is-approved">
+                                        @if($registration->is_approved == REGISTRATION_IS_NOT_APPROVED)
+                                            <span class="label label-warning">Not approved</span>
                                         @else
-                                            <i class="fa fa-times"></i> Not Approved
-
+                                            <span class="label label-success"><i class="fa fa-check"></i> Yes</span>
+                                            <small><i class="fa fa-clock-o"></i>
+                                                {{ date('h:i a', strtotime($registration->approval_time)) }}<br/>
+                                                {{ date('d M, Y', strtotime($registration->approval_time)) }}</small>
+                                            </small>
                                         @endif
                                     </td>
                                     @include('lms.admin.registration.parts.table.td.mark_approved')
-                                    <td class="js-certificate">
-                                        @if($registration->is_approved == REGISTRATION_IS_APPROVED)
-
-                                            <form method="post" target="_blank"
-                                                  action="{{ url("/admin/registration/$registration->id/download/certificate") }}">
-                                                {{ csrf_field() }}
-                                                <button type="submit" class="btn btn-link btn-link-download" rel="tooltip"
-                                                        title="{{ basename($registration->certificate_path) }}"
-                                                ><i class="fa fa-cloud-download"></i> Download</button>
-                                            </form>
-
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if(isset($registration->diploma_path))
-
-                                            <form method="post" target="_blank"
-                                                  action="{{ url("/admin/registration/$registration->id/download/diploma") }}">
-                                                {{ csrf_field() }}
-                                                <button type="submit" class="btn btn-link btn-link-download" rel="tooltip"
-                                                        title="{{ basename($registration->diploma) }}"
-                                                ><i class="fa fa-cloud-download"></i> Download</button>
-                                            </form>
-
-                                        @endif
-
-                                        @if(Auth::user()->role == 'admin')
-                                            @isset($registration->diploma_download_time)
-                                                <small>
-                                                    <span>Last download  </span><br/>
-                                                    <span class="text-info">
-                                                        {{ date('d M Y', strtotime($registration->diploma_download_time)) }}<br/>
-                                                        {{ date('h:i a', strtotime($registration->diploma_download_time)) }}
-
-                                                    </span>
-                                                </small>
-                                            @endisset
-                                        @endif
-
-                                    </td>
+                                    @include('lms.admin.registration.parts.table.td.certificate')
+                                    @include('lms.admin.registration.parts.table.td.diploma')
                                 </tr>
                             @endforeach
 

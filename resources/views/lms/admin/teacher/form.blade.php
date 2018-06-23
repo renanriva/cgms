@@ -593,7 +593,6 @@
             </div>
 
         </div>
-
         <div class="row">
             <div class="col-lg-2">
                 <div class="col-md-12">
@@ -609,6 +608,12 @@
         </div>
 
     </form>
+
+    <br/>
+    @include('lms.admin.teacher.profile.portfolios')
+
+    @include('lms.admin.teacher.profile.upcoming')
+
 
 
 @stop

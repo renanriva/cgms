@@ -113,6 +113,14 @@ Route::middleware(['auth'])->group(function (){
          */
         Route::prefix('profile')->group(function() {
 
+            Route::get('/', 'ProfileController@index');
+            Route::get('/change-password', 'ProfileController@changePassword');
+
+            Route::post('', 'ProfileController@update');//update profile
+            Route::post('/email', 'ProfileController@updateEmail');//update profile
+            Route::post('/change-password', 'ProfileController@updatePassword'); //update password
+
+
 
         });
 

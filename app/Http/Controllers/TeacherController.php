@@ -24,6 +24,14 @@ use App\Canton;
  */
 class TeacherController extends Controller
 {
+    private $repo = null;
+
+    public function __construct()
+    {
+        $this->repo = new TeacherRepository();
+    }
+
+
     public function index(){
 
         $user = getAuthUser();
@@ -109,9 +117,11 @@ class TeacherController extends Controller
 
             $title = 'Edit Teacher - ' . env('APP_NAME');
 
-            $teacher = Teacher::find($id);
+            $teacher = $this->repo->findById($id);
+            $portfolio = $this->repo->getPortfolioById($id);
 
-            return view('lms.admin.teacher.form', ['title' => $title, 'teacher' => $teacher]);
+            return view('lms.admin.teacher.form', ['title' => $title, 'teacher' => $teacher,
+                'portfolios' => $portfolio]);
 
         } else{
             echo  'unauthorized';
@@ -169,6 +179,9 @@ class TeacherController extends Controller
             $teacher_repo = new TeacherRepository();
 
             $new_teacher = $teacher_repo->insert($teacher, USER_CREATION_TYPE_CMS);
+
+            $this->repo->registrationRepo->flushAllCache();
+
 
 
         return response()->json(['teacher' => $new_teacher])->setStatusCode(201);
@@ -241,6 +254,10 @@ class TeacherController extends Controller
 
         $teacher_repo = new TeacherRepository();
         $new_teacher = $teacher_repo->update($teacher, $id);
+
+
+        $this->repo->flushCacheById($id);
+        $this->repo->registrationRepo->flushAllCache();
 
 
         return response()->json(['teacher' => $new_teacher])->setStatusCode(200);
@@ -334,8 +351,7 @@ class TeacherController extends Controller
 
     public function showProfile($id){
 
-
-        $teacher = Teacher::find($id);
+        $teacher = $this->repo->findById($id);
         $title = $teacher->user->name . ' - ' . env('APP_NAME');
 
         return view('lms.admin.teacher.profile', ['teacher'=> $teacher, 'title' =>  $title]);
@@ -344,6 +360,7 @@ class TeacherController extends Controller
 
 
     /**
+     * @TODO user canton repository and use cache
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
@@ -360,11 +377,11 @@ class TeacherController extends Controller
      */
     public function delete($id){
 
-        $canton = Canton::findOrFail($id);
-
-        $canton->delete();
-
-        return response()->json()->setStatusCode(204);
+//        $canton = Canton::findOrFail($id);
+//
+//        $canton->delete();
+//
+//        return response()->json()->setStatusCode(204);
 
     }
 

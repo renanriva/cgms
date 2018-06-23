@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Province;
+use Illuminate\Support\Facades\Cache;
 use Yajra\DataTables\Facades\DataTables;
 use App\Canton;
 
@@ -100,12 +101,19 @@ class CantonController extends Controller
     }
 
     /**
+     * @todo move to a repository
+     *
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function getByProvinceId($id){
 
-        $cantons = Canton::where('province_id', $id)->get();
+        $cantons = Cache::tags(['GET_CANTON_BY_ID'])->remember('GET_CANTON_BY_PROVINCE_ID_'.$id, 60,
+            function () use($id){
+
+            return Canton::where('province_id', $id)->get();
+
+        });
 
         return response()->json(['cantons'=> $cantons])->setStatusCode(200);
     }
