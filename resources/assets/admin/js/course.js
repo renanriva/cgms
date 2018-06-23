@@ -206,11 +206,12 @@ $(document).ready(function () {
                     video_type      : $(this).attr('data-video_type'),
                     video_code      : $(this).attr('data-video_code'),
                     terms_condition : $(this).attr('data-terms_condition'),
-                    data_update     : $(this).attr('data-data_update')
+                    data_update     : $(this).attr('data-data_update'),
+                    tc_file_path    : $(this).attr('data-tc_file_path'),
+                    lor_file_path   : $(this).attr('data-lor_file_path')
 
 
                 };
-
 
                 modal.find('.js-edit-course-code').val(data.course_code);
                 modal.find('.js-edit-course-type option[value="'+data.course_type+'"]').attr('selected', true);
@@ -229,12 +230,53 @@ $(document).ready(function () {
                 modal.find('.js-edit-course-terms_condition').val(data.terms_condition);
                 modal.find('.js-edit-course-data_update').val(data.data_update);
 
+                modal.find('.js-course-id').val(data.id);
+
+                modal.find('.js-load-tc_file').text(data.tc_file_path);
+                modal.find('.js-load-lor').text(data.lor_file_path);
+
+                modal.find('.btn-update-course-files').removeClass('hidden');
+                modal.find('.btn-show-course-form').addClass('hidden');
+
 
                 modal.find('#btn-edit-course').attr('data-id', data.id);
                 modal.find('#btn-edit-course').text('Update');
                 modal.find('#btn-edit-course').attr('data-type','update');
                 modal.modal('show');
 
+
+            });
+
+        }
+
+        showUploadFile();
+        function showUploadFile() {
+
+            $('.btn-update-course-files').click(function () {
+
+
+                $('.js-course-inspection-form').removeClass('hidden');
+                $('.btn-show-course-form').removeClass('hidden');
+
+                $(this).addClass('hidden');
+                $('.js-course-form').addClass('hidden');
+                $('#btn-edit-course').addClass('hidden');
+
+
+            });
+        }
+
+        showCourseForm();
+        function showCourseForm() {
+
+            $('.btn-show-course-form').click(function () {
+
+                $(this).addClass('hidden');
+                $('.js-course-inspection-form').addClass('hidden');
+
+                $('.btn-update-course-files').removeClass('hidden');
+                $('.js-course-form').removeClass('hidden');
+                $('#btn-edit-course').removeClass('hidden');
 
             });
 

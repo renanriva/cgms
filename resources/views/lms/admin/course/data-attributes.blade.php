@@ -14,3 +14,5 @@ data-video_text="{{$video_text}}"
 data-video_type="{{$video_type}}"
 data-video_code="{{$video_code}}"
 data-data_update="{{$data_update_brief}}"
+data-tc_file_path= {{ $tc_file_path }}
+data-lor_file_path= {{ $lor_file_path }}
