@@ -67,6 +67,64 @@ class ProfileController extends Controller
 
     }
 
+
+    public function update(Request $request){
+
+
+        $v = $this->validate($request, [
+            'name' => 'required|max:100|min:3|string'
+        ]);
+
+        if ($v){
+
+            $posts  = $request->all();
+            $user = Auth::user();
+
+            $user->name = $posts['name'];
+            $user->save();
+
+            return redirect()->back()->with('message', 'Updated');
+
+
+            // update password
+        } else {
+
+
+            return redirect()->back()->withErrors($v)->withInput();
+
+        }
+
+    }
+
+    public function updateEmail(Request $request){
+
+
+        $v = $this->validate($request, [
+            'email' => 'required|max:100|min:3|email|unique:users,email'
+        ]);
+
+        if ($v){
+
+            $posts  = $request->all();
+            $user = Auth::user();
+
+            $user->email = $posts['email'];
+            $user->save();
+
+            return redirect()->back()->with('message_email', 'Login Email Updated');
+
+
+            // update password
+        } else {
+
+
+            return redirect()->back()->withErrors($v)->withInput();
+
+        }
+
+    }
+
+
     public function restPassword(){
 
     }

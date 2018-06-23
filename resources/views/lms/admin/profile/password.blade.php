@@ -19,7 +19,7 @@
                 <div class="box box-info">
 
                     <div class="box-header">
-                        <div class="box-title"> Change Pasword</div>
+                        <div class="box-title"> Change Password</div>
                     </div>
                     <div class="box-body">
 
