@@ -54674,6 +54674,8 @@ $(document).ready(function () {
                     website: modal.find('.js-edit-university-website').val(),
                     login_name: modal.find('.js-edit-university-login_name').val(),
                     login_email: modal.find('.js-edit-university-login_email').val(),
+                    login_password: modal.find('.js-edit-university-login_password').val(),
+                    login_confirm_password: modal.find('.js-edit-university-login_confirm_password').val(),
                     note: modal.find('.js-edit-university-note').val()
                 };
 

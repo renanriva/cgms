@@ -26,7 +26,7 @@
                                 <div class="col-md-9 col-lg-9">
                                     <input id="js-edit-university-name" type="text" maxlength="100"
                                            class="js-edit-university-name form-control" name="course_id"
-                                           required placeholder="{{ __('lms.page.university.form.name') }}"                                     >
+                                           required placeholder="{{ __('lms.page.university.form.name') }}"   >
                                 </div>
                             </div>
 
@@ -36,7 +36,7 @@
                                 <div class="col-md-9 col-lg-9">
                                     <input id="js-edit-university-email" type="email" maxlength="100"
                                            class="js-edit-university-email form-control"
-                                           required placeholder="{{ __('lms.page.university.form.email') }}"                                     >
+                                           required placeholder="{{ __('lms.page.university.form.email') }}"  >
                                 </div>
                             </div>
 
@@ -46,7 +46,7 @@
                                 <div class="col-md-9 col-lg-9">
                                     <input id="js-edit-university-website" type="url" maxlength="100"
                                            class="js-edit-university-website form-control"
-                                           placeholder="{{ __('lms.page.university.form.website') }}"                                     >
+                                           placeholder="{{ __('lms.page.university.form.website') }}"  >
                                 </div>
                             </div>
 
@@ -56,7 +56,7 @@
                                 <div class="col-md-9 col-lg-9">
                                     <input id="js-edit-university-phone" type="text" maxlength="20"
                                            class="js-edit-university-phone form-control"
-                                           placeholder="{{ __('lms.page.university.form.phone') }}"                                     >
+                                           placeholder="{{ __('lms.page.university.form.phone') }}"  >
                                 </div>
                             </div>
                             <div class="form-group">
@@ -65,7 +65,7 @@
                                 <div class="col-md-9 col-lg-9">
                                     <input id="js-edit-university-note" type="text" maxlength="255"
                                            class="js-edit-university-note form-control"
-                                           placeholder="{{ __('lms.page.university.form.note') }}"                                     >
+                                           placeholder="{{ __('lms.page.university.form.note') }}"  >
                                 </div>
                             </div>
                             <div class="js-login-section">
@@ -81,7 +81,7 @@
                                 <div class="col-md-9 col-lg-9">
                                     <input id="js-edit-university-login_name" type="text" maxlength="100"
                                            class="js-edit-university-login_name form-control"
-                                           placeholder="{{ __('lms.page.university.form.login_name') }}"                                     >
+                                           placeholder="{{ __('lms.page.university.form.login_name') }}"  >
                                 </div>
                             </div>
                             <div class="form-group">
@@ -90,7 +90,23 @@
                                 <div class="col-md-9 col-lg-9">
                                     <input id="js-edit-university-login_email" type="email" maxlength="100"
                                            class="js-edit-university-login_email form-control"
-                                           placeholder="{{ __('lms.page.university.form.login_email') }}"                                     >
+                                           placeholder="{{ __('lms.page.university.form.login_email') }}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="js-edit-university-login_password"
+                                       class="col-md-3 col-lg-3 control-label">Password</label>
+                                <div class="col-md-9 col-lg-9">
+                                    <input id="js-edit-university-login_password" type="password" maxlength="100"
+                                           class="js-edit-university-login_password form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="js-edit-university-login_confirm_password"
+                                       class="col-md-3 col-lg-3 control-label">Confirm Password</label>
+                                <div class="col-md-9 col-lg-9">
+                                    <input id="js-edit-university-login_confirm_password" type="password" maxlength="100"
+                                           class="js-edit-university-login_confirm_password form-control" placeholder="">
                                 </div>
                             </div>
                             </div>
