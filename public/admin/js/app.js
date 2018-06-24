@@ -52498,8 +52498,8 @@ $(document).ready(function () {
     });
 
     //enable tooltip
-    // $('[data-toggle="tooltip"]').tooltip();
-
+    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="popover"]').popover();
 
     /**
      * Make the form elements enable and disable
@@ -53282,7 +53282,6 @@ $(document).ready(function () {
 
 /* WEBPACK VAR INJECTION */(function($) {var grade_page = $('#course_grade_page').length;
 
-console.log(' size ', grade_page);
 if (grade_page > 0) {
     var showAddMark = function showAddMark() {
         console.log('click for modal');
@@ -53295,12 +53294,23 @@ if (grade_page > 0) {
         });
     };
 
-    console.log('course_grade_page');
-
     var addMark = $('#course-add-mark-modal');
     var courseId = null;
 
     showAddMark();
+
+
+    downloadCourseGradeTemplate();
+
+    /**
+     * Download course grade template to upload grade
+     */
+    // function downloadCourseGradeTemplate() {
+    //
+    //     $.ajax({
+    //
+    //     })
+    // }
 
 
     $('#course-mark-add-uploader-manual-trigger').fineUploader({
@@ -55007,7 +55017,6 @@ $(document).ready(function () {
                 }).done(function (response, textStatus, xhr) {
 
                     if (xhr.status === 200) {
-                        alert('Password Updated');
                         resetPassword.modal('toggle');
                         $('#user_id_' + id).addClass('success');
                     }

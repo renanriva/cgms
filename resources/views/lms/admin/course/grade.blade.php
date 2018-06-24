@@ -108,11 +108,22 @@
                         <h3 class="box-title">Registrations</h3>
                     </div>
                     <div class="pull-right">
+                        <form action="{{ url('/admin/course/'.$course->id.'/download-grade-template') }}" method="post"
+                              target="_blank">
                         <div class="btn-group">
-                            <button class="btn btn-info btn-upload-grade btn-sm btn-flat"
+                                {{ csrf_field() }}
+                            <a class="btn btn-link" href="javascript:void(0)" title="Grade Template Guideline" data-trigger="hover"
+                               data-content="Enter a numeric grade on [grade] column and add `1` in [grade_approved] column for mark as approved"
+                               data-placement="top" title="Instruction" data-toggle="popover"><i class="fa fa-info"></i>
+                            </a>
+                            <button class="btn btn-sm btn-warning" id="btn-create-university" type="submit">
+                                <i class="fa fa-cloud-download"></i> Download Grade Template</button>
+                            <button class="btn btn-info btn-upload-grade btn-sm btn-flat" type="button"
                                 data-id="{{ $course->id }}"><i class="fa fa-cloud-upload"></i> Upload Grade
                             </button>
                         </div>
+                        </form>
+
                     </div>
                 </div>
                 <div class="box-body">
@@ -124,11 +135,9 @@
                                 <th>Name</th>
                                 <th>Institute</th>
                                 <th>Email</th>
-                                {{--<th>Terms & Condition</th>--}}
-                                <th>Inspection Form</th>
-                                <th>Approve</th>
                                 <th>Grade</th>
                                 <th>Grade Approved</th>
+                                <th>Diploma</th>
                             </tr>
                         </thead>
 
@@ -139,10 +148,8 @@
                                     <td>{{ $registration->student->first_name }}</td>
                                     <td>{{ $registration->student->university_name }}</td>
                                     <td>{{ $registration->student->inst_email }}</td>
-                                    {{--@include('lms.admin.registration.parts.table.td.terms_condition')--}}
-                                    @include('lms.admin.registration.parts.table.td.student_inspection_form')
-                                    @include('lms.admin.registration.parts.table.td.is_approved')
                                     @include('lms.admin.registration.parts.table.td.mark_approved')
+                                    @include('lms.admin.registration.parts.table.td.diploma')
 
                                 </tr>
                             @endforeach

@@ -78,14 +78,6 @@ class Course extends Model
 
     }
 
-    /**
-     * @return mixed
-     */
-//    public function getTotalRegistrationsAttribute()
-//    {
-//        return $this->hasMany('registrations')->count();
-//
-//    }
 
     /**
      * The attributes that should be mutated to dates.
