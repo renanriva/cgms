@@ -230,7 +230,7 @@ class RegistrationController extends Controller
         if ($registration){
 
             // if user  = teacher update download time
-            $user = getAuthUser();
+            $user = Auth::user();
 
             if ($user->role == 'teacher'){
                 $registration->diploma_download_time = now();

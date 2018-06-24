@@ -85,16 +85,13 @@
                                 <th width="18%">{{ __('lms.page.teacher.table.name') }}</th>
                                 <th>{{ __('lms.page.teacher.table.course_type') }}</th>
                                 <th>{{ __('lms.page.teacher.table.course_name') }}</th>
-                                <th>{{ __('lms.page.teacher.table.university') }}</th>
-                                {{--<th>{{ __('lms.page.teacher.table.modality') }}</th>--}}
-                                {{--<th>{{ __('lms.page.teacher.table.hours') }}</th>--}}
-                                <th>{{ __('lms.page.teacher.table.start_date') }}</th>
-                                <th>{{ __('lms.page.teacher.table.end_date') }}</th>
-                                {{--<th>{{ __('lms.page.registration.pending.table.terms_condition') }}</th>--}}
-                                <th>{{ __('lms.page.registration.pending.table.record_uploaded') }}</th>
-                                <th>{{ __('lms.page.teacher.table.approved') }}</th>
                                 <th>Grade</th>
                                 <th>Grade Approved</th>
+                                <th>{{ __('lms.page.teacher.table.university') }}</th>
+                                <th>{{ __('lms.page.teacher.table.start_date') }}</th>
+                                <th>{{ __('lms.page.teacher.table.end_date') }}</th>
+                                <th>{{ __('lms.page.registration.pending.table.record_uploaded') }}</th>
+                                <th>{{ __('lms.page.teacher.table.approved') }}</th>
                                 <th>{{ __('lms.page.teacher.table.certificate') }}</th>
                                 <th>{{ __('lms.page.teacher.table.diploma') }}</th>
                             </tr>
@@ -105,15 +102,17 @@
                                 <tr>
                                     <td>{{ $registration->id }}</td>
                                     <td>{{ $registration->student->social_id }}</td>
-                                    <td>{{ $registration->student->first_name }}</td>
+                                    <td>{{ $registration->user_first_name}} &nbsp;
+                                    <small>{{ $registration->user_last_name !== $registration->user_first_name ? $registration->user_last_name : '' }}</small>
+                                    </td>
                                     <td>{{ $registration->course->course_type }}</td>
                                     <td>{{ $registration->course->short_name }}<br/>
                                         <small class="text-warning">{{ $registration->course->course_code }}</small></td>
+                                    @include('lms.admin.registration.parts.table.td.mark_approved')
                                     <td>{{ $registration->course->university->name }}</td>
                                     <td>{{ date('d M Y', strtotime($registration->course->start_date)) }}</td>
                                     <td>{{ date('d M Y', strtotime($registration->course->end_date)) }}</td>
                                     @include('lms.admin.registration.parts.table.td.student_inspection_form')
-                                    {{--@include('lms.admin.registration.parts.table.td.is_approved')--}}
                                     <td class="js-td-is-approved">
                                         @if($registration->is_approved == REGISTRATION_IS_NOT_APPROVED)
                                             <span class="label label-warning">Not approved</span>
@@ -125,7 +124,6 @@
                                             </small>
                                         @endif
                                     </td>
-                                    @include('lms.admin.registration.parts.table.td.mark_approved')
                                     @include('lms.admin.registration.parts.table.td.certificate')
                                     @include('lms.admin.registration.parts.table.td.diploma')
                                 </tr>

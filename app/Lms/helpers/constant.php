@@ -122,3 +122,17 @@
             return Auth::user();
         });
     }
+
+
+    /**
+     * @link https://stackoverflow.com/questions/2936467/parse-youtube-video-id-using-preg-match
+     * @param $url
+     * @return mixed
+     */
+    function parseYoutubeUrl($url){
+        if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url, $url)) {
+            return  $url[1];
+        } else{
+            return $url;
+        }
+    }
