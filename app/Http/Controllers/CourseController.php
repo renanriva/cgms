@@ -535,5 +535,75 @@ class CourseController extends Controller
 
     }
 
+    /**
+     * Download Course Template
+     *
+     * @param $courseId
+     */
+    public function downloadGradeTemplate($courseId){
+
+        $course = $this->repo->findById($courseId);
+
+        $courseHeader = ['System id', 'Course code', 'Course name'];
+        $courseRow = [$course->id, $course->course_code, $course->short_name];
+
+        $headers = [
+            'Registration id',
+            'Registration date',
+            'Teacher Cedula',
+            'Teacher Name',
+            'Terms Accepted',
+            'Inspection Form Upload',
+            'Registration Approval time',
+            'Approved By',
+            'grade',
+            'grade approved'
+        ];
+
+        $rows = [];
+
+        array_push($rows, $courseHeader);
+        array_push($rows, $courseRow);
+        array_push($rows, $headers);
+
+        foreach ($course->registrations->sortByDesc('approval_time') as $registration){
+
+            $row = [
+//                $registration->course_id,
+                $registration->id,
+                $registration->reg_date,
+//                $registration->course->course_code,
+//                $registration->course->short_name,
+                $registration->student->social_id,
+                $registration->student->first_name,
+                isset($registration->tc_accept_time) ? $registration->tc_accept_time : 'not accepted',
+                isset($registration->inspection_certificate_upload_time) ? $registration->inspection_certificate_upload_time : 'not uploaded',
+                isset($registration->approval_time) ? $registration->approval_time : 'not approved',
+                isset($registration->approved_by) ? $registration->approvedBy->name : '',
+                '',
+                1
+            ];
+
+            array_push($rows, $row);
+        }
+
+
+        Excel::create("course_".$course->course_code."_grade_template", function($excel) use ($rows, $course) {
+
+            // Set the spreadsheet title, creator, and description
+            $excel->setTitle('Grade Insert Template for '.$course->short_name);
+            $excel->setCreator('CGMS')->setCompany('AppioLab.com');
+            $excel->setDescription('payments file');
+
+            // Build the spreadsheet, passing in the payments array
+            $excel->sheet('sheet1', function($sheet) use ($rows) {
+                $sheet->fromArray($rows, null, 'A1', false, false);
+            });
+
+        })->download('xlsx');
+
+
+    }
+
 
 }

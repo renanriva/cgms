@@ -108,13 +108,18 @@
                         <h3 class="box-title">Registrations</h3>
                     </div>
                     <div class="pull-right">
+                        <form action="{{ url('/admin/course/'.$course->id.'/download-grade-template') }}" method="post"
+                              target="_blank">
                         <div class="btn-group">
-                            <button class="btn btn-sm btn-warning" id="btn-create-university">
+                                {{ csrf_field() }}
+                                <button class="btn btn-sm btn-warning" id="btn-create-university" type="submit">
                                 <i class="fa fa-cloud-download"></i> Download Grade Template</button>
-                            <button class="btn btn-info btn-upload-grade btn-sm btn-flat"
+                            <button class="btn btn-info btn-upload-grade btn-sm btn-flat" type="button"
                                 data-id="{{ $course->id }}"><i class="fa fa-cloud-upload"></i> Upload Grade
                             </button>
                         </div>
+                        </form>
+
                     </div>
                 </div>
                 <div class="box-body">

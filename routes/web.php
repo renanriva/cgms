@@ -69,6 +69,7 @@ Route::middleware(['auth'])->group(function (){
 
 
             Route::post('/{id}/download/lor', 'CourseController@downloadLor');
+            Route::post('/{id}/download-grade-template', 'CourseController@downloadGradeTemplate');
 
 
 
