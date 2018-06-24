@@ -204,31 +204,58 @@
                                                 <th>Email</th>
                                                 <th>Phone</th>
                                                 <th>T&C Accept</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="register-update-data">
                                             <tr>
                                                 <td>
                                                     {{ $teacher->social_id }}
                                                 </td>
                                                 <td>
-                                                    {{ $teacher->user->name }}
+                                                    <input type="text" class="form-control js-tab-user-first_name"
+                                                           placeholder="First Name"
+                                                           value="{{ $registration->user_first_name }}"
+                                                           maxlength="100"/>
                                                 </td>
                                                 <td>
+                                                    <input type="text" class="form-control js-tab-user-last_name"
+                                                           placeholder="Last Name"
+                                                           value="{{ $registration->user_last_name }}"
+                                                           maxlength="100"/>
+                                                </td>
+                                                <td>
+                                                    <input type="email" class="form-control js-tab-user-email"
+                                                           placeholder="Email"
+                                                           value="{{ isset($registration->email) ? $registration->email : $teacher->inst_email }}"
+                                                           maxlength="100"/>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control js-tab-user-phone"
+                                                           placeholder="Phone"
+                                                           value="{{ isset($registration->cell_phone) ? $registration->cell_phone : $teacher->mobile }}"
+                                                           maxlength="50"/>
 
                                                 </td>
-                                                <td>
-                                                    {{ $teacher->inst_email }}
+                                                <td class="js-user-data-update-tc_accept_info">
+                                                    @if($registration->accept_tc == 1)
+                                                        <div class="pull-left">
+                                                            <i class="fa fa-check"></i> Accepted at<br/>
+                                                            <small>
+                                                            {{ date('d M Y h:i a', strtotime($registration->tc_accept_time)) }}
+                                                            </small>
+                                                        </div>
+                                                    @endif
                                                 </td>
                                                 <td>
-                                                    {{ $teacher->mobile }}
-                                                </td>
-                                                <td>
-                                                    Accept
+                                                    <button class="btn btn-update-user-register-data btn-info btn-sm"
+                                                            data-id="{{ $registration->id }}"
+                                                    ><i class="fa fa-save"></i> Update</button>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                    <div class="js-data-update-message"></div>
 
                                     <div class="next-layout">
                                         <a class="btn btn-default btn-flat next" href="javascript:void(0)">Next</a>
@@ -239,12 +266,12 @@
                                 <h3>Registration Inspection</h3>
 
                                 <div class="box-layout">
-                                    <p>Lorem ipsum</p>
-
                                     <div class="row">
                                         <div class="col-sm-12">
+                                            @if(strlen($registration->inspection_certificate) > 2)
                                             <p>File <code>{{ basename($registration->inspection_certificate)  }}</code>
                                                 uploaded at: {{ date('d M Y: h:i a', strtotime($registration->inspection_certificate_upload_time)) }}</p>
+                                            @endif
                                         </div>
                                     </div>
                                     <hr/>
