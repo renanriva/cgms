@@ -35,7 +35,7 @@
                                 <th>{{ __('lms.page.university.table.login_email') }}</th>
                                 <th>{{ __('lms.page.university.table.created_by') }}</th>
                                 <th>{{ __('lms.page.university.table.created_at') }}</th>
-                                <th>{{ __('lms.page.university.table.action') }}</th>
+                                <th width="200">{{ __('lms.page.university.table.action') }}</th>
                             </tr>
                         </thead>
                     </table>
