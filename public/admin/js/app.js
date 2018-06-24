@@ -52787,9 +52787,6 @@ $(document).ready(function () {
 
                 modal.find('.js-course-id').val(data.id);
 
-                modal.find('.js-load-tc_file').text(data.tc_file_path);
-                modal.find('.js-load-lor').text(data.lor_file_path);
-
                 modal.find('.btn-update-course-files').removeClass('hidden');
                 modal.find('.btn-show-course-form').addClass('hidden');
 

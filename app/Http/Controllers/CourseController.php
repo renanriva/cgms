@@ -358,6 +358,8 @@ class CourseController extends Controller
 
         }
 
+        $this->repo->flushById($request->input('course_id'));
+
         return response()->json(['path'=> $path, 'success' => true]);
 
 

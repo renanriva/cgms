@@ -326,15 +326,12 @@
 
                         <div class="col-md-12 col-md-12 col-sm-12">
 
-                            {{--<code>Upload Inspection Form (Letter of Registration)</code>--}}
-                            {{--<div id="course-inspection-form-uploader-manual-trigger"></div>--}}
-
                             <code>Upload Terms and Condition</code>
-                            <div class="js-load-tc_file"></div>
+                            {{--<div class="js-load-tc_file"></div>--}}
                             <div id="course-terms_condition-uploader-manual-trigger"></div>
 
                             <code>Upload Letter of Registration</code>
-                            <div class="js-load-lor"></div>
+                            {{--<div class="js-load-lor"></div>--}}
                             <div id="course-letter_of_registration-uploader-manual-trigger"></div>
 
                         </div>
