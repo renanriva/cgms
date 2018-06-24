@@ -249,6 +249,19 @@ $(document).ready(function () {
 
         }
 
+        modal.on('hidden.bs.modal', function () {
+
+            modal.find('input').val('');
+            modal.find('textarea').val('');
+            modal.find('.js-course-id').val('');
+
+            $('.js-course-form').removeClass('hidden');
+            $('.js-course-inspection-form').addClass('hidden');
+
+            $('.btn-update-course-files').addClass('hidden');
+
+        });
+
         showUploadFile();
         function showUploadFile() {
 
