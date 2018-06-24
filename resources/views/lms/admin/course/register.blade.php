@@ -133,7 +133,11 @@
                             <div class="tab-pane" id="step3">
                                 <h3>Terms and Conditions</h3>
                                 <div class="box-layout">
-                                    <p class=""></p>
+                                    @if(isset($course->terms_conditions))
+                                    <div class="well well-sm">
+                                        <p class="">{{ $course->terms_conditions }}</p>
+                                    </div>
+                                    @endif
                                     <div class="form-group">
                                         @if($course->tc_file_path !== null)
                                         <div class="js-pdf-viewer" style="margin-bottom: 75px;">

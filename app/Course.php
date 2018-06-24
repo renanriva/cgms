@@ -23,7 +23,7 @@ class Course extends Model
         'course_code', 'course_type', 'modality',
         'short_name', 'description',         'comment',
         'video_text', 'video_code', 'video_type',
-        'data_update_brief',
+        'data_update_brief', 'terms_conditions',
         'inspection_form_url', 'inspection_form_generated',
         'hours',         'quota',
         'start_date', 'end_date',

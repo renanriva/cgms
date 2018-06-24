@@ -52720,7 +52720,7 @@ $(document).ready(function () {
                     video_text: modal.find('.js-edit-course-video').val(),
                     video_type: modal.find('.js-edit-course-video_type option:selected').val(),
                     video_code: modal.find('.js-edit-course-video_embed_code').val(),
-                    // terms_condition : modal.find('.js-edit-course-terms_condition').val(),
+                    terms_condition: modal.find('.js-edit-course-terms_condition').val(),
                     data_update_text: modal.find('.js-edit-course-data_update').val()
 
                 };
