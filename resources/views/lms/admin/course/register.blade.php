@@ -103,7 +103,7 @@
                                     @if($course->video_type == 'youtube')
                                         @if($course->video_code !== null)
                                         <iframe width="560" height="315"
-                                                src="https://www.youtube.com/embed/{{ $course->video_code }}">
+                                                src="https://www.youtube.com/embed/{{ parseYoutubeUrl($course->video_code) }}">
                                         </iframe>
                                         @else
                                             <div class="js-error">

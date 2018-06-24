@@ -229,11 +229,11 @@
 
                         <div class="row">
 
-                            <div class="col-lg-6 col-sm-12 col-md-6">
+                            <div class="col-lg-4 col-sm-12 col-md-4">
                                 <div class="form-group js-error-block js-video_type-block">
                                     <label for="js-edit-course-video_type"
-                                           class="col-md-3 control-label">{{ __('lms.page.course.form.video_type') }}</label>
-                                    <div    class="col-md-9">
+                                           class="col-md-4 control-label">{{ __('lms.page.course.form.video_type') }}</label>
+                                    <div    class="col-md-8">
                                         <select id="js-edit-course-video_type" name="video_type" style="width: 100%"
                                                 class="js-edit-course-video_type js-select-video_type form-control js-lms-select2" >
                                             <option value="youtube">Youtube</option>
@@ -247,11 +247,17 @@
 
                             </div>
 
-                            <div class="col-lg-6 col-sm-12 col-md-6">
+                            <div class="col-lg-8 col-sm-12 col-md-8">
 
                                 <div class="form-group js-error-block js-video_embed_code-block">
                                     <label for="js-edit-course-video_embed_code"
-                                           class="col-md-3 control-label">{{ __('lms.page.course.form.video_embed') }}</label>
+                                           class="col-md-3 control-label">
+                                        <a href="javascript:void(0)" data-toggle="tooltip"
+                                           data-placement="top"
+                                           title="Add youtube full url" data-triger="hover"
+                                           data-content="" >
+                                        <i class="fa fa-info"></i> </a> {{ __('lms.page.course.form.video_embed') }}
+                                    </label>
                                     <div    class="col-md-9">
                                         <input id="js-edit-course-video_embed_code"
                                                class="js-edit-course-video_embed_code form-control" name="video_embed_code"
