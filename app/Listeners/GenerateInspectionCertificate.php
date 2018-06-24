@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\RegistrationApproved;
+use App\Repository\RegistrationRepository;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\App;
@@ -14,13 +15,14 @@ use Illuminate\Support\Facades\App;
  */
 class GenerateInspectionCertificate
 {
+    private  $repo ;
     /**
      * Create the event listener.
      *
      */
     public function __construct()
     {
-        //
+        $this->repo = new RegistrationRepository();
     }
 
     /**
@@ -34,16 +36,7 @@ class GenerateInspectionCertificate
     {
         //@todo generate file and update the registration
 
-
-        $certificateFilename =$approved->registration->course->course_code . '_certificate_of_'.$approved->registration->student->social_id.'.pdf';
-
-        $pdf = App::make('dompdf.wrapper');
-        $pdf->loadView('lms.admin.registration.pdf.certificate', ['registration' => $approved->registration]);
-        $pdf->save(storage_path('app/course/certificate/' . $certificateFilename));
-
-        $approved->registration->registry_is_generated = true;
-        $approved->registration->certificate_path = storage_path('app/course/certificate/' . $certificateFilename);
-        $approved->registration->save();
+        $this->repo->generateInspectionCertificate($approved->registration);;
 
     }
 }
