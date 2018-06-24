@@ -109,6 +109,8 @@
                     </div>
                     <div class="pull-right">
                         <div class="btn-group">
+                            <button class="btn btn-sm btn-warning" id="btn-create-university">
+                                <i class="fa fa-cloud-download"></i> Download Grade Template</button>
                             <button class="btn btn-info btn-upload-grade btn-sm btn-flat"
                                 data-id="{{ $course->id }}"><i class="fa fa-cloud-upload"></i> Upload Grade
                             </button>
@@ -124,11 +126,9 @@
                                 <th>Name</th>
                                 <th>Institute</th>
                                 <th>Email</th>
-                                {{--<th>Terms & Condition</th>--}}
-                                <th>Inspection Form</th>
-                                <th>Approve</th>
                                 <th>Grade</th>
                                 <th>Grade Approved</th>
+                                <th>Diploma</th>
                             </tr>
                         </thead>
 
@@ -139,10 +139,8 @@
                                     <td>{{ $registration->student->first_name }}</td>
                                     <td>{{ $registration->student->university_name }}</td>
                                     <td>{{ $registration->student->inst_email }}</td>
-                                    {{--@include('lms.admin.registration.parts.table.td.terms_condition')--}}
-                                    @include('lms.admin.registration.parts.table.td.student_inspection_form')
-                                    @include('lms.admin.registration.parts.table.td.is_approved')
                                     @include('lms.admin.registration.parts.table.td.mark_approved')
+                                    @include('lms.admin.registration.parts.table.td.diploma')
 
                                 </tr>
                             @endforeach
