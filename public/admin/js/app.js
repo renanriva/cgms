@@ -54213,6 +54213,39 @@ $(document).ready(function () {
             console.log('#btn-upload-registration-release-file');
             $('#registration_release_file_upload').fineUploader('uploadStoredFiles');
         });
+
+        $('.btn-update-user-register-data').click(function () {
+
+            var id = $(this).attr('data-id');
+
+            var button = $('.btn-update-user-register-data');
+            var form = $('#register-update-data');
+            var data = {
+                first_name: form.find('.js-tab-user-first_name').val(),
+                last_name: form.find('.js-tab-user-last_name').val(),
+                email: form.find('.js-tab-user-email').val(),
+                phone: form.find('.js-tab-user-phone').val()
+            };
+
+            form.find('input').attr('disabled', true);
+            $(this).attr('disabled', true);
+
+            $.ajax({
+                url: '/admin/registration/' + id + '/update/user-data',
+                method: 'post',
+                data: data
+            }).done(function (response, textStatus, xhr) {
+
+                if (xhr.status === 200) {
+                    $('.js-data-update-message').html('<div class="alert alert-success">Data updated successfully</div>').addClass('text-success');
+                }
+            }).fail(function (errors, textStatus, errorThrown) {}).always(function () {
+                form.find('input').attr('disabled', false);
+                button.removeAttr('disabled');
+            });
+
+            // alert('id '+id);
+        });
     } //end page
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))

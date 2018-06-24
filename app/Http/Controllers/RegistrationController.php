@@ -107,6 +107,16 @@ class RegistrationController extends Controller
 
             event(new RegistrationApproved($registration));
 
+        } elseif($part == 'user-data'){
+
+            $registration->user_first_name = $post['first_name'];
+            $registration->user_last_name = $post['last_name'];
+            $registration->email= $post['email'];
+            $registration->cell_phone = $post['phone'];
+
+            $this->repo->flushRegistrationById($registrationId);
+
+            $registration->save();
         }
 
         $this->repo->flushRegistrationById($registrationId);
