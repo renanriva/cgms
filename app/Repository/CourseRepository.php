@@ -178,18 +178,15 @@ class CourseRepository
     }
 
 
-    /**
-     * @param $id
-     * @return mixed
-     */
-    public function getById($id){
+    public function findById($id){
 
+        $time = config('adminlte.cache_time');
 
-        $key = 'course_by_id'.$id;
+        $course = Cache::tags(['COURSE_FIND_BY_ID'])->remember('COURSE_FIND_BY_ID_'.$id, $time, function () use($id){
 
-        $course = Cache::remember($key, 20, function () use($id){
-
-             return Course::find($id);
+            return Course::with(['requests', 'university', 'registrations', 'approvedRegistrations',
+                'diplomaUploadedBy'])
+            ->find($id);
 
         });
 
@@ -198,12 +195,32 @@ class CourseRepository
     }
 
     /**
+     * Invalidate cache course
+     * @param $id
+     */
+    public function flushById($id){
+
+        Cache::tags(['COURSE_FIND_BY_ID'])->flush('COURSE_FIND_BY_ID_'.$id);
+    }
+
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getById($id){
+
+
+        return $this->findById($id);
+
+    }
+
+    /**
      * @param $id
      */
     public function invalidateCache($id){
 
-        $key = 'course_by_id'.$id;
-        Cache::forever($key);
+        $this->flushById($id);
 
     }
 }

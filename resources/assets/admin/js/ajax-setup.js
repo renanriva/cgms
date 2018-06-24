@@ -23,8 +23,8 @@ $(document).ready(function () {
 
 
     //enable tooltip
-    // $('[data-toggle="tooltip"]').tooltip();
-
+    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="popover"]').popover();
 
     /**
      * Make the form elements enable and disable

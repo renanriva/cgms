@@ -8,6 +8,7 @@ use App\Http\Requests\CourseInsertRequest;
 use App\Http\Requests\CourseUpdateRequest;
 use App\Registration;
 use App\Repository\CourseRepository;
+use App\Repository\RegistrationRepository;
 use App\Repository\UniversityRepository;
 use DateTime;
 use Dompdf\Image\Cache;
@@ -462,40 +463,45 @@ class CourseController extends Controller
             $cloud = Storage::disk();
 
             $filename = 'grade_of_'.$course->course_code.'_'.date('Ymdhi', strtotime('now'));
-            $path = $cloud->putFileAs('course/grade/university_'.$course->university->id,
+            $path = $cloud->putFileAs('course/university_'.$course->university->id.'/grade',
                         $request->file('qqfile'), $filename.'.'.$request->file('qqfile')->extension());
 
             $path = storage_path('app/'.$path);
 
-
-            $courseRepository = new CourseRepository();
-
             try {
                 $rows = [];
 
-                Excel::load($path, function ($reader) use(&$rows, $courseRepository, $user){
+                Excel::load($path, function ($reader) use(&$rows, $user){
 
                     foreach ($reader->toArray() as $row) {
 
-                        $getCourse = Course::where('course_code', trim($row['course_code']))->first();
+                        $courseId = (string)$row['system_id'];
+                        $getCourse = $this->repo->findById($courseId);
 
 
                         // if the course id received from the file has permission for this user to update mark
                         if ($user->can('update_grade', $getCourse)){
 
-                            $newRegistration = $courseRepository->updateGrade(
-                                trim($getCourse->id),
-                                trim($row['cedula']),
-                                $row['grade'],
-                                $row['approved'],
-                                $user);
+                            // if grade is valid
+                            if (is_numeric($row['grade'])){
+                                $newRegistration = $this->repo->updateGrade(
+                                    trim($getCourse->id),
+                                    trim($row['teacher_cedula']),
+                                    $row['grade'],
+                                    (string)$row['grade_approved'],
+                                    $user);
 
-                            array_push($rows, $newRegistration);
+                                array_push($rows, $newRegistration);
+                            }
                         }
 
                     }
 
                 });
+
+                $this->repo->flushById($course_id);
+                $registrationRepo = new RegistrationRepository();
+                $registrationRepo->flushAllCache();
 
                 return response()->json(['rows' => $rows, 'success' => true] );
 
@@ -532,6 +538,74 @@ class CourseController extends Controller
             }
 
         }
+
+    }
+
+    /**
+     * Download Course Template
+     *
+     * @param $courseId
+     */
+    public function downloadGradeTemplate($courseId){
+
+        $course = $this->repo->findById($courseId);
+
+        $headers = [
+            'System id',
+            'Registration id',
+            'Registration date',
+            'Course Code',
+            'Course Name',
+            'Teacher Cedula',
+            'Teacher Name',
+            'Terms Accepted',
+            'Inspection Form Upload',
+            'Registration Approval time',
+            'Approved By',
+            'grade',
+            'grade approved'
+        ];
+
+        $rows = [];
+
+        array_push($rows, $headers);
+
+        foreach ($course->registrations->sortByDesc('approval_time') as $registration){
+
+            $row = [
+                $registration->course_id,
+                $registration->id,
+                $registration->reg_date,
+                $registration->course->course_code,
+                $registration->course->short_name,
+                $registration->student->social_id,
+                $registration->student->first_name,
+                isset($registration->tc_accept_time) ? $registration->tc_accept_time : 'not accepted',
+                isset($registration->inspection_certificate_upload_time) ? $registration->inspection_certificate_upload_time : 'not uploaded',
+                isset($registration->approval_time) ? $registration->approval_time : 'not approved',
+                isset($registration->approved_by) ? $registration->approvedBy->name : '',
+                '0',
+                1
+            ];
+
+            array_push($rows, $row);
+        }
+
+
+        Excel::create("course_".$course->course_code."_grade_template", function($excel) use ($rows, $course) {
+
+            // Set the spreadsheet title, creator, and description
+            $excel->setTitle('Grade Insert Template for '.$course->short_name);
+            $excel->setCreator('CGMS')->setCompany('AppioLab.com');
+            $excel->setDescription('payments file');
+
+            // Build the spreadsheet, passing in the payments array
+            $excel->sheet('sheet1', function($sheet) use ($rows) {
+                $sheet->fromArray($rows, null, 'A1', false, false);
+            });
+
+        })->download('xlsx');
+
 
     }
 
