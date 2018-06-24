@@ -11,7 +11,7 @@
 
     @endif
 
-    @if(Auth::user()->role == 'admin')
+    @if(Auth::user()->role != 'teacher')
         @isset($registration->diploma_download_time)
             <small>
                 <span>Last download  </span><br/>

@@ -8,6 +8,7 @@ use App\Http\Requests\CourseInsertRequest;
 use App\Http\Requests\CourseUpdateRequest;
 use App\Registration;
 use App\Repository\CourseRepository;
+use App\Repository\RegistrationRepository;
 use App\Repository\UniversityRepository;
 use DateTime;
 use Dompdf\Image\Cache;
@@ -462,40 +463,45 @@ class CourseController extends Controller
             $cloud = Storage::disk();
 
             $filename = 'grade_of_'.$course->course_code.'_'.date('Ymdhi', strtotime('now'));
-            $path = $cloud->putFileAs('course/grade/university_'.$course->university->id,
+            $path = $cloud->putFileAs('course/university_'.$course->university->id.'/grade',
                         $request->file('qqfile'), $filename.'.'.$request->file('qqfile')->extension());
 
             $path = storage_path('app/'.$path);
 
-
-            $courseRepository = new CourseRepository();
-
             try {
                 $rows = [];
 
-                Excel::load($path, function ($reader) use(&$rows, $courseRepository, $user){
+                Excel::load($path, function ($reader) use(&$rows, $user){
 
                     foreach ($reader->toArray() as $row) {
 
-                        $getCourse = Course::where('course_code', trim($row['course_code']))->first();
+                        $courseId = (string)$row['system_id'];
+                        $getCourse = $this->repo->findById($courseId);
 
 
                         // if the course id received from the file has permission for this user to update mark
                         if ($user->can('update_grade', $getCourse)){
 
-                            $newRegistration = $courseRepository->updateGrade(
-                                trim($getCourse->id),
-                                trim($row['cedula']),
-                                $row['grade'],
-                                $row['approved'],
-                                $user);
+                            // if grade is valid
+                            if (is_numeric($row['grade'])){
+                                $newRegistration = $this->repo->updateGrade(
+                                    trim($getCourse->id),
+                                    trim($row['teacher_cedula']),
+                                    $row['grade'],
+                                    (string)$row['grade_approved'],
+                                    $user);
 
-                            array_push($rows, $newRegistration);
+                                array_push($rows, $newRegistration);
+                            }
                         }
 
                     }
 
                 });
+
+                $this->repo->flushById($course_id);
+                $registrationRepo = new RegistrationRepository();
+                $registrationRepo->flushAllCache();
 
                 return response()->json(['rows' => $rows, 'success' => true] );
 
@@ -544,12 +550,12 @@ class CourseController extends Controller
 
         $course = $this->repo->findById($courseId);
 
-        $courseHeader = ['System id', 'Course code', 'Course name'];
-        $courseRow = [$course->id, $course->course_code, $course->short_name];
-
         $headers = [
+            'System id',
             'Registration id',
             'Registration date',
+            'Course Code',
+            'Course Name',
             'Teacher Cedula',
             'Teacher Name',
             'Terms Accepted',
@@ -562,25 +568,23 @@ class CourseController extends Controller
 
         $rows = [];
 
-        array_push($rows, $courseHeader);
-        array_push($rows, $courseRow);
         array_push($rows, $headers);
 
         foreach ($course->registrations->sortByDesc('approval_time') as $registration){
 
             $row = [
-//                $registration->course_id,
+                $registration->course_id,
                 $registration->id,
                 $registration->reg_date,
-//                $registration->course->course_code,
-//                $registration->course->short_name,
+                $registration->course->course_code,
+                $registration->course->short_name,
                 $registration->student->social_id,
                 $registration->student->first_name,
                 isset($registration->tc_accept_time) ? $registration->tc_accept_time : 'not accepted',
                 isset($registration->inspection_certificate_upload_time) ? $registration->inspection_certificate_upload_time : 'not uploaded',
                 isset($registration->approval_time) ? $registration->approval_time : 'not approved',
                 isset($registration->approved_by) ? $registration->approvedBy->name : '',
-                '',
+                '0',
                 1
             ];
 

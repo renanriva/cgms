@@ -198,7 +198,7 @@ class CourseRepository
      * Invalidate cache course
      * @param $id
      */
-    public function flushFindById($id){
+    public function flushById($id){
 
         Cache::tags(['COURSE_FIND_BY_ID'])->flush('COURSE_FIND_BY_ID_'.$id);
     }
@@ -220,7 +220,7 @@ class CourseRepository
      */
     public function invalidateCache($id){
 
-        $this->flushFindById($id);
+        $this->flushById($id);
 
     }
 }
