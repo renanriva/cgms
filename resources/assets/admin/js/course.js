@@ -338,6 +338,7 @@ $(document).ready(function () {
                             $('.js-'+key+'-block').find('.help-block').append(error+'<br/>');
                         });
                     });
+
                 } else{
                     alert('Error: '+errorThrown);
                     console.log('errors ', xhr.responseJSON);
