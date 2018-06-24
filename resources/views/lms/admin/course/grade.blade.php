@@ -112,7 +112,11 @@
                               target="_blank">
                         <div class="btn-group">
                                 {{ csrf_field() }}
-                                <button class="btn btn-sm btn-warning" id="btn-create-university" type="submit">
+                            <a class="btn btn-link" href="javascript:void(0)" title="Grade Template Guideline" data-trigger="hover"
+                               data-content="Enter a numeric grade on [grade] column and add `1` in [grade_approved] column for mark as approved"
+                               data-placement="top" title="Instruction" data-toggle="popover"><i class="fa fa-info"></i>
+                            </a>
+                            <button class="btn btn-sm btn-warning" id="btn-create-university" type="submit">
                                 <i class="fa fa-cloud-download"></i> Download Grade Template</button>
                             <button class="btn btn-info btn-upload-grade btn-sm btn-flat" type="button"
                                 data-id="{{ $course->id }}"><i class="fa fa-cloud-upload"></i> Upload Grade
