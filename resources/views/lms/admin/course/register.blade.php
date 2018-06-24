@@ -237,7 +237,7 @@
                                                            maxlength="50"/>
 
                                                 </td>
-                                                <td>
+                                                <td class="js-user-data-update-tc_accept_info">
                                                     @if($registration->accept_tc == 1)
                                                         <div class="pull-left">
                                                             <i class="fa fa-check"></i> Accepted at<br/>
@@ -266,12 +266,12 @@
                                 <h3>Registration Inspection</h3>
 
                                 <div class="box-layout">
-                                    <p>Lorem ipsum</p>
-
                                     <div class="row">
                                         <div class="col-sm-12">
+                                            @if(strlen($registration->inspection_certificate) > 2)
                                             <p>File <code>{{ basename($registration->inspection_certificate)  }}</code>
                                                 uploaded at: {{ date('d M Y: h:i a', strtotime($registration->inspection_certificate_upload_time)) }}</p>
+                                            @endif
                                         </div>
                                     </div>
                                     <hr/>

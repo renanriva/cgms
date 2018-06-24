@@ -33,9 +33,13 @@ $(document).ready(function () {
             $.ajax(obj)
             .done(function (response, textStatus, jqXhr) {
 
+                var acceptedHtml = '<div class="pull-left"> <i class="fa fa-check"></i> Accepted at<br/> <small>'+response.registration.tc_accept_time+'</small></div>';
+
                 $('.js-accept-time')
                     .removeClass('hidden')
-                    .html(response.registration.tc_accept_time);
+                    .html(acceptedHtml);
+
+                $('.js-user-data-update-tc_accept_info').html(acceptedHtml);
 
                 $('.btn-accept-tc').remove();
 

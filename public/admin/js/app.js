@@ -54145,7 +54145,11 @@ $(document).ready(function () {
             };
             $.ajax(obj).done(function (response, textStatus, jqXhr) {
 
-                $('.js-accept-time').removeClass('hidden').html(response.registration.tc_accept_time);
+                var acceptedHtml = '<div class="pull-left"> <i class="fa fa-check"></i> Accepted at<br/> <small>' + response.registration.tc_accept_time + '</small></div>';
+
+                $('.js-accept-time').removeClass('hidden').html(acceptedHtml);
+
+                $('.js-user-data-update-tc_accept_info').html(acceptedHtml);
 
                 $('.btn-accept-tc').remove();
             }).fail(function (jqXhr, textStatus, errorThrown) {
