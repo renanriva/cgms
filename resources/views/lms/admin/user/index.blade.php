@@ -32,7 +32,7 @@
                                 <th>{{ __('lms.page.user.table.status') }}</th>
                                 <th>{{ __('lms.page.user.table.creation_type') }}</th>
                                 <th>{{ __('lms.page.user.table.created_at') }}</th>
-                                <th>{{ __('lms.page.user.table.action') }}</th>
+                                <th width="220">{{ __('lms.page.user.table.action') }}</th>
                             </tr>
                         </thead>
                     </table>
@@ -43,6 +43,7 @@
         </div>
 
         @include('lms.admin.user.edit_modal')
+        @include('lms.admin.user.reset_password')
         @include('lms.admin.parts.modal_delete')
 
     </div>

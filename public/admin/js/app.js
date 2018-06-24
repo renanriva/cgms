@@ -54971,6 +54971,64 @@ $(document).ready(function () {
             });
         };
 
+        var showResetPassword = function showResetPassword() {
+
+            $('#user-table').on('click', '.btn-change-user-password-action', function () {
+
+                var data = {
+                    id: $(this).attr('data-id')
+                };
+
+                $('#user_id_' + data.id).addClass('warning');
+
+                resetPassword.find('#btn-change-user-password').attr('data-id', data.id);
+                resetPassword.modal('show');
+            });
+        };
+
+        var changePassword = function changePassword() {
+
+            $('#btn-change-user-password').click(function () {
+
+                var id = $(this).attr('data-id');
+                $('.help-block').text('');
+                $('.js-error-block').removeClass('has-error');
+
+                var data = {
+                    password: resetPassword.find('#js-user-new-password').val(),
+                    password_confirmation: resetPassword.find('#js-user-confirm-password').val()
+
+                };
+
+                $.ajax({
+                    url: '/admin/users/' + id + '/change-password',
+                    method: 'POST',
+                    data: data
+                }).done(function (response, textStatus, xhr) {
+
+                    if (xhr.status === 200) {
+                        alert('Password Updated');
+                        resetPassword.modal('toggle');
+                        $('#user_id_' + id).addClass('success');
+                    }
+                }).fail(function (errors, textStatus, errorThrown) {
+
+                    if (errors.status === 422) {
+
+                        $.each(errors.responseJSON.errors, function (key, errors) {
+                            $('.js-' + key + '-block').addClass('has-error');
+
+                            $.each(errors, function (index, error) {
+                                $('.js-' + key + '-block').find('.help-block').append(error + '<br/>');
+                            });
+                        });
+                    } else {
+                        alert('Error: ' + errorThrown);
+                    }
+                }).always(function () {});
+            });
+        };
+
         /**
          * Send data to server
          */
@@ -55087,6 +55145,7 @@ $(document).ready(function () {
         });
 
         var modal = $('#edit-user-modal');
+        var resetPassword = $('#reset-password-user-modal');
 
         /**
          * Create University
@@ -55095,6 +55154,17 @@ $(document).ready(function () {
 
 
         showEditModal();
+
+
+        showResetPassword();
+
+
+        resetPassword.on('hidden.bs.modal', function () {
+            var id = resetPassword.find('#btn-change-user-password').attr('data-id');
+            $('#user_id_' + id).removeClass('warning');
+        });
+
+        changePassword();
         clickCreateUpdate();
     }
 

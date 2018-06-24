@@ -103,6 +103,8 @@ Route::middleware(['auth'])->group(function (){
             Route::post('/table/ajax',  'UserController@getTableData');
             Route::post('/ajax',        'UserController@store');
             Route::post('/{id}/ajax',   'UserController@update');
+            Route::post('/{id}/change-password',   'UserController@changePassword');
+
             Route::delete('/{id}/ajax', 'UserController@delete');
 
 

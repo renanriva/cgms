@@ -72,9 +72,6 @@ class UserController extends Controller
 
         $user = User::find($id);
 
-//        return response()->json(['user' => $id])->setStatusCode(200);
-
-
         if ($user){
 
             $post = $request->all();
@@ -88,6 +85,43 @@ class UserController extends Controller
 
 
         }
+
+        return response()->json(['message' => 'User not found'])->setStatusCode(404);
+
+    }
+
+    /**
+     * @param Request $request
+     * @param         $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function changePassword(Request $request, $id){
+
+        $v = $this->validate($request, [
+            'password' => 'required|max:20|min:3|confirmed',
+            'password_confirmation' => 'required|min:3',
+        ]);
+
+        if ($v){
+
+            $user = User::find($id);
+            if ($user){
+
+                $post = $request->all();
+
+                $user->password    = bcrypt($post['password']);
+                $user->save();
+
+                return response()->json(['user' => $user])->setStatusCode(200);
+
+            }
+
+        } else {
+
+            return response()->json(['error' => $v->getMessage()])->setStatusCode(422);
+
+        }
+
 
         return response()->json(['message' => 'User not found'])->setStatusCode(404);
 
@@ -108,13 +142,6 @@ class UserController extends Controller
     }
 
     public function updateStatus(){
-
-    }
-
-    /**
-     * Admin change uses password
-     */
-    public function changePassword(){
 
     }
 
