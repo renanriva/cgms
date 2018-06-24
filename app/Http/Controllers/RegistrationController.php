@@ -203,7 +203,12 @@ class RegistrationController extends Controller
 
         if ($registration){
 
-            return response()->file($registration->certificate_path);
+            if (file_exists($registration->certificate_path)) {
+                return response()->file($registration->certificate_path);
+            } else {
+                $this->repo->generateInspectionCertificate($registration);
+                return response()->file($registration->certificate_path);
+            }
 
         } else {
             return response()->redirectTo('admin/unauthorized');

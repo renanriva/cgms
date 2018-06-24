@@ -10,8 +10,11 @@
 
 
     use App\Registration;
+    use Illuminate\Http\File;
+    use Illuminate\Support\Facades\App;
     use Illuminate\Support\Facades\Cache;
     use Illuminate\Support\Facades\Log;
+    use Illuminate\Support\Facades\Storage;
 
     /**
      * Class RegistrationRepository
@@ -227,6 +230,29 @@
                 });
 
             return $registration;
+
+        }
+
+        /**
+         * Generate Inspection Certificate FIle
+         * @todo move the folder to university/course/certificate structure
+         * @param Registration $registration
+         */
+        public function generateInspectionCertificate(Registration $registration){
+
+
+            $certificate_filename = $registration->course->course_code . '_certificate_of_'.$registration->student->social_id.'.pdf';
+            $root_path = 'app/course/certificate/';
+
+            $pdf = App::make('dompdf.wrapper');
+            $pdf->loadView('lms.admin.registration.pdf.certificate', ['registration' => $registration]);
+            $pdf->save(storage_path($root_path . $certificate_filename));
+
+            $registration->registry_is_generated = true;
+            $registration->certificate_path = storage_path($root_path . $certificate_filename);
+            $registration->save();
+
+            $this->flushRegistrationById($registration->id);
 
         }
 
