@@ -127,6 +127,7 @@ class CourseController extends Controller
         $course['video_type']                   = $post['video_type'];
         $course['video_code']                   = $post['video_code'];
         $course['data_update_brief']            = $post['data_update_text'];
+        $course['terms_conditions']            = $post['terms_condition'];
 
         $course['inspection_form_generated']    = false;
 
@@ -149,7 +150,6 @@ class CourseController extends Controller
             $post = $request->all();
 
             // @todo add different procedure to update course code
-//            $course->course_code      = $post['course_code'];
             $course->course_type    = $post['course_type'];
             $course->modality       = $post['modality'];
 
@@ -181,6 +181,8 @@ class CourseController extends Controller
             $course->video_type                   = $post['video_type'];
             $course->video_code                   = $post['video_code'];
             $course->data_update_brief            = $post['data_update_text'];
+            $course->terms_conditions             = $post['terms_condition'];
+
 
             $course->updated_by     = Auth::user()->id;
             $course->save();
@@ -203,10 +205,10 @@ class CourseController extends Controller
     public function delete($id){
 
 //        @todo add authorization check
-        $course = Course::findOrFail($id);
+        $course = $this->repo->findById($id);
         $course->delete();
 
-        $this->repo->invalidateCache($id);
+        $this->repo->flushById($id);
 
         return response()->json()->setStatusCode(204);
 

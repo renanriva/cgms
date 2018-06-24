@@ -56,6 +56,7 @@ class CourseRepository
         $course->video_type             = $post['video_type'];
         $course->video_code             = $post['video_code'];
         $course->data_update_brief      = $post['data_update_text'];
+        $course->terms_conditions       = $post['terms_conditions'];
 
         $course->inspection_form_generated = false;
 
@@ -75,7 +76,7 @@ class CourseRepository
 
     public function update($teacher, $id){
 
-
+/*
         $newTeacher = Teacher::find($id);
 
         $newTeacher->first_name = $teacher['first_name'];
@@ -119,7 +120,7 @@ class CourseRepository
 
         $newTeacher->save();
 
-        return $newTeacher;
+        return $newTeacher; */
 
     }
 

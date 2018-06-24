@@ -269,22 +269,22 @@
 
                         </div>
 
-                        {{--<div class="row">--}}
-                            {{--<div class="col-lg-12 col-sm-12 col-md-12">--}}
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
 
-                                {{--<div class="form-group js-error-block js-course_terms_condition-block">--}}
-                                    {{--<label for="js-edit-course-terms_condition"--}}
-                                           {{--class="col-md-2 control-label">{{ __('lms.page.course.form.terms_condition') }}</label>--}}
-                                    {{--<div    class="col-md-10">--}}
-                                        {{--<textarea id="js-edit-course-terms_condition"--}}
-                                                  {{--class="js-edit-course-terms_condition form-control" name="course_terms_condition"--}}
-                                                  {{--placeholder="{{ __('lms.page.course.form.terms_condition') }}" ></textarea>--}}
-                                        {{--<div class="help-block"></div>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
+                                <div class="form-group js-error-block js-course_terms_condition-block">
+                                    <label for="js-edit-course-terms_condition"
+                                           class="col-md-2 control-label">{{ __('lms.page.course.form.terms_condition') }}</label>
+                                    <div    class="col-md-10">
+                                        <textarea id="js-edit-course-terms_condition"
+                                                  class="js-edit-course-terms_condition form-control" name="course_terms_condition"
+                                                  placeholder="{{ __('lms.page.course.form.terms_condition') }}" ></textarea>
+                                        <div class="help-block"></div>
+                                    </div>
+                                </div>
 
-                            {{--</div>--}}
-                        {{--</div>--}}
+                            </div>
+                        </div>
 
                         <div class="row">
                             <div class="col-lg-12 col-sm-12 col-md-12">

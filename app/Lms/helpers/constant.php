@@ -130,9 +130,23 @@
      * @return mixed
      */
     function parseYoutubeUrl($url){
-        if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url, $url)) {
-            return  $url[1];
-        } else{
-            return $url;
+
+        if (!is_null($url)){
+
+            $youtube = $url;
+
+            //check if valid url
+            if (filter_var($youtube, FILTER_VALIDATE_URL) === FALSE) {
+                // if not valid url, try to add url
+                $youtube = 'https://www.youtube.com/watch?v='.$url;
+            }
+
+            if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $youtube, $youtube)) {
+                return  $youtube[1];
+            } else{
+                return $youtube;
+            }
+        } else {
+            return null;
         }
     }
