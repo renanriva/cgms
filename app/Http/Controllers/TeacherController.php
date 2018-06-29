@@ -373,15 +373,15 @@ class TeacherController extends Controller
 
     /**
      * @param $id
-     * @return $this
+     * @return \Illuminate\Http\JsonResponse
      */
     public function delete($id){
 
-//        $canton = Canton::findOrFail($id);
-//
-//        $canton->delete();
-//
-//        return response()->json()->setStatusCode(204);
+        $teacher = Teacher::find($id);
+
+        $result = $teacher->delete();
+
+        return response()->json()->setStatusCode(204);
 
     }
 

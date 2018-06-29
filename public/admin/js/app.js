@@ -54312,6 +54312,61 @@ $(document).ready(function () {
             });
         };
 
+        /**
+         * Delete
+         */
+
+        var showDeleteModalModal = function showDeleteModalModal() {
+
+            $('#teacher-table').on('click', '.btn-remove-teacher', function () {
+
+                var id = $(this).attr('data-id');
+                var name = $(this).attr('data-name');
+
+                deleteModal.find('.model-title').text('Delete Teacher');
+                deleteModal.find('.js-message').text('Are you sure to delete Teacher [' + name + ']?');
+                deleteModal.find('#btn-delete-confirm').attr('data-url', '/admin/teachers/' + id);
+                deleteModal.find('#btn-delete-confirm').attr('data-id', id);
+                deleteModal.modal('show');
+            });
+        };
+
+        var deleteItem = function deleteItem() {
+
+            $('#page_teacher #btn-delete-confirm').click(function () {
+
+                var data = {
+                    id: $(this).attr('data-id'),
+                    url: $(this).attr('data-url')
+                };
+
+                var ajaxObj = {
+                    method: 'delete',
+                    url: data.url
+                };
+
+                $('tr#teacher_id_' + data.id).addClass('warning');
+
+                $.ajax(ajaxObj).done(function (response, textStatus, jqXhr) {
+
+                    if (jqXhr.status === 204) {
+
+                        deleteModal.modal('hide');
+                        $('tr#teacher_id_' + data.id).find('td').eq(8).text('Removing...');
+
+                        (function () {
+                            setTimeout(function () {
+                                $('tr#teacher_id_' + data.id).remove();
+                            }, 1500);
+                        })(this);
+                    }
+                }).fail(function (jqXhr, textStatus, errorThrown) {
+                    alert('Error: ' + errorThrown);
+                    console.log('error ', jqXhr);
+                });
+            });
+        };
+
         console.log('Teacher');
 
         /**
@@ -54402,6 +54457,12 @@ $(document).ready(function () {
         var createMoodleUser = $('#create-moodal-modal');
 
         showCreateModalModal();
+        var deleteModal = $('#delete-modal');
+
+        showDeleteModalModal();
+
+
+        deleteItem();
     }
 
     var isTeacherForm = $('.teacher-form').length;
