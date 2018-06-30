@@ -29,7 +29,14 @@ class HomeController extends Controller
     {
 
         if (Auth::check()){
-            return view('home');
+            $user = Auth::user()->toArray();
+            
+            if ($user['role'] == 'teacher') {
+                return redirect('admin/portfolio');
+            } else {
+                return view('home');
+            }
+
         } else{
             return response()->redirectTo('login');
         }

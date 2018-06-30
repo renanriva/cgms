@@ -125,7 +125,7 @@
             </form>
             <div class="auth-links">
                 <a href="{{ url(config('adminlte.login_url', 'login')) }}"
-                   class="text-center">{{ trans('adminlte::adminlte.i_already_have_a_membership') }}</a>
+                   class="text-center">{{ __('adminlte::adminlte.i_already_have_a_membership') }}</a>
             </div>
         </div>
         <!-- /.form-box -->

@@ -86,9 +86,12 @@ class Teacher extends Model
     }
 
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function registrations(){
 
-
+        return $this->hasMany(Registration::class, 'teacher_id', 'id');
 
     }
 

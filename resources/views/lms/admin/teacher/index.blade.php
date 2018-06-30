@@ -51,11 +51,12 @@
 
 
         </div>
+        @include('lms.admin.parts.modal_delete')
+
     </div>
 
     {{--@include('lms.admin.teacher.edit_modal')--}}
     @include('lms.admin.teacher.moodal_modal')
     @include('lms.admin.teacher.upload_form')
-    @include('lms.admin.parts.modal_delete')
 
 @stop

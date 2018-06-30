@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Registration;
 use App\Repository\RegistrationRepository;
 use App\Repository\TeacherRepository;
+use App\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -51,29 +52,23 @@ class PortfolioController extends Controller
             $this->repo->flushPortfolioAdmin();
             $registrations = $this->repo->filter($search_in, $search_keyword, $registration, $page);
 
+            return view('lms.admin.portfolio.all', ['title'=> $title,
+                                                    'registrations' => $registrations]);
+
         } elseif ($user->role == 'teacher'){
 
             $title = 'My Portfolio - '.env('APP_NAME') ;
 
             $this->repo->flushPortfolioTeacherCache();
 
-            // @todo move this to registration repository
-            $minutes = config('adminlte.cache_time');
-            $cache_key = 'PORTFOLIO_OF_TEACHER_'.$user->teacher->id.'_of_page_'.$page;
+            $teacherRepo = new TeacherRepository();
 
-            $registrations = Cache::tags(['PORTFOLIO_TEACHER'])->remember($cache_key, $minutes, function () use($user){
+            $teacher = $teacherRepo->findById($user->teacher->id);
 
-             return Registration::with(['student', 'course', 'course.university', 'student.user', 'markApprovedBy', 'approvedBy'])
-                    ->where('teacher_id', $user->teacher->id)
-                    ->orderBy('is_approved', 'desc')
-                    ->orderBy('tc_accept_time', 'desc')
-                    ->paginate(10);
-            });
+
+            return view('lms.admin.teacher.profile', ['teacher'=> $teacher, 'title' =>  $title]);
 
         }
-
-        return view('lms.admin.portfolio.all', ['title'=> $title,
-                        'registrations' => $registrations]);
 
     }
 
