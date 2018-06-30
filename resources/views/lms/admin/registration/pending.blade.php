@@ -12,29 +12,12 @@
                 </label>
             </h4>
         </div>
-        <div class="col-md-6">
-            <div id="custom-search-input text-left">
-                <div class="input-group col-md-12">
-                    <select id="search-pending-approval" type="text" class="form-control input-lg js-select"
-                           placeholder="{{ __('lms.page.registration.pending.index.page_header') }}" >
-                    </select>
-
-                    <span class="input-group-btn">
-                        <button class="btn btn-info btn-search-course" type="button" >
-                            <i class="glyphicon glyphicon-search"></i>
-                        </button>
-                    </span>
-                </div>
-            </div>
-        </div>
     </div>
 @stop
 
 @section('content')
 
     <div class="div" id="page_registration_pending_approval">
-
-        {{--<br/>--}}
 
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
