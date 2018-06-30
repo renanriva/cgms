@@ -20,7 +20,7 @@
 
                         <div class="col-lg-3">
                             <img class="img-responsive img-thumbnail"
-                                 src="https://placeimg.com/640/480/people">
+                                 src="{{ url($teacher->gender=='M'? '/images/user_male.jpg' : '/images/user_female.jpg') }}">
                                 <h3 class="profile-username text-center">{{ $teacher->user->name }}</h3>
                                 <p class="text-muted text-center">{{ $teacher->function }}</p>
 
