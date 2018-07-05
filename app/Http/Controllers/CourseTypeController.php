@@ -66,6 +66,10 @@ class CourseTypeController extends Controller
 
     public function delete($id){
 
+        $this->repo->delete($id);
+
+        return response()->redirectTo('/admin/course-type');
+
 
     }
 }
