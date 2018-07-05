@@ -151,6 +151,11 @@ return [
                     'url'           => 'admin/course',
                     'can'           => 'admin-only',
                 ],
+                [
+                    'text'      => 'Course Types',
+                    'url'           => 'admin/course-type',
+                    'can'           => 'admin-only',
+                ],
             ],
 
         ],

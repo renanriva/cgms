@@ -11,6 +11,7 @@ namespace App\Repository;
 use App\Course;
 use App\CourseType;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class CourseTypeRepository
@@ -25,8 +26,8 @@ class CourseTypeRepository
         $types = Cache::tags(['COURSE_TYPE_LIST'])->remember('COURSE_TYPE_LIST_ALL_BY_PAGE_'.$page, 20,
             function (){
 
-            return CourseType::with(['modalities, createdBy, updatedBy'])
-                    ->orderby('sort', 'asc')
+            return CourseType::with(['modalities', 'createdBy', 'updatedBy'])
+                    ->orderBy('sort', 'asc')
                     ->paginate(10);
 
             });

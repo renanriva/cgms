@@ -49,7 +49,7 @@ class CourseModalityRepository
         $user = Auth::user();
         $type = new CourseModality();
         $type->title = $data['title'];
-        $type->course_type_id = $data['course_type_id'];
+        $type->course_type_id = $data['type_id'];
         $type->sort = $data['sort'];
 
         $type->created_by = $user->id;
@@ -73,7 +73,7 @@ class CourseModalityRepository
         $type = $this->findById($id);
 
         $type->title = $data['title'];
-        $type->course_type_id = $data['course_type_id'];
+        $type->course_type_id = $data['type_id'];
         $type->sort = $data['sort'];
 
         $type->updated_by = $user->id;
