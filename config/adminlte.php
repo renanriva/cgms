@@ -147,6 +147,11 @@ return [
             'can'           => 'admin-only',
             'submenu'       => [
                 [
+                    'text'      => 'Master Course',
+                    'url'           => 'admin/master-course',
+                    'can'           => 'admin-only',
+                ],
+                [
                     'text'      => 'lms.menu.course.all',
                     'url'           => 'admin/course',
                     'can'           => 'admin-only',
