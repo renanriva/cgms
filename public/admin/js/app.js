@@ -52524,6 +52524,49 @@ $(document).ready(function () {
 
 /***/ }),
 
+/***/ "./resources/assets/admin/js/category.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {/**
+ * Created by ariful.haque on 09/05/2018.
+ */
+$(document).ready(function () {
+
+    var categoryPage = $('#page_category');
+
+    if (categoryPage.length > 0) {
+        var insertType = function insertType() {
+
+            $('.btn-save-type').click(function () {
+
+                var data = {
+                    title: $('#title').val(),
+                    type: 'type'
+                };
+
+                $.ajax({
+                    method: 'post',
+                    url: '/admin/categories/insert',
+                    data: data
+                }).done(function (response, textStatus, xhr) {
+
+                    // console.log(response);
+                    location.reload();
+                }).fail(function (errors, textStatus, errorThrown) {
+                    console.log(error);
+                });
+            });
+        };
+
+        console.log('Category page');
+
+        insertType();
+    }
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))
+
+/***/ }),
+
 /***/ "./resources/assets/admin/js/common.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -55506,6 +55549,7 @@ __webpack_require__("./resources/assets/admin/js/registration.js");
 __webpack_require__("./resources/assets/admin/js/registration-approval.js");
 __webpack_require__("./resources/assets/admin/js/user.js");
 __webpack_require__("./resources/assets/admin/js/profile.js");
+__webpack_require__("./resources/assets/admin/js/category.js");
 __webpack_require__("./resources/assets/admin/js/course_grade.js");
 __webpack_require__("./resources/assets/admin/js/course_type.js");
 __webpack_require__("./resources/assets/admin/js/common.js");

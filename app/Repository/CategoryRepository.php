@@ -34,6 +34,16 @@ class CategoryRepository
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getAll(){
+
+        $data = Category::all();
+
+        return $data;
+    }
+
+    /**
      * @param array $post
      * @return Category
      */

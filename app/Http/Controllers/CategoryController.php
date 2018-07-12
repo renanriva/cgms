@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Repository\CategoryRepository;
 use Illuminate\Http\Request;
 
@@ -22,12 +23,56 @@ class CategoryController extends Controller
 
     public function index(){
 
+        $all = $this->repo->getAll();
+
+        $category['type'] = $all->where('type', true);
+
+//        dd($category);
+
+        return view('lms.admin.category.index', [ 'title'=> 'Category', 'category' => $category]);
+
+    }
+
+    public function create(){
+
+
+        $all = $this->repo->getAll();
+
+        $category['type'] = $all->where('type', true);
+
+//        dd($category);
+
+
+        return view('lms.admin.category.create', [ 'title'=> 'Category', 'category' => $category]);
+
     }
 
     /**
      * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function insert(Request $request){
+
+        $post = $request->all();
+
+
+        $category = null;
+
+        if ($post['type'] == 'type'){
+
+            $data['title'] = $post['title'];
+            $data['type'] = true;
+            $data['label'] = false;
+            $data['sub_label'] = false;
+            $data['knowledge'] = false;
+            $data['subject'] = false;
+
+            $category = $this->repo->insert($data);
+
+        }
+
+
+        return response()->json(['data' => $category])->setStatusCode(201);
 
     }
 

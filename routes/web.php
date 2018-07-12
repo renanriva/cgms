@@ -47,6 +47,24 @@ Route::middleware(['auth'])->group(function (){
         Route::get('/portfolio/download', 'PortfolioController@download');
 
         /**
+         * Category
+         */
+        Route::prefix('categories')->group(function (){
+
+            Route::get('/create', 'CategoryController@create');
+            Route::get('/list', 'CategoryController@getList');
+            Route::get('/', 'CategoryController@index');
+            Route::get('/{id}', 'CategoryController@show');
+
+
+            Route::post('/insert', 'CategoryController@insert');
+            Route::post('/{id}', 'CategoryController@update');
+            Route::delete('/{id}', 'CategoryController@delete');
+
+        });
+
+
+        /**
          * Master Course
          */
 

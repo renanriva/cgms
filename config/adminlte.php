@@ -152,6 +152,34 @@ return [
                     'can'           => 'admin-only',
                 ],
                 [
+                    'text'      => 'Category',
+                    'url'           => 'admin/categories',
+                    'can'           => 'admin-only',
+                    'submenu'   => [
+                        [
+                            'text'  => 'Type',
+                            'url'   => 'admin/categories/type',
+                        ],
+                        [
+                            'text'  => 'Label',
+                            'url'   => 'admin/categories/label',
+                        ],
+                        [
+                            'text'  => 'Sub Label',
+                            'url'   => 'admin/categories/sub-label',
+                        ],
+                        [
+                            'text'  => 'Area of Knowledge',
+                            'url'   => 'admin/categories/knowledge',
+                        ],
+                        [
+                            'text'  => 'Subject',
+                            'url'   => 'admin/categories/Subject',
+                        ]
+
+                    ]
+                ],
+                [
                     'text'      => 'lms.menu.course.all',
                     'url'           => 'admin/course',
                     'can'           => 'admin-only',
