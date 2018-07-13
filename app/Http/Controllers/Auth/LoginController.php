@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Adldap\Exceptions\Auth\BindException;
 use Adldap\Laravel\Facades\Adldap;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -48,9 +49,10 @@ class LoginController extends Controller
     public function login(Request $request)
     {
 
-        $user = Adldap::search()->users()->findBy('samaccountname', 'ariful');
-
-        dd($user);
+//        dd('here');
+//        $user = Adldap::search()->users()->findBy('samaccountname', 'moodle.docente');
+//
+//        dd($user);
 //        $this->validateLogin($request);
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
@@ -67,6 +69,7 @@ class LoginController extends Controller
 //            dd($request->toArray());
             return $this->sendLoginResponse($request);
         }
+
 
         // If the login attempt was unsuccessful we will increment the number of attempts
         // to login and redirect the user back to the login form. Of course, when this
