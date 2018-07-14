@@ -70,8 +70,13 @@ class CategoryRepository
             $category->parent_id        = $post['parent_id'];
         }
 
-        $category->created_by     = Auth::user()->id;
-        $category->updated_by     = Auth::user()->id;
+        if (app()->runningInConsole() == false){
+            $category->created_by     = Auth::user()->id;
+            $category->updated_by     = Auth::user()->id;
+        } else {
+            $category->created_by     = 1;
+            $category->updated_by     = 1;
+        }
         $category->save();
 
         $this->flushCategoryList();
