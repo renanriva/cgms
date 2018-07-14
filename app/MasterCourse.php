@@ -20,7 +20,7 @@ class MasterCourse extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'sort','created_by', 'updated_by'
+        'name', 'subject_id', 'course_code','created_by', 'updated_by'
     ];
 
 

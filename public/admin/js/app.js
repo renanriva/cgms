@@ -52533,6 +52533,162 @@ $(document).ready(function () {
 $(document).ready(function () {
 
     var categoryPage = $('#page_category');
+    var masterCourse = $('#master-course');
+    var jsTitle = $('.js-title');
+
+    function loadType() {
+
+        jsSelectType.html(optionLoading);
+
+        $.ajax({
+            method: 'get',
+            url: '/admin/categories/type/list'
+        }).done(function (response, textStatus, xhr) {
+
+            renderSelect(jsSelectType, response.types);
+
+            $('#select-type option:first').trigger('change');
+        }).fail(function (erors, textStatus, errorThrown) {});
+    }
+    function changeTypes() {
+
+        $('#select-type').on('change', function () {
+
+            var jsLabelsTable = $('#label-table');
+
+            if (jsLabelsTable.length > 0) {
+                clearTable(jsLabelsTable);
+            }
+
+            jsSelectLabel.html('<option value="loading">Loading...</option>');
+
+            $.ajax({
+                method: 'get',
+                url: '/admin/categories/label/' + this.value
+            }).done(function (response, textStatus, xhr) {
+
+                if (jsTitle.text() === 'sublabel' || jsTitle.text() === 'knowledge' || jsTitle.text() === 'subject' || masterCourse.length > 0) {
+                    // get label list and show
+
+                    jsSelectLabel.attr('disabled', true);
+
+                    renderSelect(jsSelectLabel, response.labels);
+
+                    $('#select-label option:first').trigger('change');
+                } else if (jsTitle.text() === 'label') {
+
+                    renderTable(jsLabelsTable, response.labels);
+                }
+            }).fail(function (errors, textStatus, errorThrown) {}).always(function () {
+                jsSelectLabel.removeAttr('disabled');
+            });
+        });
+    }
+    function changeLabels() {
+
+        /**
+         * Get sublabel list
+         */
+
+        $('#select-label').on('change', function () {
+
+            var jsLabelsTable = $('#sublabel-table');
+            if (jsLabelsTable.length > 0) {
+                clearTable(jsLabelsTable);
+            }
+
+            $.ajax({
+                method: 'get',
+                url: '/admin/categories/sublabel/' + this.value
+            }).done(function (response, textStatus, xhr) {
+
+                if (jsTitle.text() === 'sublabel') {
+                    // get label list and show
+                    renderTable(jsLabelsTable, response.labels);
+                } else if (jsTitle.text() === 'knowledge' || jsTitle.text() === 'subject' || masterCourse.length > 0) {
+
+                    renderSelect(jsSelectSubLabel, response.labels);
+
+                    $('#select-sublabel option:first').trigger('change');
+                }
+            }).fail(function (errors, textStatus, errorThrown) {}).always(function () {});
+        });
+    }
+    function changeSubLabel() {
+
+        $('#select-sublabel').on('change', function () {
+
+            var jsLabelsTable = $('#knowledge-table');
+            if (jsLabelsTable.length > 0) {
+                clearTable(jsLabelsTable);
+            }
+            /**
+             * Get Knowledge List
+             */
+
+            $.ajax({
+                method: 'get',
+                url: '/admin/categories/knowledge/' + this.value
+            }).done(function (response, textStatus, xhr) {
+
+                if (jsTitle.text() === 'knowledge') {
+                    // get label list and show
+
+                    renderTable(jsLabelsTable, response.labels);
+                } else if (jsTitle.text() === 'subject' || masterCourse.length > 0) {
+
+                    renderSelect(jsKnowledgeLabel, response.labels);
+                    $('#select-knowledge option:first').trigger('change');
+                }
+            }).fail(function (errors, textStatus, errorThrown) {}).always(function () {
+                // jsSelectLabel.removeAttr('disabled');
+            });
+        });
+    }
+    function changeKnowledge() {
+
+        $('#select-knowledge').on('change', function () {
+
+            var jsLabelsTable = $('#subject-table');
+            if (jsLabelsTable.length > 0) {
+                clearTable(jsLabelsTable);
+            }
+
+            /**
+             * Get Subject List
+             */
+
+            $.ajax({
+                method: 'get',
+                url: '/admin/categories/subject/' + this.value
+            }).done(function (response, textStatus, xhr) {
+
+                if (jsTitle.text() === 'subject') {
+                    // get label list and show
+                    renderTable(jsLabelsTable, response.labels);
+                } else if (masterCourse.length > 0) {
+
+                    // alert('load subje')
+                    renderSelect(jsSelectSubject, response.labels);
+                }
+            }).fail(function (errors, textStatus, errorThrown) {}).always(function () {
+                // jsSelectLabel.removeAttr('disabled');
+            });
+        });
+    }
+
+    function renderSelect(select, data) {
+
+        select.html('');
+        $.each(data, function (key, value) {
+
+            select.append(getOption(value));
+        });
+    }
+    function getOption(item) {
+
+        return '<option value="' + item.id + '">' + item.title + '</option>';
+    }
 
     if (categoryPage.length > 0) {
         var insertType = function insertType() {
@@ -52558,152 +52714,7 @@ $(document).ready(function () {
             });
         };
 
-        var loadType = function loadType() {
-
-            jsSelectType.html(optionLoading);
-
-            $.ajax({
-                method: 'get',
-                url: '/admin/categories/type/list'
-            }).done(function (response, textStatus, xhr) {
-
-                renderSelect(jsSelectType, response.types);
-
-                $('#select-type option:first').trigger('change');
-            }).fail(function (erors, textStatus, errorThrown) {});
-        };
-
-        var changeTypes = function changeTypes() {
-
-            $('#select-type').on('change', function () {
-
-                var jsLabelsTable = $('#label-table');
-                clearTable(jsLabelsTable);
-
-                jsSelectLabel.html('<option value="loading">Loading...</option>');
-
-                $.ajax({
-                    method: 'get',
-                    url: '/admin/categories/label/' + this.value
-                }).done(function (response, textStatus, xhr) {
-
-                    if (jsTitle.text() === 'sublabel' || jsTitle.text() === 'knowledge' || jsTitle.text() === 'subject') {
-                        // get label list and show
-
-                        jsSelectLabel.attr('disabled', true);
-
-                        renderSelect(jsSelectLabel, response.labels);
-
-                        $('#select-label option:first').trigger('change');
-                    } else if (jsTitle.text() === 'label') {
-
-                        renderTable(jsLabelsTable, response.labels);
-                    }
-                }).fail(function (errors, textStatus, errorThrown) {}).always(function () {
-                    jsSelectLabel.removeAttr('disabled');
-                });
-            });
-        };
-
-        var changeLabels = function changeLabels() {
-
-            /**
-             * Get sublabel list
-             */
-
-            $('#select-label').on('change', function () {
-
-                var jsLabelsTable = $('#sublabel-table');
-                clearTable(jsLabelsTable);
-
-                $.ajax({
-                    method: 'get',
-                    url: '/admin/categories/sublabel/' + this.value
-                }).done(function (response, textStatus, xhr) {
-
-                    if (jsTitle.text() === 'sublabel') {
-                        // get label list and show
-                        renderTable(jsLabelsTable, response.labels);
-                    } else if (jsTitle.text() === 'knowledge' || jsTitle.text() === 'subject') {
-
-                        renderSelect(jsSelectSubLabel, response.labels);
-
-                        $('#select-sublabel option:first').trigger('change');
-                    }
-                }).fail(function (errors, textStatus, errorThrown) {}).always(function () {});
-            });
-        };
-
-        var changeSubLabel = function changeSubLabel() {
-
-            $('#select-sublabel').on('change', function () {
-
-                var jsLabelsTable = $('#knowledge-table');
-                clearTable(jsLabelsTable);
-                /**
-                 * Get Knowledge List
-                 */
-
-                $.ajax({
-                    method: 'get',
-                    url: '/admin/categories/knowledge/' + this.value
-                }).done(function (response, textStatus, xhr) {
-
-                    if (jsTitle.text() === 'knowledge') {
-                        // get label list and show
-
-                        renderTable(jsLabelsTable, response.labels);
-                    } else if (jsTitle.text() === 'subject') {
-
-                        renderSelect(jsKnowledgeLabel, response.labels);
-                        $('#select-knowledge option:first').trigger('change');
-                    }
-                }).fail(function (errors, textStatus, errorThrown) {}).always(function () {
-                    // jsSelectLabel.removeAttr('disabled');
-                });
-            });
-        };
-
-        var changeKnowledge = function changeKnowledge() {
-
-            $('#select-knowledge').on('change', function () {
-
-                var jsLabelsTable = $('#subject-table');
-                clearTable(jsLabelsTable);
-                /**
-                 * Get Subject List
-                 */
-
-                $.ajax({
-                    method: 'get',
-                    url: '/admin/categories/subject/' + this.value
-                }).done(function (response, textStatus, xhr) {
-
-                    if (jsTitle.text() === 'subject') {
-                        // get label list and show
-                        renderTable(jsLabelsTable, response.labels);
-                    }
-                }).fail(function (errors, textStatus, errorThrown) {}).always(function () {
-                    // jsSelectLabel.removeAttr('disabled');
-                });
-            });
-        };
-
-        var renderSelect = function renderSelect(select, data) {
-
-            select.html('');
-            $.each(data, function (key, value) {
-
-                select.append(getOption(value));
-            });
-        };
-
-        var getOption = function getOption(item) {
-
-            return '<option value="' + item.id + '">' + item.title + '</option>';
-        };
-
-        var renderTable = function renderTable(table, data) {
+        var _renderTable = function _renderTable(table, data) {
 
             table.html('');
 
@@ -52717,7 +52728,7 @@ $(document).ready(function () {
             });
         };
 
-        var clearTable = function clearTable(table) {
+        var _clearTable = function _clearTable(table) {
             table.html('');
         };
 
@@ -52778,7 +52789,6 @@ $(document).ready(function () {
             });
         };
 
-        var jsTitle = $('.js-title');
         var jsSelectType = $('#select-type');
         var jsSelectLabel = $('#select-label');
         var jsSelectSubLabel = $('#select-sublabel');
@@ -52795,15 +52805,11 @@ $(document).ready(function () {
 
         changeTypes();
 
-
         changeLabels();
-
 
         changeSubLabel();
 
-
         changeKnowledge();
-
 
         showEditModal();
 
@@ -52812,6 +52818,21 @@ $(document).ready(function () {
 
 
         removeItem();
+    }
+
+    if (masterCourse.length > 0 || categoryPage.length > 0) {
+
+        var jsSelectType = $('#select-type');
+        var jsSelectLabel = $('#select-label');
+        var jsSelectSubLabel = $('#select-sublabel');
+        var jsKnowledgeLabel = $('#select-knowledge');
+        var jsSelectSubject = $('#select-subject');
+
+        loadType();
+        changeTypes();
+        changeLabels();
+        changeSubLabel();
+        changeKnowledge();
     }
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))

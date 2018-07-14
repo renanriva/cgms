@@ -88,6 +88,32 @@
     const REGISTRATION_ACCEPT_TERMS_AND_CONDITION_TRUE = 1;
 
     /**
+     * Course
+     */
+
+    const COURSE_STAGE_DRAFT = 0;
+    const COURSE_STAGE_PUBLISHED = 1;
+    const COURSE_STAGE = [
+        0 => 'draft',
+        1 => 'published'
+    ];
+
+    function getCourseStage($id){
+        return COURSE_STAGE[$id];
+    }
+
+    const COURSE_STATUS_ACTIVE = 1;
+    const COURSE_STATUS_INACTIVE = 0;
+    const COURSE_STATUS = [
+        0 => 'active',
+        1 => 'inactive'
+    ];
+
+    function getCourseStatus($id){
+        return COURSE_STATUS[$id];
+    }
+
+    /**
      * COURSE VIDEO TYPE
      */
 

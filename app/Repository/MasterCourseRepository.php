@@ -62,6 +62,8 @@ class MasterCourseRepository
         $course = new MasterCourse();
 
         $course->name = $data['name'];
+        $course->code = $data['code'];
+        $course->subject_id = $data['subject'];
 
         $course->created_by = $user->id;
         $course->updated_by = $user->id;

@@ -35,7 +35,7 @@ class MasterCourseController extends Controller
     public function create(){
 
 //        dd('eee');
-        return view('lms.admin.course_type.create', [ 'title'=> 'Course Types']);
+        return view('lms.admin.master_course.create', [ 'title'=> 'Master Course']);
 
     }
 
@@ -45,7 +45,7 @@ class MasterCourseController extends Controller
 
         $type = $this->repo->insert($post);
 
-        return response()->redirectTo('/admin/course-type');
+        return response()->redirectTo('/admin/master-course');
 
 
     }

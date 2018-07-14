@@ -24,25 +24,10 @@
     <div class="row" id="page_product_create">
         <div class="col-lg-6 col-md-8 col-sm-12">
 
-            @include('lms.admin.course_type.create_form')
+            @include('lms.admin.master_course.create_form')
 
         </div>
 
-        @isset($type)
-            <div class="col-lg-6 col-md-8 col-sm-12">
-
-                @include('lms.admin.course_type.create_modality')
-
-            </div>
-        @endisset
     </div>
-
-    @isset($type)
-        <div class="row" >
-            <div class="col-lg-12 col-md-12 col-sm-12">
-                @include('lms.admin.course_type.modality_table')
-            </div>
-        </div>
-    @endisset
 
 @stop

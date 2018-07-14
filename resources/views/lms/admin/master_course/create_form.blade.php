@@ -1,42 +1,67 @@
-    <div class="box box-info">
+    <div id="master-course" class="box box-info">
 
+        <span class="js-title"></span>
         <div class="box-header with-border">
-            <h3 class="box-title">Course Type Information</h3>
+            <h3 class="box-title">Master Course Info</h3>
         </div>
 
-        <form class="form-horizontal" method="post" action="/admin/course-type/{{ isset($type) ? $type->id : ''}}">
+        <form class="form-horizontal" method="post" action="/admin/master-course/{{ isset($master) ? $master->id : ''}}">
 
             <div class="box-body">
                 {{ csrf_field() }}
 
-                @component('lms.admin.components.bootstrap.form-group', ['name' => 'title'])
-                    <input type="text" class="form-control" id="title"
-                           value="{{ isset($type) ? $type->title : ''  }}"
-                           placeholder="title" name="title">
+                @component('lms.admin.components.bootstrap.form-group', ['name' => 'Type'])
+                    <select class="form-control" id="select-type" name="type">
+                    </select>
                 @endcomponent
 
 
-                @component('lms.admin.components.bootstrap.form-group', ['name' => 'sort'])
-                    <input type="number" class="form-control" id="sort"
-                           value="{{ isset($type) ? $type->sort : '0'  }}"
-                           placeholder="sort" name="sort">
+                @component('lms.admin.components.bootstrap.form-group', ['name' => 'Label'])
+                    <select class="form-control" id="select-label" name="label">
+                        <option disabled="">Select Option</option>
+                    </select>
+                @endcomponent
+
+                @component('lms.admin.components.bootstrap.form-group', ['name' => 'Sub Label'])
+                    <select class="form-control" id="select-sublabel" name="sublabel">
+                        <option disabled="">Select Option</option>
+                    </select>
                 @endcomponent
 
 
-                @component('lms.admin.components.bootstrap.form-group', ['name' => 'is_active'])
-                    {{--{{ $question->is_active }}--}}
-
-                    <div class="checkbox">
-                        <label><input name="is_active" value="1"
-                            type="checkbox" {{ isset($type) ? $type->is_active == 1 ?  'CHECKED' : ''  : '' }}>&nbsp;Is active</label>
-                    </div>
+                @component('lms.admin.components.bootstrap.form-group', ['name' => 'Knowledge'])
+                    <select class="form-control" id="select-knowledge" name="knowledge">
+                        <option disabled="">Select Option</option>
+                    </select>
                 @endcomponent
+
+
+                @component('lms.admin.components.bootstrap.form-group', ['name' => 'Subject'])
+                    <select class="form-control" id="select-subject" name="subject">
+                        <option disabled="">Select Option</option>
+                    </select>
+                @endcomponent
+
+                @component('lms.admin.components.bootstrap.form-group', ['name' => 'Course Code'])
+                    <input type="text" class="form-control" id="code" maxlength="20"
+                           value="{{ isset($master) ? $master->code : ''  }}"
+                           placeholder="Course Code" name="course_code">
+                @endcomponent
+
+                @component('lms.admin.components.bootstrap.form-group', ['name' => 'Course Title'])
+                    <input type="text" class="form-control" id="title" maxlength="250"
+                           value="{{ isset($master) ? $master->title : ''  }}"
+                           placeholder="Course Title" name="title">
+                @endcomponent
+
 
             </div>
 
             <div class="box-footer">
-                @isset($type)
-                <a href="/admin/course-type/create" class="btn btn-default btn-flat btn-sm"><i class="fas fa-plus"></i> Add New</a>
+                @isset($master)
+                    <a href="/admin/master-course/create" class="btn btn-default btn-flat btn-sm">
+                        <i class="fas fa-plus"></i> Add New
+                    </a>
                 @endisset
 
                 <button type="submit" class="btn btn-info pull-right"><i class="fa fa-save"></i> Save</button>
