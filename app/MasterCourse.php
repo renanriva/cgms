@@ -32,4 +32,22 @@ class MasterCourse extends Model
         return $this->hasMany('App\Courses', 'master_course_id', 'id');
 
     }
+
+    public function subject(){
+        return $this->belongsTo('App\Category', 'subject_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function createdBy(){
+        return $this->belongsTo('App\User', 'created_by', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function updatedBy(){
+        return $this->belongsTo('App\User', 'updated_by', 'id');
+    }
 }

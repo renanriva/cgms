@@ -51,7 +51,7 @@
                 @component('lms.admin.components.bootstrap.form-group', ['name' => 'Course Title'])
                     <input type="text" class="form-control" id="title" maxlength="250"
                            value="{{ isset($master) ? $master->title : ''  }}"
-                           placeholder="Course Title" name="title">
+                           placeholder="Course Title" name="name">
                 @endcomponent
 
 

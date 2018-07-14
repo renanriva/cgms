@@ -62,7 +62,7 @@ class MasterCourseRepository
         $course = new MasterCourse();
 
         $course->name = $data['name'];
-        $course->code = $data['code'];
+        $course->course_code = $data['course_code'];
         $course->subject_id = $data['subject'];
 
         $course->created_by = $user->id;
