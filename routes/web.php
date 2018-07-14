@@ -70,6 +70,7 @@ Route::middleware(['auth'])->group(function (){
             Route::get('/subject/{id}', 'CategoryController@getSubjectList');
             Route::post('/subject', 'CategoryController@postSubject');
 
+            Route::post('/{id}', 'CategoryController@update');
             Route::delete('/delete/{id}', 'CategoryController@delete');
 
         });

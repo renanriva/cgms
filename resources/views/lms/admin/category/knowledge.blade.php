@@ -33,16 +33,3 @@
 
 </form>
 @include('lms.admin.category.table')
-{{--<table class="table table-responsive table-sm">--}}
-
-    {{--<thead>--}}
-        {{--<tr>--}}
-            {{--<th>Id</th>--}}
-            {{--<th>Knowledge Title</th>--}}
-            {{--<th width="200px" class="text-right">Action</th>--}}
-        {{--</tr>--}}
-    {{--</thead>--}}
-    {{--<tbody id="knowledge-table">--}}
-    {{--</tbody>--}}
-
-{{--</table>--}}

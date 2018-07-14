@@ -91,15 +91,10 @@ class CategoryRepository
         $category = $this->findById($id);
 
         $category->title          = $post['title'];
-        $category->type           = $post['type'];
-        $category->label          = $post['label'];
-        $category->sub_label      = $post['sub_label'];
-        $category->knowledge      = $post['knowledge'];
-        $category->subject        = $post['subject'];
-
         $category->updated_by = Auth::user()->id;
-
         $category->save();
+
+        $this->flushCategoryList();
 
         return $category;
 

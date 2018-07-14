@@ -4,19 +4,7 @@
 
 
 @section('content_header')
-    <h1>{{ $title }} <small>Create new Course Type </small></h1>
-    @component('lms.admin.components.bootstrap.breadcrumb')
-        <li class=""><i class="fa fa-book"></i> Course</li>
-
-        <li class="">
-            <a href="{{ url('/admin/course-type') }}"><i class="fa fa-plus"></i> Course Type</a>
-        </li>
-        @if(isset($type))
-        <li class="active"><i class="fa fa-pencil"></i> Edit</li>
-        @else
-            <li class="active"><i class="fa fa-plus"></i> create</li>
-        @endif
-    @endcomponent
+    <h1>{{ $title }}</h1>
 @stop
 
 @section('content')
@@ -40,6 +28,31 @@
 
         </div>
     </div>
+
+    @component('lms.admin.components.bootstrap.modal.modal',
+        [
+            'modal_id' => 'modal-edit-category',
+            'modal_title' => 'Edit Category Title',
+
+        ])
+
+        @slot('modal_body')
+
+
+            @component('lms.admin.components.bootstrap.form-group', ['name' => 'Title'])
+                <input type="text" class="form-control" id="js-input-edit-category-title"
+                       value="" placeholder="title" name="title">
+            @endcomponent
+
+
+        @endslot
+
+        @slot('footer_action_button')
+            <button type="button" class="btn btn-primary btn-edit-category-title"
+            data-id="">Save</button>
+        @endslot
+
+    @endcomponent
 
     <style>
         .tag {

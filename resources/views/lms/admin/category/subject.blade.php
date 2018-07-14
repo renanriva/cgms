@@ -41,16 +41,3 @@
 
 </form>
 @include('lms.admin.category.table')
-{{--<table class="table table-responsive table-sm">--}}
-
-    {{--<thead>--}}
-        {{--<tr>--}}
-            {{--<th>Id</th>--}}
-            {{--<th>Subject Title</th>--}}
-            {{--<th width="200px" class="text-right">Action</th>--}}
-        {{--</tr>--}}
-    {{--</thead>--}}
-    {{--<tbody id="subject-table">--}}
-    {{--</tbody>--}}
-
-{{--</table>--}}

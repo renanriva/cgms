@@ -33,8 +33,10 @@
             <td>{{ $type->title }}</td>
             <td class="text-right">
                 <div class="btn-group">
-                    <button class="btn btn-edit-type btn-sm btn-flat btn-default">Edit</button>
-                    <button class="btn btn-remove btn-sm btn-flat btn-default">Remove</button>
+                    <button type="button" data-id="{{ $type->id }}" data-title="{{ $type->title }}"
+                            class="btn btn-edit-type btn-sm btn-flat btn-default">Edit</button>
+                    <button type="button" data-id="{{ $type->id }}"
+                            class="btn btn-remove btn-sm btn-flat btn-default">Remove</button>
                 </div>
             </td>
         </tr>

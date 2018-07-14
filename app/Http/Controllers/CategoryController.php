@@ -280,8 +280,16 @@ class CategoryController extends Controller
     /**
      * @param Request $request
      * @param         $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, $id){
+
+
+        $posts = $request->all();
+
+        $result = $this->repo->update($posts, $id);
+
+        return response()->json(['data', $result]);
 
     }
 

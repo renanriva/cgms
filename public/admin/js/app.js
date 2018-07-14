@@ -52709,7 +52709,7 @@ $(document).ready(function () {
 
             $.each(data, function (key, value) {
 
-                var buttons = '<td class="text-right"> <div class="btn-group">' + '<button type="button" class="btn btn-edit-type btn-sm btn-flat btn-default">Edit</button>' + '<button type="button" data-id="' + value.id + '" class="btn btn-remove btn-sm btn-flat btn-default">Remove</button></div></td>';
+                var buttons = '<td class="text-right"> <div class="btn-group">' + '<button type="button" data-id="' + value.id + '" data-title="' + value.title + '" class="btn btn-edit-title btn-sm btn-flat btn-default">Edit</button>' + '<button type="button" data-id="' + value.id + '" class="btn btn-remove btn-sm btn-flat btn-default">Remove</button></div></td>';
 
                 var row = '<tr id="row_type_' + value.id + '"><td>' + value.id + '</td><td>' + value.title + '</td><td>' + buttons + '</td></tr>';
 
@@ -52721,27 +52721,60 @@ $(document).ready(function () {
             table.html('');
         };
 
+        var showEditModal = function showEditModal() {
+
+            categoryPage.on('click', '.btn-edit-title', function () {
+
+                $('#modal-edit-category').modal('show');
+                $('#modal-edit-category').find('#js-input-edit-category-title').val($(this).attr('data-title'));
+                $('.btn-edit-category-title').attr('data-id', $(this).attr('data-id'));
+            });
+        };
+
+        var updateTitle = function updateTitle() {
+
+            $('.btn-edit-category-title').click(function () {
+
+                var id = $(this).attr('data-id');
+                var title = $('#js-input-edit-category-title').val();
+
+                $.ajax({
+                    method: 'post',
+                    data: {
+                        title: title
+                    },
+                    url: '/admin/categories/' + id
+                }).done(function (response, textStatus, xhr) {
+
+                    location.reload();
+                }).fail(function (errors, textStatus, errorThrown) {}).always(function () {});
+            });
+        };
+
         var removeItem = function removeItem() {
 
             categoryPage.on('click', '.btn-remove', function (e) {
 
                 e.preventDefault();
 
-                var id = $(this).attr('data-id');
-                $('#row_type_' + id).addClass('warning');
+                var answer = confirm("Are you sure to remove?");
 
-                $.ajax({
-                    method: 'delete',
-                    url: '/admin/categories/delete/' + id
-                }).done(function (response, textStatus, xhr) {
+                if (answer === true) {
 
-                    if (xhr.status === 204) {
+                    var id = $(this).attr('data-id');
+                    $('#row_type_' + id).addClass('warning');
 
-                        $('#row_type_' + id).remove();
-                    }
-                }).fail(function (errors) {});
+                    $.ajax({
+                        method: 'delete',
+                        url: '/admin/categories/delete/' + id
+                    }).done(function (response, textStatus, xhr) {
 
-                console.log('id ', id);
+                        if (xhr.status === 204) {
+
+                            $('#row_type_' + id).remove();
+                        }
+                    }).fail(function (errors) {});
+                }
             });
         };
 
@@ -52752,8 +52785,6 @@ $(document).ready(function () {
         var jsKnowledgeLabel = $('#select-knowledge');
 
         var optionLoading = '<option value="loading">Loading...</option>';
-
-        console.log('title: ', jsTitle.text());
 
         insertType();
 
@@ -52772,6 +52803,12 @@ $(document).ready(function () {
 
 
         changeKnowledge();
+
+
+        showEditModal();
+
+
+        updateTitle();
 
 
         removeItem();
