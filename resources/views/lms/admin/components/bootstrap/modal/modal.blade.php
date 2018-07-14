@@ -10,7 +10,7 @@
                 </h4>
             </div>
 
-            <form class="form-horizontal {{ $form_class }}" >
+            <form class="form-horizontal {{ isset($form_class) ? $form_class: '' }}" >
 
                 <div class="modal-body">
 

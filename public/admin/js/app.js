@@ -52524,6 +52524,321 @@ $(document).ready(function () {
 
 /***/ }),
 
+/***/ "./resources/assets/admin/js/category.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {/**
+ * Created by ariful.haque on 09/05/2018.
+ */
+$(document).ready(function () {
+
+    var categoryPage = $('#page_category');
+    var masterCourse = $('#master-course');
+    var jsTitle = $('.js-title');
+
+    function loadType() {
+
+        jsSelectType.html(optionLoading);
+
+        $.ajax({
+            method: 'get',
+            url: '/admin/categories/type/list'
+        }).done(function (response, textStatus, xhr) {
+
+            renderSelect(jsSelectType, response.types);
+
+            $('#select-type option:first').trigger('change');
+        }).fail(function (erors, textStatus, errorThrown) {});
+    }
+    function changeTypes() {
+
+        $('#select-type').on('change', function () {
+
+            var jsLabelsTable = $('#label-table');
+
+            if (jsLabelsTable.length > 0) {
+                clearTable(jsLabelsTable);
+            }
+
+            jsSelectLabel.html('<option value="loading">Loading...</option>');
+
+            $.ajax({
+                method: 'get',
+                url: '/admin/categories/label/' + this.value
+            }).done(function (response, textStatus, xhr) {
+
+                if (jsTitle.text() === 'sublabel' || jsTitle.text() === 'knowledge' || jsTitle.text() === 'subject' || masterCourse.length > 0) {
+                    // get label list and show
+
+                    jsSelectLabel.attr('disabled', true);
+
+                    renderSelect(jsSelectLabel, response.labels);
+
+                    $('#select-label option:first').trigger('change');
+                } else if (jsTitle.text() === 'label') {
+
+                    renderTable(jsLabelsTable, response.labels);
+                }
+            }).fail(function (errors, textStatus, errorThrown) {}).always(function () {
+                jsSelectLabel.removeAttr('disabled');
+            });
+        });
+    }
+    function changeLabels() {
+
+        /**
+         * Get sublabel list
+         */
+
+        $('#select-label').on('change', function () {
+
+            var jsLabelsTable = $('#sublabel-table');
+            if (jsLabelsTable.length > 0) {
+                clearTable(jsLabelsTable);
+            }
+
+            $.ajax({
+                method: 'get',
+                url: '/admin/categories/sublabel/' + this.value
+            }).done(function (response, textStatus, xhr) {
+
+                if (jsTitle.text() === 'sublabel') {
+                    // get label list and show
+                    renderTable(jsLabelsTable, response.labels);
+                } else if (jsTitle.text() === 'knowledge' || jsTitle.text() === 'subject' || masterCourse.length > 0) {
+
+                    renderSelect(jsSelectSubLabel, response.labels);
+
+                    $('#select-sublabel option:first').trigger('change');
+                }
+            }).fail(function (errors, textStatus, errorThrown) {}).always(function () {});
+        });
+    }
+    function changeSubLabel() {
+
+        $('#select-sublabel').on('change', function () {
+
+            var jsLabelsTable = $('#knowledge-table');
+            if (jsLabelsTable.length > 0) {
+                clearTable(jsLabelsTable);
+            }
+            /**
+             * Get Knowledge List
+             */
+
+            $.ajax({
+                method: 'get',
+                url: '/admin/categories/knowledge/' + this.value
+            }).done(function (response, textStatus, xhr) {
+
+                if (jsTitle.text() === 'knowledge') {
+                    // get label list and show
+
+                    renderTable(jsLabelsTable, response.labels);
+                } else if (jsTitle.text() === 'subject' || masterCourse.length > 0) {
+
+                    renderSelect(jsKnowledgeLabel, response.labels);
+                    $('#select-knowledge option:first').trigger('change');
+                }
+            }).fail(function (errors, textStatus, errorThrown) {}).always(function () {
+                // jsSelectLabel.removeAttr('disabled');
+            });
+        });
+    }
+    function changeKnowledge() {
+
+        $('#select-knowledge').on('change', function () {
+
+            var jsLabelsTable = $('#subject-table');
+            if (jsLabelsTable.length > 0) {
+                clearTable(jsLabelsTable);
+            }
+
+            /**
+             * Get Subject List
+             */
+
+            $.ajax({
+                method: 'get',
+                url: '/admin/categories/subject/' + this.value
+            }).done(function (response, textStatus, xhr) {
+
+                if (jsTitle.text() === 'subject') {
+                    // get label list and show
+                    renderTable(jsLabelsTable, response.labels);
+                } else if (masterCourse.length > 0) {
+
+                    // alert('load subje')
+                    renderSelect(jsSelectSubject, response.labels);
+                }
+            }).fail(function (errors, textStatus, errorThrown) {}).always(function () {
+                // jsSelectLabel.removeAttr('disabled');
+            });
+        });
+    }
+
+    function renderSelect(select, data) {
+
+        select.html('');
+        $.each(data, function (key, value) {
+
+            select.append(getOption(value));
+        });
+    }
+    function getOption(item) {
+
+        return '<option value="' + item.id + '">' + item.title + '</option>';
+    }
+
+    if (categoryPage.length > 0) {
+        var insertType = function insertType() {
+
+            $('.btn-save-type').click(function () {
+
+                var data = {
+                    title: $('#title').val(),
+                    type: 'type'
+                };
+
+                $.ajax({
+                    method: 'post',
+                    url: '/admin/categories/insert',
+                    data: data
+                }).done(function (response, textStatus, xhr) {
+
+                    // console.log(response);
+                    location.reload();
+                }).fail(function (errors, textStatus, errorThrown) {
+                    console.log(error);
+                });
+            });
+        };
+
+        var _renderTable = function _renderTable(table, data) {
+
+            table.html('');
+
+            $.each(data, function (key, value) {
+
+                var buttons = '<td class="text-right"> <div class="btn-group">' + '<button type="button" data-id="' + value.id + '" data-title="' + value.title + '" class="btn btn-edit-title btn-sm btn-flat btn-default">Edit</button>' + '<button type="button" data-id="' + value.id + '" class="btn btn-remove btn-sm btn-flat btn-default">Remove</button></div></td>';
+
+                var row = '<tr id="row_type_' + value.id + '"><td>' + value.id + '</td><td>' + value.title + '</td><td>' + buttons + '</td></tr>';
+
+                table.append(row);
+            });
+        };
+
+        var _clearTable = function _clearTable(table) {
+            table.html('');
+        };
+
+        var showEditModal = function showEditModal() {
+
+            categoryPage.on('click', '.btn-edit-title', function () {
+
+                $('#modal-edit-category').modal('show');
+                $('#modal-edit-category').find('#js-input-edit-category-title').val($(this).attr('data-title'));
+                $('.btn-edit-category-title').attr('data-id', $(this).attr('data-id'));
+            });
+        };
+
+        var updateTitle = function updateTitle() {
+
+            $('.btn-edit-category-title').click(function () {
+
+                var id = $(this).attr('data-id');
+                var title = $('#js-input-edit-category-title').val();
+
+                $.ajax({
+                    method: 'post',
+                    data: {
+                        title: title
+                    },
+                    url: '/admin/categories/' + id
+                }).done(function (response, textStatus, xhr) {
+
+                    location.reload();
+                }).fail(function (errors, textStatus, errorThrown) {}).always(function () {});
+            });
+        };
+
+        var removeItem = function removeItem() {
+
+            categoryPage.on('click', '.btn-remove', function (e) {
+
+                e.preventDefault();
+
+                var answer = confirm("Are you sure to remove?");
+
+                if (answer === true) {
+
+                    var id = $(this).attr('data-id');
+                    $('#row_type_' + id).addClass('warning');
+
+                    $.ajax({
+                        method: 'delete',
+                        url: '/admin/categories/delete/' + id
+                    }).done(function (response, textStatus, xhr) {
+
+                        if (xhr.status === 204) {
+
+                            $('#row_type_' + id).remove();
+                        }
+                    }).fail(function (errors) {});
+                }
+            });
+        };
+
+        var jsSelectType = $('#select-type');
+        var jsSelectLabel = $('#select-label');
+        var jsSelectSubLabel = $('#select-sublabel');
+        var jsKnowledgeLabel = $('#select-knowledge');
+
+        var optionLoading = '<option value="loading">Loading...</option>';
+
+        insertType();
+
+
+        if (jsTitle.text() !== 'type') {
+            loadType();
+        }
+
+        changeTypes();
+
+        changeLabels();
+
+        changeSubLabel();
+
+        changeKnowledge();
+
+        showEditModal();
+
+
+        updateTitle();
+
+
+        removeItem();
+    }
+
+    if (masterCourse.length > 0 || categoryPage.length > 0) {
+
+        var jsSelectType = $('#select-type');
+        var jsSelectLabel = $('#select-label');
+        var jsSelectSubLabel = $('#select-sublabel');
+        var jsKnowledgeLabel = $('#select-knowledge');
+        var jsSelectSubject = $('#select-subject');
+
+        loadType();
+        changeTypes();
+        changeLabels();
+        changeSubLabel();
+        changeKnowledge();
+    }
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))
+
+/***/ }),
+
 /***/ "./resources/assets/admin/js/common.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -53349,6 +53664,116 @@ if (grade_page > 0) {
         $('#course-mark-add-uploader-manual-trigger').fineUploader('uploadStoredFiles');
     });
 }
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))
+
+/***/ }),
+
+/***/ "./resources/assets/admin/js/course_type.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {$(document).ready(function () {
+
+    var tableAnswers = $('#table-modalities');
+
+    if (tableAnswers.length > 0) {
+        var addModality = function addModality() {
+
+            $('.btn-add-modality').click(function () {
+
+                var data = {
+                    title: $('#modality_title').val(),
+                    type_id: $('#type_id').val(),
+                    sort: $('#modality_sort').val()
+                };
+
+                var type = $(this).attr('data-type');
+
+                var url = '/admin/course-modality/';
+
+                if (type === 'update') {
+                    var id = $(this).attr('data-id');
+
+                    url = url + id;
+
+                    $('tr#modality_' + id).addClass('warning');
+                }
+
+                $.ajax({
+                    data: data,
+                    method: 'post',
+                    url: url
+                }).done(function (response, textStatus, xhr) {
+
+                    var sort = '<td>' + response.modality.sort + '</td>';
+                    var title = '<td>' + response.modality.title + '</td>';
+                    var row = '<tr class="success">' + sort + title + '<td>...</td></tr>';
+                    $('#modality-body').append(row);
+
+                    if (type === 'update') {
+                        $('tr#modality_' + response.modality.id).remove();
+                    }
+
+                    clear();
+                }).fail(function (error, textStatus, errorThrown) {});
+            });
+        };
+
+        var clear = function clear() {
+
+            $('#modality_title').val('');
+            $('#modality_sort').val('');
+
+            $('.btn-add-modality').text('Insert');
+            $('.btn-add-modality').attr('data-id', '');
+            $('.btn-add-modality').attr('data-type', 'insert');
+        };
+
+        console.log('Table Answer');
+
+        addModality();
+
+
+        tableAnswers.on('click', '.btn-edit', function () {
+
+            var id = $(this).attr('data-id');
+
+            $('#modality_title').val($(this).attr('data-title'));
+            $('#modality_sort').val($(this).attr('data-sort'));
+            $('.btn-add-modality').text('Update');
+            $('.btn-add-modality').attr('data-id', id);
+            $('.btn-add-modality').attr('data-type', 'update');
+        });
+
+        tableAnswers.on('click', '.btn-remove', function () {
+
+            var id = $(this).attr('data-id');
+
+            $('tr#modality_' + id).addClass('warning');
+
+            $.ajax({
+                url: '/admin/course-modality/' + id,
+                method: 'delete'
+            }).done(function (response, textStatus, xhr) {
+
+                if (xhr.status === 204) {
+                    $('tr#modality_' + id).remove();
+                }
+            }).fail(function (xhr, textStatus, errorThrown) {
+
+                console.log('sync error: ', xhr);
+            });
+        });
+
+        tableAnswers.on('click', '.btn-add-label', function () {
+
+            var id = $(this).attr('data-id');
+
+            $('tr').removeClass('warning');
+            $('tr#modality_' + id).addClass('warning');
+            $('#js-modality-title').html($(this).attr('data-title'));
+        });
+    }
+});
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))
 
 /***/ }),
@@ -55396,7 +55821,9 @@ __webpack_require__("./resources/assets/admin/js/registration.js");
 __webpack_require__("./resources/assets/admin/js/registration-approval.js");
 __webpack_require__("./resources/assets/admin/js/user.js");
 __webpack_require__("./resources/assets/admin/js/profile.js");
+__webpack_require__("./resources/assets/admin/js/category.js");
 __webpack_require__("./resources/assets/admin/js/course_grade.js");
+__webpack_require__("./resources/assets/admin/js/course_type.js");
 __webpack_require__("./resources/assets/admin/js/common.js");
 module.exports = __webpack_require__("./resources/assets/sass/app.scss");
 

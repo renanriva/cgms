@@ -46,6 +46,53 @@ Route::middleware(['auth'])->group(function (){
         Route::get('/portfolio', 'PortfolioController@teachers');
         Route::get('/portfolio/download', 'PortfolioController@download');
 
+        /**
+         * Category
+         */
+        Route::prefix('categories')->group(function (){
+
+            Route::get('/type', 'CategoryController@index');
+            Route::get('/type/list', 'CategoryController@getTypeList');
+
+            Route::get('/label', 'CategoryController@label');
+            Route::get('/label/{id}', 'CategoryController@getLabelList');
+            Route::post('/label', 'CategoryController@postLabel');
+
+            Route::get('/sublabel', 'CategoryController@subLabel');
+            Route::get('/sublabel/{id}', 'CategoryController@getSubLabelList');
+            Route::post('/sublabel', 'CategoryController@postSubLabel');
+
+            Route::get('/knowledge', 'CategoryController@knowledge');
+            Route::get('/knowledge/{id}', 'CategoryController@getKnowledgeList');
+            Route::post('/knowledge', 'CategoryController@postKnowledge');
+
+            Route::get('/subject', 'CategoryController@subject');
+            Route::get('/subject/{id}', 'CategoryController@getSubjectList');
+            Route::post('/subject', 'CategoryController@postSubject');
+
+            Route::post('/{id}', 'CategoryController@update');
+            Route::delete('/delete/{id}', 'CategoryController@delete');
+
+        });
+
+
+        /**
+         * Master Course
+         */
+
+        Route::prefix('master-course')->group(function (){
+
+            Route::get('/create', 'MasterCourseController@create');
+            Route::get('/list', 'MasterCourseController@getList');
+            Route::get('/', 'MasterCourseController@index');
+            Route::get('/{id}', 'MasterCourseController@show');
+
+
+            Route::post('/', 'MasterCourseController@insert');
+            Route::post('/{id}', 'MasterCourseController@update');
+            Route::delete('/{id}', 'MasterCourseController@delete');
+
+        });
 
         Route::prefix('course')->group(function (){
 
@@ -73,6 +120,38 @@ Route::middleware(['auth'])->group(function (){
             Route::post('/{id}/download-grade-template', 'CourseController@downloadGradeTemplate');
 
 
+
+        });
+
+        /**
+         * Course type
+         */
+        Route::prefix('course-type')->group(function (){
+
+            Route::get('/create', 'CourseTypeController@create');
+            Route::get('/list', 'CourseTypeController@getList');
+            Route::get('/', 'CourseTypeController@index');
+            Route::get('/{id}', 'CourseTypeController@show');
+
+
+            Route::post('/', 'CourseTypeController@insert');
+            Route::post('/{id}', 'CourseTypeController@update');
+            Route::delete('/{id}', 'CourseTypeController@delete');
+
+        });
+
+        /**
+         * Course modality
+         */
+        Route::prefix('course-modality')->group(function (){
+
+
+            Route::get('/{courseTypeId}', 'CourseModalityController@index');
+            Route::get('/{id}', 'CourseModalityController@show');
+
+            Route::post('/', 'CourseModalityController@insert');
+            Route::post('/{id}', 'CourseModalityController@update');
+            Route::delete('/{id}', 'CourseModalityController@delete');
 
         });
 

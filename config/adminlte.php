@@ -147,8 +147,45 @@ return [
             'can'           => 'admin-only',
             'submenu'       => [
                 [
+                    'text'      => 'Master Course',
+                    'url'           => 'admin/master-course',
+                    'can'           => 'admin-only',
+                ],
+                [
+                    'text'      => 'Category',
+                    'can'           => 'admin-only',
+                    'submenu'   => [
+                        [
+                            'text'  => 'Type',
+                            'url'   => 'admin/categories/type',
+                        ],
+                        [
+                            'text'  => 'Label',
+                            'url'   => 'admin/categories/label',
+                        ],
+                        [
+                            'text'  => 'Sub Label',
+                            'url'   => 'admin/categories/sublabel',
+                        ],
+                        [
+                            'text'  => 'Area of Knowledge',
+                            'url'   => 'admin/categories/knowledge',
+                        ],
+                        [
+                            'text'  => 'Subject',
+                            'url'   => 'admin/categories/subject',
+                        ]
+
+                    ]
+                ],
+                [
                     'text'      => 'lms.menu.course.all',
                     'url'           => 'admin/course',
+                    'can'           => 'admin-only',
+                ],
+                [
+                    'text'      => 'Course Types',
+                    'url'           => 'admin/course-type',
                     'can'           => 'admin-only',
                 ],
             ],

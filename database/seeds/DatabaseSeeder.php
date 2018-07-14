@@ -14,7 +14,8 @@ class DatabaseSeeder extends Seeder
          $this->call([
              UsersTableSeeder::class,
              ProvinceTableSeeder::class,
-             UniversityTableSeeder::class
+             UniversityTableSeeder::class,
+             CategoryTableSeeder::class
          ]);
     }
 }

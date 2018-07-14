@@ -47,7 +47,9 @@ mix.autoload({
             'resources/assets/admin/js/registration-approval.js',
             'resources/assets/admin/js/user.js',
             'resources/assets/admin/js/profile.js',
+            'resources/assets/admin/js/category.js',
             'resources/assets/admin/js/course_grade.js',
+            'resources/assets/admin/js/course_type.js',
             'resources/assets/admin/js/common.js'
         ],
         'public/admin/js/app.js')
