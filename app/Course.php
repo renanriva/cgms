@@ -30,8 +30,21 @@ class Course extends Model
         'university_id',
         'lor_file_path', 'tc_file_path',
         'diploma_uploaded_by_id', 'diploma_upload_time', 'diploma_uploaded',
-        'created_by', 'updated_by'
+        'created_by', 'updated_by',
+
+        'master_course_id', 'cost', 'edition', 'finance_type', 'has_disclaimer', 'disclaimer_file',
+        'grade_upload_start_date', 'grade_upload_end_date', 'stage', 'status'
     ];
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function masterCourse(){
+
+        return $this->belongsTo('App\MasterCourse', 'master_course_id', 'id');
+
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -88,7 +101,9 @@ class Course extends Model
         'created_at',
         'updated_at',
         'start_date',
-        'end_date'
+        'end_date',
+        'grade_upload_start_date',
+        'grade_upload_end_date',
     ];
 
 }
