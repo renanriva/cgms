@@ -1,4 +1,4 @@
-<form class="form-horizontal"  action="{{ url('/admin/categories/label') }}" method="post">
+<form class="form-horizontal"  action="{{ url('/admin/categories/knowledge') }}" method="post">
 
     <div class="box-body">
         {{ csrf_field() }}
@@ -13,6 +13,18 @@
             </select>
         @endcomponent
 
+        @component('lms.admin.components.bootstrap.form-group', ['name' => 'Label'])
+            <select class="form-control" id="select-label" name="label">
+                <option disabled="">Select Option</option>
+            </select>
+        @endcomponent
+
+        @component('lms.admin.components.bootstrap.form-group', ['name' => 'Sub Label'])
+            <select class="form-control" id="select-sublabel" name="sublabel">
+                <option disabled="">Select Option</option>
+            </select>
+        @endcomponent
+
         @component('lms.admin.components.bootstrap.form-group', ['name' => ''])
             <button type="submit" class="btn btn-info btn-save-type pull-right"><i class="fa fa-save"></i> Save</button>
         @endcomponent
@@ -21,30 +33,16 @@
 
 </form>
 @include('lms.admin.category.table')
-{{--<table class="table table-responsive table-sm" id="">--}}
+{{--<table class="table table-responsive table-sm">--}}
 
     {{--<thead>--}}
         {{--<tr>--}}
             {{--<th>Id</th>--}}
-            {{--<th>Label Title</th>--}}
+            {{--<th>Knowledge Title</th>--}}
             {{--<th width="200px" class="text-right">Action</th>--}}
         {{--</tr>--}}
     {{--</thead>--}}
-    {{--<tbody id="labels-table">--}}
-
-    {{--@foreach($category['labels'] as $type)--}}
-        {{--<tr id="row_type_{{ $type->id }}">--}}
-            {{--<td>{{ $type->id }}</td>--}}
-            {{--<td>{{ $type->title }}</td>--}}
-            {{--<td class="text-right">--}}
-                {{--<div class="btn-group">--}}
-                    {{--<button class="btn btn-edit-type btn-sm btn-flat btn-default">Edit</button>--}}
-                    {{--<button class="btn btn-remove-type btn-sm btn-flat btn-default">Remove</button>--}}
-                {{--</div>--}}
-            {{--</td>--}}
-        {{--</tr>--}}
-    {{--@endforeach--}}
-
+    {{--<tbody id="knowledge-table">--}}
     {{--</tbody>--}}
 
 {{--</table>--}}

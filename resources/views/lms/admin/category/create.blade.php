@@ -24,9 +24,49 @@
     <div class="row" id="page_category">
         <div class="col-lg-6 col-md-8 col-sm-12">
 
-            @include('lms.admin.category.create_form')
+            @component('lms.admin.components.bootstrap.box', [ 'box_body_class' => 'table-responsive' ])
+
+                @slot('box_title')
+                    <span class="js-title">{{ str_replace('admin/categories/', '', Request::path() ) }}</span>
+                @endslot
+
+                @slot('box_tools')@endslot
+
+                    @include('lms.admin.category.'.str_replace('admin/categories/', '', Request::path() ))
+
+                @slot('box_footer')@endslot
+
+            @endcomponent
 
         </div>
     </div>
+
+    <style>
+        .tag {
+            font-size: 0.85em;
+            font-weight: normal;
+            padding: .3em .4em .4em;
+            margin: 0 .1em;
+        }
+        .tag a {
+            color: #bbb;
+            cursor: pointer;
+            opacity: 0.6;
+        }
+        .tag a:hover {
+            opacity: 1.0
+        }
+        .tag .remove {
+            vertical-align: bottom;
+            top: 0;
+        }
+        .tag a {
+            margin: 0 0 0 .3em;
+        }
+        .tag a .glyphicon-white {
+            color: #fff;
+            margin-bottom: 2px;
+        }
+    </style>
 
 @stop

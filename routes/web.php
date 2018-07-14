@@ -51,15 +51,26 @@ Route::middleware(['auth'])->group(function (){
          */
         Route::prefix('categories')->group(function (){
 
-            Route::get('/create', 'CategoryController@create');
-            Route::get('/list', 'CategoryController@getList');
-            Route::get('/', 'CategoryController@index');
-            Route::get('/{id}', 'CategoryController@show');
+            Route::get('/type', 'CategoryController@index');
+            Route::get('/type/list', 'CategoryController@getTypeList');
 
+            Route::get('/label', 'CategoryController@label');
+            Route::get('/label/{id}', 'CategoryController@getLabelList');
+            Route::post('/label', 'CategoryController@postLabel');
 
-            Route::post('/insert', 'CategoryController@insert');
-            Route::post('/{id}', 'CategoryController@update');
-            Route::delete('/{id}', 'CategoryController@delete');
+            Route::get('/sublabel', 'CategoryController@subLabel');
+            Route::get('/sublabel/{id}', 'CategoryController@getSubLabelList');
+            Route::post('/sublabel', 'CategoryController@postSubLabel');
+
+            Route::get('/knowledge', 'CategoryController@knowledge');
+            Route::get('/knowledge/{id}', 'CategoryController@getKnowledgeList');
+            Route::post('/knowledge', 'CategoryController@postKnowledge');
+
+            Route::get('/subject', 'CategoryController@subject');
+            Route::get('/subject/{id}', 'CategoryController@getSubjectList');
+            Route::post('/subject', 'CategoryController@postSubject');
+
+            Route::delete('/delete/{id}', 'CategoryController@delete');
 
         });
 

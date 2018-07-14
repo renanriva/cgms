@@ -34,7 +34,7 @@
             <td class="text-right">
                 <div class="btn-group">
                     <button class="btn btn-edit-type btn-sm btn-flat btn-default">Edit</button>
-                    <button class="btn btn-remove-type btn-sm btn-flat btn-default">Remove</button>
+                    <button class="btn btn-remove btn-sm btn-flat btn-default">Remove</button>
                 </div>
             </td>
         </tr>
@@ -43,30 +43,3 @@
     </tbody>
 
 </table>
-<style>
-    .tag {
-        font-size: 0.85em;
-        font-weight: normal;
-        padding: .3em .4em .4em;
-        margin: 0 .1em;
-    }
-    .tag a {
-        color: #bbb;
-        cursor: pointer;
-        opacity: 0.6;
-    }
-    .tag a:hover {
-        opacity: 1.0
-    }
-    .tag .remove {
-        vertical-align: bottom;
-        top: 0;
-    }
-    .tag a {
-        margin: 0 0 0 .3em;
-    }
-    .tag a .glyphicon-white {
-        color: #fff;
-        margin-bottom: 2px;
-    }
-</style>

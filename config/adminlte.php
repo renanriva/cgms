@@ -153,7 +153,6 @@ return [
                 ],
                 [
                     'text'      => 'Category',
-                    'url'           => 'admin/categories',
                     'can'           => 'admin-only',
                     'submenu'   => [
                         [
@@ -166,7 +165,7 @@ return [
                         ],
                         [
                             'text'  => 'Sub Label',
-                            'url'   => 'admin/categories/sub-label',
+                            'url'   => 'admin/categories/sublabel',
                         ],
                         [
                             'text'  => 'Area of Knowledge',
@@ -174,7 +173,7 @@ return [
                         ],
                         [
                             'text'  => 'Subject',
-                            'url'   => 'admin/categories/Subject',
+                            'url'   => 'admin/categories/subject',
                         ]
 
                     ]

@@ -38,7 +38,11 @@ class CategoryRepository
      */
     public function getAll(){
 
-        $data = Category::all();
+        $data = Cache::tags(['CATEGORY_ALL'])->remember('CATEGORY_ALL', 60, function (){
+
+            return Category::all();
+
+        });
 
         return $data;
     }
@@ -62,12 +66,15 @@ class CategoryRepository
         $category->knowledge      = $post['knowledge'];
         $category->subject        = $post['subject'];
 
+        if(isset($post['parent_id'])){
+            $category->parent_id        = $post['parent_id'];
+        }
+
         $category->created_by     = Auth::user()->id;
         $category->updated_by     = Auth::user()->id;
         $category->save();
 
-        $category->save();
-
+        $this->flushCategoryList();
 
         return $category;
 
@@ -134,6 +141,22 @@ class CategoryRepository
 
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function delete($id){
+
+        $item = $this->findById($id);
+
+        $result = $item->delete($id);
+
+        if ($result){
+            $this->flushCategoryList();
+        }
+        return $result;
+    }
+
 
     /**
      * @param $id
@@ -167,6 +190,7 @@ class CategoryRepository
     public function flushCategoryList(){
 
         Cache::tags(['CATEGORY_TYPE_LIST'])->flush();
+        Cache::tags(['CATEGORY_ALL'])->flush();
 
 
     }
