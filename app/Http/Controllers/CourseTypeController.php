@@ -25,8 +25,14 @@ class CourseTypeController extends Controller
 
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getList(){
 
+        $list = $this->repo->getAllList();
+
+        return response()->json(['courseTypes' => $list]);
     }
 
     /**
@@ -34,8 +40,8 @@ class CourseTypeController extends Controller
      */
     public function create(){
 
-//        dd('eee');
-        return view('lms.admin.course_type.create', [ 'title'=> 'Course Types']);
+
+        return view('lms.admin.course_type.create', [ 'title'=> 'Course Modality']);
 
     }
 
@@ -45,7 +51,7 @@ class CourseTypeController extends Controller
 
         $type = $this->repo->insert($post);
 
-        return response()->redirectTo('/admin/course-type');
+        return response()->redirectTo('/admin/course-modality');
 
 
     }
@@ -68,7 +74,7 @@ class CourseTypeController extends Controller
 
         $this->repo->delete($id);
 
-        return response()->redirectTo('/admin/course-type');
+        return response()->redirectTo('/admin/course-modality');
 
 
     }

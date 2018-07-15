@@ -25,8 +25,14 @@ class MasterCourseController extends Controller
 
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getList(){
 
+        $list = $this->repo->getListAll();
+
+        return response()->json(['master_course' => $list]);
     }
 
     /**

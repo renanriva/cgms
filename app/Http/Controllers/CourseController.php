@@ -53,6 +53,15 @@ class CourseController extends Controller
     }
 
 
+    public function create(){
+
+        $title = 'Create Course';
+
+        return view('lms.admin.course.create', ['title'=> $title]);
+
+    }
+
+
     /**
      * Process datatables ajax request.
      *

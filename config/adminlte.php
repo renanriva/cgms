@@ -184,8 +184,8 @@ return [
                     'can'           => 'admin-only',
                 ],
                 [
-                    'text'      => 'Course Types',
-                    'url'           => 'admin/course-type',
+                    'text'      => 'Course Modality',
+                    'url'           => 'admin/course-modality',
                     'can'           => 'admin-only',
                 ],
             ],

@@ -1,10 +1,10 @@
     <div class="box box-info">
 
         <div class="box-header with-border">
-            <h3 class="box-title">Course Type Information</h3>
+            <h3 class="box-title">Course Modality Information</h3>
         </div>
 
-        <form class="form-horizontal" method="post" action="/admin/course-type/{{ isset($type) ? $type->id : ''}}">
+        <form class="form-horizontal" method="post" action="/admin/course-modality/{{ isset($type) ? $type->id : ''}}">
 
             <div class="box-body">
                 {{ csrf_field() }}
@@ -36,7 +36,7 @@
 
             <div class="box-footer">
                 @isset($type)
-                <a href="/admin/course-type/create" class="btn btn-default btn-flat btn-sm"><i class="fas fa-plus"></i> Add New</a>
+                <a href="/admin/course-modality/create" class="btn btn-default btn-flat btn-sm"><i class="fas fa-plus"></i> Add New</a>
                 @endisset
 
                 <button type="submit" class="btn btn-info pull-right"><i class="fa fa-save"></i> Save</button>

@@ -3,12 +3,12 @@
 @include('lms.admin.parts.title')
 
 @section('content_header')
-    <h1>Course type</h1>
+    <h1>Course Modality</h1>
     @component('lms.admin.components.bootstrap.breadcrumb')
         <li class=""><i class="fa fa-book"></i> Course</li>
-        <li class="active"><i class="fa fa-list"></i> Course Type</li>
+        <li class="active"><i class="fa fa-list"></i> Course Modality</li>
         <li class="">
-            <a href="{{ url('/admin/course-type/create') }}"><i class="fa fa-plus"></i> create</a>
+            <a href="{{ url('/admin/course-modality/create') }}"><i class="fa fa-plus"></i> Create</a>
         </li>
     @endcomponent
 @stop
@@ -43,7 +43,7 @@
                             <th width="20px">ID</th>
                             <th width="30px">Sort</th>
                             <th width="350px">Title</th>
-                            <th width="350px">Modality</th>
+                            {{--<th width="350px">Modality</th>--}}
                             <th width=100px">Is Active</th>
                             <th width="100px">Updated By</th>
                             <th width="120px">Updated at</th>
@@ -60,13 +60,6 @@
                             <td>{{ $type->sort }}</td>
                             <td>{{ $type->title }}</td>
                             <td>
-                                <ul class="list-unstyled">
-                                    @foreach($type->modalities->sortBy('sort') as $modality)
-                                        <li><span class="text-info"> {{ $modality->title }}</span></li>
-                                    @endforeach
-                                </ul>
-                            </td>
-                            <td>
                                 @if($type->is_active == 1)
                                     <span class="label label-success">Active</span>
                                     @else
@@ -82,7 +75,7 @@
                                     <input type="hidden" name="_method" value="DELETE">
 
                                     <div class="btn-group btn-group-xs">
-                                        <a href="{{ url('/admin/course-type/'.$type->id) }}"
+                                        <a href="{{ url('/admin/course-modality/'.$type->id) }}"
                                            class="btn btn-flat btn-primary"><i class="fa fa-edit"></i> Edit</a>
                                         <button type="submit" class="btn btn-warning"><i class="fa fa-trash"></i> Delete</button>
                                     </div>
