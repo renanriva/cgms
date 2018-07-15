@@ -51,6 +51,63 @@ $(document).ready(function () {
             },
         });
 
+        loadMasterCourse();
+        function loadMasterCourse() {
+
+
+            var masterCourseLength = $('.js-edit-course-master-course').length;
+
+            if (masterCourseLength > 0){
+
+                // console.log('load courses');
+                var masterCourse = $('.js-select-master-course');
+
+                masterCourse.empty();
+                masterCourse.attr('disabled', 'disabled');
+                masterCourse.append('<option>Loading...</option>');
+
+                var ajaxObj = {
+                    method: 'get',
+                    url: '/admin/master-course/list/'
+                };
+
+                $.ajax(ajaxObj)
+                    .done(function (response, textStatus, jqXhr) {
+
+                        if (jqXhr.status === 200) {
+
+                            masterCourse.empty();
+
+                            $.each(response.master_course, function (key, value) {
+                                masterCourse.append('<option value="'+value.id+'">'+value.name+'</option>');
+                            });
+                            masterCourse.attr('disabled', false);
+
+                        }
+
+                    }).fail(function (jqXhr, textStatus, errorThrown) {
+
+                        alert('Error: '+errorThrown);
+                        console.log('error ', jqXhr);
+                        masterCourse.empty();
+                        masterCourse.attr('disabled', false);
+
+                });
+
+
+                //select 2
+                masterCourse.select2({
+                    dropdownParent: modal,
+                    width: 'resolve',
+                    minimumResultsForSearch: 20,
+                    minimumInputLength: 1, // only start searching when the user has input 3 or more characters
+                    maximumInputLength: 20 // only allow terms up to 20 characters long
+                });
+
+
+            }
+        }
+
         loadUniversities();
         function loadUniversities() {
 
@@ -107,6 +164,32 @@ $(document).ready(function () {
 
         }
 
+
+        loadCourseTypeList();
+        function loadCourseTypeList() {
+
+            $('.js-edit-course-type').html('<option>Loading...</option>');
+
+            $.ajax({
+                method: 'get',
+                url: '/admin/course-modality/list'
+            }).done(function (response, textStatus, xhr) {
+
+                var options = '';
+                $('.js-edit-course-type').html(options);
+
+                $.each(response.courseTypes, function (key, value) {
+
+                    options+='<option value="'+value.id+'">'+value.title+'</option>';
+
+                });
+
+                $('.js-edit-course-type').html(options);
+
+            }).fail(function (error, textStatus, errorThrown) {
+
+            })
+        }
 
 
         /**
