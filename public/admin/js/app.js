@@ -52556,6 +52556,7 @@ $(document).ready(function () {
 
             var jsLabelsTable = $('#label-table');
 
+            console.log('label table ', jsLabelsTable);
             if (jsLabelsTable.length > 0) {
                 clearTable(jsLabelsTable);
             }
@@ -52714,24 +52715,6 @@ $(document).ready(function () {
             });
         };
 
-        var _renderTable = function _renderTable(table, data) {
-
-            table.html('');
-
-            $.each(data, function (key, value) {
-
-                var buttons = '<td class="text-right"> <div class="btn-group">' + '<button type="button" data-id="' + value.id + '" data-title="' + value.title + '" class="btn btn-edit-title btn-sm btn-flat btn-default">Edit</button>' + '<button type="button" data-id="' + value.id + '" class="btn btn-remove btn-sm btn-flat btn-default">Remove</button></div></td>';
-
-                var row = '<tr id="row_type_' + value.id + '"><td>' + value.id + '</td><td>' + value.title + '</td><td>' + buttons + '</td></tr>';
-
-                table.append(row);
-            });
-        };
-
-        var _clearTable = function _clearTable(table) {
-            table.html('');
-        };
-
         var showEditModal = function showEditModal() {
 
             categoryPage.on('click', '.btn-edit-title', function () {
@@ -52833,6 +52816,24 @@ $(document).ready(function () {
         changeLabels();
         changeSubLabel();
         changeKnowledge();
+    }
+
+    function renderTable(table, data) {
+
+        table.html('');
+
+        $.each(data, function (key, value) {
+
+            var buttons = '<td class="text-right"> <div class="btn-group">' + '<button type="button" data-id="' + value.id + '" data-title="' + value.title + '" class="btn btn-edit-title btn-sm btn-flat btn-default">Edit</button>' + '<button type="button" data-id="' + value.id + '" class="btn btn-remove btn-sm btn-flat btn-default">Remove</button></div></td>';
+
+            var row = '<tr id="row_type_' + value.id + '"><td>' + value.id + '</td><td>' + value.title + '</td><td>' + buttons + '</td></tr>';
+
+            table.append(row);
+        });
+    }
+
+    function clearTable(table) {
+        table.html('');
     }
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))
