@@ -97,6 +97,7 @@ Route::middleware(['auth'])->group(function (){
         Route::prefix('course')->group(function (){
 
             Route::get('/', 'CourseController@index');
+            Route::get('/create', 'CourseController@create');
 
             Route::post('/ajax/table', 'CourseController@getTableData');
             Route::delete('/{id}/ajax', 'CourseController@delete');

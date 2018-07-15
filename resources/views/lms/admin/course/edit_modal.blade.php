@@ -17,289 +17,193 @@
 
                     <div class="js-course-form">
 
-                        <div class="row">
-                            <div class="col-lg-12 col-sm-12 col-md-12">
 
-                                <div class="form-group js-error-block js-course_code-block">
-                                    <label for="js-edit-course-code" class="col-md-2 control-label">{{ __('lms.page.course.form.course_id') }}</label>
-                                    <div class="col-md-10">
-                                        <input id="js-edit-course-code" type="text" class="js-edit-course-code form-control" name="course_code"
-                                               value="" required placeholder="{{ __('lms.page.course.form.course_id') }}" maxlength="100">
-                                        <div class="help-block"></div>
-                                    </div>
-                                </div>
+                        @component('lms.admin.components.form-group', [   'name' => 'master-course', 'grid' => 10,
+                            'title' => 'Master Course'])
+                            <select id="js-edit-course-master-course" name="master-course" style="width: 100%"
+                                    class="js-edit-course-master-course js-select-master-course form-control js-lms-select2" >
+                            </select>
+                        @endcomponent
 
-                            </div>
-                        </div>
+                        @component('lms.admin.components.form-group', [   'name' => 'course_type', 'grid' => 10,
+                                'title' => __('lms.page.course.form.course_type')])
+                            <select id="js-edit-course-type" class="js-edit-course-type form-control" name="course_type">
+                                <option value="Presencial">Presencial</option>
+                                <option value="Virtual">Virtual</option>
+                            </select>
+                        @endcomponent
 
-                        <div class="row">
+                        @component('lms.admin.components.form-group', [   'name' => 'course-university', 'grid' => 10,
+                                'title' => __('lms.page.course.form.university')])
+                            <select id="js-edit-course-university" name="university" style="width: 100%"
+                                class="js-edit-course-university js-select-university form-control js-lms-select2" >
+                            </select>
+                        @endcomponent
 
-                            <div class="col-lg-6 col-sm-12 col-md-6">
+                        <div class="form-group">
 
-                                <div class="form-group js-error-block js-course_id-block">
-                                    <label for="js-edit-course-type" class="col-md-3 control-label">{{ __('lms.page.course.form.course_type') }}</label>
-                                    <div class="col-md-9">
-                                        <select id="js-edit-course-type" class="js-edit-course-type form-control" name="course_type">
-                                            <option value="Presencial">Presencial</option>
-                                            <option value="Virtual">Virtual</option>
-                                        </select>
-                                        <div class="help-block"></div>
-                                    </div>
-                                </div>
+                            @component('lms.admin.components.bootstrap.group_block', [   'name' => 'course_code', 'grid' => 4,
+                            'title' => __('lms.page.course.form.course_id')])
+                                <input id="js-edit-course-code" type="text" class="js-edit-course-code form-control"
+                                       name="course_code"
+                                value="" required placeholder="{{ __('lms.page.course.form.course_id') }}" maxlength="100">
 
-                            </div>
-                            <div class="col-lg-6 col-sm-12 col-md-6">
+                            @endcomponent
 
-                                <div class="form-group js-error-block js-course_id-block">
-                                    <label for="js-edit-course-modality" class="col-md-3 control-label">{{ __('lms.page.course.form.course_modality') }}</label>
-                                    <div class="col-md-9">
-                                        <select id="js-edit-course-type" class="js-edit-course-modality form-control" name="course_modality">
-                                            <option value="Test 1">Test 1</option>
-                                            <option value="Test 2">Test 2</option>
-                                        </select>
-                                        <div class="help-block"></div>
+                            @component('lms.admin.components.bootstrap.group_block', [   'name' => 'course_edition', 'grid' => 4,
+                                        'title' => 'Course Edition'])
+                                <input id="js-edit-course-edition" type="text" class="js-edit-course-edition form-control"
+                                name="course_edition" value="" required placeholder="Edition" maxlength="100">
 
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="row">
-
-                            <div class="col-lg-12 col-sm-12 col-md-12">
-
-                                <div class="form-group js-error-block js-university-block">
-                                    <label for="js-edit-course-university" class="col-md-2 control-label">{{ __('lms.page.course.form.university') }}</label>
-                                    <div class="col-md-10">
-                                        <select id="js-edit-course-university" name="university" style="width: 100%"
-                                                class="js-edit-course-university js-select-university form-control js-lms-select2" >
-                                        </select>
-                                        <div class="help-block"></div>
-                                    </div>
-
-                                </div>
-                            </div>
+                            @endcomponent
 
                         </div>
 
-                        <div class="row">
-                            <div class="col-lg-12 col-sm-12 col-md-12">
+                        @component('lms.admin.components.form-group', [   'name' => 'course-university', 'grid' => 10,
+                                'title' => __('lms.page.course.form.short_name')])
+                                <input id="js-edit-course-short_name" type="text"   maxlength="100" value=""
+                                       class="js-edit-course-short_name form-control" name="short_name"
+                                       placeholder={{ __('lms.page.course.form.short_name') }}/>
+                        @endcomponent
 
-                                <div class="form-group js-error-block js-short_name-block">
+                        <div class="form-group">
 
-                                    <label for="js-edit-course-short_name" class="col-md-2 control-label">{{ __('lms.page.course.form.short_name') }}</label>
-                                    <div class="col-md-10">
-                                        <input id="js-edit-course-short_name" type="text"
-                                               class="js-edit-course-short_name form-control" name="short_name"
-                                               maxlength="100" value=""
-                                               placeholder={{ __('lms.page.course.form.short_name') }}/>
-                                        <div class="help-block"></div>
-                                    </div>
 
-                                </div>
+                            @component('lms.admin.components.bootstrap.group_block', [   'name' => 'course-start_date', 'grid' => 4,
+                                        'title' => __('lms.page.course.form.start_date')])
+                                <input id="js-edit-course-start_date" type="text" autocomplete="off"
+                                       class="js-edit-course-start_date js-datepicker form-control" name="Start Date"
+                                       placeholder={{ __('lms.page.course.form.start_date') }}/>
 
-                            </div>
+                            @endcomponent
+
+                            @component('lms.admin.components.bootstrap.group_block', [   'name' => 'course-end_date', 'grid' => 4,
+                                'title' => __('lms.page.course.form.end_date')])
+                                    <input id="js-edit-course-end_date" type="text" autocomplete="off"
+                                           class="js-edit-course-end_date js-datepicker form-control" name="end_date"
+                                           placeholder={{ __('lms.page.course.form.end_date') }}/>
+                            @endcomponent
+
                         </div>
 
-                        <div class="row">
+                        <div class="form-group">
 
-                            <div class="col-lg-6 col-sm-12 col-md-6">
+                            @component('lms.admin.components.bootstrap.group_block', [   'name' => 'grade-entry-start-date',
+                                'grid' => 4, 'title' => 'Grade Entry Start Date'])
+                                <input id="js-edit-grade-entry-start-date" type="text" name="grade-entry-start-date"
+                                       class="js-edit-grade-entry-start-date js-datepicker form-control"
+                                       autocomplete="off" />
 
-                                <div class="form-group js-error-block js-start_date-block">
+                            @endcomponent
 
-                                    <label for="js-edit-course-start_date"
-                                    class="col-md-3 control-label">{{ __('lms.page.course.form.start_date') }}</label>
-                                    <div class="col-md-9">
-                                        <input id="js-edit-course-start_date" type="text"
-                                               class="js-edit-course-start_date js-datepicker form-control" name="Start Date"
-                                               required placeholder={{ __('lms.page.course.form.start_date') }}/>
-                                        <div class="help-block"></div>
-                                    </div>
+                            @component('lms.admin.components.bootstrap.group_block', [   'name' => 'grade-entry-end-date',
+                                    'grid' => 4, 'title' => 'Grade Entry End Date'])
+                                    <input id="js-edit-grade-entry-end-date" type="text" name="grade-entry-end-date"
+                                           class="js-edit-grade-entry-end-date js-datepicker form-control"
+                                           autocomplete="off" />
+                            @endcomponent
 
-
-                                </div>
-
-                            </div>
-
-                            <div class="col-lg-6 col-sm-12 col-md-6">
-
-                                <div class="form-group js-error-block js-end_date-block">
-                                    <label for="js-edit-course-end_date"
-                                           class="col-md-3 control-label">{{ __('lms.page.course.form.end_date') }}</label>
-                                    <div class="col-md-9">
-                                        <input id="js-edit-course-end_date" type="text"
-                                               class="js-edit-course-end_date js-datepicker form-control" name="end_date"
-                                               required placeholder={{ __('lms.page.course.form.end_date') }}/>
-                                        <div class="help-block"></div>
-
-                                    </div>
-                                </div>
-
-                            </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-lg-6 col-sm-12 col-md-6">
 
-                                <div class="form-group js-error-block js-hours-block">
+                        <div class="form-group">
 
-                                    <label for="js-edit-course-hours" class="col-md-3 control-label"
-                                    >{{ __('lms.page.course.form.hours') }}</label>
-                                    <div class="col-md-9">
-                                        <input id="js-edit-course-hours" type="number"
-                                               class="js-edit-course-hours form-control" name="hours"
-                                               value="" required placeholder={{ __('lms.page.course.form.hours') }} />
-                                        <div class="help-block"></div>
-                                    </div>
+                            @component('lms.admin.components.bootstrap.group_block', [   'name' => 'hours', 'grid' => 4,
+                                'title' => __('lms.page.course.form.end_date')])
+                                <input id="js-edit-course-hours" type="number"
+                                       class="js-edit-course-hours form-control" name="hours"
+                                       value="" required placeholder={{ __('lms.page.course.form.hours') }} />
+                            @endcomponent
 
-                                </div>
+                            @component('lms.admin.components.bootstrap.group_block', [   'name' => 'quota', 'grid' => 4,
+                                'title' => __('lms.page.course.form.end_date')])
+                                    <input id="js-edit-course-quota" type="number"
+                                           class="js-edit-course-quota form-control" name="quota"
+                                           value="" required placeholder={{ __('lms.page.course.form.quota') }} />
+                            @endcomponent
 
-                            </div>
-
-                            <div class="col-lg-6 col-sm-12 col-md-6">
-
-                                <div class="form-group js-error-block js-quota-block">
-                                    <label for="js-edit-course-quota" class="col-md-3 control-label"
-                                    >{{ __('lms.page.course.form.quota') }}</label>
-                                    <div class="col-md-9">
-                                        <input id="js-edit-course-quota" type="number"
-                                               class="js-edit-course-quota form-control" name="quota"
-                                               value="" required placeholder={{ __('lms.page.course.form.quota') }} />
-                                        <div class="help-block"></div>
-                                    </div>
-
-                                </div>
-
-                            </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-lg-12 col-sm-12 col-md-12">
+                        @component('lms.admin.components.form-group', [   'name' => 'course_comment', 'grid' => 10,
+                            'title' => __('lms.page.course.form.comment')])
+                                <input id="js-edit-course-comment" type="text"
+                                       class="js-edit-course-comment form-control" name="course_comment"
+                                       value="" required placeholder={{ __('lms.page.course.form.comment') }} />
+                        @endcomponent
 
-                                <div class="form-group js-error-block js-course_comment-block">
+                        @component('lms.admin.components.form-group', [   'name' => 'course_description', 'grid' => 10,
+                        'title' => __('lms.page.course.form.description')])
+                            <textarea id="js-edit-course-description" type="text"
+                                      class="js-edit-course-description form-control" name="course_description"
+                                      placeholder="{{ __('lms.page.course.form.description') }}" ></textarea>
+                        @endcomponent
 
-                                    <label for="js-edit-course-comment"
-                                           class="col-md-2 control-label">{{ __('lms.page.course.form.comment') }}</label>
-                                    <div class="col-md-10">
-                                        <input id="js-edit-course-comment" type="text"
-                                               class="js-edit-course-comment form-control" name="course_comment"
-                                               value="" required placeholder={{ __('lms.page.course.form.comment') }} />
-                                            <div class="help-block"></div>
-                                    </div>
+                        @component('lms.admin.components.form-group', [   'name' => 'course_video', 'grid' => 10,
+                            'title' => __('lms.page.course.form.video_type')])
+                                <textarea id="js-edit-course-video"
+                                          class="js-edit-course-video form-control" name="course_video"
+                                          placeholder="{{ __('lms.page.course.form.video') }}" ></textarea>
+                        @endcomponent
 
-                                </div>
+                        <div class="form-group">
+                            @component('lms.admin.components.bootstrap.group_block', [   'name' => 'video_type', 'grid' => 4,
+                                'title' => __('lms.page.course.form.video_type')])
+                                    <select id="js-edit-course-video_type" name="video_type" style="width: 100%"
+                                            class="js-edit-course-video_type js-select-video_type form-control js-lms-select2" >
+                                        <option value="youtube">Youtube</option>
+                                    </select>
+                            @endcomponent
 
-                            </div>
-                        </div>
+                            @component('lms.admin.components.bootstrap.group_block', [   'name' => 'video_embed_code', 'grid' => 4,
+                                'title' => ''])
 
-                        <div class="row">
-                            <div class="col-lg-12 col-sm-12 col-md-12">
 
-                                <div class="form-group js-error-block js-course_description-block">
-                                    <label for="js-edit-course-description"
-                                           class="col-md-2 control-label">{{ __('lms.page.course.form.description') }}</label>
-                                    <div    class="col-md-10">
-                                        <textarea id="js-edit-course-description" type="text"
-                                                  class="js-edit-course-description form-control" name="course_description"
-                                                  placeholder="{{ __('lms.page.course.form.description') }}" ></textarea>
-                                        <div class="help-block"></div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-12 col-sm-12 col-md-12">
-
-                                <div class="form-group js-error-block js-course_video-block">
-
-                                    <label for="js-edit-course-video"
-                                           class="col-md-2 control-label">{{ __('lms.page.course.form.video') }}</label>
-                                    <div    class="col-md-10">
-                                        <textarea id="js-edit-course-video"
-                                                  class="js-edit-course-video form-control" name="course_video"
-                                                  placeholder="{{ __('lms.page.course.form.video') }}" ></textarea>
-                                        <div class="help-block"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-
-                            <div class="col-lg-4 col-sm-12 col-md-4">
-                                <div class="form-group js-error-block js-video_type-block">
-                                    <label for="js-edit-course-video_type"
-                                           class="col-md-4 control-label">{{ __('lms.page.course.form.video_type') }}</label>
-                                    <div    class="col-md-8">
-                                        <select id="js-edit-course-video_type" name="video_type" style="width: 100%"
-                                                class="js-edit-course-video_type js-select-video_type form-control js-lms-select2" >
-                                            <option value="youtube">Youtube</option>
-                                            <option value="Vimeo">Vimeo</option>
-                                            <option value="Upload">Upload</option>
-                                        </select>
-                                        <div class="help-block"></div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <div class="col-lg-8 col-sm-12 col-md-8">
-
-                                <div class="form-group js-error-block js-video_embed_code-block">
-                                    <label for="js-edit-course-video_embed_code"
-                                           class="col-md-3 control-label">
+                                @slot('label')
                                         <a href="javascript:void(0)" data-toggle="tooltip"
-                                           data-placement="top"
-                                           title="Add youtube full url" data-triger="hover"
-                                           data-content="" >
+                                        data-placement="top"
+                                        title="Add youtube full url" data-triger="hover"
+                                        data-content="" >
                                         <i class="fa fa-info"></i> </a> {{ __('lms.page.course.form.video_embed') }}
-                                    </label>
-                                    <div    class="col-md-9">
-                                        <input id="js-edit-course-video_embed_code"
-                                               class="js-edit-course-video_embed_code form-control" name="video_embed_code"
-                                               value="" required placeholder="{{ __('lms.page.course.form.video_embed') }}" />
-                                        <div class="help-block"></div>
-                                    </div>
-                                </div>
-                            </div>
+                                @endslot
+                                    <input id="js-edit-course-video_embed_code"
+                                           class="js-edit-course-video_embed_code form-control" name="video_embed_code"
+                                           value="" required placeholder="{{ __('lms.page.course.form.video_embed') }}" />
+                            @endcomponent
 
                         </div>
 
-                        <div class="row">
-                            <div class="col-lg-12 col-sm-12 col-md-12">
+                        @component('lms.admin.components.form-group', [   'name' => 'course_terms_condition', 'grid' => 10,
+                                              'title' => __('lms.page.course.form.terms_condition')])
+                                <textarea id="js-edit-course-terms_condition"
+                                          class="js-edit-course-terms_condition form-control" name="course_terms_condition"
+                                          placeholder="{{ __('lms.page.course.form.terms_condition') }}" ></textarea>
+                        @endcomponent
 
-                                <div class="form-group js-error-block js-course_terms_condition-block">
-                                    <label for="js-edit-course-terms_condition"
-                                           class="col-md-2 control-label">{{ __('lms.page.course.form.terms_condition') }}</label>
-                                    <div    class="col-md-10">
-                                        <textarea id="js-edit-course-terms_condition"
-                                                  class="js-edit-course-terms_condition form-control" name="course_terms_condition"
-                                                  placeholder="{{ __('lms.page.course.form.terms_condition') }}" ></textarea>
-                                        <div class="help-block"></div>
-                                    </div>
-                                </div>
+                        @component('lms.admin.components.form-group', [   'name' => 'course_data_update', 'grid' => 10,
+                            'title' => __('lms.page.course.form.data_update')])
+                                <textarea id="js-edit-course-data_update"
+                                          class="js-edit-course-data_update form-control" name="course_data_update"
+                                          placeholder="{{ __('lms.page.course.form.data_update') }}" ></textarea>
+                        @endcomponent
 
-                            </div>
-                        </div>
+                        <div class="form-group">
+                            @component('lms.admin.components.bootstrap.group_block', [   'name' => 'course_stage', 'grid' => 4,
+                                'title' => 'Stage'])
+                                <select id="js-edit-course-stage" name="course_stage"
+                                        class="js-edit-course-stage js-select-course-stage form-control" >
+                                    <option value="0">Draft</option>
+                                    <option value="1">Published</option>
+                                </select>
+                            @endcomponent
 
-                        <div class="row">
-                            <div class="col-lg-12 col-sm-12 col-md-12">
-
-                                <div class="form-group js-error-block js-course_data_update-block">
-                                    <label for="js-edit-course-data_update"
-                                           class="col-md-2 control-label">{{ __('lms.page.course.form.data_update') }}</label>
-                                    <div    class="col-md-10">
-                                        <textarea id="js-edit-course-data_update"
-                                                  class="js-edit-course-data_update form-control" name="course_data_update"
-                                                  placeholder="{{ __('lms.page.course.form.data_update') }}" ></textarea>
-                                    </div>
-                                </div>
-
-                            </div>
+                            @component('lms.admin.components.bootstrap.group_block', [   'name' => 'course_status', 'grid' => 4,
+                                'title' => 'Status'])
+                                <select id="js-edit-course-status" name="course_status"
+                                        class="js-edit-course-status js-select-course-status form-control" >
+                                    <option value="0">Inactive</option>
+                                    <option value="1">Active</option>
+                                </select>
+                            @endcomponent
                         </div>
 
                         <div class="row">
