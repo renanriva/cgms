@@ -52941,7 +52941,7 @@ $(document).ready(function () {
 
             if (masterCourseLength > 0) {
 
-                console.log('load courses');
+                // console.log('load courses');
                 var masterCourse = $('.js-select-master-course');
 
                 masterCourse.empty();
@@ -53028,6 +53028,27 @@ $(document).ready(function () {
                     maximumInputLength: 20 // only allow terms up to 20 characters long
                 });
             }
+        };
+
+        var loadCourseTypeList = function loadCourseTypeList() {
+
+            $('.js-edit-course-type').html('<option>Loading...</option>');
+
+            $.ajax({
+                method: 'get',
+                url: '/admin/course-modality/list'
+            }).done(function (response, textStatus, xhr) {
+
+                var options = '';
+                $('.js-edit-course-type').html(options);
+
+                $.each(response.courseTypes, function (key, value) {
+
+                    options += '<option value="' + value.id + '">' + value.title + '</option>';
+                });
+
+                $('.js-edit-course-type').html(options);
+            }).fail(function (error, textStatus, errorThrown) {});
         };
 
         /**
@@ -53411,6 +53432,9 @@ $(document).ready(function () {
 
 
         loadUniversities();
+
+
+        loadCourseTypeList();
         showAddModal();
         clickCreateUpdate();
         showEditModal();

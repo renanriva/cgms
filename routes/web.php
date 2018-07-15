@@ -125,9 +125,9 @@ Route::middleware(['auth'])->group(function (){
         });
 
         /**
-         * Course type
+         * Course Modality --old=type
          */
-        Route::prefix('course-type')->group(function (){
+        Route::prefix('course-modality')->group(function (){
 
             Route::get('/create', 'CourseTypeController@create');
             Route::get('/list', 'CourseTypeController@getList');
@@ -138,21 +138,6 @@ Route::middleware(['auth'])->group(function (){
             Route::post('/', 'CourseTypeController@insert');
             Route::post('/{id}', 'CourseTypeController@update');
             Route::delete('/{id}', 'CourseTypeController@delete');
-
-        });
-
-        /**
-         * Course modality
-         */
-        Route::prefix('course-modality')->group(function (){
-
-
-            Route::get('/{courseTypeId}', 'CourseModalityController@index');
-            Route::get('/{id}', 'CourseModalityController@show');
-
-            Route::post('/', 'CourseModalityController@insert');
-            Route::post('/{id}', 'CourseModalityController@update');
-            Route::delete('/{id}', 'CourseModalityController@delete');
 
         });
 
@@ -169,9 +154,6 @@ Route::middleware(['auth'])->group(function (){
             Route::post('/{id}/download/student-inspection-form', 'RegistrationController@downloadStudentInspectionCertificate');
             Route::post('/{id}/download/certificate', 'RegistrationController@downloadStudentCertificate');
             Route::post('/{id}/download/diploma', 'RegistrationController@downloadStudentDiploma');
-
-
-
 
         });
 
