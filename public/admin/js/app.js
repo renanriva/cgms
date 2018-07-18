@@ -53673,6 +53673,41 @@ $(document).ready(function () {
         });
 
         /**
+         * Disclaimer File Upload
+         */
+        $('#course-disclaimer-uploader-manual-trigger').fineUploader({
+            template: 'disclaimer_upload_template-trigger',
+            multiple: false,
+            request: {
+                endpoint: '/admin/course/upload/file',
+                params: {
+                    course_id: function course_id() {
+                        return modal.find('.js-course-id').val();
+                    },
+                    type: 'disclaimer'
+                },
+                customHeaders: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            },
+            validation: {
+                itemLimit: 1,
+                allowedExtensions: ['pdf', 'doc', 'docx']
+            },
+            callbacks: {
+                onSubmit: function onSubmit(id, name) {},
+                onComplete: function onComplete(id, name, response, xhr) {},
+                onStatusChange: function onStatusChange(id, oldStatus, newStatus) {},
+                onCancel: function onCancel(id, name) {}
+            },
+            autoUpload: false
+        });
+
+        $('#btn-trigger-disclaimer-upload').click(function () {
+            $('#course-disclaimer-uploader-manual-trigger').fineUploader('uploadStoredFiles');
+        });
+
+        /**
          * Diploma upload
          * @type {*}
          */

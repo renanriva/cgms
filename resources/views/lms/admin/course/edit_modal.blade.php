@@ -252,12 +252,13 @@
                         <div class="col-md-12 col-md-12 col-sm-12">
 
                             <code>Upload Terms and Condition</code>
-                            {{--<div class="js-load-tc_file"></div>--}}
                             <div id="course-terms_condition-uploader-manual-trigger"></div>
 
                             <code>Upload Letter of Registration</code>
-                            {{--<div class="js-load-lor"></div>--}}
                             <div id="course-letter_of_registration-uploader-manual-trigger"></div>
+
+                            <code>Upload Disclaimer</code>
+                            <div id="course-disclaimer-uploader-manual-trigger"></div>
 
                         </div>
 
@@ -266,15 +267,21 @@
                 </div>
 
                 <div class="modal-footer">
-                    <div class="text-left">
-                        <button class="btn btn-info btn-update-course-files hidden"
-                                type="button"><i class="fa fa-cloud-upload"></i> Update Files</button>
-                        <button class="btn btn-info btn-show-course-form hidden"
-                                type="button">Show Form</button>
+                    <div class="row">
+
+                        <div class="col-lg-6 col-sm-6 col-md-6 text-left">
+                            <button class="btn btn-info btn-update-course-files hidden"
+                                    type="button"><i class="fa fa-cloud-upload"></i> Update Files</button>
+                            <button class="btn btn-info btn-show-course-form hidden"
+                                    type="button">Show Form</button>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-md-6">
+
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" id="btn-edit-course" data-id="" class="btn btn-primary" data-type="update">
+                                <i class="fa fa-plus"></i> Update</button>
+                        </div>
                     </div>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" id="btn-edit-course" data-id="" class="btn btn-primary" data-type="update">
-                        <i class="fa fa-plus"></i> Update</button>
                 </div>
             </form>
         </div>
@@ -282,3 +289,4 @@
 </div>
 @include('lms.admin.course.templates.terms_condition_upload_template')
 @include('lms.admin.course.templates.letter_of_registration_template')
+@include('lms.admin.course.templates.disclaimer_upload_template')

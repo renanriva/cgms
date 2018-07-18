@@ -403,6 +403,17 @@ class CourseController extends Controller
                 return response()->json(['path'=> $path, 'success' => true]);
             }
 
+        } elseif ($type == 'disclaimer'){
+
+            $path = $root_path.'/disclaimer';
+            $filename = "course_".$request->input('course_id').'_disclaimer.'.$request->file('qqfile')->extension();
+
+            $cloud = Storage::disk();
+            $path = $cloud->putFileAs($path, $request->file('qqfile'), $filename);
+
+            $course->disclaimer_file  = storage_path('app/'.$path);
+            $course->save();
+
         }
 
         $this->repo->flushById($request->input('course_id'));
