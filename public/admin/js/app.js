@@ -53198,8 +53198,6 @@ $(document).ready(function () {
 
                 };
 
-                console.log('data ', data);
-
                 modal.find('.js-edit-course-code').val(data.course_code);
                 modal.find('.js-edit-course-university option[value="' + data.university_id + '"]').attr('selected', true);
                 modal.find('.js-edit-course-short_name').val(data.short_name);
@@ -53238,6 +53236,14 @@ $(document).ready(function () {
                 $(this).addClass('hidden');
                 $('.js-course-form').addClass('hidden');
                 $('#btn-edit-course').addClass('hidden');
+
+                var isDisclaimer = $('.js-select-disclaimer_required option:selected').val();
+
+                if (isDisclaimer === "1") {
+                    $('.js-disclaimer-wrapper').removeClass('hidden');
+                } else {
+                    $('.js-disclaimer-wrapper').addClass('hidden');
+                }
             });
         };
 
@@ -53447,9 +53453,6 @@ $(document).ready(function () {
          */
         // $('.js-edit-course-start_date, .js-edit-course-end_date').datepicker();
 
-
-        console.log('Course');
-
         var modal = $('#edit-course-modal');
 
         $('#course-table').DataTable({
@@ -53595,7 +53598,6 @@ $(document).ready(function () {
         });
 
         $('#btn-upload-course-request-list').click(function () {
-            console.log('course-request-list-uploader-manual-trigger');
             $('#course-request-list-uploader-manual-trigger').fineUploader('uploadStoredFiles');
         });
 
@@ -53632,7 +53634,6 @@ $(document).ready(function () {
         });
 
         $('#btn-trigger-terms-upload').click(function () {
-            console.log('course-request-list-uploader-manual-trigger');
             $('#course-terms_condition-uploader-manual-trigger').fineUploader('uploadStoredFiles');
         });
 
@@ -53668,7 +53669,6 @@ $(document).ready(function () {
         });
 
         $('#btn-trigger-lor-upload').click(function () {
-            console.log('course-letter_of_registration-uploader-manual-trigger');
             $('#course-letter_of_registration-uploader-manual-trigger').fineUploader('uploadStoredFiles');
         });
 
@@ -53716,7 +53716,6 @@ $(document).ready(function () {
 
             modalUploadDiploma.modal('show');
             var courseId = $(this).attr('data-id');
-            console.log('course id: ', courseId);
             modalUploadDiploma.find('.js-course-diploma-id').val(courseId);
         });
 
