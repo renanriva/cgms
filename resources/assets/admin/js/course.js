@@ -108,6 +108,63 @@ $(document).ready(function () {
             }
         }
 
+
+        loadCourseTypes();
+        function loadCourseTypes() {
+
+
+            var courseTypeList = $('.js-edit-course-type');
+
+            if (courseTypeList.length > 0){
+
+                // console.log('load courses');
+
+                courseTypeList.empty();
+                courseTypeList.attr('disabled', 'disabled');
+                courseTypeList.append('<option>Loading...</option>');
+
+                var ajaxObj = {
+                    method: 'get',
+                    url: '/admin/course-modality/list/'
+                };
+
+                $.ajax(ajaxObj)
+                    .done(function (response, textStatus, jqXhr) {
+
+                        if (jqXhr.status === 200) {
+
+                            courseTypeList.empty();
+
+                            $.each(response.courseTypes, function (key, value) {
+                                courseTypeList.append('<option value="'+value.id+'">'+value.title+'</option>');
+                            });
+                            courseTypeList.attr('disabled', false);
+
+                        }
+
+                    }).fail(function (jqXhr, textStatus, errorThrown) {
+
+                    alert('Error: '+errorThrown);
+                        console.log('error ', jqXhr);
+                        courseTypeList.empty();
+                        courseTypeList.attr('disabled', false);
+
+                });
+
+
+                //select 2
+                courseTypeList.select2({
+                    dropdownParent: modal,
+                    width: 'resolve',
+                    minimumResultsForSearch: 20,
+                    minimumInputLength: 1, // only start searching when the user has input 3 or more characters
+                    maximumInputLength: 20 // only allow terms up to 20 characters long
+                });
+
+
+            }
+        }
+
         loadUniversities();
         function loadUniversities() {
 
@@ -164,34 +221,6 @@ $(document).ready(function () {
 
         }
 
-
-        loadCourseTypeList();
-        function loadCourseTypeList() {
-
-            $('.js-edit-course-type').html('<option>Loading...</option>');
-
-            $.ajax({
-                method: 'get',
-                url: '/admin/course-modality/list'
-            }).done(function (response, textStatus, xhr) {
-
-                var options = '';
-                $('.js-edit-course-type').html(options);
-
-                $.each(response.courseTypes, function (key, value) {
-
-                    options+='<option value="'+value.id+'">'+value.title+'</option>';
-
-                });
-
-                $('.js-edit-course-type').html(options);
-
-            }).fail(function (error, textStatus, errorThrown) {
-
-            })
-        }
-
-
         /**
          * Create Course
          */
@@ -227,7 +256,6 @@ $(document).ready(function () {
                 var data = {
                     id          : $(this).attr('data-id'),
                     course_code   : modal.find('.js-edit-course-code').val(),
-                    modality : modal.find('.js-edit-course-modality option:selected').val(),
                     course_type : modal.find('.js-edit-course-type option:selected').val(),
 
                     university_id : modal.find('.js-edit-course-university option:selected').val(),
@@ -240,13 +268,23 @@ $(document).ready(function () {
                     hours       : parseInt(modal.find('.js-edit-course-hours').val()),
                     quota       : parseInt(modal.find('.js-edit-course-quota').val()),
 
-                    comment     : modal.find('.js-edit-course-comment').val(),
-                    description : modal.find('.js-edit-course-description').val(),
-                    video_text  : modal.find('.js-edit-course-video').val(),
-                    video_type  : modal.find('.js-edit-course-video_type option:selected').val(),
-                    video_code : modal.find('.js-edit-course-video_embed_code').val(),
-                    terms_condition : modal.find('.js-edit-course-terms_condition').val(),
-                    data_update_text : modal.find('.js-edit-course-data_update').val()
+                    comment                 : modal.find('.js-edit-course-comment').val(),
+                    description             : modal.find('.js-edit-course-description').val(),
+                    video_text              : modal.find('.js-edit-course-video').val(),
+                    video_type              : 'youtube',
+                    video_code              : modal.find('.js-edit-course-video_embed_code').val(),
+                    terms_condition         : modal.find('.js-edit-course-terms_condition').val(),
+                    data_update_text        : modal.find('.js-edit-course-data_update').val(),
+
+                    master_course_id        : modal.find('.js-select-master-course option:selected').val(),
+                    course_edition          : modal.find('.js-edit-course-edition').val(),
+                    grade_entry_start_date  : modal.find('.js-edit-grade-entry-start-date').val(),
+                    grade_entry_end_date    : modal.find('.js-edit-grade-entry-end-date').val(),
+                    course_stage            : modal.find('.js-select-course-stage option:selected').val(),
+                    course_status           : modal.find('.js-select-course-status option:selected').val(),
+                    is_disclaimer           : modal.find('.js-select-master-course option:selected').val(),
+                    cost                    : modal.find('.js-edit-course-cost').val(),
+                    finance_type            : modal.find('.js-edit-course-finance_type').val()
 
                 };
 
@@ -275,8 +313,6 @@ $(document).ready(function () {
                 var data = {
                     id              : $(this).attr('data-id'),
                     course_code     : $(this).attr('data-course_code'),
-                    course_type     : $(this).attr('data-course_type'),
-                    modality        : $(this).attr('data-modality'),
                     short_name      : $(this).attr('data-short_name'),
                     description     : $(this).attr('data-description'),
                     comment         : $(this).attr('data-comment'),
@@ -291,14 +327,26 @@ $(document).ready(function () {
                     terms_condition : $(this).attr('data-terms_condition'),
                     data_update     : $(this).attr('data-data_update'),
                     tc_file_path    : $(this).attr('data-tc_file_path'),
-                    lor_file_path   : $(this).attr('data-lor_file_path')
+                    lor_file_path   : $(this).attr('data-lor_file_path'),
+
+                    course_type     : $(this).attr('data-course_type_id'),
+                    master_course_id : $(this).attr('data-master_course_id'),
+                    course_edition  : $(this).attr('data-course_edition'),
+                    course_stage    : $(this).attr('data-stage'),
+                    course_status   : $(this).attr('data-status'),
+                    is_disclaimer   : $(this).attr('data-is_disclaimer'),
+                    disclaimer_file : $(this).attr('data-disclaimer_file'),
+                    cost            : $(this).attr('data-cost'),
+                    finance_type    : $(this).attr('data-finance_type'),
+                    grade_entry_start_date : $(this).attr('data-grade_upload_start_date'),
+                    grade_entry_end_date : $(this).attr('data-grade_upload_end_date'),
 
 
                 };
 
+                console.log('data ', data);
+
                 modal.find('.js-edit-course-code').val(data.course_code);
-                modal.find('.js-edit-course-type option[value="'+data.course_type+'"]').attr('selected', true);
-                modal.find('.js-edit-course-modality option[value="'+data.modality+'"]').attr('selected', true);
                 modal.find('.js-edit-course-university option[value="'+data.university_id+'"]').attr('selected', true);
                 modal.find('.js-edit-course-short_name').val(data.short_name);
                 modal.find('.js-edit-course-description').val(data.description);
@@ -312,6 +360,17 @@ $(document).ready(function () {
                 modal.find('.js-edit-course-video_embed_code').val(data.video_code);
                 modal.find('.js-edit-course-terms_condition').val(data.terms_condition);
                 modal.find('.js-edit-course-data_update').val(data.data_update);
+
+                modal.find('.js-edit-course-type option[value="'+data.course_type+'"]').attr('selected', true);
+                modal.find('.js-select-master-course option[value="'+data.master_course_id+'"]').attr('selected', true),
+                modal.find('.js-edit-course-edition').val(data.course_edition),
+                modal.find('.js-edit-grade-entry-start-date').val(data.grade_entry_start_date),
+                modal.find('.js-edit-grade-entry-end-date').val(data.grade_entry_end_date),
+                modal.find('.js-select-course-stage option[value="'+data.course_stage+'"]').attr('selected', true),
+                modal.find('.js-select-course-status option[type="'+data.course_status+'"]').attr('selected', true),
+                modal.find('.js-select-disclaimer_required option[value="'+data.is_disclaimer+'"]').attr('selected', true),
+                modal.find('.js-edit-course-cost').val(data.cost),
+                modal.find('.js-edit-course-finance_type').val(data.finance_type),
 
                 modal.find('.js-course-id').val(data.id);
 

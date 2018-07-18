@@ -172,7 +172,13 @@
                     'terms_condition'   => 'Terms & Condition',
                     'video'             => 'Video Information',
                     'video_type'        => 'Video Type',
+                    'master_course'     => 'Master Course',
+                    'cost'              => 'Cost',
+                    'finance_type'      => 'Finance Type',
                     'video_embed'       => 'Embed Code',
+                    'stage'             => 'Stage',
+                    'status'            => 'Status',
+                    'disclaimer_required' => 'Disclaimer Required',
                     'data_update'       => 'Data Update Tab Info',
                     'inspection_file_message' => 'After creating the course, you can upload inspection file.'
 

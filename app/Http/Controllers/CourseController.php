@@ -106,10 +106,8 @@ class CourseController extends Controller
 
         $post = $request->all();
 
-        $course['course_code']    = $post['course_code'];
-        $course['course_type']    = $post['course_type'];
-        $course['modality']       = $post['modality'];
-
+        $course['course_code']                  = $post['course_code'];
+        $course['course_type_id']               = $post['course_type'];
         $course['university_id']                = $post['university_id'];
         $course['short_name']                   = $post['short_name'];
 
@@ -137,6 +135,28 @@ class CourseController extends Controller
         $course['video_code']                   = $post['video_code'];
         $course['data_update_brief']            = $post['data_update_text'];
         $course['terms_conditions']            = $post['terms_condition'];
+        $course['master_course_id']             = $post['master_course_id'];
+        $course['edition']                      = $post['course_edition'];
+        $course['stage']                        = $post['course_stage'];
+        $course['status']                       = $post['course_status'];
+        $course['is_disclaimer']                = $post['is_disclaimer'];
+        $course['cost']                         = $post['cost'];
+        $course['finance_type']                 = $post['finance_type'];
+
+        if (isset($post['grade_entry_start_date'])) {
+            $startDate = DateTime::createFromFormat('d/m/Y', $post['grade_entry_start_date']);
+            $course['grade_upload_start_date'] = $startDate->format('Y-m-d');
+        } else{
+            $course['grade_upload_start_date'] =  null;
+        }
+
+        if (isset($post['grade_entry_end_date'])) {
+            $startDate = DateTime::createFromFormat('d/m/Y', $post['grade_entry_end_date']);
+            $course['grade_upload_end_date'] = $startDate->format('Y-m-d');
+        } else{
+            $course['grade_upload_end_date'] =  null;
+        }
+
 
         $course['inspection_form_generated']    = false;
 
@@ -158,9 +178,7 @@ class CourseController extends Controller
 
             $post = $request->all();
 
-            // @todo add different procedure to update course code
-            $course->course_type    = $post['course_type'];
-            $course->modality       = $post['modality'];
+            $course['course_type_id']               = $post['course_type'];
 
             $course->university_id  = $post['university_id'];
             $course->short_name     = $post['short_name'];
@@ -191,7 +209,27 @@ class CourseController extends Controller
             $course->video_code                   = $post['video_code'];
             $course->data_update_brief            = $post['data_update_text'];
             $course->terms_conditions             = $post['terms_condition'];
+            $course->master_course_id             = $post['master_course_id'];
+            $course->edition                      = $post['course_edition'];
+            $course->stage                        = $post['course_stage'];
+            $course->status                       = $post['course_status'];
+            $course->has_disclaimer               = $post['is_disclaimer'];
+            $course->cost                         = $post['cost'];
+            $course->finance_type                 = $post['finance_type'];
 
+            if (isset($post['grade_entry_start_date'])) {
+                $startDate = DateTime::createFromFormat('d/m/Y', $post['grade_entry_start_date']);
+                $course->grade_upload_start_date = $startDate->format('Y-m-d');
+            } else{
+                $course->grade_upload_start_date =  null;
+            }
+
+            if (isset($post['grade_entry_end_date'])) {
+                $endDate = DateTime::createFromFormat('d/m/Y', $post['grade_entry_end_date']);
+                $course->grade_upload_end_date = $endDate->format('Y-m-d');
+            } else{
+                $course->grade_upload_end_date =  null;
+            }
 
             $course->updated_by     = Auth::user()->id;
             $course->save();

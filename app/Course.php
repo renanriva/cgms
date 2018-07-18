@@ -20,7 +20,7 @@ class Course extends Model
      * @var array
      */
     protected $fillable = [
-        'course_code', 'course_type', 'modality',
+        'course_code',
         'short_name', 'description',         'comment',
         'video_text', 'video_code', 'video_type',
         'data_update_brief', 'terms_conditions',
@@ -33,7 +33,7 @@ class Course extends Model
         'created_by', 'updated_by',
 
         'master_course_id', 'cost', 'edition', 'finance_type', 'has_disclaimer', 'disclaimer_file',
-        'grade_upload_start_date', 'grade_upload_end_date', 'stage', 'status'
+        'grade_upload_start_date', 'grade_upload_end_date', 'stage', 'status', 'course_type_id'
     ];
 
 
