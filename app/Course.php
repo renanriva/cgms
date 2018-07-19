@@ -47,6 +47,14 @@ class Course extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function modality(){
+
+        return $this->belongsTo('App\CourseType', 'course_type_id', 'id');
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function requests(){
@@ -91,6 +99,22 @@ class Course extends Model
 
     }
 
+
+    public function getStageTitleAttribute(){
+
+        return [
+            'title' => ucfirst(getCourseStage($this->stage)),
+            'class' => $this->stage == 0 ? 'default' : 'success'
+        ];
+    }
+
+    public function getStatusTitleAttribute(){
+
+        return [
+            'title' => ucfirst(getCourseStatus($this->status)),
+            'class' => $this->status == 0 ? 'default' : 'success'
+        ];
+    }
 
     /**
      * The attributes that should be mutated to dates.

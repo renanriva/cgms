@@ -43,12 +43,32 @@ class CourseController extends Controller
 
     /**
      * @todo add authorization check
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(){
+    public function index(Request $request){
+
+        $posts = $request->all();
+
+        $user = Auth::user();
+        $page = isset($posts['page']) ? $posts['page'] : 1;
+
+
+        if ($user->role == 'admin'){
+
+            $courses = $this->repo->paginate($page);
+
+
+        } elseif ($user->role == 'university'){
+
+            $courses = $this->repo->coursesByUniversity($page, $user->university->id);
+
+        }
+
 
         $title = 'Course Management - '.env('APP_NAME') ;
-        return view('lms.admin.course.index', ['title'=> $title]);
+
+        return view('lms.admin.course.index', ['title'=> $title, 'courses' => $courses]);
 
     }
 
@@ -70,7 +90,7 @@ class CourseController extends Controller
     public function getTableData()
     {
 
-        $user = getAuthUser();
+        $user = Auth::user();
 
         if ($user->role == 'admin'){
 

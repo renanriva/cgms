@@ -26,6 +26,44 @@ class CourseRepository
 {
 
     /**
+     * @param $page
+     * @return mixed
+     */
+    public function paginate($page){
+
+//        $data = Cache::tags('COURSE_PAGINATE')->remember('COURSE_PAGINATE_'.$page, 60, function ()  {
+
+
+            return Course::with(['masterCourse', 'requests', 'university', 'registrations', 'approvedRegistrations'])
+                    ->paginate(10);
+
+//        });
+//
+//        return $data;
+
+    }
+
+    /**
+     * @param $page
+     * @param $universityId
+     * @return mixed
+     */
+    public function coursesByUniversity($page, $universityId){
+
+//        $data = Cache::tags('COURSE_PAGINATE')->remember('COURSE_UNIVERSITY_'.$universityId.'__PAGINATE_'.$page, 60,
+//            function () use ($universityId)  {
+
+
+            return Course::with(['masterCourse', 'requests', 'university', 'registrations', 'approvedRegistrations'])
+                ->where('university_id', $universityId)
+                ->paginate(10);
+
+//        });
+
+//        return $data;
+    }
+
+    /**
      * @param array $post
      * @return Course
      */
@@ -223,6 +261,12 @@ class CourseRepository
 
         return $this->findById($id);
 
+    }
+
+    public function flushCache(){
+
+        Cache::tags(['COURSE_FIND_BY_ID']);
+        Cache::tags(['COURSE_PAGINATE']);
     }
 
     /**

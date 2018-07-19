@@ -15,38 +15,40 @@ $(document).ready(function () {
 
         var modal = $('#edit-course-modal');
 
-        $('#course-table').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: {
-                url:'/admin/course/ajax/table',
-                method: 'POST'
-            },
-            columns: [
-                { data: 'course_code', name: 'course_code', searchable: true },
-                { data: 'short_name', name: 'short_name', searchable: true},
-                { data: 'hours', name: 'hours', searchable: true},
-                { data: 'start_date', name: 'start_date', searchable: true, render:function (item) {
-                    return new Date(item).toLocaleDateString();
-                }},
-                { data: 'end_date', name: 'end_date', searchable: true, render:function (item) {
-                    return new Date(item).toLocaleDateString();
-                }},
-                { data: 'quota', name: 'quota', searchable: true},
-                { data: 'comment', name: 'comment', searchable: false},
-                { data :'action', searchable:false, orderable: false,}
-            ],
-            initComplete: function () {
-                this.api().columns().every(function () {
-                    var column = this;
-                    var input = document.createElement("input");
-                    $(input).appendTo($(column.footer()).empty())
-                        .on('change', function () {
-                            column.search($(this).val()).draw();
-                        });
-                });
-            },
-        });
+        // $('#course-table').DataTable({
+        //     processing: true,
+        //     serverSide: true,
+        //     ajax: {
+        //         url:'/admin/course/ajax/table',
+        //         method: 'POST'
+        //     },
+        //     columns: [
+        //         { data: 'course_code', name: 'course_code', searchable: true },
+        //         { data: 'short_name', name: 'short_name', searchable: true},
+        //         { data: 'hours', name: 'hours', searchable: true},
+        //         { data: 'start_date', name: 'start_date', searchable: true, render:function (item) {
+        //             return new Date(item).toLocaleDateString();
+        //         }},
+        //         { data: 'end_date', name: 'end_date', searchable: true, render:function (item) {
+        //             return new Date(item).toLocaleDateString();
+        //         }},
+        //         { data: 'quota', name: 'quota', searchable: true},
+        //         { data: 'stage', name: 'stage', searchable: true},
+        //         { data: 'status', name: 'status', searchable: false},
+        //         { data: 'comment', name: 'comment', searchable: false},
+        //         { data :'action', searchable:false, orderable: false,}
+        //     ],
+        //     initComplete: function () {
+        //         this.api().columns().every(function () {
+        //             var column = this;
+        //             var input = document.createElement("input");
+        //             $(input).appendTo($(column.footer()).empty())
+        //                 .on('change', function () {
+        //                     column.search($(this).val()).draw();
+        //                 });
+        //         });
+        //     },
+        // });
 
         loadMasterCourse();
         function loadMasterCourse() {

@@ -113,7 +113,7 @@ Route::middleware(['auth'])->group(function (){
 //            @todo move those to Registration Controller
             Route::post('/register/{id}', 'CourseController@getRegister');
 
-            Route::get('/{id}/add-grade', 'CourseController@getAddMarkPage');
+            Route::get('/{id}/show', 'CourseController@getAddMarkPage');
             Route::post('/{id}/add-grade', 'CourseController@postAddMark');
 
 

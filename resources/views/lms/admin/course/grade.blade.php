@@ -25,30 +25,48 @@
                             <table class="table table-course-information">
                                 <tbody>
                                 <tr>
-                                    <td>{{ __('lms.page.course.form.course_id') }}:</td>
-                                    <td><code>{{ $course->course_code }}</code></td>
+                                    <td>{{ __('lms.page.course.form.master_course') }}</td>
+                                    <td><strong>{{ $course->masterCourse->name }}</strong>
+
+                                    <small class="text-info">({{ $course->masterCourse->subject->title }})</small></td>
                                 </tr>
                                 <tr>
                                     <td>{{ __('lms.page.course.form.short_name') }}</td>
                                     <td><strong class="strong"> {{ $course->short_name }}</strong></td>
                                 </tr>
                                 <tr>
-                                    <td>{{ __('lms.page.course.form.course_type') }}</td>
-                                    <td>{{ $course->course_type }}</td>
+                                    <td>{{ __('lms.page.course.form.course_id') }}:</td>
+                                    <td><code>{{ $course->course_code }}</code></td>
                                 </tr>
 
                                 <tr>
                                     <td>{{ __('lms.page.course.form.course_modality') }}</td>
-                                    <td>{{ $course->modality }}</td>
+                                    <td>{{ $course->modality->title }}</td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>{{ __('lms.page.course.form.hours') }}</td>
+                                    <td>{{ $course->hours }} hours</td>
                                 </tr>
 
                                 <tr>
-                                    <td>{{ __('lms.page.course.form.comment') }}</td>
-                                    <td>{{ $course->comment }}</td>
+                                    <td>{{ __('lms.page.course.form.quota') }}</td>
+                                    <td>{{ $course->quota }} persons</td>
                                 </tr>
                                 <tr>
-                                    <td>Total requested</td>
-                                    <td><code>{{ $course->requests->count() }}</code></td>
+                                    <td>{{ __('lms.page.course.form.stage') }}</td>
+                                    <td>
+                                        <span class="label label-{{ $course->stageTitle['class'] }}">
+                                            {{ $course->stageTitle['title'] }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>{{ __('lms.page.course.form.status') }}</td>
+                                    <td>
+                                        <span class="label label-{{ $course->statusTitle['class'] }}">
+                                            {{ $course->statusTitle['title'] }}</span>
+                                    </td>
                                 </tr>
 
 
@@ -59,6 +77,10 @@
                             <table class="table table-course-information">
                                 <tbody>
                                     <tr>
+                                        <td>{{ __('lms.page.course.form.comment') }}</td>
+                                        <td>{{ $course->comment }}</td>
+                                    </tr>
+                                    <tr>
                                         <td>{{ __('lms.page.course.form.start_date') }}</td>
                                         <td>{{ date('d M Y', strtotime($course->start_date)) }}</td>
                                     </tr>
@@ -68,13 +90,8 @@
                                     </tr>
 
                                     <tr>
-                                        <td>{{ __('lms.page.course.form.hours') }}</td>
-                                        <td>{{ $course->hours }} hours</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>{{ __('lms.page.course.form.quota') }}</td>
-                                        <td>{{ $course->quota }} persons</td>
+                                        <td>Total requested</td>
+                                        <td><code>{{ $course->requests->count() }}</code></td>
                                     </tr>
 
                                     <tr>
@@ -88,6 +105,15 @@
                                         <td>
                                             <span class="label label-success">Approved</span> <span class="badge badge-success">{{ $course->approvedRegistrations->count() }}</span>
                                         </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Grade Add {{ __('lms.page.course.form.start_date') }}</td>
+                                        <td class="text-success">{{ date('d M Y', strtotime($course->grade_upload_start_date)) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Grade Add {{ __('lms.page.course.form.end_date') }}</td>
+                                        <td class="text-warning">{{ date('d M Y', strtotime($course->grade_upload_end_date)) }}</td>
                                     </tr>
 
                                 </tbody>
@@ -118,9 +144,14 @@
                             </a>
                             <button class="btn btn-sm btn-warning" id="btn-create-university" type="submit">
                                 <i class="fa fa-cloud-download"></i> Download Grade Template</button>
-                            <button class="btn btn-info btn-upload-grade btn-sm btn-flat" type="button"
-                                data-id="{{ $course->id }}"><i class="fa fa-cloud-upload"></i> Upload Grade
-                            </button>
+
+                            @if (Carbon\Carbon::now()->between(Carbon\Carbon::parse($course->grade_upload_start_date),
+                                                        Carbon\Carbon::parse($course->grade_upload_end_date)))
+                                <button class="btn btn-info btn-upload-grade btn-sm btn-flat" type="button"
+                                    data-id="{{ $course->id }}"><i class="fa fa-cloud-upload"></i> Upload Grade
+                                </button>
+                            @endif
+
                         </div>
                         </form>
 
