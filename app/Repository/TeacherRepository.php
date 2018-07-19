@@ -359,8 +359,8 @@ class TeacherRepository
 
         $teacher = Cache::tags(['FIND_BY_ID'])->remember('FIND_BY_ID_'.$id, 10, function () use($id){
 
-            return Teacher::with(['registrations', 'registrations.course', 'registrations.markApprovedBy', 'registrations.approvedBy',
-                'registrations.student', 'registrations.course.university', 'user',
+            return Teacher::with(['registrations', 'registrations.course', 'registrations.markApprovedBy',
+                'registrations.approvedBy', 'registrations.student', 'registrations.course.university',
                 'allUpcomingCourses', 'updatedBy', 'createdBy', 'user'])->find($id);
 
         }) ;

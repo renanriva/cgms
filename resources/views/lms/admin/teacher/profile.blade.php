@@ -41,9 +41,6 @@
                                     <i class="fa fa-mobile"></i>&nbsp;<b>Cell</b> <span class="pull-right">{{ $teacher->mobile}}</span>
                                 </li>
                                 <li class="list-group-item">
-                                    <i class="fa fa-envelope"></i>&nbsp;<b>Login Email</b> <span class="pull-right">{{ $teacher->user->email}}</span>
-                                </li>
-                                <li class="list-group-item">
                                     <i class="fa fa-envelope-o"></i>&nbsp;<b>Institute Email</b> <span class="pull-right">{{ $teacher->inst_email }}</span>
                                 </li>
                                 <li class="list-group-item">
@@ -63,9 +60,13 @@
                                     <i class="fa fa-envelope-o"></i>&nbsp<b>Note</b> <span class="pull-right">
                                         User was imported by {{ $teacher->createdBy->name }} here at {{ $teacher->created_at }}</span>
                                 </li>
+                                <li class="list-group-item auxilary">
+                                    <i class="fa fa-mobile"></i>&nbsp;<b>Cell 2</b> <span class="pull-right">{{ $teacher->phone2}}</span>
+                                </li>
+                                <li class="list-group-item auxilary">
+                                    <i class="fa fa-envelope"></i>&nbsp;<b>Email 2</b> <span class="pull-right">{{ $teacher->email2}}</span>
+                                </li>
                             </ul>
-
-                            {{--<a href="#" class="btn btn-primary btn-block"><b>Edit</b></a>--}}
 
                         </div>
                     </div>
@@ -125,14 +126,6 @@
                 <div class="box-header">
                     <div class="pull-left">
                         <h3 class="box-title">{{ __('lms.page.teacher_profile.index.table_header') }}</h3>
-                    </div>
-                    <div class="pull-right">
-                        {{--<div class="btn-group">--}}
-                            {{--<button class="btn btn-sm btn-success" id="btn-import-teachers" type="submit">--}}
-                                {{--<i class="fa fa-upload"></i> {{ __('lms.elements.button.upload') }}</button>--}}
-                            {{--<button class="btn btn-sm btn-primary" id="btn-create-canton">--}}
-                                {{--<i class="fa fa-plus"></i> {{ __('lms.elements.button.create') }}</button>--}}
-                        {{--</div>--}}
                     </div>
                 </div>
                 <div class="box-body">

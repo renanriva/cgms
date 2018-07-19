@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repository\TeacherRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,8 +20,12 @@ class ProfileController extends Controller
 
         $title = 'Profile '.env('APP_NAME') ;
 
-//        dd($title);
-        return view('lms.admin.profile.account', ['title'=> $title]);
+        if (Auth::user()->role == 'teacher'){
+
+            return view('lms.admin.profile.teacher_profile', ['title'=> $title, 'teacher'=> Auth::user()->teacher]);
+        } else{
+            return view('lms.admin.profile.account', ['title'=> $title]);
+        }
 
     }
 
@@ -68,31 +73,67 @@ class ProfileController extends Controller
     }
 
 
+    /**
+     *
+     *
+     * @param Request $request
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
     public function update(Request $request){
 
+        $user = Auth::user();
 
-        $v = $this->validate($request, [
-            'name' => 'required|max:100|min:3|string'
-        ]);
+        $v = null;
 
-        if ($v){
+        if ($user->role == 'teacher'){
 
-            $posts  = $request->all();
-            $user = Auth::user();
-
-            $user->name = $posts['name'];
-            $user->save();
-
-            return redirect()->back()->with('message', 'Updated');
+            $v = $this->validate($request, [
+                'phone2' => 'required|max:100|min:3|string',
+                'email2' => 'required|email|max:100|min:3|string'
+            ]);
 
 
-            // update password
+            if ($v){
+
+                $teacherRepo = new TeacherRepository();
+
+                $teacher = $teacherRepo->findById($user->teacher->id);
+
+                $teacher->phone2 = $request->input('phone2');
+                $teacher->email2 = $request->input('email2');
+                $teacher->save();
+
+                $teacherRepo->flushCacheById($user->teacher->id);
+
+                return redirect()->back()->with('message', 'Updated');
+
+                // update password
+            }
+
         } else {
 
+            $v = $this->validate($request, [
+            'name' => 'required|max:100|min:3|string'
+            ]);
 
-            return redirect()->back()->withErrors($v)->withInput();
+
+            if ($v){
+
+                $posts  = $request->all();
+                $user = Auth::user();
+
+                $user->name = $posts['name'];
+                $user->save();
+
+                return redirect()->back()->with('message', 'Updated');
+
+                // update password
+            }
 
         }
+
+        return redirect()->back()->withErrors($v)->withInput();
+
 
     }
 
