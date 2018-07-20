@@ -25,7 +25,7 @@ class UniversityTableSeeder extends Seeder
         $university->created_by = 1;
         $university->updated_by = 1;
         $university->save();
-        event(new UniversityCreated($university, $user));
+        event(new UniversityCreated($university, $university->login_email, $user));
 
 
         $university = new University();
@@ -36,7 +36,7 @@ class UniversityTableSeeder extends Seeder
         $university->created_by = 1;
         $university->updated_by = 1;
         $university->save();
-        event(new UniversityCreated($university, $user));
+        event(new UniversityCreated($university,$university->login_email,  $user));
 
 
 
@@ -48,7 +48,7 @@ class UniversityTableSeeder extends Seeder
         $university->created_by = 1;
         $university->updated_by = 1;
         $university->save();
-        event(new UniversityCreated($university, $user));
+        event(new UniversityCreated($university,$university->login_email, $user));
 
     }
 }
