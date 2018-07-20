@@ -54965,40 +54965,50 @@ $(document).ready(function () {
         /**
          * Datepicker
          */
+        //
+        // $('#teacher-table').DataTable({
+        //     processing: true,
+        //     serverSide: true,
+        //     ajax: {
+        //         url:'/admin/teachers/ajax/table',
+        //         method: 'POST'
+        //     },
+        //     "order": [[ 0, "desc" ]],
+        //     columns: [
+        //         { data: 'id', name: 'teachers.id', searchable: false },
+        //         { data: 'social_id', name: 'teachers.social_id', searchable: true },
+        //         { data: 'teacher_name', name: 'teacher_name', searchable: true,
+        //             render:function (item, data, meta) {
+        //                 var icon = meta.gender === 'F'? 'female':'male';
+        //                 var url = '/admin/teachers/profile/'+meta.id;
+        //                 return '<i class="fa fa-'+icon+'"></i>&nbsp;<a href="'+url+'">'+meta.teacher_name+'</a>';
+        //         }},
+        //         { data: 'teacher_email', name: 'teacher_email', searchable: true},
+        //         { data: 'university', name: 'university', searchable: true},
+        //         // { data: 'function', name: 'function', searchable: true},
+        //         { data: 'moodle_id', name: 'moodle_id', searchable: true},
+        //         { data: 'province', name: 'province', searchable: true, render:function (item, data, meta) {
+        //             return meta.province + ',<br/>'+meta.canton + ', <br/><small>'+meta.parroquia+'<small/>';
+        //         }},
+        //         // { data: 'canton', name: 'canton', searchable: true},
+        //         { data: 'district', name: 'district', searchable: true, render: function (item, data, meta) {
+        //
+        //             return meta.district+',<br/>'+meta.district_code+'<br/>'+'<small>'+meta.zone+'</small>';
+        //         }},
+        //         { data :'action', searchable:false, orderable: false,}
+        //     ],
+        //     initComplete: function () {
+        //         this.api().columns().every(function () {
+        //             var column = this;
+        //             var input = document.createElement("input");
+        //             $(input).appendTo($(column.footer()).empty())
+        //                 .on('change', function () {
+        //                     column.search($(this).val()).draw();
+        //                 });
+        //         });
+        //     },
+        // });
 
-        $('#teacher-table').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: {
-                url: '/admin/teachers/ajax/table',
-                method: 'POST'
-            },
-            "order": [[0, "desc"]],
-            columns: [{ data: 'id', name: 'teachers.id', searchable: false }, { data: 'social_id', name: 'teachers.social_id', searchable: true }, { data: 'teacher_name', name: 'teacher_name', searchable: true,
-                render: function render(item, data, meta) {
-                    var icon = meta.gender === 'F' ? 'female' : 'male';
-                    var url = '/admin/teachers/profile/' + meta.id;
-                    return '<i class="fa fa-' + icon + '"></i>&nbsp;<a href="' + url + '">' + meta.teacher_name + '</a>';
-                } }, { data: 'teacher_email', name: 'teacher_email', searchable: true }, { data: 'university', name: 'university', searchable: true },
-            // { data: 'function', name: 'function', searchable: true},
-            { data: 'moodle_id', name: 'moodle_id', searchable: true }, { data: 'province', name: 'province', searchable: true, render: function render(item, data, meta) {
-                    return meta.province + ',<br/>' + meta.canton + ', <br/><small>' + meta.parroquia + '<small/>';
-                } },
-            // { data: 'canton', name: 'canton', searchable: true},
-            { data: 'district', name: 'district', searchable: true, render: function render(item, data, meta) {
-
-                    return meta.district + ',<br/>' + meta.district_code + '<br/>' + '<small>' + meta.zone + '</small>';
-                } }, { data: 'action', searchable: false, orderable: false }],
-            initComplete: function initComplete() {
-                this.api().columns().every(function () {
-                    var column = this;
-                    var input = document.createElement("input");
-                    $(input).appendTo($(column.footer()).empty()).on('change', function () {
-                        column.search($(this).val()).draw();
-                    });
-                });
-            }
-        });
 
         var modal = $('#edit-teacher-modal');
 

@@ -13,6 +13,8 @@
     </tr>
     </thead>
     <tbody>
+
+    @isset($teacher)
     @foreach($teacher->allUpcomingCourses as $course)
         <tr class="{{ $course->status == 0 ? 'disabled' : '' }}">
             <td>{{ $course->university->name }}</td>
@@ -62,5 +64,6 @@
             </td>
         </tr>
     @endforeach
+    @endisset
     </tbody>
 </table>

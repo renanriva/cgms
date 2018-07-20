@@ -32,14 +32,22 @@ class TeacherController extends Controller
     }
 
 
-    public function index(){
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index(Request $request){
 
-        $user = getAuthUser();
+        $user = Auth::user();
 
         if ($user->can('browse', Teacher::class)) {
 
-        $title = 'Teacher Management - '.env('APP_NAME') ;
-        return view('lms.admin.teacher.index', ['title'=> $title]);
+            $title = 'Teacher Management - '.env('APP_NAME') ;
+
+            $page = isset($posts['page']) ? $posts['page'] : 1;
+            $teachers = $this->repo->paginate($page);
+
+            return view('lms.admin.teacher.index', ['title'=> $title, 'teachers' => $teachers]);
 
         } else{
             echo  'unauthorized';

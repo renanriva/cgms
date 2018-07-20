@@ -31,6 +31,21 @@ class TeacherRepository
     }
 
 
+    public function paginate($page){
+
+//        $data = Cache::tags('TEACHER_PAGINATE')->remember('TEACHER_PAGINATE_PAGINATE_'.$page, 60, function ()  {
+
+            return Teacher::with(['user', 'registrations', 'registrations.course'])
+                ->paginate(10);
+
+//        });
+//
+//        return $data;
+
+    }
+
+
+
     /**
      * @param array $teacher
      * @param int      $creation_type

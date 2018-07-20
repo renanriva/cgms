@@ -31,15 +31,15 @@ class CourseRepository
      */
     public function paginate($page){
 
-//        $data = Cache::tags('COURSE_PAGINATE')->remember('COURSE_PAGINATE_'.$page, 60, function ()  {
+        $data = Cache::tags('COURSE_PAGINATE')->remember('COURSE_PAGINATE_'.$page, 60, function ()  {
 
 
             return Course::with(['masterCourse', 'requests', 'university', 'registrations', 'approvedRegistrations'])
                     ->paginate(10);
 
-//        });
-//
-//        return $data;
+        });
+
+        return $data;
 
     }
 
@@ -50,17 +50,17 @@ class CourseRepository
      */
     public function coursesByUniversity($page, $universityId){
 
-//        $data = Cache::tags('COURSE_PAGINATE')->remember('COURSE_UNIVERSITY_'.$universityId.'__PAGINATE_'.$page, 60,
-//            function () use ($universityId)  {
+        $data = Cache::tags('COURSE_PAGINATE')->remember('COURSE_UNIVERSITY_'.$universityId.'__PAGINATE_'.$page, 60,
+            function () use ($universityId)  {
 
 
             return Course::with(['masterCourse', 'requests', 'university', 'registrations', 'approvedRegistrations'])
                 ->where('university_id', $universityId)
                 ->paginate(10);
 
-//        });
+        });
 
-//        return $data;
+        return $data;
     }
 
     /**

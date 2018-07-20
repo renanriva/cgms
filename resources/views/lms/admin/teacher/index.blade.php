@@ -25,27 +25,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="box-body">
+                <div class="box-body no-padding">
 
-                    <table class="table table-bordered table-responsive" id="teacher-table">
-                        <thead>
-                            <tr>
-                                <th>{{ __('lms.page.teacher.table.id') }}</th>
-                                <th>{{ __('lms.page.teacher.table.security_id') }}</th>
-                                <th width="18%">{{ __('lms.page.teacher.table.name') }}</th>
-                                <th>{{ __('lms.page.teacher.table.email') }}</th>
-                                <th>{{ __('lms.page.teacher.table.university') }}</th>
-                                {{--<th>{{ __('lms.page.teacher.table.function') }}</th>--}}
-                                <th>{{ __('lms.page.teacher.table.moodle_id') }}</th>
-                                <th>{{ __('lms.page.teacher.table.location') }}</th>
-                                {{--<th>{{ __('lms.page.teacher.table.canton') }}</th>--}}
-                                <th>{{ __('lms.page.teacher.table.district') }}</th>
-                                <th width="16%">{{ __('lms.page.teacher.table.action') }}</th>
-                            </tr>
-                        </thead>
-                        <tfoot></tfoot>
-                    </table>
+                    @include('lms.admin.teacher.profile.table')
 
+                </div>
+
+                <div class="box-footer no-padding">
+                    {{  $teachers->links() }}
                 </div>
             </div>
 

@@ -32,6 +32,8 @@
                             <th>{{ __('lms.page.course.table.status') }}</th>
 
                         </tr>
+
+                        @isset($portfolios)
                         @foreach($portfolios as $registration)
                             <tr class="{{ $registration->course->status == 0 ? 'disabled' : '' }}">
                                 <td>{{ $registration->course->university->name }}</td>
@@ -62,6 +64,7 @@
                                             {{ $registration->course->statusTitle['title'] }}</span></td>
                             </tr>
                         @endforeach
+                        @endisset
                     </tbody>
 
                 </table>
