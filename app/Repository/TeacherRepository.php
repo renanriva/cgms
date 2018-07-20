@@ -100,17 +100,13 @@ class TeacherRepository
 
         $newTeacher->first_name = $teacher['first_name'];
         $newTeacher->last_name = $teacher['last_name'];
-//        $newTeacher->social_id = $teacher['social_id'];
         $newTeacher->cc = $teacher['cc'];
 
         $newTeacher->gender = $teacher['gender'];
         $newTeacher->date_of_birth = $teacher['date_of_birth'];
-
-//        $newTeacher->email = $teacher['email'];
         $newTeacher->telephone = $teacher['telephone'];
         $newTeacher->mobile = $teacher['mobile'];
 
-//        $newTeacher->inst_email = $teacher['inst_email'];
         $newTeacher->university_name = $teacher['university_name'];
         $newTeacher->join_date = $teacher['join_date'];
         $newTeacher->end_date = $teacher['end_date'];
@@ -118,6 +114,7 @@ class TeacherRepository
 
         $newTeacher->function = $teacher['function'] ;
         $newTeacher->work_area = $teacher['work_area'];
+        $newTeacher->work_hours = $teacher['work_hours'];
 
         $newTeacher->category = $teacher['category'];
         $newTeacher->reason_type = $teacher['reason_type'];

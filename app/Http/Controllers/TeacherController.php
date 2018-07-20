@@ -155,6 +155,7 @@ class TeacherController extends Controller
             $teacher['university_name'] = $post['university'];
             $teacher['function'] = $post['teacher_function'];
             $teacher['work_area'] = $post['work_area'];
+            $teacher['work_hours'] = $post['work_hours'];
             $teacher['category'] = $post['category'];
 
             $teacher['reason_type'] = $post['reason_type'];
@@ -219,6 +220,7 @@ class TeacherController extends Controller
         $teacher['university_name'] = $post['university'];
         $teacher['function'] = $post['teacher_function'];
         $teacher['work_area'] = $post['work_area'];
+        $teacher['work_hours'] = $post['work_hours'];
         $teacher['category'] = $post['category'];
 
         $teacher['reason_type'] = $post['reason_type'];

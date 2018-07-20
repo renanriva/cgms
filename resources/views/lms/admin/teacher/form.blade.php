@@ -156,33 +156,33 @@
 
                 <div class="box box-primary">
 
-                    <div class="box-header"><h3 class="box-title">Profile Photo</h3></div>
+                    <div class="box-header"><h3 class="box-title">Personal</h3></div>
                     <div class="box-body">
 
-                        <div class="row">
-                            <div class="col-lg-6 col-sm-12">
+                        {{--<div class="row">--}}
+                            {{--<div class="col-lg-6 col-sm-12">--}}
 
-                                <div class="form-group">
+                                {{--<div class="form-group">--}}
 
-                                    <label for="" class="col-md-3 control-label">Photo</label>
-                                    <div class="col-md-9">
+                                    {{--<label for="" class="col-md-3 control-label">Photo</label>--}}
+                                    {{--<div class="col-md-9">--}}
                                         {{--<div class="text-center">--}}
                                         {{--<img src="//placehold.it/100" class="avatar img-circle" alt="avatar">--}}
                                         {{--<h6>Upload a different photo...</h6>--}}
                                         {{--</div>--}}
 
-                                    </div>
-                                </div>
-                            </div>
+                                    {{--</div>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
 
-                            <div class="col-lg-6 col-sm-12">
-                                <div class="form-group">
-                                    <div class="col-md-9 col-md-offset-3">
-                                        <input type="file" class="form-control" disabled>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            {{--<div class="col-lg-6 col-sm-12">--}}
+                                {{--<div class="form-group">--}}
+                                    {{--<div class="col-md-9 col-md-offset-3">--}}
+                                        {{--<input type="file" class="form-control" disabled>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
                         <div class="row">
 
@@ -216,6 +216,28 @@
                                                placeholder="Date of Birth" maxlength="20">
                                         <div class="help-block"></div>
                                     </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-lg-5 col-sm-12">
+
+                                <div class="form-group  ">
+                                    <label class="col-md-3 control-label" >Cell 2</label>
+                                    <div class="col-md-9">
+                                        <label class="">{{ $teacher->phone2 }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-7 col-sm-12">
+
+                                <div class="form-group ">
+                                    <label class="col-md-3 control-label">Email 2</label>
+                                    <div class="col-md-9"><label class="">{{ $teacher->email2 }}</label></div>
                                 </div>
 
                             </div>
@@ -370,6 +392,22 @@
                                     <input id="teacher-category" type="text" class="form-control" name="category"
                                            value="{{ isset($teacher) ? $teacher->category : '' }}"
                                            placeholder="Category" maxlength="100">
+                                    <div class="help-block"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                            <div class="form-group js-error-block js-work_hours-block">
+                                <label for="work_hours" class="col-md-3 control-label">Work Hours</label>
+                                <div class="col-md-9">
+                                    <input id="work_hours" type="text" class=" form-control" name="work_hours"
+                                           value="{{ isset($teacher) ? $teacher->work_hours : '' }}"
+                                           placeholder="Work Hours" maxlength="20">
                                     <div class="help-block"></div>
                                 </div>
                             </div>

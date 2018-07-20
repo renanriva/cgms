@@ -55098,6 +55098,7 @@ $(document).ready(function () {
 
                     inst_email: form.find('input[name=inst_email]').val(),
                     work_area: form.find('input[name=work_area]').val(),
+                    work_hours: form.find('input[name=work_hours]').val(),
                     teacher_function: form.find('input[name=teacher_function]').val(),
                     category: form.find('input[name=category]').val(),
 

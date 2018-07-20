@@ -23,7 +23,7 @@ class Teacher extends Model
         'first_name', 'last_name',
         'social_id', 'cc', 'date_of_birth', 'gender', 'telephone', 'mobile', 'moodle_id',
         'inst_email', 'university_name', 'function', 'work_area', 'category',
-        'email2', 'phone2',
+        'email2', 'phone2', 'work_hours',
         'reason_type', 'action_type', 'action_description', 'speciality',
         'join_date', 'end_date', 'amie', 'disability', 'ethnic_group',
         'province', 'canton', 'parroquia', 'district', 'district_code', 'zone',
