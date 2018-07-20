@@ -89,8 +89,8 @@ class MasterCourseRepository
         $course = $this->findById($id);
 
         $course->name = $data['name'];
+        $course->course_code = $data['course_code'];
         $course->updated_by = $user->id;
-
         $course->save();
 
         $this->flushCache();

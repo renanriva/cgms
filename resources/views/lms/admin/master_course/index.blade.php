@@ -44,6 +44,7 @@
                             <th width="100px">Code</th>
                             <th width="350px">Title</th>
                             <th width="350px">Subject</th>
+                            <th width="100px">Courses</th>
                             <th width="100px">Updated By</th>
                             <th width="120px">Updated at</th>
                             <th width="150px">Action</th>
@@ -59,6 +60,7 @@
                             <td><code>{{ $course->course_code }}</code></td>
                             <td>{{ $course->name }}</td>
                             <td>{{ $course->subject->title }}</td>
+                            <td><span class="badge badge-info">{{ $course->courses->count() }}</span>&nbsp;courses</td>
                             <td>{{ $course->updatedBy->name }}</td>
                             <td>{{ $course->updated_at->diffForHumans() }}</td>
                             <td>

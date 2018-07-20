@@ -36,6 +36,7 @@ $(document).ready(function () {
 
             var jsLabelsTable = $('#label-table');
 
+            console.log('label table ', jsLabelsTable);
             if (jsLabelsTable.length >0){
                 clearTable(jsLabelsTable);
             }
@@ -257,28 +258,6 @@ $(document).ready(function () {
 
         changeKnowledge();
 
-        function renderTable(table, data) {
-
-            table.html('');
-
-            $.each(data, function (key, value) {
-
-                var buttons = '<td class="text-right"> <div class="btn-group">'+
-                    '<button type="button" data-id="'+value.id+'" data-title="'+value.title+'" class="btn btn-edit-title btn-sm btn-flat btn-default">Edit</button>' +
-                    '<button type="button" data-id="'+value.id+'" class="btn btn-remove btn-sm btn-flat btn-default">Remove</button></div></td>';
-
-                var row = '<tr id="row_type_'+value.id+'"><td>'+value.id+'</td><td>'+value.title+'</td><td>'+buttons+'</td></tr>';
-
-                table.append(row);
-
-            });
-
-        }
-
-        function clearTable(table) {
-            table.html('');
-        }
-
         showEditModal();
         function showEditModal() {
 
@@ -359,8 +338,6 @@ $(document).ready(function () {
     }
 
 
-
-
     if (masterCourse.length > 0 || categoryPage.length > 0){
 
         var jsSelectType = $('#select-type');
@@ -375,6 +352,28 @@ $(document).ready(function () {
         changeSubLabel();
         changeKnowledge();
 
+    }
+
+    function renderTable(table, data) {
+
+        table.html('');
+
+        $.each(data, function (key, value) {
+
+            var buttons = '<td class="text-right"> <div class="btn-group">'+
+                '<button type="button" data-id="'+value.id+'" data-title="'+value.title+'" class="btn btn-edit-title btn-sm btn-flat btn-default">Edit</button>' +
+                '<button type="button" data-id="'+value.id+'" class="btn btn-remove btn-sm btn-flat btn-default">Remove</button></div></td>';
+
+            var row = '<tr id="row_type_'+value.id+'"><td>'+value.id+'</td><td>'+value.title+'</td><td>'+buttons+'</td></tr>';
+
+            table.append(row);
+
+        });
+
+    }
+
+    function clearTable(table) {
+        table.html('');
     }
 
 });

@@ -105,8 +105,8 @@
     const COURSE_STATUS_ACTIVE = 1;
     const COURSE_STATUS_INACTIVE = 0;
     const COURSE_STATUS = [
-        0 => 'active',
-        1 => 'inactive'
+        0 => 'inactive',
+        1 => 'active'
     ];
 
     function getCourseStatus($id){

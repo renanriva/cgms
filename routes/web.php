@@ -36,7 +36,9 @@ Route::middleware(['auth'])->group(function (){
             Route::post('/{id}', 'TeacherController@update');
             Route::delete('/{id}', 'TeacherController@delete');
 
-            Route::post('/ajax/table', 'TeacherController@getTableData');
+//            Route::post('/ajax/table', 'TeacherController@getTableData');
+
+            Route::get('/search', 'TeacherController@getSearch');
             Route::get('/profile/{id}', 'TeacherController@showProfile');
             Route::post('/upload/teachers-list', 'TeacherController@upload');
 
@@ -113,7 +115,7 @@ Route::middleware(['auth'])->group(function (){
 //            @todo move those to Registration Controller
             Route::post('/register/{id}', 'CourseController@getRegister');
 
-            Route::get('/{id}/add-grade', 'CourseController@getAddMarkPage');
+            Route::get('/{id}/show', 'CourseController@getAddMarkPage');
             Route::post('/{id}/add-grade', 'CourseController@postAddMark');
 
 

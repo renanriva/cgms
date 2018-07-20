@@ -144,8 +144,10 @@
                 ],
                 'table' => [
                     'id'                => 'Id',
+                    'master_course'     => 'Master Course',
                     'course_id'         => 'Course Id',
                     'short_name'        => 'Short Name',
+                    'modality'          => 'Modality',
                     'hours'             => 'Hours',
                     'start_date'        => 'Start Date',
                     'end_date'          => 'End Date',
@@ -153,7 +155,9 @@
                     'comment'           => 'Comment',
                     'state'             => 'State',
                     'upload_rating'     => 'Upload Rating',
-                    'action'            => 'Editor'
+                    'action'            => 'Editor',
+                    'stage'             => 'Stage',
+                    'status'            => 'Status',
                 ],
                 'form'  =>[
                     'edit_title'        => 'Edit Course',
@@ -172,7 +176,13 @@
                     'terms_condition'   => 'Terms & Condition',
                     'video'             => 'Video Information',
                     'video_type'        => 'Video Type',
+                    'master_course'     => 'Master Course',
+                    'cost'              => 'Cost',
+                    'finance_type'      => 'Finance Type',
                     'video_embed'       => 'Embed Code',
+                    'stage'             => 'Stage',
+                    'status'            => 'Status',
+                    'disclaimer_required' => 'Disclaimer Required',
                     'data_update'       => 'Data Update Tab Info',
                     'inspection_file_message' => 'After creating the course, you can upload inspection file.'
 
@@ -192,7 +202,9 @@
                     'start_date'        => 'Start Date',
                     'end_date'          => 'End Date',
                     'hours'             => 'Hours',
-                    'action'            => 'Register'
+                    'action'            => 'Register',
+                    'stage'             => 'Stage',
+                    'status'            => 'Status',
                 ]
 
             ],
