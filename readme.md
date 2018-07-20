@@ -12,6 +12,17 @@
 
 ### Installation
 
+Goto Directory
+
+    cd /var/www/
+
+
+Get the Package through git
+
+    git clone https://github.com/arifulhb/cgms.git cgms
+    cd cgms
+
+
 Install package
 
     composer install
@@ -114,3 +125,17 @@ for that course and the users by filename, and will update their diploma file in
             deny all;
         }
     }
+    
+    
+#### Getting Updates 
+
+If Developer puts new updates and inform you, get it by
+
+    cd /var/www/cgms
+    git pull origin master
+    
+Optionl: If `migration` is required
+    
+    php artisan migrate
+    
+It might ask you this is production environment. Do you want to run it. Choose Yes or Positive Answer.    
