@@ -12,49 +12,49 @@ $(document).ready(function () {
         /**
          * Datepicker
          */
-
-        $('#teacher-table').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: {
-                url:'/admin/teachers/ajax/table',
-                method: 'POST'
-            },
-            "order": [[ 0, "desc" ]],
-            columns: [
-                { data: 'id', name: 'teachers.id', searchable: false },
-                { data: 'social_id', name: 'teachers.social_id', searchable: true },
-                { data: 'teacher_name', name: 'teacher_name', searchable: true,
-                    render:function (item, data, meta) {
-                        var icon = meta.gender === 'F'? 'female':'male';
-                        var url = '/admin/teachers/profile/'+meta.id;
-                        return '<i class="fa fa-'+icon+'"></i>&nbsp;<a href="'+url+'">'+meta.teacher_name+'</a>';
-                }},
-                { data: 'teacher_email', name: 'teacher_email', searchable: true},
-                { data: 'university', name: 'university', searchable: true},
-                // { data: 'function', name: 'function', searchable: true},
-                { data: 'moodle_id', name: 'moodle_id', searchable: true},
-                { data: 'province', name: 'province', searchable: true, render:function (item, data, meta) {
-                    return meta.province + ',<br/>'+meta.canton + ', <br/><small>'+meta.parroquia+'<small/>';
-                }},
-                // { data: 'canton', name: 'canton', searchable: true},
-                { data: 'district', name: 'district', searchable: true, render: function (item, data, meta) {
-
-                    return meta.district+',<br/>'+meta.district_code+'<br/>'+'<small>'+meta.zone+'</small>';
-                }},
-                { data :'action', searchable:false, orderable: false,}
-            ],
-            initComplete: function () {
-                this.api().columns().every(function () {
-                    var column = this;
-                    var input = document.createElement("input");
-                    $(input).appendTo($(column.footer()).empty())
-                        .on('change', function () {
-                            column.search($(this).val()).draw();
-                        });
-                });
-            },
-        });
+        //
+        // $('#teacher-table').DataTable({
+        //     processing: true,
+        //     serverSide: true,
+        //     ajax: {
+        //         url:'/admin/teachers/ajax/table',
+        //         method: 'POST'
+        //     },
+        //     "order": [[ 0, "desc" ]],
+        //     columns: [
+        //         { data: 'id', name: 'teachers.id', searchable: false },
+        //         { data: 'social_id', name: 'teachers.social_id', searchable: true },
+        //         { data: 'teacher_name', name: 'teacher_name', searchable: true,
+        //             render:function (item, data, meta) {
+        //                 var icon = meta.gender === 'F'? 'female':'male';
+        //                 var url = '/admin/teachers/profile/'+meta.id;
+        //                 return '<i class="fa fa-'+icon+'"></i>&nbsp;<a href="'+url+'">'+meta.teacher_name+'</a>';
+        //         }},
+        //         { data: 'teacher_email', name: 'teacher_email', searchable: true},
+        //         { data: 'university', name: 'university', searchable: true},
+        //         // { data: 'function', name: 'function', searchable: true},
+        //         { data: 'moodle_id', name: 'moodle_id', searchable: true},
+        //         { data: 'province', name: 'province', searchable: true, render:function (item, data, meta) {
+        //             return meta.province + ',<br/>'+meta.canton + ', <br/><small>'+meta.parroquia+'<small/>';
+        //         }},
+        //         // { data: 'canton', name: 'canton', searchable: true},
+        //         { data: 'district', name: 'district', searchable: true, render: function (item, data, meta) {
+        //
+        //             return meta.district+',<br/>'+meta.district_code+'<br/>'+'<small>'+meta.zone+'</small>';
+        //         }},
+        //         { data :'action', searchable:false, orderable: false,}
+        //     ],
+        //     initComplete: function () {
+        //         this.api().columns().every(function () {
+        //             var column = this;
+        //             var input = document.createElement("input");
+        //             $(input).appendTo($(column.footer()).empty())
+        //                 .on('change', function () {
+        //                     column.search($(this).val()).draw();
+        //                 });
+        //         });
+        //     },
+        // });
 
 
 
@@ -272,23 +272,24 @@ $(document).ready(function () {
                     end_date    : form.find('input[name=end_date]').val(),
                     amie        : form.find('input[name=amie]').val(),
 
-                    inst_email        : form.find('input[name=inst_email]').val(),
-                    work_area        : form.find('input[name=work_area]').val(),
-                    teacher_function        : form.find('input[name=teacher_function]').val(),
-                    category        : form.find('input[name=category]').val(),
+                    inst_email          : form.find('input[name=inst_email]').val(),
+                    work_area           : form.find('input[name=work_area]').val(),
+                    work_hours          : form.find('input[name=work_hours]').val(),
+                    teacher_function    : form.find('input[name=teacher_function]').val(),
+                    category            : form.find('input[name=category]').val(),
 
-                    province        : form.find('.js-province').select2('data')[0].text,
-                    canton        : form.find('.js-canton').select2('data')[0].text,
-                    parroquia        : form.find('input[name=parroquia]').val(),
-                    zone        : form.find('.js-zone option:selected').val(),
-                    district        : form.find('input[name=district]').val(),
-                    dist_code        : form.find('input[name=dist_code]').val(),
+                    province            : form.find('.js-province').select2('data')[0].text,
+                    canton              : form.find('.js-canton').select2('data')[0].text,
+                    parroquia           : form.find('input[name=parroquia]').val(),
+                    zone                : form.find('.js-zone option:selected').val(),
+                    district            : form.find('input[name=district]').val(),
+                    dist_code           : form.find('input[name=dist_code]').val(),
 
-                    reason_type        : form.find('input[name=reason_type]').val(),
-                    speciality        : form.find('input[name=speciality]').val(),
-                    action_type        : form.find('input[name=action_type]').val(),
-                    action_description        : form.find('input[name=action_description]').val(),
-                    disability        : form.find('input[name=disability]').val(),
+                    reason_type         : form.find('input[name=reason_type]').val(),
+                    speciality          : form.find('input[name=speciality]').val(),
+                    action_type         : form.find('input[name=action_type]').val(),
+                    action_description  : form.find('input[name=action_description]').val(),
+                    disability          : form.find('input[name=disability]').val(),
                     ethnic_group        : form.find('input[name=ethnic_group]').val(),
 
                 };

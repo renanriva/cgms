@@ -19,17 +19,16 @@
 
 
                         @component('lms.admin.components.form-group', [   'name' => 'master-course', 'grid' => 10,
-                            'title' => 'Master Course'])
-                            <select id="js-edit-course-master-course" name="master-course" style="width: 100%"
+                            'title' => __('lms.page.course.form.master_course')])
+                            <select id="js-edit-course-master-course" style="width: 100%"
                                     class="js-edit-course-master-course js-select-master-course form-control js-lms-select2" >
                             </select>
                         @endcomponent
 
                         @component('lms.admin.components.form-group', [   'name' => 'course_type', 'grid' => 10,
                                 'title' => __('lms.page.course.form.course_type')])
-                            <select id="js-edit-course-type" class="js-edit-course-type form-control" name="course_type">
-                                <option value="Presencial">Presencial</option>
-                                <option value="Virtual">Virtual</option>
+                            <select id="js-edit-course-type" class="js-edit-course-type js-lms-select2 form-control"
+                                    style="width: 100%">
                             </select>
                         @endcomponent
 
@@ -146,17 +145,16 @@
                         @endcomponent
 
                         <div class="form-group">
-                            @component('lms.admin.components.bootstrap.group_block', [   'name' => 'video_type', 'grid' => 4,
-                                'title' => __('lms.page.course.form.video_type')])
-                                    <select id="js-edit-course-video_type" name="video_type" style="width: 100%"
-                                            class="js-edit-course-video_type js-select-video_type form-control js-lms-select2" >
-                                        <option value="youtube">Youtube</option>
-                                    </select>
-                            @endcomponent
+                            {{--@component('lms.admin.components.bootstrap.group_block', [   'name' => 'video_type', 'grid' => 4,--}}
+                                {{--'title' => __('lms.page.course.form.video_type')])--}}
+                                    {{--<select id="js-edit-course-video_type" name="video_type" style="width: 100%"--}}
+                                            {{--class="js-edit-course-video_type js-select-video_type form-control js-lms-select2" >--}}
+                                        {{--<option value="youtube">Youtube</option>--}}
+                                    {{--</select>--}}
+                            {{--@endcomponent--}}
 
-                            @component('lms.admin.components.bootstrap.group_block', [   'name' => 'video_embed_code', 'grid' => 4,
-                                'title' => ''])
-
+                            @component('lms.admin.components.bootstrap.group_block',
+                            [ 'name' => 'video_embed_code', 'grid' => 4, 'title' => ''])
 
                                 @slot('label')
                                         <a href="javascript:void(0)" data-toggle="tooltip"
@@ -168,6 +166,15 @@
                                     <input id="js-edit-course-video_embed_code"
                                            class="js-edit-course-video_embed_code form-control" name="video_embed_code"
                                            value="" required placeholder="{{ __('lms.page.course.form.video_embed') }}" />
+                            @endcomponent
+
+                            @component('lms.admin.components.bootstrap.group_block', [   'name' => 'Disclaimer Required', 'grid' => 4,
+                                'title' => __('lms.page.course.form.disclaimer_required')])
+                                <select id="js-edit-course-disclaimer_required" name="disclaimer_required" style="width: 100%"
+                                        class="js-edit-course-disclaimer_required js-select-disclaimer_required form-control" >
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
                             @endcomponent
 
                         </div>
@@ -188,7 +195,7 @@
 
                         <div class="form-group">
                             @component('lms.admin.components.bootstrap.group_block', [   'name' => 'course_stage', 'grid' => 4,
-                                'title' => 'Stage'])
+                                'title' => __('lms.page.course.form.stage')])
                                 <select id="js-edit-course-stage" name="course_stage"
                                         class="js-edit-course-stage js-select-course-stage form-control" >
                                     <option value="0">Draft</option>
@@ -197,12 +204,26 @@
                             @endcomponent
 
                             @component('lms.admin.components.bootstrap.group_block', [   'name' => 'course_status', 'grid' => 4,
-                                'title' => 'Status'])
+                                'title' => __('lms.page.course.form.status')])
                                 <select id="js-edit-course-status" name="course_status"
                                         class="js-edit-course-status js-select-course-status form-control" >
                                     <option value="0">Inactive</option>
                                     <option value="1">Active</option>
                                 </select>
+                            @endcomponent
+                        </div>
+                        <div class="form-group">
+                            @component('lms.admin.components.bootstrap.group_block', ['name' => 'Cost', 'grid' => 4,
+                                'title' => __('lms.page.course.form.cost')])
+                                <input id="js-edit-course-cost" class="js-edit-course-cost form-control" type="number"
+                                        step="any" placeholder="{{ __('lms.page.course.form.cost') }}" />
+                            @endcomponent
+
+                            @component('lms.admin.components.bootstrap.group_block', ['name' => 'Finance Type', 'grid' => 4,
+                                'title' => __('lms.page.course.form.finance_type')])
+                                    <input id="js-edit-course-finance_type" type="text" maxlength="200"
+                                           class="js-edit-course-finance_type form-control"
+                                           required placeholder="{{ __('lms.page.course.form.finance_type') }}" />
                             @endcomponent
                         </div>
 
@@ -231,12 +252,15 @@
                         <div class="col-md-12 col-md-12 col-sm-12">
 
                             <code>Upload Terms and Condition</code>
-                            {{--<div class="js-load-tc_file"></div>--}}
                             <div id="course-terms_condition-uploader-manual-trigger"></div>
 
                             <code>Upload Letter of Registration</code>
-                            {{--<div class="js-load-lor"></div>--}}
                             <div id="course-letter_of_registration-uploader-manual-trigger"></div>
+
+                            <div class="js-disclaimer-wrapper hidden">
+                            <code>Upload Disclaimer</code>
+                            <div id="course-disclaimer-uploader-manual-trigger"></div>
+                            </div>
 
                         </div>
 
@@ -245,15 +269,21 @@
                 </div>
 
                 <div class="modal-footer">
-                    <div class="text-left">
-                        <button class="btn btn-info btn-update-course-files hidden"
-                                type="button"><i class="fa fa-cloud-upload"></i> Update Files</button>
-                        <button class="btn btn-info btn-show-course-form hidden"
-                                type="button">Show Form</button>
+                    <div class="row">
+
+                        <div class="col-lg-6 col-sm-6 col-md-6 text-left">
+                            <button class="btn btn-info btn-update-course-files hidden"
+                                    type="button"><i class="fa fa-cloud-upload"></i> Update Files</button>
+                            <button class="btn btn-info btn-show-course-form hidden"
+                                    type="button">Show Form</button>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-md-6">
+
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" id="btn-edit-course" data-id="" class="btn btn-primary" data-type="update">
+                                <i class="fa fa-plus"></i> Update</button>
+                        </div>
                     </div>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" id="btn-edit-course" data-id="" class="btn btn-primary" data-type="update">
-                        <i class="fa fa-plus"></i> Update</button>
                 </div>
             </form>
         </div>
@@ -261,3 +291,4 @@
 </div>
 @include('lms.admin.course.templates.terms_condition_upload_template')
 @include('lms.admin.course.templates.letter_of_registration_template')
+@include('lms.admin.course.templates.disclaimer_upload_template')

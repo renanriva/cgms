@@ -15,31 +15,36 @@
 
                     <tbody>
                         <tr>
-                            <th>Course Type</th>
-                            <th>Course</th>
-                            <th>University</th>
-                            <th>Modalidad</th>
-                            <th>Hours</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
+                            <th>{{ __('lms.page.upcoming.table.institution') }}</th>
+                            <th>{{ __('lms.page.upcoming.table.short_name') }}</th>
+                            <th>{{ __('lms.page.upcoming.table.modality') }}</th>
+                            <th>{{ __('lms.page.upcoming.table.hours') }}</th>
+                            <th>{{ __('lms.page.upcoming.table.start_date') }}</th>
+                            <th>{{ __('lms.page.upcoming.table.end_date') }}</th>
                             <th>Status</th>
                             <th>Grade</th>
                             <th>Grade Approved</th>
                             <th>Certificate</th>
                             <th>Diploma</th>
+
+
+                            <th>{{ __('lms.page.course.table.stage') }}</th>
+                            <th>{{ __('lms.page.course.table.status') }}</th>
+
                         </tr>
+
+                        @isset($portfolios)
                         @foreach($portfolios as $registration)
-                            <tr>
-                                <td>{{ $registration->course->course_type }}</td>
-                                <td>{{ $registration->course->short_name }}<br/>
+                            <tr class="{{ $registration->course->status == 0 ? 'disabled' : '' }}">
+                                <td>{{ $registration->course->university->name }}</td>
+                                <td><a href="{{ url("/admin/course/".$registration->course->id."/show") }}">
+                                        {{ $registration->course->short_name }}</a><br/>
                                     <small class="text-warning">{{ $registration->course->course_code }}</small>
                                 </td>
-                                <td>{{ $registration->course->university->name }}</td>
-                                <td>{{ $registration->course->modality }}</td>
+                                <td>{{ $registration->course->modality->title }}</td>
                                 <td>{{ $registration->course->hours }}</td>
                                 <td>{{ date('d M Y', strtotime($registration->course->start_date)) }}</td>
                                 <td>{{ date('d M Y', strtotime($registration->course->end_date)) }}</td>
-                                {{--@include('lms.admin.registration.parts.table.td.is_approved')--}}
                                 <td>
                                     @if($registration->is_approved == REGISTRATION_IS_APPROVED)
                                         <i class="fa fa-check-square-o"></i> Approved<br/>
@@ -53,8 +58,13 @@
                                 @include('lms.admin.registration.parts.table.td.mark_approved')
                                 @include('lms.admin.registration.parts.table.td.certificate')
                                 @include('lms.admin.registration.parts.table.td.diploma')
+                                <td><span class="label label-{{ $registration->course->stageTitle['class'] }}">
+                                            {{ $registration->course->stageTitle['title'] }}</span></td>
+                                <td><span class="label label-{{ $registration->course->statusTitle['class'] }}">
+                                            {{ $registration->course->statusTitle['title'] }}</span></td>
                             </tr>
                         @endforeach
+                        @endisset
                     </tbody>
 
                 </table>

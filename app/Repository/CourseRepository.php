@@ -26,6 +26,44 @@ class CourseRepository
 {
 
     /**
+     * @param $page
+     * @return mixed
+     */
+    public function paginate($page){
+
+        $data = Cache::tags('COURSE_PAGINATE')->remember('COURSE_PAGINATE_'.$page, 60, function ()  {
+
+
+            return Course::with(['masterCourse', 'requests', 'university', 'registrations', 'approvedRegistrations'])
+                    ->paginate(10);
+
+        });
+
+        return $data;
+
+    }
+
+    /**
+     * @param $page
+     * @param $universityId
+     * @return mixed
+     */
+    public function coursesByUniversity($page, $universityId){
+
+        $data = Cache::tags('COURSE_PAGINATE')->remember('COURSE_UNIVERSITY_'.$universityId.'__PAGINATE_'.$page, 60,
+            function () use ($universityId)  {
+
+
+            return Course::with(['masterCourse', 'requests', 'university', 'registrations', 'approvedRegistrations'])
+                ->where('university_id', $universityId)
+                ->paginate(10);
+
+        });
+
+        return $data;
+    }
+
+    /**
      * @param array $post
      * @return Course
      */
@@ -38,8 +76,7 @@ class CourseRepository
         $course = new Course();
 
         $course->course_code            = $post['course_code'];
-        $course->course_type            = $post['course_type'];
-        $course->modality               = $post['modality'];
+        $course->course_type_id       = $post['course_type_id'];
 
         $course->university_id          = $post['university_id'];
         $course->short_name             = $post['short_name'];
@@ -57,6 +94,16 @@ class CourseRepository
         $course->video_code             = $post['video_code'];
         $course->data_update_brief      = $post['data_update_text'];
         $course->terms_conditions       = $post['terms_conditions'];
+
+        $course->master_course_id       = $post['master_course_id'];
+        $course->edition                = $post['course_edition'];
+        $course->stage                  = $post['course_stage'];
+        $course->status                 = $post['course_status'];
+        $course->has_disclaimer          = $post['is_disclaimer'];
+        $course->cost                   = $post['cost'];
+        $course->finance_type           = $post['finance_type'];
+        $course->grade_upload_start_date             = $post['grade_upload_start_date'];
+        $course->grade_upload_end_date               = $post['grade_upload_start_date'];
 
         $course->inspection_form_generated = false;
 
@@ -214,6 +261,12 @@ class CourseRepository
 
         return $this->findById($id);
 
+    }
+
+    public function flushCache(){
+
+        Cache::tags(['COURSE_FIND_BY_ID']);
+        Cache::tags(['COURSE_PAGINATE']);
     }
 
     /**

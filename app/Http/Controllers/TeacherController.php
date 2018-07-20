@@ -32,17 +32,55 @@ class TeacherController extends Controller
     }
 
 
-    public function index(){
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index(Request $request){
 
-        $user = getAuthUser();
+        $user = Auth::user();
 
         if ($user->can('browse', Teacher::class)) {
 
-        $title = 'Teacher Management - '.env('APP_NAME') ;
-        return view('lms.admin.teacher.index', ['title'=> $title]);
+            $title = 'Teacher Management - '.env('APP_NAME') ;
+
+            $page = isset($posts['page']) ? $posts['page'] : 1;
+            $teachers = $this->repo->paginate($page);
+
+            return view('lms.admin.teacher.index', ['title'=> $title, 'teachers' => $teachers]);
 
         } else{
             echo  'unauthorized';
+        }
+
+    }
+
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getSearch(Request $request)
+    {
+
+
+        $user = Auth::user();
+
+        if ($user->can('browse', Teacher::class)) {
+
+            $posts = $request->query();
+
+            $title = 'Teacher Search Result for ['.$posts['search'].'] - '.env('APP_NAME') ;
+
+            $page = isset($posts['page']) ? $posts['page'] : 1;
+            $teachers = $this->repo->search($page, $posts['search']);
+
+            return view('lms.admin.teacher.index', ['title'=> $title, 'teachers' => $teachers]);
+
+        } else{
+
+            echo  'unauthorized';
+
         }
 
     }
@@ -63,44 +101,6 @@ class TeacherController extends Controller
         } else{
             echo  'unauthorized';
         }
-
-    }
-
-
-    /**
-     * Process datatables ajax request.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getTableData()
-    {
-
-        $teachers = Teacher::select([
-            'teachers.id as id',
-            'teachers.first_name as teacher_name',
-            'users.email as teacher_email',
-            'teachers.social_id as social_id',
-            'teachers.cc as cc',
-            'teachers.moodle_id as moodle_id',
-            'teachers.university_name as university',
-            'teachers.function as function',
-            'teachers.gender as gender',
-            'teachers.province as province',
-            'teachers.canton as canton',
-            'teachers.parroquia as parroquia',
-            'teachers.district as district',
-            'teachers.district_code as district_code',
-            'teachers.zone as zone',
-            'teachers.amie as amie',
-            ])
-            ->join('users','teachers.user_id', '=' ,'users.id');
-
-        return Datatables::of($teachers)
-            ->editColumn('action', 'lms.admin.teacher.action')
-            ->setRowId(function ($teachers){
-                return 'teacher_id_'.$teachers->id;
-            })
-            ->make(true);
 
     }
 
@@ -155,6 +155,7 @@ class TeacherController extends Controller
             $teacher['university_name'] = $post['university'];
             $teacher['function'] = $post['teacher_function'];
             $teacher['work_area'] = $post['work_area'];
+            $teacher['work_hours'] = $post['work_hours'];
             $teacher['category'] = $post['category'];
 
             $teacher['reason_type'] = $post['reason_type'];
@@ -219,6 +220,7 @@ class TeacherController extends Controller
         $teacher['university_name'] = $post['university'];
         $teacher['function'] = $post['teacher_function'];
         $teacher['work_area'] = $post['work_area'];
+        $teacher['work_hours'] = $post['work_hours'];
         $teacher['category'] = $post['category'];
 
         $teacher['reason_type'] = $post['reason_type'];
@@ -256,6 +258,7 @@ class TeacherController extends Controller
         $new_teacher = $teacher_repo->update($teacher, $id);
 
 
+        $this->repo->flushCache();
         $this->repo->flushCacheById($id);
         $this->repo->registrationRepo->flushAllCache();
 
@@ -335,6 +338,8 @@ class TeacherController extends Controller
                         array_push($rows, $teacher);
                     }
 //                    @todo update the data on else
+
+                    $this->repo->flushCache();
 
                 }
 

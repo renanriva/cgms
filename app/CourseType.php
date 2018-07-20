@@ -27,11 +27,9 @@ class CourseType extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function modalities(){
-
-        return $this->hasMany('App\CourseModality', 'course_type_id', 'id');
+    public function course(){
+        return $this->hasMany('App\Course', 'course_type_id', 'id');
     }
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

@@ -27,6 +27,11 @@ class AddMasterCourseInCourseTable extends Migration
 
             $table->tinyInteger('stage')->default(COURSE_STAGE_PUBLISHED);//1=published /  0 = draft
             $table->tinyInteger('status')->default(COURSE_STATUS_ACTIVE);//1=active / 0  = inactive
+            $table->integer('course_type_id')->nullable()->unsigned();
+
+            $table->dropColumn('modality');
+
+
         });
 
     }
@@ -38,7 +43,7 @@ class AddMasterCourseInCourseTable extends Migration
      */
     public function down()
     {
-        Schema::table('master_course_id', function($table) {
+        Schema::table('courses', function($table) {
             $table->dropColumn('master_course_id');
             $table->dropColumn('edition');
             $table->dropColumn('cost');
@@ -49,6 +54,10 @@ class AddMasterCourseInCourseTable extends Migration
             $table->dropColumn('grade_upload_end_date');
             $table->dropColumn('stage');
             $table->dropColumn('status');
+            $table->dropColumn('course_type_id');
+
+            $table->string('modality', 100)->nullable();
+
         });
     }
 }

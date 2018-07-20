@@ -43,12 +43,32 @@ class CourseController extends Controller
 
     /**
      * @todo add authorization check
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(){
+    public function index(Request $request){
+
+        $posts = $request->all();
+
+        $user = Auth::user();
+        $page = isset($posts['page']) ? $posts['page'] : 1;
+
+
+        if ($user->role == 'admin'){
+
+            $courses = $this->repo->paginate($page);
+
+
+        } elseif ($user->role == 'university'){
+
+            $courses = $this->repo->coursesByUniversity($page, $user->university->id);
+
+        }
+
 
         $title = 'Course Management - '.env('APP_NAME') ;
-        return view('lms.admin.course.index', ['title'=> $title]);
+
+        return view('lms.admin.course.index', ['title'=> $title, 'courses' => $courses]);
 
     }
 
@@ -70,7 +90,7 @@ class CourseController extends Controller
     public function getTableData()
     {
 
-        $user = getAuthUser();
+        $user = Auth::user();
 
         if ($user->role == 'admin'){
 
@@ -106,10 +126,8 @@ class CourseController extends Controller
 
         $post = $request->all();
 
-        $course['course_code']    = $post['course_code'];
-        $course['course_type']    = $post['course_type'];
-        $course['modality']       = $post['modality'];
-
+        $course['course_code']                  = $post['course_code'];
+        $course['course_type_id']               = $post['course_type'];
         $course['university_id']                = $post['university_id'];
         $course['short_name']                   = $post['short_name'];
 
@@ -137,6 +155,28 @@ class CourseController extends Controller
         $course['video_code']                   = $post['video_code'];
         $course['data_update_brief']            = $post['data_update_text'];
         $course['terms_conditions']            = $post['terms_condition'];
+        $course['master_course_id']             = $post['master_course_id'];
+        $course['edition']                      = $post['course_edition'];
+        $course['stage']                        = $post['course_stage'];
+        $course['status']                       = $post['course_status'];
+        $course['is_disclaimer']                = $post['is_disclaimer'];
+        $course['cost']                         = $post['cost'];
+        $course['finance_type']                 = $post['finance_type'];
+
+        if (isset($post['grade_entry_start_date'])) {
+            $startDate = DateTime::createFromFormat('d/m/Y', $post['grade_entry_start_date']);
+            $course['grade_upload_start_date'] = $startDate->format('Y-m-d');
+        } else{
+            $course['grade_upload_start_date'] =  null;
+        }
+
+        if (isset($post['grade_entry_end_date'])) {
+            $startDate = DateTime::createFromFormat('d/m/Y', $post['grade_entry_end_date']);
+            $course['grade_upload_end_date'] = $startDate->format('Y-m-d');
+        } else{
+            $course['grade_upload_end_date'] =  null;
+        }
+
 
         $course['inspection_form_generated']    = false;
 
@@ -158,9 +198,7 @@ class CourseController extends Controller
 
             $post = $request->all();
 
-            // @todo add different procedure to update course code
-            $course->course_type    = $post['course_type'];
-            $course->modality       = $post['modality'];
+            $course['course_type_id']               = $post['course_type'];
 
             $course->university_id  = $post['university_id'];
             $course->short_name     = $post['short_name'];
@@ -191,7 +229,27 @@ class CourseController extends Controller
             $course->video_code                   = $post['video_code'];
             $course->data_update_brief            = $post['data_update_text'];
             $course->terms_conditions             = $post['terms_condition'];
+            $course->master_course_id             = $post['master_course_id'];
+            $course->edition                      = $post['course_edition'];
+            $course->stage                        = $post['course_stage'];
+            $course->status                       = $post['course_status'];
+            $course->has_disclaimer               = $post['is_disclaimer'];
+            $course->cost                         = $post['cost'];
+            $course->finance_type                 = $post['finance_type'];
 
+            if (isset($post['grade_entry_start_date'])) {
+                $startDate = DateTime::createFromFormat('d/m/Y', $post['grade_entry_start_date']);
+                $course->grade_upload_start_date = $startDate->format('Y-m-d');
+            } else{
+                $course->grade_upload_start_date =  null;
+            }
+
+            if (isset($post['grade_entry_end_date'])) {
+                $endDate = DateTime::createFromFormat('d/m/Y', $post['grade_entry_end_date']);
+                $course->grade_upload_end_date = $endDate->format('Y-m-d');
+            } else{
+                $course->grade_upload_end_date =  null;
+            }
 
             $course->updated_by     = Auth::user()->id;
             $course->save();
@@ -365,6 +423,17 @@ class CourseController extends Controller
                 return response()->json(['path'=> $path, 'success' => true]);
             }
 
+        } elseif ($type == 'disclaimer'){
+
+            $path = $root_path.'/disclaimer';
+            $filename = "course_".$request->input('course_id').'_disclaimer.'.$request->file('qqfile')->extension();
+
+            $cloud = Storage::disk();
+            $path = $cloud->putFileAs($path, $request->file('qqfile'), $filename);
+
+            $course->disclaimer_file  = storage_path('app/'.$path);
+            $course->save();
+
         }
 
         $this->repo->flushById($request->input('course_id'));
@@ -446,7 +515,7 @@ class CourseController extends Controller
     public function getAddMarkPage($courseId){
 
 
-        $user = getAuthUser();
+        $user = Auth::user();
         $course = $this->repo->getById($courseId);
 
 
