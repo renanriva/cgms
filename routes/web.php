@@ -36,7 +36,9 @@ Route::middleware(['auth'])->group(function (){
             Route::post('/{id}', 'TeacherController@update');
             Route::delete('/{id}', 'TeacherController@delete');
 
-            Route::post('/ajax/table', 'TeacherController@getTableData');
+//            Route::post('/ajax/table', 'TeacherController@getTableData');
+
+            Route::get('/search', 'TeacherController@getSearch');
             Route::get('/profile/{id}', 'TeacherController@showProfile');
             Route::post('/upload/teachers-list', 'TeacherController@upload');
 
