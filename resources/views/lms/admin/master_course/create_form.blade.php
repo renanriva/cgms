@@ -44,13 +44,13 @@
 
                 @component('lms.admin.components.bootstrap.form-group', ['name' => 'Course Code'])
                     <input type="text" class="form-control" id="code" maxlength="20"
-                           value="{{ isset($master) ? $master->code : ''  }}"
+                           value="{{ isset($master) ? $master->course_code : ''  }}"
                            placeholder="Course Code" name="course_code">
                 @endcomponent
 
                 @component('lms.admin.components.bootstrap.form-group', ['name' => 'Course Title'])
                     <input type="text" class="form-control" id="title" maxlength="250"
-                           value="{{ isset($master) ? $master->title : ''  }}"
+                           value="{{ isset($master) ? $master->name : ''  }}"
                            placeholder="Course Title" name="name">
                 @endcomponent
 
