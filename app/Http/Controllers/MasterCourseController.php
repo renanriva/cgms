@@ -56,16 +56,24 @@ class MasterCourseController extends Controller
 
     }
 
-    public function update(Request $request){
+    public function update(Request $request, $id){
+
+
+        $post = $request->all();
+
+        $this->repo->update($post, $id);
+
+        return response()->redirectTo('/admin/master-course');
+
 
     }
 
 
     public function show($id){
 
-        $type = $this->repo->findById($id);
+        $course = $this->repo->findById($id);
 
-        return view('lms.admin.course_type.create', ['type' => $type, 'title'=> 'Edit Course']);
+        return view('lms.admin.master_course.create', ['master' => $course, 'title'=> 'Edit Course']);
 
 
     }
@@ -74,7 +82,7 @@ class MasterCourseController extends Controller
 
         $this->repo->delete($id);
 
-        return response()->redirectTo('/admin/course-type');
+        return response()->redirectTo('/admin/master-course');
 
 
     }
