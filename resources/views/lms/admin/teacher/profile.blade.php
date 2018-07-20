@@ -128,18 +128,16 @@
                         <h3 class="box-title">{{ __('lms.page.teacher_profile.index.table_header') }}</h3>
                     </div>
                 </div>
-                <div class="box-body">
+                <div class="box-body  no-padding">
 
-                    <table class="table table-bordered table-responsive" id="teacher-table">
+                    <table class="table table-borderless table-responsive table-hover" id="teacher-table">
                         <thead>
                             <tr>
-                                {{--<th>{{ __('lms.page.teacher.table.id') }}</th>--}}
                                 <th>{{ __('lms.page.teacher_profile.table.institute') }}</th>
-                                <th>{{ __('lms.page.teacher_profile.table.course_type') }}</th>
                                 <th>{{ __('lms.page.teacher_profile.table.course_name') }}</th>
+                                <th>{{ __('lms.page.teacher_profile.table.modality') }}</th>
                                 <th>Grade</th>
                                 <th>Grade Approved By</th>
-                                <th>{{ __('lms.page.teacher_profile.table.modality') }}</th>
                                 <th>{{ __('lms.page.teacher_profile.table.hours') }}</th>
                                 <th>{{ __('lms.page.teacher_profile.table.start_date') }}</th>
                                 <th>{{ __('lms.page.teacher_profile.table.end_date') }}</th>
@@ -151,13 +149,15 @@
                         </thead>
                         <tbody>
                             @foreach($teacher->registrations->sortByDesc('approval_time') as $registration)
-                                <tr>
+                                <tr class="{{ $registration->course->status == 0 ? 'disabled' : '' }}">
                                     <td>{{ $registration->course->university->name }}</td>
-                                    <td>{{ $registration->course->course_type }}</td>
                                     <td>{{ $registration->course->short_name }}<br/>
-                                        <small class="text-warning">{{ $registration->course->course_code }}</small></td>
+                                        <small class="text-warning">
+                                            {{ $registration->course->course_code }}</small>
+                                    </td>
+                                    <td>{{ $registration->course->modality->title }}</td>
+
                                     @include('lms.admin.registration.parts.table.td.mark_approved')
-                                    <td>{{ $registration->course->modality }}</td>
                                     <td>{{ $registration->course->hours }}</td>
                                     <td>{{ date('d M Y', strtotime($registration->course->start_date)) }}</td>
                                     <td>{{ date('d M Y', strtotime($registration->course->end_date)) }}</td>

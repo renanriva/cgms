@@ -515,7 +515,7 @@ class CourseController extends Controller
     public function getAddMarkPage($courseId){
 
 
-        $user = getAuthUser();
+        $user = Auth::user();
         $course = $this->repo->getById($courseId);
 
 

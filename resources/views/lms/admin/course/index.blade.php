@@ -27,27 +27,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="box-body">
+                <div class="box-body no-padding">
 
                     @include('lms.admin.course.templates.table')
-                    {{--<table class="table table-bordered table-responsive" id="course-table">--}}
-                        {{--<thead>--}}
-                            {{--<tr>--}}
-                                {{--<th>{{ __('lms.page.course.table.course_id') }}</th>--}}
-                                {{--<th>{{ __('lms.page.course.table.short_name') }}</th>--}}
-                                {{--<th>{{ __('lms.page.course.table.hours') }}</th>--}}
-                                {{--<th>{{ __('lms.page.course.table.start_date') }}</th>--}}
-                                {{--<th>{{ __('lms.page.course.table.end_date') }}</th>--}}
-                                {{--<th>{{ __('lms.page.course.table.quota') }}</th>--}}
-                                {{--<th>{{ __('lms.page.course.table.stage') }}</th>--}}
-                                {{--<th>{{ __('lms.page.course.table.status') }}</th>--}}
-                                {{--<th>{{ __('lms.page.course.table.comment') }}</th>--}}
-                                {{--<th>{{ __('lms.page.course.table.action') }}</th>--}}
-                            {{--</tr>--}}
-                        {{--</thead>--}}
-                        {{--<tfoot></tfoot>--}}
-                    {{--</table>--}}
 
+                </div>
+
+                <div class="box-footer no-padding">
+                    {{  $courses->links() }}
                 </div>
             </div>
 

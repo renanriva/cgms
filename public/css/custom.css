@@ -26,3 +26,6 @@
 .auxilary{
     background-color: #eeeeee;
 }
+tr.disabled{
+  background-color: #dddddd;
+}
