@@ -26,8 +26,6 @@ Get the Package through git
 Install package
 
     composer install
-    php artisan migrate
-    php artisan db:seed
 
 #### Update .env file
 
@@ -64,6 +62,8 @@ Install package
     MAIL_ENCRYPTION=null
    
    
+    SYSTEM_ADMIN_EMAIL=''
+    SYSTEM_ADMIN_PASSWORD=''
     
     ADLDAP_CONNECTION="default"
     ADLDAP_CONTROLLERS="181.113.25.234"
@@ -77,7 +77,19 @@ Install package
     ADLDAP_ADMIN_USERNAME=ADMIN_USERNAME_HERE
     ADLDAP_ADMIN_PASSWORD=ADMIN_PASSWORD_HERE
 
+##### System Admin email & Password
 
+In this `.env` file, you have `SYSTEM_ADMIN_EMAIL=` and `SYSTEM_ADMIN_PASSWORD=`. Please fill this fields before you 
+go for Database Migration.
+
+
+#### Database Migration & Initial Data
+
+Run following commands after preparing  `.env` file to populate database and initial data.
+
+    php artisan migrate
+    php artisan db:seed
+    
 ### Run the Queue
 
 When uploading diploma file in zip format, the system will store the zip file and a queue process `ExtractDiplomaFile` 
@@ -138,4 +150,9 @@ Optionl: If `migration` is required
     
     php artisan migrate
     
-It might ask you this is production environment. Do you want to run it. Choose Yes or Positive Answer.    
+It might ask you this is production environment. Do you want to run it. Choose Yes or Positive Answer.
+    
+    
+## Common Issue:
+    
+1. `storage` Folder permission. Please find the sollution [here](https://laracasts.com/discuss/channels/general-discussion/laravel-framework-file-permission-security)
