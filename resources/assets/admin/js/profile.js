@@ -3,17 +3,6 @@
  */
 $(document).ready(function () {
 
-    console.log('Common');
-
-
-    var selectProvinceLength = $('.js-select-province').length;
-
-    if(selectProvinceLength > 0) {
-
-
-    }
-
-
     /**
      * Close Delete Modal
      */

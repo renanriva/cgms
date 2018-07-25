@@ -4,6 +4,8 @@
 $(document).ready(function () {
 
     var pageLength = $('#page_university').length;
+    var app_url = $('#app_url').val();
+
 
     if(pageLength > 0) {
 
@@ -16,13 +18,13 @@ $(document).ready(function () {
             processing: true,
             serverSide: true,
             ajax: {
-                url:'/admin/university/ajax/table',
+                url: app_url+'/admin/university/ajax/table',
                 method: 'POST'
             },
             columns: [
                 { data: 'id', name: 'universities.id', searchable: true },
                 { data: 'name', name: 'name', searchable: true, render: function (item, type, data) {
-                    return '<a href="/admin/university/'+data.id+'">'+item+'</a>';
+                    return '<a href="'+app_url+'/admin/university/'+data.id+'">'+item+'</a>';
                 }},
                 { data: 'email', name: 'email', searchable: true},
                 { data: 'phone', name: 'phone', searchable: true},
@@ -145,15 +147,13 @@ $(document).ready(function () {
             var ajaxObj = {
                 method: 'post',
                 data: data,
-                url: '/admin/university/ajax'
+                url: app_url+'/admin/university/ajax'
             };
 
             $.ajax(ajaxObj)
                 .done(function (response, textStatus, jqXhr) {
 
                     if (jqXhr.status === 201) {
-
-                        console.log(response.university);
 
                         var row = '<tr class="success"><td>'+response.university.id+'</td>' +
                             '<td>'+data.name+'</td><' +
@@ -190,11 +190,10 @@ $(document).ready(function () {
             var ajaxObj = {
                 method: 'post',
                 data: data,
-                url: '/admin/university/ajax/'+data.id
+                url: app_url+'/admin/university/ajax/'+data.id
             };
             $.ajax(ajaxObj)
                 .done(function (response, textStatus, jqXhr) {
-
 
                     if (jqXhr.status === 200) {
 
@@ -214,8 +213,8 @@ $(document).ready(function () {
 
                 }).fail(function (jqXhr, textStatus, errorThrown) {
 
-                alert('Error: '+errorThrown);
-                console.log('error ', jqXhr);
+                    alert('Error: '+errorThrown);
+                    console.log('error ', jqXhr);
 
             });
 

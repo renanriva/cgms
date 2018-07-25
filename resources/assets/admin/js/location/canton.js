@@ -2,8 +2,10 @@ $(document).ready(function () {
 
 
     var page = $('#page_canton').length;
+    var app_url = $('#app_url').val();
 
     if (page > 0){
+
 
         console.log('canton ready');
 
@@ -11,7 +13,7 @@ $(document).ready(function () {
             processing: true,
             serverSide: true,
             ajax: {
-                url:'/admin/location/canton/ajax/table',
+                url: app_url+'/admin/location/canton/ajax/table',
                 method: 'POST'
             },
             columns: [
@@ -127,7 +129,7 @@ $(document).ready(function () {
             var ajaxObj = {
                 method: 'post',
                 data: data,
-                url: '/admin/location/canton/'+ data.id+'/ajax'
+                url: app_url+'/admin/location/canton/'+ data.id+'/ajax'
             };
 
             $.ajax(ajaxObj)
@@ -168,7 +170,7 @@ $(document).ready(function () {
             var ajaxObj = {
                 method: 'post',
                 data: data,
-                url: '/admin/location/canton/ajax'
+                url: app_url+'/admin/location/canton/ajax'
             };
 
             $.ajax(ajaxObj)
@@ -272,7 +274,7 @@ $(document).ready(function () {
 
             var ajaxObj = {
                 method: 'post',
-                url: '/admin/location/province/ajax/all'
+                url: app_url+'/admin/location/province/ajax/all'
             };
 
             $.ajax(ajaxObj)
