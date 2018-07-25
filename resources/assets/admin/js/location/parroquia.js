@@ -2,16 +2,15 @@ $(document).ready(function () {
 
 
     var page = $('#page_parroquia').length;
+    var app_url = $('#app_url').val();
 
     if (page > 0){
-
-        console.log('Parroquia ready');
 
         $('#parroquia-table').DataTable({
             processing: true,
             serverSide: true,
             ajax: {
-                url:'/admin/location/parroquia/ajax/table',
+                url: app_url+'/admin/location/parroquia/ajax/table',
                 method: 'POST'
             },
             columns: [
@@ -118,7 +117,7 @@ $(document).ready(function () {
             var ajaxObj = {
                 method: 'post',
                 data: data,
-                url: '/admin/location/parroquia/'+ data.id+'/ajax'
+                url: app_url+'/admin/location/parroquia/'+ data.id+'/ajax'
             };
 
             $.ajax(ajaxObj)
@@ -156,7 +155,7 @@ $(document).ready(function () {
             var ajaxObj = {
                 method: 'post',
                 data: data,
-                url: '/admin/location/parroquia/ajax'
+                url: app_url+'/admin/location/parroquia/ajax'
             };
 
             $.ajax(ajaxObj)

@@ -4,10 +4,11 @@
 $(document).ready(function () {
 
     var pageCourseLength = $('#page_register').length;
+    var app_url = $('#app_url').val();
+
 
     if(pageCourseLength > 0) {
 
-        console.log('register');
 
         var registrationId = $('#registration_id').val();
 
@@ -26,9 +27,9 @@ $(document).ready(function () {
         function updateRegistration(registrationId, data, part) {
 
             var obj = {
-                url: '/admin/registration/'+registrationId+'/update/'+part,
+                url: app_url+'/admin/registration/'+registrationId+'/update/'+part,
                 method: 'POST',
-                data: data,
+                data: data
             };
             $.ajax(obj)
             .done(function (response, textStatus, jqXhr) {
@@ -44,8 +45,8 @@ $(document).ready(function () {
                 $('.btn-accept-tc').remove();
 
             }).fail(function (jqXhr, textStatus, errorThrown) {
-                console.log(' fail registration ' , jqXhr);
 
+                console.log(' fail registration ' , jqXhr);
                 alert('Error : '+errorThrown);
 
             });
@@ -57,7 +58,7 @@ $(document).ready(function () {
         $('.next').click(function(){
 
             var nextId = $(this).parents('.tab-pane').next().attr("id");
-            console.log('next ', nextId);
+
             // $('#'+nextId).tab('show');
             $('a[href="#'+nextId+'"]').tab('show');
 
@@ -75,7 +76,7 @@ $(document).ready(function () {
             template: 'qq-registration-release-file-template-manual-trigger',
             multiple: false,
             request: {
-                endpoint: '/admin/registration/'+registrationId+'/upload/inspection',
+                endpoint: app_url+'/admin/registration/'+registrationId+'/upload/inspection',
                 params: {
                     teacher_id : function () {
                         return $('#teacher_social_id').val();
@@ -107,7 +108,6 @@ $(document).ready(function () {
         });
 
         $('#btn-upload-registration-release-file').click(function() {
-            console.log('#btn-upload-registration-release-file');
             $('#registration_release_file_upload').fineUploader('uploadStoredFiles');
         });
 
@@ -131,7 +131,7 @@ $(document).ready(function () {
             $(this).attr('disabled', true);
 
             $.ajax({
-                url: '/admin/registration/'+id+'/update/user-data',
+                url: app_url+'/admin/registration/'+id+'/update/user-data',
                 method: 'post',
                 data: data
             }).done(function (response, textStatus, xhr) {
@@ -149,7 +149,6 @@ $(document).ready(function () {
                 button.removeAttr('disabled');
             });
 
-            // alert('id '+id);
 
         });
 

@@ -4,51 +4,11 @@
 $(document).ready(function () {
 
     var pageCourseLength = $('#page_course').length;
+    var app_url = $('#app_url').val();
 
     if(pageCourseLength > 0) {
 
-
-        /**
-         * Datepicker
-         */
-        // $('.js-edit-course-start_date, .js-edit-course-end_date').datepicker();
-
         var modal = $('#edit-course-modal');
-
-        // $('#course-table').DataTable({
-        //     processing: true,
-        //     serverSide: true,
-        //     ajax: {
-        //         url:'/admin/course/ajax/table',
-        //         method: 'POST'
-        //     },
-        //     columns: [
-        //         { data: 'course_code', name: 'course_code', searchable: true },
-        //         { data: 'short_name', name: 'short_name', searchable: true},
-        //         { data: 'hours', name: 'hours', searchable: true},
-        //         { data: 'start_date', name: 'start_date', searchable: true, render:function (item) {
-        //             return new Date(item).toLocaleDateString();
-        //         }},
-        //         { data: 'end_date', name: 'end_date', searchable: true, render:function (item) {
-        //             return new Date(item).toLocaleDateString();
-        //         }},
-        //         { data: 'quota', name: 'quota', searchable: true},
-        //         { data: 'stage', name: 'stage', searchable: true},
-        //         { data: 'status', name: 'status', searchable: false},
-        //         { data: 'comment', name: 'comment', searchable: false},
-        //         { data :'action', searchable:false, orderable: false,}
-        //     ],
-        //     initComplete: function () {
-        //         this.api().columns().every(function () {
-        //             var column = this;
-        //             var input = document.createElement("input");
-        //             $(input).appendTo($(column.footer()).empty())
-        //                 .on('change', function () {
-        //                     column.search($(this).val()).draw();
-        //                 });
-        //         });
-        //     },
-        // });
 
         loadMasterCourse();
         function loadMasterCourse() {
@@ -67,7 +27,7 @@ $(document).ready(function () {
 
                 var ajaxObj = {
                     method: 'get',
-                    url: '/admin/master-course/list/'
+                    url: app_url+'/admin/master-course/list/'
                 };
 
                 $.ajax(ajaxObj)
@@ -124,7 +84,7 @@ $(document).ready(function () {
 
                 var ajaxObj = {
                     method: 'get',
-                    url: '/admin/course-modality/list/'
+                    url: app_url+'/admin/course-modality/list/'
                 };
 
                 $.ajax(ajaxObj)
@@ -143,7 +103,7 @@ $(document).ready(function () {
 
                     }).fail(function (jqXhr, textStatus, errorThrown) {
 
-                    alert('Error: '+errorThrown);
+                        alert('Error: '+errorThrown);
                         console.log('error ', jqXhr);
                         courseTypeList.empty();
                         courseTypeList.attr('disabled', false);
@@ -179,7 +139,7 @@ $(document).ready(function () {
 
                 var ajaxObj = {
                     method: 'get',
-                    url: '/admin/university/ajax/'
+                    url: app_url+'/admin/university/ajax/'
                 };
 
                 $.ajax(ajaxObj)
@@ -227,8 +187,6 @@ $(document).ready(function () {
         function showAddModal() {
 
             $('#btn-create-course').click(function () {
-
-                // console.log('click create course');
 
                 modal.find('.js-modal-title-add').removeClass('hidden');
                 modal.find('.js-modal-title-edit').addClass('hidden');
@@ -459,7 +417,7 @@ $(document).ready(function () {
             var ajaxObj = {
                 method: 'post',
                 data: data,
-                url: '/admin/course/ajax'
+                url: app_url+'/admin/course/ajax'
             };
             $.ajax(ajaxObj)
             .done(function (response, textStatus, jqXhr) {
@@ -529,7 +487,7 @@ $(document).ready(function () {
             var ajaxObj = {
                 method: 'post',
                 data: data,
-                url: '/admin/course/ajax/'+data.id
+                url: app_url+'/admin/course/ajax/'+data.id
             };
             $.ajax(ajaxObj)
                 .done(function (response, textStatus, jqXhr) {
@@ -661,7 +619,7 @@ $(document).ready(function () {
             template: 'qq-template-manual-trigger',
             multiple: false,
             request: {
-                endpoint: '/admin/course/upload/inspection-form',
+                endpoint: app_url+'/admin/course/upload/inspection-form',
                 params: {
                     course_id : function () {
                         return modal.find('.js-course-id').val();
@@ -680,12 +638,6 @@ $(document).ready(function () {
 
                 },
                 onComplete: function (id, name, response, xhr ) {
-
-                    // $('.js-message').empty();
-
-                    // if(response.error === undefined){
-                    //     modal.modal('hide');
-                    // }
 
                 },
                 onStatusChange: function (id, oldStatus, newStatus) {
@@ -723,7 +675,7 @@ $(document).ready(function () {
             template: 'qq-course-request-template-manual-trigger',
             multiple: false,
             request: {
-                endpoint: '/admin/upcoming-courses/upload',
+                endpoint: app_url+'/admin/upcoming-courses/upload',
                 customHeaders: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
@@ -737,10 +689,6 @@ $(document).ready(function () {
 
                 },
                 onComplete: function (id, name, response, xhr ) {
-
-                    // if(response.error === undefined){
-                    //     modal.modal('hide');
-                    // }
 
                 },
                 onStatusChange: function (id, oldStatus, newStatus) {
@@ -765,7 +713,7 @@ $(document).ready(function () {
             template: 'qq-terms_condition_upload_template-trigger',
             multiple: false,
             request: {
-                endpoint: '/admin/course/upload/file',
+                endpoint: app_url+'/admin/course/upload/file',
                 params: {
                     course_id : function () {
                         return modal.find('.js-course-id').val();
@@ -811,7 +759,7 @@ $(document).ready(function () {
             template: 'letter_of_registration_template-trigger',
             multiple: false,
             request: {
-                endpoint: '/admin/course/upload/file',
+                endpoint: app_url+'/admin/course/upload/file',
                 params: {
                     course_id : function () {
                         return modal.find('.js-course-id').val();
@@ -856,7 +804,7 @@ $(document).ready(function () {
             template: 'disclaimer_upload_template-trigger',
             multiple: false,
             request: {
-                endpoint: '/admin/course/upload/file',
+                endpoint: app_url+'/admin/course/upload/file',
                 params: {
                     course_id : function () {
                         return modal.find('.js-course-id').val();
@@ -911,7 +859,7 @@ $(document).ready(function () {
             template: 'qq_course_diploma_upload_manual_template',
             multiple: false,
             request: {
-                endpoint: '/admin/course/upload/file',
+                endpoint: app_url+'/admin/course/upload/file',
                 params: {
                     course_id : function () {
                         // var courseId =  modalUploadDiploma.find('.js-course-diploma-id').val();

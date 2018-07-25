@@ -8,6 +8,7 @@ $(document).ready(function () {
     var categoryPage = $('#page_category');
     var masterCourse = $('#master-course');
     var jsTitle = $('.js-title');
+    var app_url = $('#app_url').val();
 
 
     function loadType() {
@@ -16,7 +17,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: 'get',
-            url: '/admin/categories/type/list',
+            url: app_url+'/admin/categories/type/list',
         }).done(function (response, textStatus, xhr) {
 
             renderSelect(jsSelectType, response.types);
@@ -45,7 +46,7 @@ $(document).ready(function () {
 
             $.ajax({
                 method: 'get',
-                url: '/admin/categories/label/'+this.value,
+                url: app_url+'/admin/categories/label/'+this.value,
             }).done(function (response, textStatus, xhr) {
 
                 if (jsTitle.text() === 'sublabel' || jsTitle.text() === 'knowledge' || jsTitle.text() === 'subject'
@@ -88,7 +89,7 @@ $(document).ready(function () {
 
             $.ajax({
                 method: 'get',
-                url: '/admin/categories/sublabel/'+this.value,
+                url: app_url+'/admin/categories/sublabel/'+this.value,
             }).done(function (response, textStatus, xhr) {
 
 
@@ -127,7 +128,7 @@ $(document).ready(function () {
 
             $.ajax({
                 method: 'get',
-                url: '/admin/categories/knowledge/'+this.value,
+                url: app_url+'/admin/categories/knowledge/'+this.value,
             }).done(function (response, textStatus, xhr) {
 
                 if (jsTitle.text() === 'knowledge') {
@@ -167,7 +168,7 @@ $(document).ready(function () {
 
             $.ajax({
                 method: 'get',
-                url: '/admin/categories/subject/'+this.value,
+                url: app_url+'/admin/categories/subject/'+this.value,
             }).done(function (response, textStatus, xhr) {
 
                 if (jsTitle.text() === 'subject') {
@@ -283,7 +284,7 @@ $(document).ready(function () {
                     data: {
                         title: title,
                     },
-                    url: '/admin/categories/'+id,
+                    url: app_url+'/admin/categories/'+id,
                 }).done(function (response, textStatus, xhr) {
 
                     location.reload();
@@ -316,7 +317,7 @@ $(document).ready(function () {
 
                     $.ajax({
                         method: 'delete',
-                        url: '/admin/categories/delete/'+id
+                        url: app_url+'/admin/categories/delete/'+id
                     })
                         .done(function (response, textStatus, xhr) {
 

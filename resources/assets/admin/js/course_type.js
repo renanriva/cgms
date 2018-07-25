@@ -1,10 +1,9 @@
 $(document).ready(function () {
 
     var tableAnswers = $('#table-modalities');
+    var app_url = $('#app_url').val();
 
     if(tableAnswers.length > 0){
-
-        console.log('Table Answer');
 
         addModality();
         function addModality() {
@@ -19,7 +18,7 @@ $(document).ready(function () {
 
                 var type = $(this).attr('data-type');
 
-                var url = '/admin/course-modality/';
+                var url = app_url+'/admin/course-modality/';
 
                 if (type === 'update'){
                     var id = $(this).attr('data-id');
@@ -86,7 +85,7 @@ $(document).ready(function () {
             $('tr#modality_'+id).addClass('warning');
 
             $.ajax({
-                url: '/admin/course-modality/'+id,
+                url: app_url+'/admin/course-modality/'+id,
                 method: 'delete',
             }).done(function (response, textStatus, xhr) {
 
@@ -98,6 +97,7 @@ $(document).ready(function () {
             }).fail(function (xhr, textStatus, errorThrown) {
 
                 console.log('sync error: ', xhr);
+                alert('Sync Error: '+errorThrown);
 
             });
 

@@ -29,6 +29,8 @@ Install package
 
 #### Update .env file
 
+Add the `APP_URL` = site's base path WITHOUT tailing slash `/`. e.g. `http://www.example.com/sga`
+
     LANGUAGE=es
     APP_NAME=CGMS
     APP_ENV=production

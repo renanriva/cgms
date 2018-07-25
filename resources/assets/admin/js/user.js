@@ -4,6 +4,7 @@
 $(document).ready(function () {
 
     var isPage = $('#page_user').length;
+    var app_url = $('#app_url').val();
 
     if (isPage){
 
@@ -14,7 +15,7 @@ $(document).ready(function () {
             processing: true,
             serverSide: true,
             ajax: {
-                url:'/admin/users/table/ajax',
+                url: app_url+'/admin/users/table/ajax',
                 method: 'POST'
             },
             "order": [[ 0, "desc" ]],
@@ -135,7 +136,7 @@ $(document).ready(function () {
                 };
 
                 $.ajax({
-                    url: '/admin/users/'+id+'/change-password',
+                    url: app_url+'/admin/users/'+id+'/change-password',
                     method: 'POST',
                     data: data
                 }).done(function (response, textStatus, xhr) {
@@ -203,7 +204,7 @@ $(document).ready(function () {
             var ajaxObj = {
                 method: 'post',
                 data: data,
-                url: '/admin/users/ajax'
+                url: app_url+'/admin/users/ajax'
             };
 
             $.ajax(ajaxObj)
@@ -245,7 +246,7 @@ $(document).ready(function () {
             var ajaxObj = {
                 method: 'post',
                 data: data,
-                url: '/admin/users/'+data.id+ '/ajax'
+                url: app_url+'/admin/users/'+data.id+ '/ajax'
             };
             $.ajax(ajaxObj)
                 .done(function (response, textStatus, jqXhr) {

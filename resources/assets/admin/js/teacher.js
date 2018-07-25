@@ -4,59 +4,9 @@
 $(document).ready(function () {
 
     var pageLength = $('#page_teacher').length;
+    var app_url = $('#app_url').val();
 
     if(pageLength > 0) {
-
-        console.log('Teacher');
-
-        /**
-         * Datepicker
-         */
-        //
-        // $('#teacher-table').DataTable({
-        //     processing: true,
-        //     serverSide: true,
-        //     ajax: {
-        //         url:'/admin/teachers/ajax/table',
-        //         method: 'POST'
-        //     },
-        //     "order": [[ 0, "desc" ]],
-        //     columns: [
-        //         { data: 'id', name: 'teachers.id', searchable: false },
-        //         { data: 'social_id', name: 'teachers.social_id', searchable: true },
-        //         { data: 'teacher_name', name: 'teacher_name', searchable: true,
-        //             render:function (item, data, meta) {
-        //                 var icon = meta.gender === 'F'? 'female':'male';
-        //                 var url = '/admin/teachers/profile/'+meta.id;
-        //                 return '<i class="fa fa-'+icon+'"></i>&nbsp;<a href="'+url+'">'+meta.teacher_name+'</a>';
-        //         }},
-        //         { data: 'teacher_email', name: 'teacher_email', searchable: true},
-        //         { data: 'university', name: 'university', searchable: true},
-        //         // { data: 'function', name: 'function', searchable: true},
-        //         { data: 'moodle_id', name: 'moodle_id', searchable: true},
-        //         { data: 'province', name: 'province', searchable: true, render:function (item, data, meta) {
-        //             return meta.province + ',<br/>'+meta.canton + ', <br/><small>'+meta.parroquia+'<small/>';
-        //         }},
-        //         // { data: 'canton', name: 'canton', searchable: true},
-        //         { data: 'district', name: 'district', searchable: true, render: function (item, data, meta) {
-        //
-        //             return meta.district+',<br/>'+meta.district_code+'<br/>'+'<small>'+meta.zone+'</small>';
-        //         }},
-        //         { data :'action', searchable:false, orderable: false,}
-        //     ],
-        //     initComplete: function () {
-        //         this.api().columns().every(function () {
-        //             var column = this;
-        //             var input = document.createElement("input");
-        //             $(input).appendTo($(column.footer()).empty())
-        //                 .on('change', function () {
-        //                     column.search($(this).val()).draw();
-        //                 });
-        //         });
-        //     },
-        // });
-
-
 
         var modal = $('#edit-teacher-modal');
 
@@ -102,7 +52,7 @@ $(document).ready(function () {
         $('#fine-uploader-manual-trigger').fineUploader({
             template: 'qq-template-manual-trigger',
             request: {
-                endpoint: '/admin/teachers/upload/teachers-list',
+                endpoint: app_url+'/admin/teachers/upload/teachers-list',
                 customHeaders: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
@@ -294,10 +244,10 @@ $(document).ready(function () {
 
                 };
 
-                var url = '/admin/teachers';
+                var url = app_url+'/admin/teachers';
                 if (type === 'update'){
                     var id = btnSubmit.attr('data-id');
-                    url = '/admin/teachers/'+id;
+                    url = app_url+'/admin/teachers/'+id;
                 }
 
                 var ajaxObj = {
@@ -310,7 +260,7 @@ $(document).ready(function () {
                     .done(function (response, textStatus, xhr) {
 
                         if (xhr.status === 201){
-                            redirect('/admin/teachers');
+                            redirect(app_url+'/admin/teachers');
                         } else if (xhr.status === 200){
                             var alert = '<div class="alert alert-success alert-dismissible">' +
                                 '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>'+
@@ -367,7 +317,7 @@ $(document).ready(function () {
 
                 var ajaxObj = {
                     method: 'post',
-                    url: '/admin/location/province/ajax/all'
+                    url: app_url+'/admin/location/province/ajax/all'
                 };
 
                 $.ajax(ajaxObj)
@@ -439,7 +389,7 @@ $(document).ready(function () {
 
             var ajaxObj = {
                 method: 'get',
-                url: '/admin/location/canton/ajax/'+provinceId
+                url: app_url+'/admin/location/canton/ajax/'+provinceId
             };
 
             $.ajax(ajaxObj)

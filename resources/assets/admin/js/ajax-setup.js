@@ -21,29 +21,9 @@ $(document).ready(function () {
         $(this).addClass('btn-default');
     });
 
-
     //enable tooltip
     $('[data-toggle="tooltip"]').tooltip();
     $('[data-toggle="popover"]').popover();
-
-    /**
-     * Make the form elements enable and disable
-     *
-     * @param disableStatus
-     */
-    // window.toogleForm = function(disableStatus) {
-    //     $('.modal input').attr('DISABLED', disableStatus);
-    //     $('.modal button').attr('DISABLED', disableStatus);
-    // }
-
-
-    /**
-     * Datetime picker
-     */
-    // $('.js-ds-datepicker').datetimepicker({
-    //     format: 'MM/DD/YYYY',
-    // });
-
 
 
 });

@@ -4,11 +4,9 @@
 $(document).ready(function () {
 
     var pageCourseLength = $('#course-upload-modal').length;
+    var app_url = $('#app_url').val();
 
     if(pageCourseLength > 0) {
-
-        console.log('New Course Upload');
-
 
         var requestListModal = $('#course-upload-modal');
         /**
@@ -26,7 +24,7 @@ $(document).ready(function () {
             template: 'qq-new-course-template-manual-trigger',
             multiple: false,
             request: {
-                endpoint: '/admin/course/upload/new-course',
+                endpoint: app_url+'/admin/course/upload/new-course',
                 customHeaders: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
@@ -41,11 +39,6 @@ $(document).ready(function () {
                 },
                 onComplete: function (id, name, response, xhr ) {
 
-                    console.log('response ', response);
-                    // if(response.error === undefined){
-                    //     modal.modal('hide');
-                    // }
-
                 },
                 onStatusChange: function (id, oldStatus, newStatus) {
 
@@ -58,7 +51,6 @@ $(document).ready(function () {
         });
 
         $('#btn-upload-new-course-list').click(function() {
-            console.log('course-request-list-uploader-manual-trigger');
             $('#new-course-list-uploader-manual-trigger').fineUploader('uploadStoredFiles');
         });
 

@@ -3,22 +3,18 @@
  */
 $(document).ready(function () {
 
-    console.log('registration approval');
-
+    var app_url = $('#app_url').val();
 
     searchCourses();
-   function searchCourses() {
+    function searchCourses() {
 
        var search_pending_approval_length = $('#pending-table').length;
 
        if(search_pending_approval_length > 0) {
 
-           console.log('load courses');
-
            $('#pending-table .btn-approve-confirm').click(function () {
 
                var id = $(this).attr('data-id');
-               console.log('id ', id);
 
                if ($('.js-approve-check-'+id).is(':checked') === false){
 
@@ -32,17 +28,14 @@ $(document).ready(function () {
                var table = $('#pending-table');
 
                $.ajax({
-                  url: '/admin/registration/'+id+'/update/approve',
+                  url: app_url+'/admin/registration/'+id+'/update/approve',
                    method:'post',
                    data: {
                       is_approved: true
                    }
                }).done(function (response, textStatus, jqxhr) {
 
-                   console.log('response ', response);
-
-                   if (jqxhr.status == 200){
-
+                   if (jqxhr.status === 200){
 
                        var isApproved = '<i class="fa fa-check"></i> Yes <br/>'
                        +'<small><i class="fa fa-clock-o"></i> '+response.registration.approval_time+'</small>';
@@ -52,6 +45,9 @@ $(document).ready(function () {
 
 
                }).fail(function (jqXhr, textStatus, errorThrown) {
+
+                   alert('Update approval failed!');
+                   console.log('jqxhr', jqXhr);
 
                });
            });
@@ -64,7 +60,7 @@ $(document).ready(function () {
            searchPendingApproval.select2({
                // dropdownParent: modal,
                ajax: {
-                   url: '/admin/course/search/ajax',
+                   url: app_url+'/admin/course/search/ajax',
                    dataType: 'json',
                    delay: 250,
                    data: function (params) {
@@ -72,8 +68,6 @@ $(document).ready(function () {
                            search: params.term,
                            type: 'public'
                        };
-
-                       console.log('query ', query);
 
                        // Query parameters will be ?search=[term]&type=public
                        return query;

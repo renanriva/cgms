@@ -48,6 +48,7 @@
     {{--<script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>--}}
 
 
+<input id="app_url" type="hidden" value="{{ env('APP_URL') }}"/>
 <script type="text/javascript" src="{{ url(mix('/admin/js/app.js')) }}"></script>
 
 </body>

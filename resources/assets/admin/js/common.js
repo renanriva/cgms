@@ -3,8 +3,7 @@
  */
 $(document).ready(function () {
 
-    console.log('Common');
-
+    var app_url = $('#app_url').val();
 
     $(document).ready(function(e){
         $('.search-panel .dropdown-menu').find('a').click(function(e) {
@@ -42,7 +41,7 @@ $(document).ready(function () {
 
             var ajaxObj = {
                 method: 'get',
-                url: '/admin/location/canton/ajax/'+provinceId
+                url: app_url+'/admin/location/canton/ajax/'+provinceId
             };
 
             $.ajax(ajaxObj)
