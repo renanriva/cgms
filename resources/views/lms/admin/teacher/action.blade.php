@@ -1,5 +1,5 @@
 <div class="btn-group btn-group-xs">
-    <a href="/admin/teachers/{{ $teacher->id }}/edit"
+    <a href={{ url("/admin/teachers/{{ $teacher->id }}/edit") }}
        class="btn btn-edit-teacher btn-primary" id="teacher_edit_{{ $teacher->id }}"
        data-id="{{ $teacher->id }}">
         <i class="fa fa-edit"></i> {{ __('lms.elements.button.edit') }}</a>
