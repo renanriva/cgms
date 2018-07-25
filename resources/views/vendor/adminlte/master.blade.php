@@ -48,7 +48,7 @@
     {{--<script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>--}}
 
 
-<script type="text/javascript" src="{{ mix('/admin/js/app.js') }}"></script>
+<script type="text/javascript" src="{{ url(mix('/admin/js/app.js')) }}"></script>
 
 </body>
 </html>

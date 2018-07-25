@@ -36,7 +36,7 @@
 
             <div class="box-footer">
                 @isset($type)
-                <a href="/admin/course-modality/create" class="btn btn-default btn-flat btn-sm"><i class="fas fa-plus"></i> Add New</a>
+                <a href={{ url("/admin/course-modality/create") }} class="btn btn-default btn-flat btn-sm"><i class="fas fa-plus"></i> Add New</a>
                 @endisset
 
                 <button type="submit" class="btn btn-info pull-right"><i class="fa fa-save"></i> Save</button>
