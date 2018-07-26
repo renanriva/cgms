@@ -526,7 +526,7 @@ class CourseController extends Controller
 
         } else {
 
-            return response()->redirectTo('unauthorized');
+            return response()->redirectTo(url('/admin/unauthorized'));
         }
     }
 
@@ -615,7 +615,7 @@ class CourseController extends Controller
                 return response()->file($course->lor_file_path);
 
             } else {
-                return response()->redirectTo('admin/unauthorized');
+                return response()->redirectTo(url('/admin/unauthorized'));
 
             }
 

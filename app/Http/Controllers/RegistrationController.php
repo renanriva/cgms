@@ -185,7 +185,7 @@ class RegistrationController extends Controller
             return response()->file($registration->inspection_certificate);
 
         } else {
-            return response()->redirectTo('admin/unauthorized');
+            return response()->redirectTo(url('/admin/unauthorized'));
 
         }
 
@@ -211,7 +211,7 @@ class RegistrationController extends Controller
             }
 
         } else {
-            return response()->redirectTo('admin/unauthorized');
+            return response()->redirectTo(url('/admin/unauthorized'));
 
         }
 
@@ -249,7 +249,7 @@ class RegistrationController extends Controller
             return response()->file($registration->diploma_path);
 
         } else {
-            return response()->redirectTo('admin/unauthorized');
+            return response()->redirectTo(url('/admin/unauthorized'));
 
         }
 

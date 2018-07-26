@@ -51,7 +51,7 @@ class CourseTypeController extends Controller
 
         $type = $this->repo->insert($post);
 
-        return response()->redirectTo('/admin/course-modality');
+        return response()->redirectTo(url('/admin/course-modality'));
 
 
     }
@@ -74,7 +74,7 @@ class CourseTypeController extends Controller
 
         $this->repo->delete($id);
 
-        return response()->redirectTo('/admin/course-modality');
+        return response()->redirectTo(url('/admin/course-modality'));
 
 
     }

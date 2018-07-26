@@ -32,13 +32,13 @@ class HomeController extends Controller
             $user = Auth::user()->toArray();
             
             if ($user['role'] == 'teacher') {
-                return redirect('admin/portfolio');
+                return redirect(url('/admin/portfolio'));
             } else {
                 return view('home');
             }
 
         } else{
-            return response()->redirectTo('login');
+            return response()->redirectTo(url('login'));
         }
     }
 
