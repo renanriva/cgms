@@ -2,6 +2,8 @@
 
 namespace App\Exceptions;
 
+use Bugsnag\Breadcrumbs\Breadcrumb;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -36,6 +38,12 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
+        Bugsnag::notifyException($exception);
+
+        Bugsnag::leaveBreadcrumb(
+            $exception->getMessage(),
+            Breadcrumb::ERROR_TYPE
+        );
         parent::report($exception);
     }
 
