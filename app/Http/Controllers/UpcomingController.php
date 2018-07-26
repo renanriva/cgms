@@ -38,7 +38,7 @@ class UpcomingController extends Controller
                 'teacher' => $user->teacher]);
         } else {
 
-            return response()->redirectTo('admin/unauthorized');
+            return response()->redirectTo(url('/admin/unauthorized'));
         }
 
     }

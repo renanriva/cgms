@@ -79,7 +79,7 @@ class CategoryController extends Controller
 
         $this->repo->insert($data);
 
-        return response()->redirectTo('/admin/categories/label');
+        return response()->redirectTo(url('/admin/categories/label'));
 
     }
 
@@ -132,7 +132,7 @@ class CategoryController extends Controller
 
         $this->repo->insert($data);
 
-        return response()->redirectTo('/admin/categories/sublabel');
+        return response()->redirectTo(url('/admin/categories/sublabel'));
 
     }
 
@@ -187,7 +187,7 @@ class CategoryController extends Controller
 
         $this->repo->insert($data);
 
-        return response()->redirectTo('/admin/categories/knowledge');
+        return response()->redirectTo(url('/admin/categories/knowledge'));
 
     }
 
@@ -243,7 +243,7 @@ class CategoryController extends Controller
 
         $this->repo->insert($data);
 
-        return response()->redirectTo('/admin/categories/subject');
+        return response()->redirectTo(url('/admin/categories/subject'));
 
     }
 
