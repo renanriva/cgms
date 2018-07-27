@@ -237,13 +237,14 @@
                 <div class="box-body">
 
                     <div class="row">
-                        <div class="col-lg-2 col-md-3 col-sm-12">
+                        <div class="col-lg-2 col-sm-12">
 
                             <div class="form-group">
                                 <label for="teacher-university" class="col-md-3 col-lg-3 control-label">University</label>
                             </div>
 
                         </div>
+
                         <div class="col-lg-10 col-md-12 col-sm-12">
 
                             <div class="form-group js-error-block js-university-block">
@@ -409,7 +410,7 @@
                     <div class="box-body">
 
                         <div class="row">
-                            <div class="col-lg-6 col-sm-12">
+                            <div class="col-lg-6 col-sm-12 col-md-12">
 
                                 <div class="form-group js-error-block js-province-block">
                                     <label for="province" class="col-md-3 control-label">Province</label>
@@ -421,7 +422,7 @@
                                 </div>
 
                             </div>
-                            <div class="col-lg-6 col-sm-12">
+                            <div class="col-lg-6 col-sm-12 col-md-12">
 
                                 <div class="form-group js-error-block js-canton-block">
                                     <label for="canton" class="col-md-3 control-label">Canton</label>
