@@ -18,9 +18,12 @@ class CourseTypeController extends Controller
     public function index(Request $request){
 
 
-        $page= 1;
+        $posts = $request->all();
+        $page = isset($posts['page']) ? $posts['page'] : 1;
+//        dd($page);
         $course_types = $this->repo->getListByPagination($page);
 
+//        dd($course_types);
         return view('lms.admin.course_type.index', ['courseTypes' => $course_types, 'title'=> 'Course Types']);
 
     }
