@@ -415,7 +415,8 @@
                                 <div class="form-group js-error-block js-province-block">
                                     <label for="province" class="col-md-3 control-label">Province</label>
                                     <div class="col-md-9">
-                                        <input type="hidden" class="js-edit-province" value="{{ isset($teacher) ? $teacher->province : '' }}">
+                                        <input type="hidden" class="js-edit-province"
+                                               value="{{ isset($teacher) ? $teacher->province : '' }}">
                                         <select id="province" class="form-control js-province" name="province"></select>
                                         <div class="help-block"></div>
                                     </div>
