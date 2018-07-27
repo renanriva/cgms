@@ -20,9 +20,6 @@
 
                 @slot('box_tools')@endslot
 
-{{--                    @include('lms.admin.category.'.str_replace('admin/categories/', '', Request::path() ))--}}
-
-
                 @slot('box_footer')@endslot
 
             @endcomponent

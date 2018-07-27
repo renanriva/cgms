@@ -86,6 +86,7 @@ class CourseController extends Controller
      * Process datatables ajax request.
      *
      * @return \Illuminate\Http\JsonResponse
+     * @deprecated
      */
     public function getTableData()
     {
@@ -514,20 +515,11 @@ class CourseController extends Controller
      */
     public function getAddMarkPage($courseId){
 
-
-        $user = Auth::user();
         $course = $this->repo->getById($courseId);
 
+        $title = 'Course Grade Upload - '.env('APP_NAME') ;
+        return view('lms.admin.course.grade', ['title' => $title, 'course' => $course]);
 
-//        if ($user->can('addmark', $course)){
-
-            $title = 'Course Grade Upload - '.env('APP_NAME') ;
-            return view('lms.admin.course.grade', ['title' => $title, 'course' => $course]);
-
-//        } else {
-//
-//            return response()->redirectTo(url('/admin/unauthorized'));
-//        }
     }
 
     /**
@@ -592,7 +584,8 @@ class CourseController extends Controller
                 return response()->json(['error' => $e->getMessage(),'rows' => $rows, 'file' => $path])->setStatusCode(422);
             }
 
-        } else {
+        }
+        else {
             //send 403 json response
             return response()->json(['error'=> 'Unauthorized'])->setStatusCode(403);
         }

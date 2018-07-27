@@ -4,6 +4,7 @@
         <th>{{ __('lms.page.upcoming.table.institution') }}</th>
         <th>{{ __('lms.page.upcoming.table.short_name') }}</th>
         <th>{{ __('lms.page.upcoming.table.modality') }}</th>
+        <th>{{ __('lms.page.course.form.quota') }}</th>
         <th>{{ __('lms.page.upcoming.table.hours') }}</th>
         <th>{{ __('lms.page.upcoming.table.start_date') }}</th>
         <th>{{ __('lms.page.upcoming.table.end_date') }}</th>
@@ -22,6 +23,9 @@
                 <small class="text-warning">{{ $course->course_code }}</small>
             </td>
             <td>{{ $course->modality->title }}</td>
+            <td>Quota <small> <span class="badge">{{ $course->quota }}</span></small><br/>
+                Registrations <small><span class="badge">{{ $course->registrations->count() }}</span></small>
+            </td>
             <td>{{ $course->hours }} hours</td>
             <td>{{ date('d M Y', strtotime($course->start_date)) }}</td>
             <td>{{ date('d M Y', strtotime($course->end_date)) }}</td>
@@ -35,25 +39,31 @@
 
                     @if ($course->status == '1')
 
-                        @if( Carbon\Carbon::now()->lt(Carbon\Carbon::parse($course->start_date)) )
+                        @if($course->quota >= $course->registrations->count())
 
-                            @if($course->has_disclaimer == 1)
+                            @if( Carbon\Carbon::now()->lt(Carbon\Carbon::parse($course->start_date)) )
 
-                                <form method="post" action="{{ url('admin/course/register/'.$course->id) }}">
-                                    {{ csrf_field() }}
-                                    <button type="submit" class="btn btn-link"><i class="fa fa-user-plus"></i> Register</button>
-                                </form>
+                                @if($course->has_disclaimer == 1)
+
+                                    <form method="post" action="{{ url('admin/course/register/'.$course->id) }}">
+                                        {{ csrf_field() }}
+                                        <button type="submit" class="btn btn-link"><i class="fa fa-user-plus"></i> Register</button>
+                                    </form>
+
+                                @else
+
+                                    <span class="text-success"><i class="fa fa-check"></i>
+                                        <strong>Proceda al curso</strong></span>
+
+                                @endif
+
 
                             @else
-
-                                <span class="text-success"><i class="fa fa-check"></i>
-                                    <strong>Proceda al curso</strong></span>
-
+                                <span class="label label-danger">Start Date Passed</span>
                             @endif
 
-
                         @else
-                            <span class="label label-danger">Start Date Passed</span>
+                            <span class="label label-danger">All positions filled</span>
                         @endif
 
                     @else

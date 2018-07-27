@@ -53,18 +53,6 @@ class UpcomingController extends Controller
     public function getTableData()
     {
 
-//        $user = Auth::user();
-//
-//        dd($user->teacher->requestedCourses);
-////        $course = Course::get();
-//
-//        return Datatables::of($user->teacher->requestedCourses)
-////            ->editColumn('action', 'lms.admin.course.action')
-////            ->setRowId(function ($course){
-////                return 'course_id_'.$course->id;
-////            })
-//            ->make(true);
-
     }
 
 
@@ -87,18 +75,16 @@ class UpcomingController extends Controller
                 foreach ($reader->toArray() as $row) {
 
                     if (strlen($row['teacher_social_id']) > 0 && strlen($row['course_code']) >0){
-//                    var_dump($this->getCourseId($row['course_code']));
-//                    var_dump($this->getTeacherId($row['teacher_social_id']));
 
-                    $teacher['course_id']       = $this->getCourseId($row['course_code']);
-                    $teacher['course_code']     = $row['course_code'];
-                    $teacher['teacher_id']      = $this->getTeacherId($row['teacher_social_id']);
-                    $teacher['teacher_social_id'] = $row['teacher_social_id'];
-                    $teacher['created_by']      = Auth::user()->id;
-                    $teacher['status']          = $row['status'];
+                        $teacher['course_id']       = $this->getCourseId($row['course_code']);
+                        $teacher['course_code']     = $row['course_code'];
+                        $teacher['teacher_id']      = $this->getTeacherId($row['teacher_social_id']);
+                        $teacher['teacher_social_id'] = $row['teacher_social_id'];
+                        $teacher['created_by']      = Auth::user()->id;
+                        $teacher['status']          = $row['status'];
 
 
-                    array_push($rows, $teacher);
+                        array_push($rows, $teacher);
                     }
 
                 }

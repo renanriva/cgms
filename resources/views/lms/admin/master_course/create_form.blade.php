@@ -15,8 +15,7 @@
                 {{ csrf_field() }}
 
                 @component('lms.admin.components.bootstrap.form-group', ['name' => 'Type'])
-                    <select class="form-control" id="select-type" name="type">
-                    </select>
+                    <select class="form-control" id="select-type" name="type"></select>
                 @endcomponent
 
 

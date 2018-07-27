@@ -76,8 +76,6 @@ $(document).ready(function () {
 
             if (courseTypeList.length > 0){
 
-                // console.log('load courses');
-
                 courseTypeList.empty();
                 courseTypeList.attr('disabled', 'disabled');
                 courseTypeList.append('<option>Loading...</option>');
