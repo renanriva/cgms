@@ -519,15 +519,15 @@ class CourseController extends Controller
         $course = $this->repo->getById($courseId);
 
 
-        if ($user->can('addmark', $course)){
+//        if ($user->can('addmark', $course)){
 
             $title = 'Course Grade Upload - '.env('APP_NAME') ;
             return view('lms.admin.course.grade', ['title' => $title, 'course' => $course]);
 
-        } else {
-
-            return response()->redirectTo(url('/admin/unauthorized'));
-        }
+//        } else {
+//
+//            return response()->redirectTo(url('/admin/unauthorized'));
+//        }
     }
 
     /**

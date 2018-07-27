@@ -12,7 +12,7 @@
                 <div class="btn-group">
                     <button class="btn btn-sm btn-success" id="btn-import-teachers" type="submit">
                         <i class="fa fa-upload"></i> {{ __('lms.elements.button.upload') }}</button>
-                    <a href={{ url("/admin/teachers/new") }}  class="btn btn-sm btn-primary">
+                    <a href="{{ url("/admin/teachers/new") }}" class="btn btn-sm btn-primary">
                         <i class="fa fa-plus"></i> {{ __('lms.elements.button.create') }}</a>
                 </div>
             </div>

@@ -26,7 +26,7 @@ class CourseTypeRepository
         $types = Cache::tags(['COURSE_TYPE_LIST'])->remember('COURSE_TYPE_LIST_ALL_BY_PAGE_'.$page, 20,
             function (){
 
-            return CourseType::with(['modalities', 'createdBy', 'updatedBy'])
+            return CourseType::with(['createdBy', 'updatedBy'])
                     ->orderBy('sort', 'asc')
                     ->paginate(10);
 
@@ -48,12 +48,14 @@ class CourseTypeRepository
 
             if ($is_active == true){
 
-                return CourseType::where('is_active', $is_active)
+                return CourseType::with(['createdBy', 'updatedBy'])
+                    ->where('is_active', $is_active)
                     ->orderby('sort', 'asc')
                     ->get();
             } else {
 
-                return CourseType::orderby('sort', 'asc')
+                return CourseType::with(['createdBy', 'updatedBy'])
+                    ->orderby('sort', 'asc')
                     ->get();
             }
 

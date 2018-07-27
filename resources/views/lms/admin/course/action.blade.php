@@ -16,7 +16,8 @@
 
         @if (Carbon\Carbon::now()->between(Carbon\Carbon::parse($course->grade_upload_start_date),
                                     Carbon\Carbon::parse($course->grade_upload_end_date)))
-            <a href={{ url("/admin/course/{{ $course->id }}/show") }} class="btn btn-success" data-id="{{ $course->id }}">
+            <a href="{{ url("/admin/course/$course->id/show") }}"
+               class="btn btn-success" data-id="{{ $course->id }}">
                 <i class="fa fa-plus"></i> Add Grade</a>
         @endif
 

@@ -432,11 +432,13 @@ $(document).ready(function () {
         }// end function
 
 
+        /**
+         * @todo onCantonChange select parrouia list
+         */
         $('.js-canton').on('select2:select', function (e) {
-
-            var data = e.params.data;
-            loadCantons(data.id);
-
+        //     var data = e.params.data;
+        //     console.log('canton ', data);
+        //     loadCantons(data.id);
         })
     }
 
