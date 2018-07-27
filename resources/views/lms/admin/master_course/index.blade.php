@@ -64,7 +64,7 @@
                             <td>{{ $course->updatedBy->name }}</td>
                             <td>{{ $course->updated_at->diffForHumans() }}</td>
                             <td>
-                                <form action="/admin/master-course/{{ $course->id }}" method="post">
+                                <form action="{{ url("/admin/master-course/$course->id") }}" method="post">
                                     {{ csrf_field() }}
                                     <input type="hidden" name="_method" value="DELETE">
 

@@ -70,7 +70,7 @@
                             <td>{{ $type->updatedBy->name }}</td>
                             <td>{{ $type->updated_at->diffForHumans() }}</td>
                             <td>
-                                <form action="/admin/course-type/{{ $type->id }}" method="post">
+                                <form action="{{ url("/admin/course-type/$type->id") }}" method="post">
                                     {{ csrf_field() }}
                                     <input type="hidden" name="_method" value="DELETE">
 
