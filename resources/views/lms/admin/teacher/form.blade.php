@@ -159,31 +159,6 @@
                     <div class="box-header"><h3 class="box-title">Personal</h3></div>
                     <div class="box-body">
 
-                        {{--<div class="row">--}}
-                            {{--<div class="col-lg-6 col-sm-12">--}}
-
-                                {{--<div class="form-group">--}}
-
-                                    {{--<label for="" class="col-md-3 control-label">Photo</label>--}}
-                                    {{--<div class="col-md-9">--}}
-                                        {{--<div class="text-center">--}}
-                                        {{--<img src="//placehold.it/100" class="avatar img-circle" alt="avatar">--}}
-                                        {{--<h6>Upload a different photo...</h6>--}}
-                                        {{--</div>--}}
-
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-
-                            {{--<div class="col-lg-6 col-sm-12">--}}
-                                {{--<div class="form-group">--}}
-                                    {{--<div class="col-md-9 col-md-offset-3">--}}
-                                        {{--<input type="file" class="form-control" disabled>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-
                         <div class="row">
 
                             <div class="col-lg-5 col-sm-12">
@@ -197,7 +172,7 @@
                                             Male
                                         </label>
                                         <label class="radio-inline" for="Gender-1">
-                                            <input type="radio" name="Gender" id="Gender-1" value="f"
+                                            <input type="radio" name="gender" id="Gender-1" value="f"
                                                     {{ isset($teacher) ? $teacher->gender == 'F' ? 'checked' : '' : '' }}
                                             >
                                             Female

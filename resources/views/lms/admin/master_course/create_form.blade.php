@@ -59,7 +59,7 @@
 
             <div class="box-footer">
                 @isset($master)
-                    <a href={{ url("/admin/master-course/create") }} class="btn btn-default btn-flat btn-sm">
+                    <a href="{{ url("/admin/master-course/create") }}" class="btn btn-default btn-flat btn-sm">
                         <i class="fas fa-plus"></i> Add New
                     </a>
                 @endisset
