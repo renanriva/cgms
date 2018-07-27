@@ -5,7 +5,11 @@
             <h3 class="box-title">Master Course Info</h3>
         </div>
 
-        <form class="form-horizontal" method="post" action="/admin/master-course/{{ isset($master) ? $master->id : ''}}">
+        @if(isset($master))
+            <form class="form-horizontal" method="post" action="{{ url("/admin/master-course/$master->id ") }}">
+        @else
+            <form class="form-horizontal" method="post" action="{{ url("/admin/master-course/") }}">
+        @endif
 
             <div class="box-body">
                 {{ csrf_field() }}

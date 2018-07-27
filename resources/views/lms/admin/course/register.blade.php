@@ -288,10 +288,11 @@
                                             <hr/>
                                             <p>
                                                 <form method="post" target="_blank"
-                                                    action="/admin/course/{{ $registration->course->id }}/download/lor">
+                                                    action="{{ url("/admin/course/$registration->course->id/download/lor") }}">
                                                     {{ csrf_field() }}
-                                                    <button type="submit" class="btn btn-link" href="{{ url('/asset/letter_of_registration.pdf') }}"
-                                                    target="_blank">{{ $teacher->social_id }}</button>
+                                                    <button type="submit" class="btn btn-link"
+                                                            href="{{ url('/asset/letter_of_registration.pdf') }}"
+                                                            target="_blank">{{ $teacher->social_id }}</button>
                                                     <label><i class="fa fa-check-square-o"></i></label>
                                                 </form>
                                             </p>
