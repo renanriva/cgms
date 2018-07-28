@@ -45,15 +45,18 @@
 
                                 @if($course->has_disclaimer == 1)
 
-                                    <form method="post" action="{{ url('admin/course/register/'.$course->id) }}">
+                                    <form method="post" action="{{ url('/admin/course/register/'.$course->id) }}">
                                         {{ csrf_field() }}
                                         <button type="submit" class="btn btn-link"><i class="fa fa-user-plus"></i> Register</button>
                                     </form>
 
                                 @else
 
-                                    <span class="text-success"><i class="fa fa-check"></i>
-                                        <strong>Proceda al curso</strong></span>
+                                    <button type="button" class="btn btn-flat btn-xs btn-info btn-proceed-to-the-course"
+                                    data-course-id="" data-teacher-id="">
+                                        {{ __('lms.messages.proceed_to_the_course') }}&nbsp;
+                                        <i class="fa fa-caret-right"></i>
+                                    </button>
 
                                 @endif
 

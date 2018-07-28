@@ -339,11 +339,15 @@
             ],
         ],
         'words' =>[
+            'diploma' => 'Diploma',
+            'grade' => 'Grade',
             'zone'  => 'Zone',
             'last_updated' => 'Last updated',
             'by' => 'by',
         ],
         'messages' => [
+            'grade_approved_by' => 'Grade Approved By',
+            'proceed_to_the_course' => 'Proceed to the course',
             'upload_new_course' => 'Upload New Course',
             'download_sample_file' => 'Download Sample File'
         ]

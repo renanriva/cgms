@@ -136,15 +136,15 @@
                                 <th>{{ __('lms.page.teacher_profile.table.institute') }}</th>
                                 <th>{{ __('lms.page.teacher_profile.table.course_name') }}</th>
                                 <th>{{ __('lms.page.teacher_profile.table.modality') }}</th>
-                                <th>Grade</th>
-                                <th>Grade Approved By</th>
+                                <th>{{ __('lms.words.grade') }}</th>
+                                <th>{{ __('lms.words.messages.grade_approved_by') }}</th>
                                 <th>{{ __('lms.page.teacher_profile.table.hours') }}</th>
                                 <th>{{ __('lms.page.teacher_profile.table.start_date') }}</th>
                                 <th>{{ __('lms.page.teacher_profile.table.end_date') }}</th>
                                 <th>{{ __('lms.page.registration.pending.table.record_uploaded') }}</th>
                                 <th>{{ __('lms.page.teacher.table.approved') }}</th>
                                 <th>{{ __('lms.page.teacher_profile.table.certificate') }}</th>
-                                <th>diploma</th>
+                                <th>{{ __('lms.words.diploma') }}</th>
                             </tr>
                         </thead>
                         <tbody>
