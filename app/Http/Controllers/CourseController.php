@@ -158,7 +158,7 @@ class CourseController extends Controller
         $course['video_type']                   = $post['video_type'];
         $course['video_code']                   = $post['video_code'];
         $course['data_update_brief']            = $post['data_update_text'];
-        $course['terms_conditions']            = $post['terms_condition'];
+        $course['terms_conditions']             = $post['terms_condition'];
         $course['master_course_id']             = $post['master_course_id'];
         $course['edition']                      = $post['course_edition'];
         $course['stage']                        = $post['course_stage'];
@@ -276,7 +276,7 @@ class CourseController extends Controller
     public function delete($id){
 
 //        @todo add authorization check
-        $course = $this->repo->findById($id);
+        $course = Course::find($id);
         $course->delete();
 
         $this->repo->flushById($id);
@@ -324,15 +324,15 @@ class CourseController extends Controller
                     $course['grade_upload_start_date']      = isset($row['grade_add_start_date']) ? $row['grade_add_start_date']: null;
                     $course['grade_upload_end_date']        = isset($row['grade_add_end_date']) ? $row['grade_add_end_date']: null;
 
-                    $course['cost']                         = isset($row['cost']) ? : 0;
-                    $course['finance_type']                 = isset($row['finance_type']) ? $row['finance_type']: 0;
-                    $course['is_disclaimer']                = $row['disclaimer_required'] == 'yes' ? 1 : 0;
+                    $course['cost']                         = isset($row['cost']) ? : '0';
+                    $course['finance_type']                 = isset($row['finance_type']) ? $row['finance_type']: '0';
+                    $course['is_disclaimer']                = $row['disclaimer_required'] == 'yes' ? '1' : '0';
 
-                    $course['hours']                        = isset($row['hours']) ? : 0;
-                    $course['quota']                        = isset($row['quota']) ? : 0;
+                    $course['hours']                        = isset($row['hours']) ? : '0';
+                    $course['quota']                        = isset($row['quota']) ? : '0';
 
-                    $course['course_stage']                 = $row['stage'] == 'published' ? 1 : 0;
-                    $course['course_status']                = $row['status'] == 'active' ? 1 : 0;
+                    $course['course_stage']                 = $row['stage'] == 'published' ? '1' : '0';
+                    $course['course_status']                = $row['status'] == 'active' ? '1' : '0';
 
                     $course['comment']                      = isset($row['comment']) ? $row['comment']: '';
 
