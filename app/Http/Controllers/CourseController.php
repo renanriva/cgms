@@ -258,6 +258,9 @@ class CourseController extends Controller
             $course->updated_by     = Auth::user()->id;
             $course->save();
 
+            $this->repo->flushById($id);
+            $this->repo->flushCache();
+
             return response()->json(['course' => $course])->setStatusCode(200);
 
         } else{
