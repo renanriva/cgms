@@ -317,7 +317,7 @@ class CourseController extends Controller
                     $course['course_code']                  = $row['course_code'];
                     $course['short_name']                   = $row['short_name'];
                     $course['course_type_id']               = $row['modality_id'];
-                    $course['course_edition']                      = isset($row['course_edition']) ? $row['course_edition']: '';
+                    $course['course_edition']               = isset($row['course_edition']) ? $row['course_edition']: '';
 
                     $course['start_date']                   = isset($row['start_date']) ? $row['start_date']: null;
                     $course['end_date']                     = isset($row['end_date']) ? $row['end_date'] : null;
@@ -352,6 +352,8 @@ class CourseController extends Controller
                 }
 
             });
+
+            $this->repo->flushCache();
 
             return response()->json(['rows' => $rows, 'success' => true] );
 
@@ -462,11 +464,10 @@ class CourseController extends Controller
 
 
     /**
-     * @param Request $request
      * @param         $course_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getRegister(Request $request, $course_id){
+    public function getRegister($course_id){
 
         $title = 'Register - '.env('APP_NAME') ;
 

@@ -113,7 +113,7 @@ Route::middleware(['auth'])->group(function (){
             Route::get('/search/ajax', 'CourseController@getSearch');
 
 //            @todo move those to Registration Controller
-            Route::post('/register/{id}', 'CourseController@getRegister');
+            Route::get('/register/{id}', 'CourseController@getRegister');
 
             Route::get('/{id}/show', 'CourseController@getAddMarkPage');
             Route::post('/{id}/add-grade', 'CourseController@postAddMark');
@@ -151,6 +151,7 @@ Route::middleware(['auth'])->group(function (){
             Route::post('/approve/{id}', 'RegistrationController@postApprove');
             Route::post('/{id}/update/{part}', 'RegistrationController@updateRegistration');
             Route::post('/{id}/upload/inspection', 'RegistrationController@uploadStudentInspection');
+            Route::post('/proceed-to-the-course', 'RegistrationController@postProceedToTheCourse');
 
 
             Route::post('/{id}/download/student-inspection-form', 'RegistrationController@downloadStudentInspectionCertificate');

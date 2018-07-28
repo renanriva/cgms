@@ -327,6 +327,19 @@
             ],
         ],
         'words' =>[
-            'zone'  => 'Zone'
+            'diploma' => 'Diploma',
+            'grade' => 'Grado',
+            'zone'  => 'Zona',
+            'last_updated' => 'Última actualización',
+            'by' => 'por',
+        ],
+        'messages' => [
+            'create_course' => 'Crear curso',
+            'grade_approved_by' => 'Grado aprobado por',
+            'proceed_to_the_course' => 'Proceda al curso',
+            'upload_new_course' => 'Cargar un nuevo curso',
+            'download_sample_file' => 'Descargar archivo de muestra',
+            'upload_diploma_zip_file' => 'Upload Diploma Zip File',
+            'course_request_list_modal' => 'Course Request List Modal'
         ]
     ];

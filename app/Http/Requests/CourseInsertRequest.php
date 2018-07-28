@@ -27,11 +27,13 @@ class CourseInsertRequest extends FormRequest
         return [
             'course_code'           => 'required|unique:courses|string|max:50',
             'course_type'           => 'required|string|max:50',
-            'modality'              => 'required|string|max:50|min:1',
             'short_name'            => 'required|string|max:255',
 
             'start_date'            => 'sometimes|nullable|date_format:d/m/Y|string|max:10|min:10',
             'end_date'              => 'sometimes|nullable|date_format:d/m/Y|string|max:10|min:10',
+
+            'grade_entry_start_date'=> 'sometimes|nullable|date_format:d/m/Y|string|max:10|min:10',
+            'grade_entry_end_date'  => 'sometimes|nullable|date_format:d/m/Y|string|max:10|min:10',
 
             'university_id'         => 'sometimes|nullable|integer',
 

@@ -34,7 +34,6 @@ class UserLogoutListener
     {
 
         Cache::forget('auth_user');
-//        Cache::tags('portfolio')->flush();
         Cache::flush();
 
         Log::info('Clearing all cache on Logout', ['event' => $event]);
