@@ -14,7 +14,8 @@
             @if(Auth::user()->role == 'university')
                 <th>Grade Add Dates</th>
             @endif
-            <th>{{ __('lms.page.course.table.action') }}</th>
+            <th>{{ __('lms.words.last_updated') }}</th>
+            <th class="text-right">{{ __('lms.page.course.table.action') }}</th>
         </tr>
     </thead>
     <tbody>
@@ -47,7 +48,9 @@
                         @endisset
                     </td>
                 @endif
-                <td>
+                <td>{{ $course->updated_at->diffForHumans() }}<br/>
+                    <small class="text-muted">{{ __('lms.words.by') }} {{ $course->updatedBy->name }}</small></td>
+                <td class="text-right">
                     @include('lms.admin.course.action')
                 </td>
             </tr>
