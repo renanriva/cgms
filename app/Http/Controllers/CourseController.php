@@ -283,6 +283,7 @@ class CourseController extends Controller
         $course->delete();
 
         $this->repo->flushById($id);
+        $this->repo->flushCache();
 
         return response()->json()->setStatusCode(204);
 

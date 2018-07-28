@@ -21,7 +21,7 @@
     <tbody>
 
         @foreach($courses as $course)
-            <tr>
+            <tr id="course_id_{{ $course->id }}">
                 <td>{{ isset($course->masterCourse->name) ? $course->masterCourse->name: '' }}<br/>
                     <small class="text-info">({{ $course->masterCourse->subject->title }})</small>
                 </td>
