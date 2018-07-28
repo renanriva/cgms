@@ -53,6 +53,9 @@ Route::middleware(['auth'])->group(function (){
          */
         Route::prefix('categories')->group(function (){
 
+            Route::post('/insert', 'CategoryController@postType');
+
+
             Route::get('/type', 'CategoryController@index');
             Route::get('/type/list', 'CategoryController@getTypeList');
 
