@@ -53,7 +53,7 @@
                                 @else
 
                                     <button type="button" class="btn btn-flat btn-xs btn-info btn-proceed-to-the-course"
-                                    data-course-id="" data-teacher-id="">
+                                    data-course-id="{{ $course->id }}" data-teacher-id="{{ $teacher->id }}">
                                         {{ __('lms.messages.proceed_to_the_course') }}&nbsp;
                                         <i class="fa fa-caret-right"></i>
                                     </button>

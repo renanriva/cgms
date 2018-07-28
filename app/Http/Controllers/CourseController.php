@@ -462,11 +462,10 @@ class CourseController extends Controller
 
 
     /**
-     * @param Request $request
      * @param         $course_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getRegister(Request $request, $course_id){
+    public function getRegister($course_id){
 
         $title = 'Register - '.env('APP_NAME') ;
 

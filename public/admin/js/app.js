@@ -52973,8 +52973,6 @@ $(document).ready(function () {
 
             if (courseTypeList.length > 0) {
 
-                // console.log('load courses');
-
                 courseTypeList.empty();
                 courseTypeList.attr('disabled', 'disabled');
                 courseTypeList.append('<option>Loading...</option>');
@@ -54692,6 +54690,44 @@ $(document).ready(function () {
             });
         });
     } //end page
+
+    var upcoming = $('#upcoming-course');
+
+    if (upcoming.length > 0) {
+        var handleProceedToTheCourse = function handleProceedToTheCourse() {
+
+            $('.btn-proceed-to-the-course').click(function () {
+
+                $(this).attr('disabled', 'true');
+                var course_id = $(this).attr('data-course-id');
+                var teacher_id = $(this).attr('data-teacher-id');
+
+                $.ajax({
+                    url: app_url + '/admin/registration/proceed-to-the-course',
+                    method: 'post',
+                    data: { 'course_id': course_id, 'teacher_id': teacher_id }
+                }).done(function (response, textStatus, xhr) {
+
+                    if (xhr.status === 200) {
+
+                        // open new window with url
+                        window.open('https://mecapacito.educacion.gob.ec/', '_blank');
+
+                        $(this).removeClass('btn-info');
+                        $(this).addClass('btn-success');
+                        $(this).text('Complete');
+                    }
+                }).fail(function (errors, textStatus, errorThrown) {
+
+                    alert('Error: ' + errorThrown);
+                    console.log('Error: ', errors);
+                    $(this).removeAttr('disabled');
+                });
+            });
+        };
+
+        handleProceedToTheCourse();
+    }
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))
 
