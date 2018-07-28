@@ -288,8 +288,8 @@ class CourseRepository
 
     public function flushCache(){
 
-        Cache::tags(['COURSE_FIND_BY_ID', 'COURSE_FIND_BY_CODE']);
-        Cache::tags(['COURSE_PAGINATE']);
+        Cache::tags(['COURSE_FIND_BY_ID', 'COURSE_FIND_BY_CODE'])->flush();
+        Cache::tags(['COURSE_PAGINATE'])->flush();
     }
 
     /**
