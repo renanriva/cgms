@@ -59,8 +59,14 @@ class CourseTypeController extends Controller
 
     }
 
-    public function update(Request $request){
+    public function update(Request $request, $id){
 
+
+        $post =$request->all();
+
+        $data = $this->repo->update($post, $id);
+
+        return response()->redirectTo(url('/admin/course-modality'));
     }
 
 

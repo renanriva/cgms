@@ -220,7 +220,6 @@ class TeacherRepository
      * @param $registration
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-  /*
     public function downloadPortfolio($search_in, $search_keyword, $registration){
 
         $minutes = 20;
@@ -228,7 +227,7 @@ class TeacherRepository
         $cache_key = 'portfolio_search_in_'.$search_in. '_with_'.$search_keyword .
             '_with_registration_'.$registration;
 
-        $registrations = Cache::tags(['portfolio'])->remember($cache_key, $minutes, function ()
+        $registrations = Cache::tags(['PORTFOLIO_DOWNLOAD'])->remember($cache_key, $minutes, function ()
                     use($search_in, $search_keyword, $registration) {
 
             return  Registration::with(['student', 'course', 'markApprovedBy','approvedBy'])
@@ -291,7 +290,7 @@ class TeacherRepository
 
         return $registrations;
     }
-/*
+
     /**
      * @param $id
      * @return mixed
@@ -344,7 +343,7 @@ class TeacherRepository
 
     public function flushCache(){
 
-        Cache::tags(['FIND_BY_ID', 'PORTFOLIO_BY_ID', 'TEACHER_PAGINATE', 'TEACHER_SEARCH'])->flush();
+        Cache::tags(['FIND_BY_ID', 'PORTFOLIO_BY_ID', 'TEACHER_PAGINATE', 'TEACHER_SEARCH', 'PORTFOLIO_DOWNLOAD'])->flush();
     }
 
 
