@@ -228,11 +228,10 @@ $(document).ready(function () {
 
                 $.ajax({
                     method: 'post',
-                    url : '/admin/categories/insert',
+                    url : app_url+'/admin/categories/insert',
                     data: data
                 }).done(function (response, textStatus, xhr) {
 
-                    // console.log(response);
                     location.reload();
 
                 }).fail(function (errors, textStatus, errorThrown) {
@@ -304,7 +303,7 @@ $(document).ready(function () {
         removeItem();
         function removeItem() {
 
-            categoryPage.on('click', '.btn-remove', function (e) {
+            categoryPage.on('click', '.btn-remove-category', function (e) {
 
                 e.preventDefault();
 
@@ -318,16 +317,14 @@ $(document).ready(function () {
                     $.ajax({
                         method: 'delete',
                         url: app_url+'/admin/categories/delete/'+id
-                    })
-                        .done(function (response, textStatus, xhr) {
+                    }).done(function (response, textStatus, xhr) {
 
                         if (xhr.status === 204){
 
                             $('#row_type_'+id).remove();
 
                         }
-                    })
-                        .fail(function (errors) {
+                    }).fail(function (errors) {
 
                         });
                 }

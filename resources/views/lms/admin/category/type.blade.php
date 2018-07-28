@@ -36,7 +36,7 @@
                     <button type="button" data-id="{{ $type->id }}" data-title="{{ $type->title }}"
                             class="btn btn-edit-type btn-sm btn-flat btn-default">Edit</button>
                     <button type="button" data-id="{{ $type->id }}"
-                            class="btn btn-remove btn-sm btn-flat btn-default">Remove</button>
+                            class="btn btn-remove-category btn-sm btn-flat btn-default">Remove</button>
                 </div>
             </td>
         </tr>
