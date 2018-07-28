@@ -23,8 +23,8 @@
                 <small class="text-warning">{{ $course->course_code }}</small>
             </td>
             <td>{{ $course->modality->title }}</td>
-            <td>Quota <small> <span class="badge">{{ $course->quota }}</span></small><br/>
-                Registrations <small><span class="badge">{{ $course->registrations->count() }}</span></small>
+            <td>{{ __('lms.page.course.form.quota') }} <small> <span class="badge">{{ $course->quota }}</span></small><br/>
+                {{ __('lms.page.course.form.registrations') }} <small><span class="badge">{{ $course->registrations->count() }}</span></small>
             </td>
             <td>{{ $course->hours }} hours</td>
             <td>{{ date('d M Y', strtotime($course->start_date)) }}</td>
