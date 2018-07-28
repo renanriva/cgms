@@ -41,24 +41,31 @@
 
                         <div class="form-group">
 
+                            <div class="js-error-block js-course_code-block">
+
                             @component('lms.admin.components.bootstrap.group_block', [   'name' => 'course_code', 'grid' => 4,
                             'title' => __('lms.page.course.form.course_id')])
                                 <input id="js-edit-course-code" type="text" class="js-edit-course-code form-control"
                                        name="course_code"
                                 value="" required placeholder="{{ __('lms.page.course.form.course_id') }}" maxlength="100">
-
+                                    <div class="help-block"></div>
                             @endcomponent
+                            </div>
+
+                            <div class="js-error-block js-course_edition-block">
 
                             @component('lms.admin.components.bootstrap.group_block', [   'name' => 'course_edition', 'grid' => 4,
                                         'title' => 'Course Edition'])
                                 <input id="js-edit-course-edition" type="text" class="js-edit-course-edition form-control"
                                 name="course_edition" value="" required placeholder="Edition" maxlength="100">
 
-                            @endcomponent
+                                    <div class="help-block"></div>
+                                @endcomponent
+                            </div>
 
                         </div>
 
-                        @component('lms.admin.components.form-group', [   'name' => 'course-university', 'grid' => 10,
+                        @component('lms.admin.components.form-group', [   'name' => 'short_name', 'grid' => 10,
                                 'title' => __('lms.page.course.form.short_name')])
                                 <input id="js-edit-course-short_name" type="text"   maxlength="100" value=""
                                        class="js-edit-course-short_name form-control" name="short_name"
@@ -66,7 +73,6 @@
                         @endcomponent
 
                         <div class="form-group">
-
 
                             @component('lms.admin.components.bootstrap.group_block', [   'name' => 'course-start_date', 'grid' => 4,
                                         'title' => __('lms.page.course.form.start_date')])
@@ -87,6 +93,8 @@
 
                         <div class="form-group">
 
+                            <div class="js-error-block js-grade-entry-start-date-block">
+
                             @component('lms.admin.components.bootstrap.group_block', [   'name' => 'grade-entry-start-date',
                                 'grid' => 4, 'title' => 'Grade Entry Start Date'])
                                 <input id="js-edit-grade-entry-start-date" type="text" name="grade-entry-start-date"
@@ -94,32 +102,43 @@
                                        autocomplete="off" />
 
                             @endcomponent
+                                <div class="help-block"></div>
+                            </div>
 
+                            <div class="js-error-block js-grade-entry-end-date-block">
                             @component('lms.admin.components.bootstrap.group_block', [   'name' => 'grade-entry-end-date',
                                     'grid' => 4, 'title' => 'Grade Entry End Date'])
                                     <input id="js-edit-grade-entry-end-date" type="text" name="grade-entry-end-date"
                                            class="js-edit-grade-entry-end-date js-datepicker form-control"
                                            autocomplete="off" />
                             @endcomponent
+                                <div class="help-block"></div>
+                            </div>
 
                         </div>
 
 
                         <div class="form-group">
-
+                            <div class="js-error-block js-hours-block">
                             @component('lms.admin.components.bootstrap.group_block', [   'name' => 'hours', 'grid' => 4,
                                 'title' => __('lms.page.course.form.hours')])
                                 <input id="js-edit-course-hours" type="number"
                                        class="js-edit-course-hours form-control" name="hours"
                                        value="" required placeholder={{ __('lms.page.course.form.hours') }} />
-                            @endcomponent
+                                    <div class="help-block"></div>
 
+                                @endcomponent
+                            </div>
+
+                            <div class="js-error-block js-quota-block">
                             @component('lms.admin.components.bootstrap.group_block', [   'name' => 'quota', 'grid' => 4,
                                 'title' => __('lms.page.course.form.quota')])
                                     <input id="js-edit-course-quota" type="number"
                                            class="js-edit-course-quota form-control" name="quota"
                                            value="" required placeholder={{ __('lms.page.course.form.quota') }} />
-                            @endcomponent
+                                    <div class="help-block"></div>
+                                @endcomponent
+                            </div>
 
                         </div>
 

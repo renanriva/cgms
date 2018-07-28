@@ -7,7 +7,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel"><i class="fa fa-file-o"></i>
-                        &nbsp;<span class="js-modal-title-add">Course Request List Modal</span>
+                        &nbsp;<span class="js-modal-title-add">{{ __('lms.messages.course_request_list_modal') }}</span>
                     </h4>
             </div>
             <form class="form-horizontal js-edit-course-form" >
@@ -18,7 +18,10 @@
 
                         <div class="col-md-12 col-md-12 col-sm-12">
                             <div id="course-request-list-uploader-manual-trigger"></div>
-                            <code>.csv, .xls, .xlsx are supported.</code>
+                            <i class="fa fa-info-circle text-danger"></i>
+                            <a class="text-danger" href="{{ url('/sample/course_request_list.xlsx') }}" target="_blank">
+                                {{ __('lms.messages.download_sample_file') }}</a>&nbsp
+                            {{--<code>.csv, .xls, .xlsx are supported.</code>--}}
                         </div>
 
                     </div>

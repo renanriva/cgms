@@ -15,7 +15,7 @@
             @component('lms.admin.components.bootstrap.box', [ 'box_body_class' => 'table-responsive' ])
 
                 @slot('box_title')
-                    Create Course
+                    {{ __('lms.messages.create_course') }}
                 @endslot
 
                 @slot('box_tools')@endslot

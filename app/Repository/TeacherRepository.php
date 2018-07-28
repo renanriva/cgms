@@ -337,7 +337,7 @@ class TeacherRepository
      */
     public function flushCacheById($id){
 
-        Cache::tags(['FIND_BY_ID'])->flush('FIND_BY_ID_'.$id);
+        Cache::tags(['FIND_BY_ID'])->flush('FIND_BY_ID_'.$id)->flush();
 
     }
 
