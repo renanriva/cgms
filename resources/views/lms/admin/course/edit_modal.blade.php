@@ -108,14 +108,14 @@
                         <div class="form-group">
 
                             @component('lms.admin.components.bootstrap.group_block', [   'name' => 'hours', 'grid' => 4,
-                                'title' => __('lms.page.course.form.end_date')])
+                                'title' => __('lms.page.course.form.hours')])
                                 <input id="js-edit-course-hours" type="number"
                                        class="js-edit-course-hours form-control" name="hours"
                                        value="" required placeholder={{ __('lms.page.course.form.hours') }} />
                             @endcomponent
 
                             @component('lms.admin.components.bootstrap.group_block', [   'name' => 'quota', 'grid' => 4,
-                                'title' => __('lms.page.course.form.end_date')])
+                                'title' => __('lms.page.course.form.quota')])
                                     <input id="js-edit-course-quota" type="number"
                                            class="js-edit-course-quota form-control" name="quota"
                                            value="" required placeholder={{ __('lms.page.course.form.quota') }} />

@@ -97,7 +97,6 @@
                             </tr>
                         </thead>
                         <tbody>
-
                             @foreach($registrations as $registration)
                                 <tr>
                                     <td>{{ $registration->id }}</td>

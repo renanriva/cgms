@@ -52,7 +52,7 @@
 
                                 <tr>
                                     <td>{{ __('lms.page.course.form.quota') }}</td>
-                                    <td>{{ $course->quota }} persons</td>
+                                    <td><span class="badge">{{ $course->quota }}</span> persons</td>
                                 </tr>
                                 <tr>
                                     <td>{{ __('lms.page.course.form.stage') }}</td>

@@ -184,6 +184,7 @@
                     'status'            => 'Status',
                     'disclaimer_required' => 'Disclaimer Required',
                     'data_update'       => 'Data Update Tab Info',
+                    'registrations'     => 'Registrations',
                     'inspection_file_message' => 'After creating the course, you can upload inspection file.'
 
                 ],
@@ -338,6 +339,12 @@
             ],
         ],
         'words' =>[
-            'zone'  => 'Zone'
+            'zone'  => 'Zone',
+            'last_updated' => 'Last updated',
+            'by' => 'by',
+        ],
+        'messages' => [
+            'upload_new_course' => 'Upload New Course',
+            'download_sample_file' => 'Download Sample File'
         ]
     ];

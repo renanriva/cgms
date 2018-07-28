@@ -174,6 +174,7 @@
                     'video_type'        => 'Video Type',
                     'video_embed'       => 'Embed Code',
                     'data_update'       => 'Data Update Tab Info',
+                    'registrations'     => 'Registrations',
                     'inspection_file_message' => 'After creating the course, you can upload inspection file.'
 
                 ],
