@@ -10,20 +10,18 @@
                     <span class="js-modal-title">Upload File</span>
                 </h4>
             </div>
-            <form class="form-horizontal js-upload-teachers-list" action="{{ url('/admin/teachers/upload') }}" method="POST" enctype="multipart/form-data">
-
-
+            <form class="form-horizontal js-upload-teachers-list" action="{{ url('/admin/teachers/upload') }}"
+                  method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
 
                     <div class="row">
 
                         <div class="col-lg-12 col-md-12 col-sm-12">
 
-
-                            {{--<div id="fine-uploader-gallery"></div>--}}
                             <div id="fine-uploader-manual-trigger"></div>
-
-
+                            <i class="fa fa-info-circle text-danger"></i>
+                            <a class="text-danger" href="{{ url('/sample/usuarios_lista_sample.xlsx') }}" target="_blank">
+                                {{ __('lms.messages.download_sample_file') }}</a>&nbsp
                         </div>
 
                     </div>
