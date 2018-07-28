@@ -211,7 +211,7 @@ $(document).ready(function () {
 
                     deleteModal.find('.model-title').text('Delete Canton');
                     deleteModal.find('.js-message').text('Are you sure to delete Canton ['+name+']?');
-                    deleteModal.find('#btn-delete-confirm').attr('data-url', '/admin/location/canton/'+id+'/ajax');
+                    deleteModal.find('#btn-delete-confirm').attr('data-url', app_url+'/admin/location/canton/'+id+'/ajax');
                     deleteModal.find('#btn-delete-confirm').attr('data-id', id);
                     deleteModal.modal('show');
 

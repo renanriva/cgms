@@ -301,7 +301,7 @@ $(document).ready(function () {
 
                 deleteModal.find('.model-title').text('Delete User');
                 deleteModal.find('.js-message').text('Are you sure to delete User ['+name+']?');
-                deleteModal.find('#btn-delete-confirm').attr('data-url', '/admin/users/'+id+'/ajax');
+                deleteModal.find('#btn-delete-confirm').attr('data-url', app_url+'/admin/users/'+id+'/ajax');
                 deleteModal.find('#btn-delete-confirm').attr('data-id', id);
 
                 $('tr#user_id_'+id).addClass('danger');
