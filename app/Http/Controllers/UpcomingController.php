@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Repository\CourseRepository;
+use App\Repository\MasterCourseRepository;
 use App\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +22,12 @@ use App\Canton;
  */
 class UpcomingController extends Controller
 {
+    private $courseRepo;
+
+    public function __construct()
+    {
+        $this->courseRepo = new CourseRepository();
+    }
 
     /**
      * @todo add authorization check
@@ -40,18 +48,6 @@ class UpcomingController extends Controller
 
             return response()->redirectTo(url('/admin/unauthorized'));
         }
-
-    }
-
-
-    /**
-     * @todo add authorization check
-     * Process datatables ajax request.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getTableData()
-    {
 
     }
 
@@ -125,7 +121,7 @@ class UpcomingController extends Controller
      */
     private function getCourseId($course_code) {
 
-        $course = Course::where('course_code', $course_code)->first();
+        $course = $this->courseRepo->findByCourseCode($course_code);
 
         return $course->id;
 

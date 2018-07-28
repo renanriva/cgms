@@ -8,6 +8,7 @@ use App\Http\Requests\CourseInsertRequest;
 use App\Http\Requests\CourseUpdateRequest;
 use App\Registration;
 use App\Repository\CourseRepository;
+use App\Repository\MasterCourseRepository;
 use App\Repository\RegistrationRepository;
 use App\Repository\UniversityRepository;
 use DateTime;
@@ -32,6 +33,7 @@ class CourseController extends Controller
 {
 
     private  $repo;
+    private  $masterCourseRepo;
 
     /**
      * CourseController constructor.
@@ -39,6 +41,7 @@ class CourseController extends Controller
     public function __construct()
     {
         $this->repo = new CourseRepository();
+        $this->masterCourseRepo = new MasterCourseRepository();
     }
 
     /**
@@ -306,28 +309,40 @@ class CourseController extends Controller
                 foreach ($reader->toArray() as $row) {
 
 
-                    $course['course_code']          = $row['course_code'];
-                    $course['course_type']          = $row['course_type'];
-                    $course['modality']             = $row['modality'];
+                    $master_course = $this->masterCourseRepo->findbyCode($row['master_course_code']);
 
-                    $university = $uniRepo->getUniversityByName($row['university']);
-                    if ($university !== null){
-                        $course['university_id']        = $university->id;
-                    }
+                    $course['master_course_id']             = $master_course->id;
 
-                    $course['short_name']           = $row['short_name'];
-                    $course['start_date']           = $row['start_date'];
-                    $course['end_date']             = $row['end_date'];
-                    $course['hours']                = $row['hours'];
-                    $course['quota']                = $row['quota'];
-                    $course['comment']              = $row['comment'];
+                    $course['university_id']                = $row['university_id'];
+                    $course['course_code']                  = $row['course_code'];
+                    $course['short_name']                   = $row['short_name'];
+                    $course['course_type_id']               = $row['modality_id'];
+                    $course['course_edition']                      = isset($row['course_edition']) ? $row['course_edition']: '';
 
-                    $course['description']          = $row['description'];
+                    $course['start_date']                   = isset($row['start_date']) ? $row['start_date']: null;
+                    $course['end_date']                     = isset($row['end_date']) ? $row['end_date'] : null;
+                    $course['grade_upload_start_date']      = isset($row['grade_add_start_date']) ? $row['grade_add_start_date']: null;
+                    $course['grade_upload_end_date']        = isset($row['grade_add_end_date']) ? $row['grade_add_end_date']: null;
 
-                    $course['video_text']           = $row['video_information'];
-                    $course['video_type']           = $row['video_type'];
-                    $course['video_code']           = $row['embed_code'];
-                    $course['data_update_text']     = $row['data_update'];
+                    $course['cost']                         = isset($row['cost']) ? : 0;
+                    $course['finance_type']                 = isset($row['finance_type']) ? $row['finance_type']: 0;
+                    $course['is_disclaimer']                = $row['disclaimer_required'] == 'yes' ? 1 : 0;
+
+                    $course['hours']                        = isset($row['hours']) ? : 0;
+                    $course['quota']                        = isset($row['quota']) ? : 0;
+
+                    $course['course_stage']                 = $row['stage'] == 'published' ? 1 : 0;
+                    $course['course_status']                = $row['status'] == 'active' ? 1 : 0;
+
+                    $course['comment']                      = isset($row['comment']) ? $row['comment']: '';
+
+                    $course['description']                  = isset($row['description']) ? $row['description']: '';
+
+                    $course['video_text']                   = isset($row['video_information']) ? $row['video_information']: '';
+                    $course['video_type']                   = 'youtube';
+                    $course['video_code']                   = isset($row['embed_code']) ? $row['embed_code'] : '';
+                    $course['data_update_text']             = isset($row['data_update']) ? $row['data_update'] : '';
+                    $course['terms_conditions']             = isset($row['terms_and_conditions']) ? $row['terms_and_conditions'] : '';
 
 
                     array_push($rows, $course);

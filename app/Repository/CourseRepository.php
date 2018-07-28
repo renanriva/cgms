@@ -76,7 +76,7 @@ class CourseRepository
         $course = new Course();
 
         $course->course_code            = $post['course_code'];
-        $course->course_type_id       = $post['course_type_id'];
+        $course->course_type_id         = $post['course_type_id'];
 
         $course->university_id          = $post['university_id'];
         $course->short_name             = $post['short_name'];
@@ -87,23 +87,23 @@ class CourseRepository
         $course->hours                  = $post['hours'];
         $course->quota                  = $post['quota'];
 
-        $course->comment                = $post['comment'];
-        $course->description            = $post['description'];
-        $course->video_text             = $post['video_text'];
-        $course->video_type             = $post['video_type'];
-        $course->video_code             = $post['video_code'];
-        $course->data_update_brief      = $post['data_update_text'];
-        $course->terms_conditions       = $post['terms_conditions'];
+        $course->comment                            = $post['comment'];
+        $course->description                        = $post['description'];
+        $course->video_text                         = $post['video_text'];
+        $course->video_type                         = $post['video_type'];
+        $course->video_code                         = $post['video_code'];
+        $course->data_update_brief                  = $post['data_update_text'];
+        $course->terms_conditions                   = $post['terms_conditions'];
 
-        $course->master_course_id       = $post['master_course_id'];
-        $course->edition                = $post['course_edition'];
-        $course->stage                  = $post['course_stage'];
-        $course->status                 = $post['course_status'];
-        $course->has_disclaimer          = $post['is_disclaimer'];
-        $course->cost                   = $post['cost'];
-        $course->finance_type           = $post['finance_type'];
-        $course->grade_upload_start_date             = $post['grade_upload_start_date'];
-        $course->grade_upload_end_date               = $post['grade_upload_start_date'];
+        $course->master_course_id                   = $post['master_course_id'];
+        $course->edition                            = $post['course_edition'];
+        $course->stage                              = $post['course_stage'];
+        $course->status                             = $post['course_status'];
+        $course->has_disclaimer                     = $post['is_disclaimer'];
+        $course->cost                               = $post['cost'];
+        $course->finance_type                       = $post['finance_type'];
+        $course->grade_upload_start_date            = $post['grade_upload_start_date'];
+        $course->grade_upload_end_date              = $post['grade_upload_start_date'];
 
         $course->inspection_form_generated = false;
 
@@ -263,9 +263,28 @@ class CourseRepository
 
     }
 
+    /**
+     * @param $code
+     * @return mixed
+     */
+    public function findByCourseCode($code){
+
+        $time = config('adminlte.cache_time');
+
+        $course = Cache::tags(['COURSE_FIND_BY_CODE'])->remember('COURSE_FIND_BY_CODE_'.$code, $time, function () use($code){
+
+            return Course::where('course_code', $code)->first();
+
+        });
+
+        return $course;
+
+
+    }
+
     public function flushCache(){
 
-        Cache::tags(['COURSE_FIND_BY_ID']);
+        Cache::tags(['COURSE_FIND_BY_ID', 'COURSE_FIND_BY_CODE']);
         Cache::tags(['COURSE_PAGINATE']);
     }
 

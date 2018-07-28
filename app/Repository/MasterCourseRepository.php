@@ -114,6 +114,21 @@ class MasterCourseRepository
 
     }
 
+    public function findbyCode($code){
+
+        $time = config('adminlte.cache_time');
+
+        $course = Cache::tags(['MASTER_COURSE_FIND_BY_CODE'])
+            ->remember('MASTER_COURSE_FIND_BY_CODE_'.$code, $time, function () use($code){
+
+            return MasterCourse::where('course_code', $code)->first();
+
+        });
+
+        return $course;
+
+    }
+
     /**
      * @param $id
      * @return mixed
@@ -133,7 +148,7 @@ class MasterCourseRepository
     public function flushCache(){
 
 
-        Cache::tags(['MASTER_COURSE_LIST'])->flush();
+        Cache::tags(['MASTER_COURSE_LIST', 'MASTER_COURSE_FIND_BY_CODE'])->flush();
     }
 
 }

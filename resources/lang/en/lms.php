@@ -340,5 +340,9 @@
         ],
         'words' =>[
             'zone'  => 'Zone'
+        ],
+        'messages' => [
+            'upload_new_course' => 'Upload New Course',
+            'download_sample_file' => 'Download Sample File'
         ]
     ];
