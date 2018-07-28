@@ -237,7 +237,7 @@ $(document).ready(function () {
                     grade_entry_end_date    : modal.find('.js-edit-grade-entry-end-date').val(),
                     course_stage            : modal.find('.js-select-course-stage option:selected').val(),
                     course_status           : modal.find('.js-select-course-status option:selected').val(),
-                    is_disclaimer           : modal.find('.js-select-master-course option:selected').val(),
+                    is_disclaimer           : modal.find('.js-select-disclaimer_required option:selected').val(),
                     cost                    : modal.find('.js-edit-course-cost').val(),
                     finance_type            : modal.find('.js-edit-course-finance_type').val()
 
