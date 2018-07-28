@@ -34,7 +34,11 @@ class CourseRepository
         $data = Cache::tags('COURSE_PAGINATE')->remember('COURSE_PAGINATE_'.$page, 60, function ()  {
 
 
-            return Course::with(['masterCourse', 'requests', 'university', 'registrations', 'approvedRegistrations'])
+            return Course::with(['masterCourse', 'requests', 'university', 'registrations', 'approvedRegistrations',
+                'updatedBy'])
+                    ->orderBy('updated_at', 'desc')
+                    ->orderBy('stage', 'asc')
+                    ->orderBy('status', 'asc')
                     ->paginate(10);
 
         });

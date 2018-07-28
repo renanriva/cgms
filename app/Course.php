@@ -117,6 +117,14 @@ class Course extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function updatedBy(){
+
+        return $this->belongsTo('App\User', 'updated_by', 'id');
+    }
+
+    /**
      * The attributes that should be mutated to dates.
      *
      * @var array

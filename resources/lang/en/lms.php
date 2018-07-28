@@ -339,7 +339,9 @@
             ],
         ],
         'words' =>[
-            'zone'  => 'Zone'
+            'zone'  => 'Zone',
+            'last_updated' => 'Last updated',
+            'by' => 'by',
         ],
         'messages' => [
             'upload_new_course' => 'Upload New Course',
