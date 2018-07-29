@@ -320,7 +320,7 @@ $(document).ready(function () {
                 modal.find('.js-edit-grade-entry-start-date').val(data.grade_entry_start_date),
                 modal.find('.js-edit-grade-entry-end-date').val(data.grade_entry_end_date),
                 modal.find('.js-select-course-stage option[value="'+data.course_stage+'"]').attr('selected', true),
-                modal.find('.js-select-course-status option[type="'+data.course_status+'"]').attr('selected', true),
+                modal.find('.js-select-course-status option[value="'+data.course_status+'"]').attr('selected', true),
                 modal.find('.js-select-disclaimer_required option[value="'+data.is_disclaimer+'"]').attr('selected', true),
                 modal.find('.js-edit-course-cost').val(data.cost),
                 modal.find('.js-edit-course-finance_type').val(data.finance_type),
