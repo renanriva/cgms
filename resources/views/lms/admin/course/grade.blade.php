@@ -126,7 +126,7 @@
         </div>
     </div>
 
-    @can('course.addmark', $course)
+    @can('addmark', $course)
     <div class="row" id="page_grade_upload">
         <div class="col-lg-12 col-md-12 col-sm-12">
 

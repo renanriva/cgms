@@ -96,14 +96,12 @@ class CoursePolicy
      */
     public function addmark(User $user, Course $course){
 
-        return true;
+        if (($user->role == 'university' && $user->id == $course->university->user_id ) || $user->role == 'admin'){
 
-//        if (($user->role == 'university' && $user->id == $course->university->user_id ) || $user->role == 'admin'){
-//
-//            return true;
-//        }
-//
-//        return false;
+            return true;
+        }
+
+        return false;
     }
 
     /**

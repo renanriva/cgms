@@ -116,7 +116,7 @@ Route::middleware(['auth'])->group(function (){
             Route::get('/search/ajax', 'CourseController@getSearch');
 
 //            @todo move those to Registration Controller
-            Route::get('/register/{id}', 'CourseController@getRegister');
+            Route::post('/register/{id}', 'CourseController@getRegister');
 
             Route::get('/{id}/show', 'CourseController@getAddMarkPage');
             Route::post('/{id}/add-grade', 'CourseController@postAddMark');
