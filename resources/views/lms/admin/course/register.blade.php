@@ -89,7 +89,7 @@
                                     <li><a href="#step3" data-toggle="tab">3. Terms & Condition</a></li>
                                     <li><a href="#step4" data-toggle="tab">4. Data Update</a></li>
                                     <li><a href="#step5" data-toggle="tab">5. Registry</a></li>
-                                    <li><a href="#step6" data-toggle="tab">6. Registration Certificate</a></li>
+                                    {{--<li><a href="#step6" data-toggle="tab">6. Registration Certificate</a></li>--}}
                                 </ul>
                             </div>
                         </div>
@@ -304,15 +304,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane" id="step6">
-                                <div class="box-layout">
-                                    <p>This is the last step. You're done.</p>
-                                    <div class="next-layout">
-                                        <a class="btn btn-success first" href="javascript:void(0)">Start over</a>
-                                    </div>
-                                </div>
+                            {{--<div class="tab-pane" id="step6">--}}
+                                {{--<div class="box-layout">--}}
+                                    {{--<p>This is the last step. You're done.</p>--}}
+                                    {{--<div class="next-layout">--}}
+                                        {{--<a class="btn btn-success first" href="javascript:void(0)">Start over</a>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
 
-                            </div>
+                            {{--</div>--}}
                         </div>
                     </div>
 
