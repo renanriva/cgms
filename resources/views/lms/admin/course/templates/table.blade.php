@@ -2,6 +2,7 @@
     <thead>
         <tr>
             <th>{{ __('lms.page.course.table.master_course') }}</th>
+            <th>{{ __('lms.page.course.form.university') }}</th>
             <th>{{ __('lms.page.course.table.short_name') }}</th>
             <th>{{ __('lms.page.course.table.modality') }}</th>
             <th>{{ __('lms.page.course.table.hours') }}</th>
@@ -25,9 +26,11 @@
                 <td>{{ isset($course->masterCourse->name) ? $course->masterCourse->name: '' }}<br/>
                     <small class="text-info">({{ $course->masterCourse->subject->title }})</small>
                 </td>
+                <td>{{ $course->university->name }}</td>
                 <td>
                     <a href="{{ url("/admin/course/$course->id/show") }}">{{ $course->short_name }} </a><br/>
-                    <small><code>{{ $course->course_code }}</code></small>
+                    <small><code>{{ $course->course_code }}</code></small>&nbsp;
+                    <small class="text-info">{{ $course->edition }}</small>
                 </td>
                 <td>{{ $course->modality->title }}</td>
                 <td>{{ $course->hours }}</td>
