@@ -121,13 +121,15 @@ class RegistrationController extends Controller
 
         }
 
-        DB::table('course_requests')
-            ->where('course_id', $registration->course_id)
-            ->where('teacher_id', $registration->teacher_id)
+        $result = DB::table('course_requests')
+            ->where('course_id', $posts['course_id'])
+            ->where('teacher_id', $posts['teacher_id'])
             ->update(['status' => COURSE_REQUEST_ACCEPTED]);
 
+        $this->repo->flushAllCache();
 
-        return response()->json(['registration' => $registration]);
+
+        return response()->json(['registration' => $registration, 'course_request' => $result]);
     }
 
     /**
