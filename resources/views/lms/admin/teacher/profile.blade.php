@@ -151,7 +151,7 @@
                             @foreach($teacher->registrations->sortByDesc('approval_time') as $registration)
                                 <tr class="{{ $registration->course->status == 0 ? 'disabled' : '' }}">
                                     <td>{{ $registration->course->university->name }}</td>
-                                    <td><a href="{{ url("/admin/course/$registration->course->id/show") }}">
+                                    <td><a href="{{ url("/admin/course/".$registration->course->id."/show") }}">
                                         {{ $registration->course->short_name }}</a><br/>
                                         <small class="text-warning">
                                             {{ $registration->course->course_code }}</small>

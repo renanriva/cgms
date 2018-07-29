@@ -24,6 +24,21 @@ class CoursePolicy
         //
     }
 
+    /**
+     * Only admin and university can browse course
+     *
+     * @param User   $user
+     * @return bool
+     */
+    public function browse(User $user){
+
+
+        if($user->role == 'teacher'){
+            return false;
+        }
+
+        return true;
+    }
 
     /**
      * @param User $user

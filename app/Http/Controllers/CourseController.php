@@ -51,27 +51,37 @@ class CourseController extends Controller
      */
     public function index(Request $request){
 
-        $posts = $request->all();
 
         $user = Auth::user();
-        $page = isset($posts['page']) ? $posts['page'] : 1;
+
+        if ($user->can('browse', Course::class)){
+
+            $posts = $request->all();
+
+            $page = isset($posts['page']) ? $posts['page'] : 1;
 
 
-        if ($user->role == 'admin'){
+            if ($user->role == 'admin'){
 
-            $courses = $this->repo->paginate($page);
+                $courses = $this->repo->paginate($page);
 
 
-        } elseif ($user->role == 'university'){
+            } elseif ($user->role == 'university'){
 
-            $courses = $this->repo->coursesByUniversity($page, $user->university->id);
+                $courses = $this->repo->coursesByUniversity($page, $user->university->id);
+
+            }
+
+
+            $title = 'Course Management - '.env('APP_NAME') ;
+
+            return view('lms.admin.course.index', ['title'=> $title, 'courses' => $courses]);
+
+        } else {
+            return response()->redirectTo(url('/admin/unauthorized'));
 
         }
 
-
-        $title = 'Course Management - '.env('APP_NAME') ;
-
-        return view('lms.admin.course.index', ['title'=> $title, 'courses' => $courses]);
 
     }
 
