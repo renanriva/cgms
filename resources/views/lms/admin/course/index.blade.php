@@ -34,7 +34,17 @@
                 </div>
 
                 <div class="box-footer no-padding">
-                    {{  $courses->links() }}
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            {{  $courses->links() }}
+
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 text-right" style="margin-top: 20px;padding-right: 25px;">
+                            <small><i class="fa fa-info-circle"></i>&nbsp;
+                                <span class="text-muted">{{ __('lms.messages.diploma_upload_message') }}</span>
+                            </small>
+                        </div>
+                    </div>
                 </div>
             </div>
 

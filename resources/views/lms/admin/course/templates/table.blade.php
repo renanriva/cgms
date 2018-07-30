@@ -61,13 +61,4 @@
         @endforeach
 
     </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="13" class="text-right">
-                <small><i class="fa fa-info-circle"></i>&nbsp;
-                    <span class="text-muted">{{ __('lms.messages.diploma_upload_message') }}</span>
-                </small>
-            </td>
-        </tr>
-    </tfoot>
 </table>
