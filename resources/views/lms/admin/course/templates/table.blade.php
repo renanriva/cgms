@@ -13,7 +13,7 @@
             <th>{{ __('lms.page.course.table.status') }}</th>
 
             @if(Auth::user()->role == 'university')
-                <th>Grade Add Dates</th>
+                <th>{{ __('lms.words.add_grade') }}</th>
             @endif
             <th>{{ __('lms.words.last_updated') }}</th>
             <th class="text-right">{{ __('lms.page.course.table.action') }}</th>
@@ -60,4 +60,13 @@
         @endforeach
 
     </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="13" class="text-right">
+                <small><i class="fa fa-info-circle"></i>&nbsp;
+                    <span class="text-muted">{{ __('lms.messages.diploma_upload_message') }}</span>
+                </small>
+            </td>
+        </tr>
+    </tfoot>
 </table>

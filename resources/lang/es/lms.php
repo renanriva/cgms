@@ -327,10 +327,12 @@
             ],
         ],
         'words' =>[
+            'course'    => 'Course',
             'diploma' => 'Diploma',
             'grade' => 'Grado',
             'zone'  => 'Zona',
             'last_updated' => 'Última actualización',
+            'add_grade'             => 'Add Grade',
             'by' => 'por',
         ],
         'messages' => [
@@ -340,6 +342,8 @@
             'upload_new_course' => 'Cargar un nuevo curso',
             'download_sample_file' => 'Descargar archivo de muestra',
             'upload_diploma_zip_file' => 'Upload Diploma Zip File',
-            'course_request_list_modal' => 'Course Request List Modal'
+            'course_request_list_modal' => 'Course Request List Modal',
+            'diploma_upload_message' => 'La carga del diploma se habilitará desde la fecha de inicio de la entrada al grado'
+
         ]
     ];
