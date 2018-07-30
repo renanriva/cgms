@@ -77,7 +77,7 @@ class CourseRepository
          * Store a teacher and return the teacher
          */
 
-        $user = Auth::user()->id;
+        $user = Auth::user();
         $course = new Course();
 
         $course->master_course_id                   = $post['master_course_id'];
