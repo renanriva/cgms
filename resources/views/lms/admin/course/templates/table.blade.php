@@ -28,7 +28,8 @@
                 </td>
                 <td>{{ $course->university->name }}</td>
                 <td>
-                    <a href="{{ url("/admin/course/$course->id/show") }}">{{ $course->short_name }} </a><br/>
+                    <a href="{{ url("/admin/course/$course->id/show") }}">{{ $course->short_name }} </a>&nbsp;
+                    <small class="text-muted">[{{ $course->id }}]</small><br/>
                     <small><code>{{ $course->course_code }}</code></small>&nbsp;
                     <small class="text-info">{{ $course->edition }}</small>
                 </td>
