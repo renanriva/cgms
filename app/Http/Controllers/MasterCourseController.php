@@ -49,6 +49,8 @@ class MasterCourseController extends Controller
     }
 
     /**
+     * @todo add validation
+     *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -64,6 +66,9 @@ class MasterCourseController extends Controller
     }
 
     /**
+     *
+     * @todo add validation
+     *
      * @param Request $request
      * @param         $id
      * @return \Illuminate\Http\RedirectResponse
