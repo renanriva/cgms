@@ -115,11 +115,6 @@ class CourseRepository
         $course->updated_by     = Auth::user()->id;
         $course->save();
 
-        $course->save();
-
-
-//        add user of the teacher
-//        event(new TeacherCreated($newCourse, $creation_type, $creation_type));
 
         return $course;
 
