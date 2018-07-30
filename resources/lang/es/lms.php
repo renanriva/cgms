@@ -31,54 +31,54 @@
             'university'        => 'Universidad',
             'profile'           => 'Mi perfil',
             'settings'          => [
-                'title' => 'Settings',
+                'title' => 'Ajustes',
                 'user_management' => 'Gestión de usuarios',
                 'location' => [
-                    'title' => 'Location',
-                    'province'  => 'Province',
-                    'canton'    => 'Canton',
-                    'parroquia'    => 'PARROQUIA',
+                    'title' => 'Ubicación',
+                    'province'  => 'Provincia',
+                    'canton'    => 'Cantón',
+                    'parroquia'    => 'Parroquia',
                 ],
             ]
         ],
         'location' => [
             'province' => [
                 'index' => [
-                    'page_header'=> 'Province',
-                    'table_header' => 'Province List'
+                    'page_header'=> 'Provincia',
+                    'table_header' => 'Lista de Provincias'
                 ],
                 'table' => [
                     'id'                => 'Id',
-                    'province_name'     => 'Province',
-                    'cantons'           => 'Cantons',
-                    'action'            => 'Action'
+                    'province_name'     => 'Provincia',
+                    'cantons'           => 'Cantones',
+                    'action'            => 'Acción'
                 ]
             ],
             'canton' => [
                 'index' => [
-                    'page_header'       => 'Canton',
-                    'table_header'      => 'Canton List'
+                    'page_header'       => 'Cantón',
+                    'table_header'      => 'Lista de Cantones'
                 ],
                 'table' => [
-                    'province_name'     => 'Province',
-                    'canton_name'       => 'Canton Name',
+                    'province_name'     => 'Provincia',
+                    'canton_name'       => 'Nombre del Cantón',
                     'canton_capital'    => 'Capital',
-                    'district_name'     => 'District',
-                    'district_code'     => 'Dist. Code',
-                    'zone'              => 'Zone',
-                    'action'            => 'Action'
+                    'district_name'     => 'Distrito',
+                    'district_code'     => 'Código Dist.',
+                    'zone'              => 'Zona',
+                    'action'            => 'Acción'
                 ]
             ],
             'parroquia' => [
                 'index' => [
                     'page_header'       => 'Parroquia',
-                    'table_header'      => 'Parroquia List'
+                    'table_header'      => 'Lista de Parroquias'
                 ],
                 'table' => [
-                    'province_name'     => 'Province',
-                    'canton_name'       => 'Canton Name',
+                    'province_name'     => 'Provincia',
+                    'canton_name'       => 'Nombre del Cantón',
                     'parroquia'         => 'Parroquia',
-                    'action'            => 'Action'
+                    'action'            => 'Acción'
                 ]
             ]
 
@@ -92,27 +92,27 @@
                 ],
                 'table' => [
                     'id'                => 'Id',
-                    'security_id'       => 'Social Id',
+                    'security_id'       => 'Cédula',
                     'name'              => 'Name',
                     'email'             => 'Email',
                     'moodle_id'          => 'Id Moodle',
-                    'university'        => 'University',
-                    'function'          => 'Function',
-                    'location'          => 'Address',
-                    'province'          => 'Province',
-                    'canton'            => 'Canton',
-                    'district'          => 'District',
-                    'course_type'       => 'Course Type',
-                    'course_name'       => 'Course Name',
-                    'modality'          => 'modality',
-                    'hours'             => 'Hours',
-                    'start_date'        => 'Start Date',
-                    'end_date'          => 'End Date',
-                    'approved'          => 'Approved',
-                    'certificate'       => 'Certificate',
+                    'university'        => 'Universidad',
+                    'function'          => 'Funcción',
+                    'location'          => 'Dirección',
+                    'province'          => 'Provincia',
+                    'canton'            => 'Cantón',
+                    'district'          => 'Distrito',
+                    'course_type'       => 'Tipo de Curso',
+                    'course_name'       => 'Nombre de Curso',
+                    'modality'          => 'modalidad',
+                    'hours'             => 'Horas',
+                    'start_date'        => 'Fecha Inicial',
+                    'end_date'          => 'Fecha Final',
+                    'approved'          => 'Aprovado',
+                    'certificate'       => 'Certificado',
                     'diploma'           => 'Diploma',
 
-                    'action'            => 'Action',
+                    'action'            => 'Acción',
                 ],
                 'form' => [
                     'edit_title'        => 'Editar profesor',
@@ -126,15 +126,14 @@
                     'table_header' => 'Perfil del profesor'
                 ],
                 'table' => [
-                    'course_type'       => 'Course Type',
-                    'course_name'       => 'Course Name',
-                    'institute'         => 'University',
-                    'modality'          => 'Modality',
-                    'hours'             => 'Hours',
-                    'start_date'        => 'Start Date',
-                    'end_date'          => 'End Date',
-                    'status'            => 'Status',
-                    'certificate'       => 'Certificate',
+                    'course_type'       => 'Tipo de Curso',
+                    'course_name'       => 'Nombre de Curso',
+                    'institute'         => 'Universidad',
+                    'modality'          => 'Modalidad',
+                    'hours'             => 'Horas',
+                    'start_date'        => 'Fecha Final',
+                    'status'            => 'Estado',
+                    'certificate'       => 'Certificado',
                 ]
             ],
             'course' => [
@@ -144,37 +143,37 @@
                 ],
                 'table' => [
                     'id'                => 'Id',
-                    'course_id'         => 'Course Id',
-                    'short_name'        => 'Short Name',
-                    'hours'             => 'Hours',
-                    'start_date'        => 'Start Date',
-                    'end_date'          => 'End Date',
-                    'quota'             => 'Quota',
-                    'comment'           => 'Comment',
-                    'state'             => 'State',
-                    'upload_rating'     => 'Upload Rating',
+                    'course_id'         => 'Id de Curso',
+                    'short_name'        => 'Nombre corto',
+                    'hours'             => 'Horas',
+                    'start_date'        => 'Fecha Inicial',
+                    'end_date'          => 'Fecha Final',
+                    'quota'             => 'Cuota',
+                    'comment'           => 'Commentario',
+                    'state'             => 'Estado',
+                    'upload_rating'     => 'Subir Rating',
                     'action'            => 'Editor'
                 ],
                 'form'  =>[
-                    'edit_title'        => 'Edit Course',
-                    'add_title'         => 'Add New Course',
-                    'course_id'         => 'Course Code',
-                    'course_type'       => 'Course Type',
-                    'course_modality'   => 'Modality',
-                    'university'        => 'University',
-                    'short_name'        => 'Short Name',
-                    'hours'             => 'Hours',
-                    'start_date'        => 'Start date',
-                    'end_date'          => 'End date',
-                    'quota'             => 'Quota',
-                    'comment'           => 'Comment',
-                    'description'       => 'Description',
-                    'terms_condition'   => 'Terms & Condition',
-                    'video'             => 'Video Information',
-                    'video_type'        => 'Video Type',
-                    'video_embed'       => 'Embed Code',
-                    'data_update'       => 'Data Update Tab Info',
-                    'inspection_file_message' => 'After creating the course, you can upload inspection file.'
+                    'edit_title'        => 'Editar Cursp',
+                    'add_title'         => 'Agragar Nuevo Curso',
+                    'course_id'         => 'Código de Curso',
+                    'course_type'       => 'Tipo de Curso',
+                    'course_modality'   => 'Modalidad',
+                    'university'        => 'Universidad',
+                    'short_name'        => 'Nombre Corto',
+                    'hours'             => 'Horas',
+                    'start_date'        => 'Fecha Inicial',
+                    'end_date'          => 'Fecha Final',
+                    'quota'             => 'Cuota',
+                    'comment'           => 'Commentario',
+                    'description'       => 'Descripción',
+                    'terms_condition'   => 'Términos y Condiciones',
+                    'video'             => 'Informción de Video',
+                    'video_type'        => 'Tipo de Video',
+                    'video_embed'       => 'Código Embebido',
+                    'data_update'       => 'Pestaña informativa de Subida de datos',
+                    'inspection_file_message' => 'Despues de crear el curso, usted puede subit el archivo de inspección.'
 
                 ],
             ],
@@ -184,15 +183,15 @@
                     'table_header' => 'Mis cursos registrables'
                 ],
                 'table' => [
-                    'course_code'       => 'Course Code',
-                    'course_type'       => 'Course Type',
-                    'short_name'        => 'Course',
-                    'institution'       => 'University',
-                    'modality'          => 'Modality',
-                    'start_date'        => 'Start Date',
-                    'end_date'          => 'End Date',
-                    'hours'             => 'Hours',
-                    'action'            => 'Register'
+                    'course_code'       => 'Código de Curso',
+                    'course_type'       => 'Tipo de Curso',
+                    'short_name'        => 'Curso',
+                    'institution'       => 'Universidad',
+                    'modality'          => 'Modalidad',
+                    'start_date'        => 'Fecha Inicial',
+                    'end_date'          => 'Fecha Final',
+                    'hours'             => 'Horas',
+                    'action'            => 'Registrar'
                 ]
 
             ],
@@ -210,17 +209,17 @@
                     ],
                     'table' => [
                         'id'                => 'Id',
-                        'security_id'       => 'Social Id',
-                        'name'              => 'Name',
+                        'security_id'       => 'Cédula',
+                        'name'              => 'Nombre',
                         'email'             => 'Email',
-                        'moodle_id'          => 'Id Moodle',
-                        'university'        => 'University',
-                        'function'          => 'Function',
-                        'location'          => 'Address',
-                        'province'          => 'Province',
-                        'canton'            => 'Canton',
-                        'district'          => 'District',
-                        'action'            => 'Action'
+                        'moodle_id'         => 'Id Moodle',
+                        'university'        => 'Universidad',
+                        'function'          => 'Funcción',
+                        'location'          => 'Dirección',
+                        'province'          => 'Provincia',
+                        'canton'            => 'Cantón',
+                        'district'          => 'Distrito',
+                        'action'            => 'Acción'
                     ]
                 ],
                 'pending' => [
@@ -230,19 +229,19 @@
 
                     ],
                     'table' => [
-                        'course_code'       => 'Course Code',
-                        'short_name'        => 'Short Name',
-                        'institute'         => 'Institute',
-                        'start_date'        => 'Start Date',
-                        'end_date'          => 'End Date',
-                        'security_id'       => 'Social Id',
-                        'name'              => 'Name',
+                        'course_code'       => 'Código de curso',
+                        'short_name'        => 'Nombre Corto',
+                        'institute'         => 'Institución',
+                        'start_date'        => 'Fecha Inicial',
+                        'end_date'          => 'Fecha Final',
+                        'security_id'       => 'Cédula',
+                        'name'              => 'Nombre',
                         'email'             => 'Email',
-                        'terms_condition'   => 'Terms & Condition',
-                        'record_uploaded'   => 'Record Uploaded',
-                        'is_approved'       => 'Approved',
-                        'approved_by'       => 'Approved By',
-                        'action'            => 'Action'
+                        'terms_condition'   => 'Términos & Condiciones',
+                        'record_uploaded'   => 'Registro subido',
+                        'is_approved'       => 'Aprobado',
+                        'approved_by'       => 'Aprobado por',
+                        'action'            => 'Acción'
                     ]
                 ]
             ],
@@ -253,28 +252,28 @@
                 ],
                 'table' => [
                     'id'                => 'Id',
-                    'name'              => 'Name',
+                    'name'              => 'Nombre',
                     'email'             => 'Email',
-                    'login_name'        => 'Login Name',
-                    'login_email'       => 'Login Email',
+                    'login_name'        => 'Nombre de ingreso',
+                    'login_email'       => 'Email de ingreso',
                     'website'           => 'Website',
-                    'phone'             => 'Phone',
-                    'created_by'        => 'Created By',
-                    'created_at'        => 'Created At',
-                    'action'            => 'Action'
+                    'phone'             => 'Teléfono',
+                    'created_by'        => 'Creado por',
+                    'created_at'        => 'Creado el',
+                    'action'            => 'Acción'
                 ],
                 'form'  =>[
                     'edit_title'        => 'Editar Universidad',
                     'add_title'         => 'Agregar nueva universidad',
-                    'name'              => 'Name',
+                    'name'              => 'Nombre',
                     'email'             => 'Email',
-                    'login_name'        => 'Login Name',
-                    'login_email'       => 'Login Email',
+                    'login_name'        => 'Nombre de ingreso',
+                    'login_email'       => 'Email de ingreso',
                     'website'           => 'Website',
-                    'phone'             => 'Phone',
-                    'note'              => 'Note',
-                    'profile_photo'     => 'Profile Photo',
-                    'login_message'     => 'These login information will be used to create login user for university.'
+                    'phone'             => 'Teléfono',
+                    'note'              => 'Nota',
+                    'profile_photo'     => 'Foto de perfil',
+                    'login_message'     => 'Esta información de ingreso sera usada para crear el usuario de ingreso para la universidad.'
                 ],
                 'view' => [
                     'table_header'      => 'Lista de cursos'
@@ -288,23 +287,23 @@
                 ],
                 'table' => [
                     'id'                => 'Id',
-                    'first_name'        => 'First Name',
-                    'last_name'         => 'Last Name',
+                    'first_name'        => 'Nombre',
+                    'last_name'         => 'Apellido',
                     'email'             => 'Email',
-                    'role'              => 'Role',
-                    'status'            => 'Status',
-                    'creation_type'     => 'Creation Type',
-                    'created_at'        => 'Created At',
-                    'action'            => 'Action'
+                    'role'              => 'Rol',
+                    'status'            => 'Estado',
+                    'creation_type'     => 'Tipo de Creación',
+                    'created_at'        => 'Creado el',
+                    'action'            => 'Acción'
                 ],
                 'form'  =>[
-                    'edit_title'        => 'Edit User',
-                    'add_title'         => 'Add New User',
-                    'first_name'        => 'First Name',
-                    'last_name'         => 'Last Name',
+                    'edit_title'        => 'Editar Usuario',
+                    'add_title'         => 'Agregar Nuevo Usuario',
+                    'first_name'        => 'Nombre',
+                    'last_name'         => 'Apellido',
                     'email'             => 'Email',
-                    'role'              => 'Role',
-                    'status'            => 'Status',
+                    'role'              => 'Rol',
+                    'status'            => 'Estado',
                 ]
 
             ]
@@ -313,19 +312,19 @@
         ],
         'elements' => [
             'button' => [
-                'edit'      => 'Edit',
-                'create'    => 'Create',
-                'delete'    => 'Delete',
-                'remove'    => 'Remove',
-                'close'     => 'Close',
-                'import'    =>  'Import',
-                'upload'    =>  'Upload',
+                'edit'      => 'Editar',
+                'create'    => 'Crear',
+                'delete'    => 'Eiminar',
+                'remove'    => 'Borrar',
+                'close'     => 'Cerrar',
+                'import'    =>  'Importar',
+                'upload'    =>  'Subir',
                 'upload_diploma' => 'Diploma',
                 'upload_course_request' => 'Cargar solicitud de curso', // in course list page
                 'new_course_upload' => 'Cargar un nuevo curso' // in course list page
             ],
         ],
         'words' =>[
-            'zone'  => 'Zone'
+            'zone'  => 'Zona'
         ]
     ];
