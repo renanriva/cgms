@@ -18,7 +18,7 @@
                                     Carbon\Carbon::parse($course->grade_upload_end_date)))
             <a href="{{ url("/admin/course/$course->id/show") }}"
                class="btn btn-success" data-id="{{ $course->id }}">
-                <i class="fa fa-plus"></i> Add Grade</a>
+                <i class="fa fa-plus"></i> {{ __('lms.words.add_grade') }}</a>
         @endif
 
 

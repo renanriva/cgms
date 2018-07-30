@@ -26,13 +26,13 @@
                 @endslot
 
                 @slot('box_tools')
-                    <div class="input-group input-group-sm" style="width: 150px;">
-                        <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+                    {{--<div class="input-group input-group-sm" style="width: 150px;">--}}
+                        {{--<input type="text" name="table_search" class="form-control pull-right" placeholder="Search">--}}
 
-                        <div class="input-group-btn">
-                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                        </div>
-                    </div>
+                        {{--<div class="input-group-btn">--}}
+                        {{--<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
 
                 @endslot
 
@@ -70,8 +70,12 @@
 
                                     <div class="btn-group btn-group-xs">
                                         <a href="{{ url('/admin/master-course/'.$course->id) }}"
-                                           class="btn btn-flat btn-primary"><i class="fa fa-edit"></i> Edit</a>
-                                        <button type="submit" class="btn btn-warning"><i class="fa fa-trash"></i> Delete</button>
+                                           class="btn btn-flat btn-primary">
+                                            <i class="fa fa-edit"></i> {{ __('lms.elements.button.edit') }}
+                                        </a>
+                                        <button type="submit" class="btn btn-warning">
+                                            <i class="fa fa-trash"></i> {{ __('lms.elements.button.delete') }}
+                                        </button>
                                     </div>
                                 </form>
                             </td>
