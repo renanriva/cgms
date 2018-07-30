@@ -140,10 +140,12 @@ class CourseController extends Controller
 
         $post = $request->all();
 
-        $course['course_code']                  = $post['course_code'];
-        $course['course_type_id']               = $post['course_type'];
+        $course['master_course_id']             = $post['master_course_id'];
         $course['university_id']                = $post['university_id'];
+        $course['course_type_id']               = $post['course_type'];
+        $course['course_code']                  = $post['course_code'];
         $course['short_name']                   = $post['short_name'];
+        $course['edition']                      = $post['course_edition'];
 
         if (isset($post['start_date'])) {
             $startDate = DateTime::createFromFormat('d/m/Y', $post['start_date']);
@@ -159,24 +161,6 @@ class CourseController extends Controller
             $course['end_date'] =  null;
         }
 
-        $course['hours']                        = $post['hours'];
-        $course['quota']                        = $post['quota'];
-
-        $course['comment']                      = $post['comment'];
-        $course['description']                  = $post['description'];
-        $course['video_text']                   = $post['video_text'];
-        $course['video_type']                   = $post['video_type'];
-        $course['video_code']                   = $post['video_code'];
-        $course['data_update_brief']            = $post['data_update_text'];
-        $course['terms_conditions']             = $post['terms_condition'];
-        $course['master_course_id']             = $post['master_course_id'];
-        $course['edition']                      = $post['course_edition'];
-        $course['stage']                        = $post['course_stage'];
-        $course['status']                       = $post['course_status'];
-        $course['is_disclaimer']                = $post['is_disclaimer'];
-        $course['cost']                         = $post['cost'];
-        $course['finance_type']                 = $post['finance_type'];
-
         if (isset($post['grade_entry_start_date'])) {
             $startDate = DateTime::createFromFormat('d/m/Y', $post['grade_entry_start_date']);
             $course['grade_upload_start_date'] = $startDate->format('Y-m-d');
@@ -191,6 +175,25 @@ class CourseController extends Controller
             $course['grade_upload_end_date'] =  null;
         }
 
+        $course['cost']                         = $post['cost'];
+        $course['finance_type']                 = $post['finance_type'];
+        $course['is_disclaimer']                = $post['is_disclaimer'];
+
+
+        $course['hours']                        = $post['hours'];
+        $course['quota']                        = $post['quota'];
+
+        $course['stage']                        = $post['course_stage'];
+        $course['status']                       = $post['course_status'];
+
+        $course['comment']                      = $post['comment'];
+        $course['description']                  = $post['description'];
+
+        $course['video_text']                   = $post['video_text'];
+        $course['video_type']                   = $post['video_type'];
+        $course['video_code']                   = $post['video_code'];
+        $course['data_update_brief']            = $post['data_update_text'];
+        $course['terms_conditions']             = $post['terms_condition'];
 
         $course['inspection_form_generated']    = false;
 
@@ -212,10 +215,11 @@ class CourseController extends Controller
 
             $post = $request->all();
 
-            $course['course_type_id']               = $post['course_type'];
-
-            $course->university_id  = $post['university_id'];
-            $course->short_name     = $post['short_name'];
+            $course->master_course_id               = $post['master_course_id'];
+            $course->university_id                  = $post['university_id'];
+            $course->course_type_id                 = $post['course_type'];
+            $course->short_name                     = $post['short_name'];
+            $course->edition                        = $post['course_edition'];
 
             if (isset($post['start_date'])) {
                 $startDate = DateTime::createFromFormat('d/m/Y', $post['start_date']);
@@ -231,26 +235,6 @@ class CourseController extends Controller
                 $course->end_date =  null;
             }
 
-            $course->hours          = $post['hours'];
-            $course->quota          = $post['quota'];
-
-            $course->comment        = $post['comment'];
-            $course->description    = $post['description'];
-
-            $course->comment                      = $post['comment'];
-            $course->video_text                   = $post['video_text'];
-            $course->video_type                   = $post['video_type'];
-            $course->video_code                   = $post['video_code'];
-            $course->data_update_brief            = $post['data_update_text'];
-            $course->terms_conditions             = $post['terms_condition'];
-            $course->master_course_id             = $post['master_course_id'];
-            $course->edition                      = $post['course_edition'];
-            $course->stage                        = $post['course_stage'];
-            $course->status                       = $post['course_status'];
-            $course->has_disclaimer               = $post['is_disclaimer'];
-            $course->cost                         = $post['cost'];
-            $course->finance_type                 = $post['finance_type'];
-
             if (isset($post['grade_entry_start_date'])) {
                 $startDate = DateTime::createFromFormat('d/m/Y', $post['grade_entry_start_date']);
                 $course->grade_upload_start_date = $startDate->format('Y-m-d');
@@ -265,7 +249,27 @@ class CourseController extends Controller
                 $course->grade_upload_end_date =  null;
             }
 
-            $course->updated_by     = Auth::user()->id;
+            $course->has_disclaimer                 = $post['is_disclaimer'];
+            $course->cost                           = $post['cost'];
+            $course->finance_type                   = $post['finance_type'];
+
+            $course->hours                          = $post['hours'];
+            $course->quota                          = $post['quota'];
+
+            $course->stage                          = $post['course_stage'];
+            $course->status                         = $post['course_status'];
+
+            $course->comment                        = $post['comment'];
+            $course->description                    = $post['description'];
+
+            $course->comment                        = $post['comment'];
+            $course->video_text                     = $post['video_text'];
+            $course->video_type                     = $post['video_type'];
+            $course->video_code                     = $post['video_code'];
+            $course->data_update_brief              = $post['data_update_text'];
+            $course->terms_conditions               = $post['terms_condition'];
+
+            $course->updated_by                     = Auth::user()->id;
             $course->save();
 
             $this->repo->flushById($id);
@@ -329,9 +333,9 @@ class CourseController extends Controller
 
                     $course['university_id']                = $row['university_id'];
                     $course['course_code']                  = $row['course_code'];
-                    $course['short_name']                   = $row['short_name'];
                     $course['course_type_id']               = $row['modality_id'];
-                    $course['course_edition']               = isset($row['course_edition']) ? $row['course_edition']: '';
+                    $course['short_name']                   = $row['short_name'];
+                    $course['edition']                      = isset($row['course_edition']) ? $row['course_edition']: '';
 
                     $course['start_date']                   = isset($row['start_date']) ? $row['start_date']: null;
                     $course['end_date']                     = isset($row['end_date']) ? $row['end_date'] : null;
@@ -345,11 +349,10 @@ class CourseController extends Controller
                     $course['hours']                        = isset($row['hours']) ? : '0';
                     $course['quota']                        = isset($row['quota']) ? : '0';
 
-                    $course['course_stage']                 = $row['stage'] == 'published' ? '1' : '0';
-                    $course['course_status']                = $row['status'] == 'active' ? '1' : '0';
+                    $course['stage']                        = $row['stage'] == 'published' ? '1' : '0';
+                    $course['status']                       = $row['status'] == 'active' ? '1' : '0';
 
                     $course['comment']                      = isset($row['comment']) ? $row['comment']: '';
-
                     $course['description']                  = isset($row['description']) ? $row['description']: '';
 
                     $course['video_text']                   = isset($row['video_information']) ? $row['video_information']: '';
