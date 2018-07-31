@@ -125,7 +125,7 @@ $(document).ready(function () {
 
                 deleteModal.find('.model-title').text('Delete Teacher');
                 deleteModal.find('.js-message').text('Are you sure to delete Teacher ['+name+']?');
-                deleteModal.find('#btn-delete-confirm').attr('data-url', '/admin/teachers/'+id);
+                deleteModal.find('#btn-delete-confirm').attr('data-url', app_url+'/admin/teachers/'+id);
                 deleteModal.find('#btn-delete-confirm').attr('data-id', id);
                 deleteModal.modal('show');
 
@@ -432,11 +432,13 @@ $(document).ready(function () {
         }// end function
 
 
+        /**
+         * @todo onCantonChange select parrouia list
+         */
         $('.js-canton').on('select2:select', function (e) {
-
-            var data = e.params.data;
-            loadCantons(data.id);
-
+        //     var data = e.params.data;
+        //     console.log('canton ', data);
+        //     loadCantons(data.id);
         })
     }
 

@@ -40,6 +40,31 @@ class CategoryController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postType(Request $request){
+
+        $post = $request->all();
+
+        $data['title'] = $post['title'];
+        $data['type'] = true;
+        $data['label'] = false;
+        $data['sub_label'] = false;
+        $data['knowledge'] = false;
+        $data['subject'] = false;
+        $data['parent_id'] = 0;
+
+        $this->repo->insert($data);
+
+        return response()->redirectTo(url('/admin/categories/type'));
+
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function label(){
 
         $all = $this->repo->getAll();
@@ -50,6 +75,11 @@ class CategoryController extends Controller
         return view('lms.admin.category.create', [ 'title'=> 'Label', 'category' => $category]);
     }
 
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getLabelList($id){
 
         $all = $this->repo->getAll();
@@ -79,7 +109,7 @@ class CategoryController extends Controller
 
         $this->repo->insert($data);
 
-        return response()->redirectTo('/admin/categories/label');
+        return response()->redirectTo(url('/admin/categories/label'));
 
     }
 
@@ -132,7 +162,7 @@ class CategoryController extends Controller
 
         $this->repo->insert($data);
 
-        return response()->redirectTo('/admin/categories/sublabel');
+        return response()->redirectTo(url('/admin/categories/sublabel'));
 
     }
 
@@ -187,7 +217,7 @@ class CategoryController extends Controller
 
         $this->repo->insert($data);
 
-        return response()->redirectTo('/admin/categories/knowledge');
+        return response()->redirectTo(url('/admin/categories/knowledge'));
 
     }
 
@@ -243,7 +273,7 @@ class CategoryController extends Controller
 
         $this->repo->insert($data);
 
-        return response()->redirectTo('/admin/categories/subject');
+        return response()->redirectTo(url('/admin/categories/subject'));
 
     }
 

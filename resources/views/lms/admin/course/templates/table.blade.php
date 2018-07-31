@@ -2,6 +2,7 @@
     <thead>
         <tr>
             <th>{{ __('lms.page.course.table.master_course') }}</th>
+            <th>{{ __('lms.page.course.form.university') }}</th>
             <th>{{ __('lms.page.course.table.short_name') }}</th>
             <th>{{ __('lms.page.course.table.modality') }}</th>
             <th>{{ __('lms.page.course.table.hours') }}</th>
@@ -12,21 +13,25 @@
             <th>{{ __('lms.page.course.table.status') }}</th>
 
             @if(Auth::user()->role == 'university')
-                <th>Grade Add Dates</th>
+                <th>{{ __('lms.words.add_grade') }}</th>
             @endif
-            <th>{{ __('lms.page.course.table.action') }}</th>
+            <th>{{ __('lms.words.last_updated') }}</th>
+            <th class="text-right">{{ __('lms.page.course.table.action') }}</th>
         </tr>
     </thead>
     <tbody>
 
         @foreach($courses as $course)
-            <tr>
+            <tr id="course_id_{{ $course->id }}">
                 <td>{{ isset($course->masterCourse->name) ? $course->masterCourse->name: '' }}<br/>
                     <small class="text-info">({{ $course->masterCourse->subject->title }})</small>
                 </td>
+                <td>{{ $course->university->name }}</td>
                 <td>
-                    <a href="{{ url("/admin/course/$course->id/show") }}">{{ $course->short_name }} </a><br/>
-                    <small><code>{{ $course->course_code }}</code></small>
+                    <a href="{{ url("/admin/course/$course->id/show") }}">{{ $course->short_name }} </a>&nbsp;
+                    <small class="text-muted">[{{ $course->id }}]</small><br/>
+                    <small><code>{{ $course->course_code }}</code></small>&nbsp;
+                    <small class="text-info">{{ $course->edition }}</small>
                 </td>
                 <td>{{ $course->modality->title }}</td>
                 <td>{{ $course->hours }}</td>
@@ -47,7 +52,9 @@
                         @endisset
                     </td>
                 @endif
-                <td>
+                <td>{{ $course->updated_at->diffForHumans() }}<br/>
+                    <small class="text-muted">{{ __('lms.words.by') }} {{ $course->updatedBy->name }}</small></td>
+                <td class="text-right">
                     @include('lms.admin.course.action')
                 </td>
             </tr>

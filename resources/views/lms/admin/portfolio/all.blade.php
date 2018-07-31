@@ -10,7 +10,7 @@
 
     @if(Auth::user()->role == 'admin')
     <div class="row">
-        <form class="form-inline" method="get" action="/admin/portfolio">
+        <form class="form-inline" method="get" action="{{ url('/admin/portfolio') }}">
             <div class="col-xs-6 col-lg-5">
                 <div class="input-group" style="width: 100%;">
                     <div class="input-group-btn search-panel" style="text-align: right;width: 20%">
@@ -51,10 +51,10 @@
             <div class="col-xs-2">
                 <div class="btn-group-sm">
                     <button class="btn btn-primary btn-search btn-flat"
-                            formaction="/admin/portfolio"
+                            formaction="{{ url("/admin/portfolio") }}"
                             type="submit"><i class="fa fa-search"></i> Search</button>
                     <button class="btn btn-success btn-download btn-flat"
-                            formaction="/admin/portfolio/download" formtarget="_blank"
+                            formaction="{{ url("/admin/portfolio/download") }}" formtarget="_blank"
                             type="submit"><i class="fa fa-cloud-download"></i> Download</button>
 
                 </div>
@@ -97,7 +97,6 @@
                             </tr>
                         </thead>
                         <tbody>
-
                             @foreach($registrations as $registration)
                                 <tr>
                                     <td>{{ $registration->id }}</td>

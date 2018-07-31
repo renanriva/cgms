@@ -196,7 +196,7 @@ $(document).ready(function () {
 
                     deleteModal.find('.model-title').text('Delete Parroquia');
                     deleteModal.find('.js-message').text('Are you sure to delete Parroquia ['+name+']?');
-                    deleteModal.find('#btn-delete-confirm').attr('data-url', '/admin/location/parroquia/'+id+'/ajax');
+                    deleteModal.find('#btn-delete-confirm').attr('data-url', app_url+'/admin/location/parroquia/'+id+'/ajax');
                     deleteModal.find('#btn-delete-confirm').attr('data-id', id);
                     deleteModal.modal('show');
 

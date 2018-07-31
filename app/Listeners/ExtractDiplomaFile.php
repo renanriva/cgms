@@ -87,7 +87,6 @@ class ExtractDiplomaFile implements ShouldQueue
             Log::info('Course '.$course->id. ': Diploma upload data updated', ['course_id' => $diploma->courseId] );
 
 //            @todo use a tag based cache and flash that
-//            Cache::tags('portfolio')->flush();
 
         } else{
             Log::warning('Course '.$diploma->courseId.' : No Diploma files was found' , ['course_id' => $diploma->courseId]);

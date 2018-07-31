@@ -89,7 +89,7 @@
                                     <li><a href="#step3" data-toggle="tab">3. Terms & Condition</a></li>
                                     <li><a href="#step4" data-toggle="tab">4. Data Update</a></li>
                                     <li><a href="#step5" data-toggle="tab">5. Registry</a></li>
-                                    <li><a href="#step6" data-toggle="tab">6. Registration Certificate</a></li>
+                                    {{--<li><a href="#step6" data-toggle="tab">6. Registration Certificate</a></li>--}}
                                 </ul>
                             </div>
                         </div>
@@ -134,17 +134,17 @@
                                 <h3>Terms and Conditions</h3>
                                 <div class="box-layout">
                                     @if(isset($course->terms_conditions))
-                                    <div class="well well-sm">
-                                        <p class="">{{ $course->terms_conditions }}</p>
-                                    </div>
+                                        <div class="well well-sm">
+                                            <p class="">{{ $course->terms_conditions }}</p>
+                                        </div>
                                     @endif
                                     <div class="form-group">
                                         @if($course->tc_file_path !== null)
-                                        <div class="js-pdf-viewer" style="margin-bottom: 75px;">
-                                            <embed src="{{ asset('storage/'.$course->tc_file_path) }}"
-                                                   width="100%" height="350" alt="pdf"
-                                                   pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
-                                        </div>
+                                            <div class="js-pdf-viewer" style="margin-bottom: 75px;">
+                                                <embed src="{{ asset('storage/'.$course->tc_file_path) }}"
+                                                       width="100%" height="350" alt="pdf"
+                                                       pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
+                                            </div>
                                         @else
                                             <div class="js-error">
                                                 <h3 class="text-warning"><strong class="text-danger" >Sorry</strong>! Terms and Condition not found.</h3>
@@ -201,62 +201,62 @@
 
                                     <table class="table table-responsive table-bordered">
                                         <thead>
-                                            <tr>
-                                                <th>Social Id</th>
-                                                <th>First name</th>
-                                                <th>Last name</th>
-                                                <th>Email</th>
-                                                <th>Phone</th>
-                                                <th>T&C Accept</th>
-                                                <th>Action</th>
-                                            </tr>
+                                        <tr>
+                                            <th>Social Id</th>
+                                            <th>First name</th>
+                                            <th>Last name</th>
+                                            <th>Email</th>
+                                            <th>Phone</th>
+                                            <th>T&C Accept</th>
+                                            <th>Action</th>
+                                        </tr>
                                         </thead>
                                         <tbody id="register-update-data">
-                                            <tr>
-                                                <td>
-                                                    {{ $teacher->social_id }}
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control js-tab-user-first_name"
-                                                           placeholder="First Name"
-                                                           value="{{ $registration->user_first_name }}"
-                                                           maxlength="100"/>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control js-tab-user-last_name"
-                                                           placeholder="Last Name"
-                                                           value="{{ $registration->user_last_name }}"
-                                                           maxlength="100"/>
-                                                </td>
-                                                <td>
-                                                    <input type="email" class="form-control js-tab-user-email"
-                                                           placeholder="Email"
-                                                           value="{{ isset($registration->email) ? $registration->email : $teacher->inst_email }}"
-                                                           maxlength="100"/>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control js-tab-user-phone"
-                                                           placeholder="Phone"
-                                                           value="{{ isset($registration->cell_phone) ? $registration->cell_phone : $teacher->mobile }}"
-                                                           maxlength="50"/>
+                                        <tr>
+                                            <td>
+                                                {{ $teacher->social_id }}
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control js-tab-user-first_name"
+                                                       placeholder="First Name"
+                                                       value="{{ $registration->user_first_name }}"
+                                                       maxlength="100"/>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control js-tab-user-last_name"
+                                                       placeholder="Last Name"
+                                                       value="{{ $registration->user_last_name }}"
+                                                       maxlength="100"/>
+                                            </td>
+                                            <td>
+                                                <input type="email" class="form-control js-tab-user-email"
+                                                       placeholder="Email"
+                                                       value="{{ isset($registration->email) ? $registration->email : $teacher->inst_email }}"
+                                                       maxlength="100"/>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control js-tab-user-phone"
+                                                       placeholder="Phone"
+                                                       value="{{ isset($registration->cell_phone) ? $registration->cell_phone : $teacher->mobile }}"
+                                                       maxlength="50"/>
 
-                                                </td>
-                                                <td class="js-user-data-update-tc_accept_info">
-                                                    @if($registration->accept_tc == 1)
-                                                        <div class="pull-left">
-                                                            <i class="fa fa-check"></i> Accepted at<br/>
-                                                            <small>
+                                            </td>
+                                            <td class="js-user-data-update-tc_accept_info">
+                                                @if($registration->accept_tc == 1)
+                                                    <div class="pull-left">
+                                                        <i class="fa fa-check"></i> Accepted at<br/>
+                                                        <small>
                                                             {{ date('d M Y h:i a', strtotime($registration->tc_accept_time)) }}
-                                                            </small>
-                                                        </div>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <button class="btn btn-update-user-register-data btn-info btn-sm"
-                                                            data-id="{{ $registration->id }}"
-                                                    ><i class="fa fa-save"></i> Update</button>
-                                                </td>
-                                            </tr>
+                                                        </small>
+                                                    </div>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-update-user-register-data btn-info btn-sm"
+                                                        data-id="{{ $registration->id }}"
+                                                ><i class="fa fa-save"></i> Update</button>
+                                            </td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                     <div class="js-data-update-message"></div>
@@ -273,8 +273,8 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             @if(strlen($registration->inspection_certificate) > 2)
-                                            <p>File <code>{{ basename($registration->inspection_certificate)  }}</code>
-                                                uploaded at: {{ date('d M Y: h:i a', strtotime($registration->inspection_certificate_upload_time)) }}</p>
+                                                <p>File <code>{{ basename($registration->inspection_certificate)  }}</code>
+                                                    uploaded at: {{ date('d M Y: h:i a', strtotime($registration->inspection_certificate_upload_time)) }}</p>
                                             @endif
                                         </div>
                                     </div>
@@ -287,13 +287,14 @@
                                             <h3><i class="fa fa-download"></i> Download Letter of Registration</h3>
                                             <hr/>
                                             <p>
-                                                <form method="post" target="_blank"
-                                                    action="/admin/course/{{ $registration->course->id }}/download/lor">
-                                                    {{ csrf_field() }}
-                                                    <button type="submit" class="btn btn-link" href="{{ url('/asset/letter_of_registration.pdf') }}"
-                                                    target="_blank">{{ $teacher->social_id }}</button>
-                                                    <label><i class="fa fa-check-square-o"></i></label>
-                                                </form>
+                                            <form method="post" target="_blank"
+                                                  action="{{ url("/admin/course/$registration->course->id/download/lor") }}">
+                                                {{ csrf_field() }}
+                                                <button type="submit" class="btn btn-link"
+                                                        href="{{ url('/asset/letter_of_registration.pdf') }}"
+                                                        target="_blank">{{ $teacher->social_id }}</button>
+                                                <label><i class="fa fa-check-square-o"></i></label>
+                                            </form>
                                             </p>
 
                                         </div>
@@ -303,15 +304,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane" id="step6">
-                                <div class="box-layout">
-                                    <p>This is the last step. You're done.</p>
-                                    <div class="next-layout">
-                                        <a class="btn btn-success first" href="javascript:void(0)">Start over</a>
-                                    </div>
-                                </div>
+                            {{--<div class="tab-pane" id="step6">--}}
+                                {{--<div class="box-layout">--}}
+                                    {{--<p>This is the last step. You're done.</p>--}}
+                                    {{--<div class="next-layout">--}}
+                                        {{--<a class="btn btn-success first" href="javascript:void(0)">Start over</a>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
 
-                            </div>
+                            {{--</div>--}}
                         </div>
                     </div>
 

@@ -44,7 +44,10 @@ class TeacherController extends Controller
 
             $title = 'Teacher Management - '.env('APP_NAME') ;
 
+            $posts = $request->all();
+
             $page = isset($posts['page']) ? $posts['page'] : 1;
+
             $teachers = $this->repo->paginate($page);
 
             return view('lms.admin.teacher.index', ['title'=> $title, 'teachers' => $teachers]);
@@ -69,10 +72,10 @@ class TeacherController extends Controller
         if ($user->can('browse', Teacher::class)) {
 
             $posts = $request->query();
+            $page = isset($posts['page']) ? $posts['page'] : 1;
 
             $title = 'Teacher Search Result for ['.$posts['search'].'] - '.env('APP_NAME') ;
 
-            $page = isset($posts['page']) ? $posts['page'] : 1;
             $teachers = $this->repo->search($page, $posts['search']);
 
             return view('lms.admin.teacher.index', ['title'=> $title, 'teachers' => $teachers]);

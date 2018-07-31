@@ -5,10 +5,10 @@
 @section('content_header')
     <h1>Course Modality</h1>
     @component('lms.admin.components.bootstrap.breadcrumb')
-        <li class=""><i class="fa fa-book"></i> Course</li>
-        <li class="active"><i class="fa fa-list"></i> Course Modality</li>
+        <li class=""><i class="fa fa-book"></i> {{ __('lms.words.course') }}</li>
+        <li class="active"><i class="fa fa-list"></i> {{ __('lms.words.course_modality') }}</li>
         <li class="">
-            <a href="{{ url('/admin/course-modality/create') }}"><i class="fa fa-plus"></i> Create</a>
+            <a href="{{ url('/admin/course-modality/create') }}"><i class="fa fa-plus"></i> {{ __('lms.elements.button.create') }}</a>
         </li>
     @endcomponent
 @stop
@@ -26,13 +26,6 @@
                 @endslot
 
                 @slot('box_tools')
-                    <div class="input-group input-group-sm" style="width: 150px;">
-                        <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                        <div class="input-group-btn">
-                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                        </div>
-                    </div>
 
                 @endslot
 
@@ -70,7 +63,7 @@
                             <td>{{ $type->updatedBy->name }}</td>
                             <td>{{ $type->updated_at->diffForHumans() }}</td>
                             <td>
-                                <form action="/admin/course-type/{{ $type->id }}" method="post">
+                                <form action="{{ url("/admin/course-modality/$type->id") }}" method="post">
                                     {{ csrf_field() }}
                                     <input type="hidden" name="_method" value="DELETE">
 

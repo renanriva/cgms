@@ -18,9 +18,12 @@ class CourseTypeController extends Controller
     public function index(Request $request){
 
 
-        $page= 1;
+        $posts = $request->all();
+        $page = isset($posts['page']) ? $posts['page'] : 1;
+//        dd($page);
         $course_types = $this->repo->getListByPagination($page);
 
+//        dd($course_types);
         return view('lms.admin.course_type.index', ['courseTypes' => $course_types, 'title'=> 'Course Types']);
 
     }
@@ -51,13 +54,19 @@ class CourseTypeController extends Controller
 
         $type = $this->repo->insert($post);
 
-        return response()->redirectTo('/admin/course-modality');
+        return response()->redirectTo(url('/admin/course-modality'));
 
 
     }
 
-    public function update(Request $request){
+    public function update(Request $request, $id){
 
+
+        $post =$request->all();
+
+        $data = $this->repo->update($post, $id);
+
+        return response()->redirectTo(url('/admin/course-modality'));
     }
 
 
@@ -74,7 +83,7 @@ class CourseTypeController extends Controller
 
         $this->repo->delete($id);
 
-        return response()->redirectTo('/admin/course-modality');
+        return response()->redirectTo(url('/admin/course-modality'));
 
 
     }

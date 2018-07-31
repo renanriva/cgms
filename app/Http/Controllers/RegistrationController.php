@@ -73,6 +73,66 @@ class RegistrationController extends Controller
     }
 
     /**
+     * Proceed to the course action
+     * for those course which no need any disclaimer
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function postProceedToTheCourse(Request $request){
+
+        $posts = $request->all();
+        $authUser = Auth::user();
+        $teacher = $authUser->teacher;
+
+
+        /**
+         * find registration with course_id and teacher id
+         *
+         * if found( return registration
+         * if not found, create registration and return code
+         */
+
+        $registration = Registration::where('teacher_id', $posts['teacher_id'])
+            ->where('course_id', $posts['course_id'])
+            ->first();
+
+
+        if ($registration == null){
+
+            $registration = new Registration();
+            $registration->course_id = $posts['course_id'];
+            $registration->teacher_id = $teacher->id;
+            $registration->user_social_id = $teacher->social_id;
+            $registration->user_first_name = $teacher->user->name;
+            $registration->inspection_certificate = '';
+            $registration->inspection_certificate_signed = false;
+            $registration->reg_date     = Carbon::today();
+            $registration->accept_tc     = REGISTRATION_ACCEPT_TERMS_AND_CONDITION_TRUE;
+            $registration->tc_accept_time   = Carbon::now();
+            $registration->registry_is_generated = REGISTRATION_REGISTRY_IS_NOT_GENERATED;
+            $registration->registry_is_generated = REGISTRATION_REGISTRY_IS_NOT_GENERATED;
+
+            $registration->status = REGISTRATION_STATUS_STARTED;
+            $registration->is_approved = REGISTRATION_IS_NOT_APPROVED;
+            $registration->is_approved = REGISTRATION_IS_NOT_APPROVED;
+
+            $registration->save();
+
+        }
+
+        $result = DB::table('course_requests')
+            ->where('course_id', $posts['course_id'])
+            ->where('teacher_id', $posts['teacher_id'])
+            ->update(['status' => COURSE_REQUEST_ACCEPTED]);
+
+        $this->repo->flushAllCache();
+
+
+        return response()->json(['registration' => $registration, 'course_request' => $result]);
+    }
+
+    /**
      * @param Request $request
      * @param         $registrationId
      * @param         $part
@@ -185,7 +245,7 @@ class RegistrationController extends Controller
             return response()->file($registration->inspection_certificate);
 
         } else {
-            return response()->redirectTo('admin/unauthorized');
+            return response()->redirectTo(url('/admin/unauthorized'));
 
         }
 
@@ -211,7 +271,7 @@ class RegistrationController extends Controller
             }
 
         } else {
-            return response()->redirectTo('admin/unauthorized');
+            return response()->redirectTo(url('/admin/unauthorized'));
 
         }
 
@@ -249,7 +309,7 @@ class RegistrationController extends Controller
             return response()->file($registration->diploma_path);
 
         } else {
-            return response()->redirectTo('admin/unauthorized');
+            return response()->redirectTo(url('/admin/unauthorized'));
 
         }
 

@@ -173,8 +173,8 @@
                     'video_type'        => 'Tipo de Video',
                     'video_embed'       => 'Código Embebido',
                     'data_update'       => 'Pestaña informativa de Subida de datos',
+                    'registrations'     => 'Registrations',
                     'inspection_file_message' => 'Despues de crear el curso, usted puede subit el archivo de inspección.'
-
                 ],
             ],
             'upcoming' => [
@@ -326,5 +326,22 @@
         ],
         'words' =>[
             'zone'  => 'Zona'
+            'course'    => 'Course',
+            'diploma' => 'Diploma',
+            'grade' => 'Grado',
+            'zone'  => 'Zona',
+            'last_updated' => 'Última actualización',
+            'add_grade'             => 'Add Grade',
+            'by' => 'por',
+        ],
+        'messages' => [
+            'create_course' => 'Crear curso',
+            'grade_approved_by' => 'Grado aprobado por',
+            'proceed_to_the_course' => 'Proceda al curso',
+            'upload_new_course' => 'Cargar un nuevo curso',
+            'download_sample_file' => 'Descargar archivo de muestra',
+            'upload_diploma_zip_file' => 'Upload Diploma Zip File',
+            'course_request_list_modal' => 'Course Request List Modal',
+            'diploma_upload_message' => 'La carga del diploma se habilitará desde la fecha de inicio de la entrada al grado'
         ]
     ];

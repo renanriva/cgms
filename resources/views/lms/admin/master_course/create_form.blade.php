@@ -5,14 +5,17 @@
             <h3 class="box-title">Master Course Info</h3>
         </div>
 
-        <form class="form-horizontal" method="post" action="/admin/master-course/{{ isset($master) ? $master->id : ''}}">
+        @if(isset($master))
+            <form class="form-horizontal" method="post" action="{{ url("/admin/master-course/$master->id ") }}">
+        @else
+            <form class="form-horizontal" method="post" action="{{ url("/admin/master-course/") }}">
+        @endif
 
             <div class="box-body">
                 {{ csrf_field() }}
 
                 @component('lms.admin.components.bootstrap.form-group', ['name' => 'Type'])
-                    <select class="form-control" id="select-type" name="type">
-                    </select>
+                    <select class="form-control" id="select-type" name="type"></select>
                 @endcomponent
 
 
@@ -59,7 +62,7 @@
 
             <div class="box-footer">
                 @isset($master)
-                    <a href={{ url("/admin/master-course/create") }} class="btn btn-default btn-flat btn-sm">
+                    <a href="{{ url("/admin/master-course/create") }}" class="btn btn-default btn-flat btn-sm">
                         <i class="fas fa-plus"></i> Add New
                     </a>
                 @endisset

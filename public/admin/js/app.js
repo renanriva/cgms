@@ -52685,11 +52685,10 @@ $(document).ready(function () {
 
                 $.ajax({
                     method: 'post',
-                    url: '/admin/categories/insert',
+                    url: app_url + '/admin/categories/insert',
                     data: data
                 }).done(function (response, textStatus, xhr) {
 
-                    // console.log(response);
                     location.reload();
                 }).fail(function (errors, textStatus, errorThrown) {
                     console.log(error);
@@ -52729,7 +52728,7 @@ $(document).ready(function () {
 
         var removeItem = function removeItem() {
 
-            categoryPage.on('click', '.btn-remove', function (e) {
+            categoryPage.on('click', '.btn-remove-category', function (e) {
 
                 e.preventDefault();
 
@@ -52973,8 +52972,6 @@ $(document).ready(function () {
 
             if (courseTypeList.length > 0) {
 
-                // console.log('load courses');
-
                 courseTypeList.empty();
                 courseTypeList.attr('disabled', 'disabled');
                 courseTypeList.append('<option>Loading...</option>');
@@ -53120,7 +53117,7 @@ $(document).ready(function () {
                     grade_entry_end_date: modal.find('.js-edit-grade-entry-end-date').val(),
                     course_stage: modal.find('.js-select-course-stage option:selected').val(),
                     course_status: modal.find('.js-select-course-status option:selected').val(),
-                    is_disclaimer: modal.find('.js-select-master-course option:selected').val(),
+                    is_disclaimer: modal.find('.js-select-disclaimer_required option:selected').val(),
                     cost: modal.find('.js-edit-course-cost').val(),
                     finance_type: modal.find('.js-edit-course-finance_type').val()
 
@@ -53195,7 +53192,7 @@ $(document).ready(function () {
                 modal.find('.js-edit-course-data_update').val(data.data_update);
 
                 modal.find('.js-edit-course-type option[value="' + data.course_type + '"]').attr('selected', true);
-                modal.find('.js-select-master-course option[value="' + data.master_course_id + '"]').attr('selected', true), modal.find('.js-edit-course-edition').val(data.course_edition), modal.find('.js-edit-grade-entry-start-date').val(data.grade_entry_start_date), modal.find('.js-edit-grade-entry-end-date').val(data.grade_entry_end_date), modal.find('.js-select-course-stage option[value="' + data.course_stage + '"]').attr('selected', true), modal.find('.js-select-course-status option[type="' + data.course_status + '"]').attr('selected', true), modal.find('.js-select-disclaimer_required option[value="' + data.is_disclaimer + '"]').attr('selected', true), modal.find('.js-edit-course-cost').val(data.cost), modal.find('.js-edit-course-finance_type').val(data.finance_type), modal.find('.js-course-id').val(data.id);
+                modal.find('.js-select-master-course option[value="' + data.master_course_id + '"]').attr('selected', true), modal.find('.js-edit-course-edition').val(data.course_edition), modal.find('.js-edit-grade-entry-start-date').val(data.grade_entry_start_date), modal.find('.js-edit-grade-entry-end-date').val(data.grade_entry_end_date), modal.find('.js-select-course-stage option[value="' + data.course_stage + '"]').attr('selected', true), modal.find('.js-select-course-status option[value="' + data.course_status + '"]').attr('selected', true), modal.find('.js-select-disclaimer_required option[value="' + data.is_disclaimer + '"]').attr('selected', true), modal.find('.js-edit-course-cost').val(data.cost), modal.find('.js-edit-course-finance_type').val(data.finance_type), modal.find('.js-course-id').val(data.id);
 
                 modal.find('.btn-update-course-files').removeClass('hidden');
                 modal.find('.btn-show-course-form').addClass('hidden');
@@ -53375,7 +53372,7 @@ $(document).ready(function () {
 
                 deleteModal.find('.model-title').text('Delete Canton');
                 deleteModal.find('.js-message').text('Are you sure to delete Canton [' + name + ']?');
-                deleteModal.find('#btn-delete-confirm').attr('data-url', '/admin/course/ajax/' + id);
+                deleteModal.find('#btn-delete-confirm').attr('data-url', app_url + '/admin/course/ajax/' + id);
                 deleteModal.find('#btn-delete-confirm').attr('data-id', id);
                 deleteModal.modal('show');
             });
@@ -54018,7 +54015,7 @@ if (grade_page > 0) {
 
                 deleteModal.find('.model-title').text('Delete Canton');
                 deleteModal.find('.js-message').text('Are you sure to delete Canton [' + name + ']?');
-                deleteModal.find('#btn-delete-confirm').attr('data-url', '/admin/location/canton/' + id + '/ajax');
+                deleteModal.find('#btn-delete-confirm').attr('data-url', app_url + '/admin/location/canton/' + id + '/ajax');
                 deleteModal.find('#btn-delete-confirm').attr('data-id', id);
                 deleteModal.modal('show');
             });
@@ -54302,7 +54299,7 @@ if (grade_page > 0) {
 
                 deleteModal.find('.model-title').text('Delete Parroquia');
                 deleteModal.find('.js-message').text('Are you sure to delete Parroquia [' + name + ']?');
-                deleteModal.find('#btn-delete-confirm').attr('data-url', '/admin/location/parroquia/' + id + '/ajax');
+                deleteModal.find('#btn-delete-confirm').attr('data-url', app_url + '/admin/location/parroquia/' + id + '/ajax');
                 deleteModal.find('#btn-delete-confirm').attr('data-id', id);
                 deleteModal.modal('show');
             });
@@ -54692,6 +54689,44 @@ $(document).ready(function () {
             });
         });
     } //end page
+
+    var upcoming = $('#upcoming-course');
+
+    if (upcoming.length > 0) {
+        var handleProceedToTheCourse = function handleProceedToTheCourse() {
+
+            $('.btn-proceed-to-the-course').click(function () {
+
+                $(this).attr('disabled', 'true');
+                var course_id = $(this).attr('data-course-id');
+                var teacher_id = $(this).attr('data-teacher-id');
+
+                $.ajax({
+                    url: app_url + '/admin/registration/proceed-to-the-course',
+                    method: 'post',
+                    data: { 'course_id': course_id, 'teacher_id': teacher_id }
+                }).done(function (response, textStatus, xhr) {
+
+                    if (xhr.status === 200) {
+
+                        // open new window with url
+                        window.open('https://mecapacito.educacion.gob.ec/', '_blank');
+
+                        $(this).removeClass('btn-info');
+                        $(this).addClass('btn-success');
+                        $(this).text('Complete');
+                    }
+                }).fail(function (errors, textStatus, errorThrown) {
+
+                    alert('Error: ' + errorThrown);
+                    console.log('Error: ', errors);
+                    $(this).removeAttr('disabled');
+                });
+            });
+        };
+
+        handleProceedToTheCourse();
+    }
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/jquery/dist/jquery.js")))
 
@@ -54758,7 +54793,7 @@ $(document).ready(function () {
 
                 deleteModal.find('.model-title').text('Delete Teacher');
                 deleteModal.find('.js-message').text('Are you sure to delete Teacher [' + name + ']?');
-                deleteModal.find('#btn-delete-confirm').attr('data-url', '/admin/teachers/' + id);
+                deleteModal.find('#btn-delete-confirm').attr('data-url', app_url + '/admin/teachers/' + id);
                 deleteModal.find('#btn-delete-confirm').attr('data-id', id);
                 deleteModal.modal('show');
             });
@@ -55071,6 +55106,11 @@ $(document).ready(function () {
         }; // end function
 
 
+        /**
+         * @todo onCantonChange select parrouia list
+         */
+
+
         insertTeacher();
 
 
@@ -55082,9 +55122,9 @@ $(document).ready(function () {
         });
 
         $('.js-canton').on('select2:select', function (e) {
-
-            var data = e.params.data;
-            loadCantons(data.id);
+            //     var data = e.params.data;
+            //     console.log('canton ', data);
+            //     loadCantons(data.id);
         });
     }
 
@@ -55276,7 +55316,7 @@ $(document).ready(function () {
 
                 deleteModal.find('.model-title').text('Delete University');
                 deleteModal.find('.js-message').text('Are you sure to delete University [' + name + ']?');
-                deleteModal.find('#btn-delete-confirm').attr('data-url', '/admin/university/ajax/' + id);
+                deleteModal.find('#btn-delete-confirm').attr('data-url', app_url + '/admin/university/ajax/' + id);
                 deleteModal.find('#btn-delete-confirm').attr('data-id', id);
 
                 $('tr#university_id_' + id).addClass('danger');
@@ -55639,7 +55679,7 @@ $(document).ready(function () {
 
                 deleteModal.find('.model-title').text('Delete User');
                 deleteModal.find('.js-message').text('Are you sure to delete User [' + name + ']?');
-                deleteModal.find('#btn-delete-confirm').attr('data-url', '/admin/users/' + id + '/ajax');
+                deleteModal.find('#btn-delete-confirm').attr('data-url', app_url + '/admin/users/' + id + '/ajax');
                 deleteModal.find('#btn-delete-confirm').attr('data-id', id);
 
                 $('tr#user_id_' + id).addClass('danger');

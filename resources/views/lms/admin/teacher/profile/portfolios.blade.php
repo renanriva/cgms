@@ -39,7 +39,8 @@
                                 <td>{{ $registration->course->university->name }}</td>
                                 <td><a href="{{ url("/admin/course/".$registration->course->id."/show") }}">
                                         {{ $registration->course->short_name }}</a><br/>
-                                    <small class="text-warning">{{ $registration->course->course_code }}</small>
+                                    <small class="text-warning">{{ $registra
+                                    tion->course->course_code }}</small>
                                 </td>
                                 <td>{{ $registration->course->modality->title }}</td>
                                 <td>{{ $registration->course->hours }}</td>

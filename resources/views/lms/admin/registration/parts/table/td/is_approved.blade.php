@@ -1,12 +1,3 @@
-{{--<td>--}}
-    {{--@if($registration->is_approved == REGISTRATION_IS_APPROVED)--}}
-        {{--<i class="fa fa-check-square-o"></i> Approved<br/>--}}
-        {{--<small>by {{ $registration->approvedBy->name }} at <br/>{{ date('d m Y - h:i a', strtotime($registration->approval_time)) }}</small>--}}
-    {{--@else--}}
-        {{--<i class="fa fa-times"></i> Not Approved--}}
-
-    {{--@endif--}}
-{{--</td>--}}
 <td class="js-td-is-approved">
         @if($registration->is_approved == REGISTRATION_IS_NOT_APPROVED)
 
@@ -28,7 +19,7 @@
                 <span class="label label-success"><i class="fa fa-check"></i> Yes</span>
                 <small><i class="fa fa-clock-o"></i>
                         {{ date('h:i a', strtotime($registration->approval_time)) }}<br/>
-                        {{ date('d M, Y', strtotime($registration->approval_time)) }}</small>
+                        {{ date('d M, Y', strtotime($registration->approval_time)) }}
                 </small>
         @endif
 </td>

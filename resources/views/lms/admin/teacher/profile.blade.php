@@ -136,22 +136,22 @@
                                 <th>{{ __('lms.page.teacher_profile.table.institute') }}</th>
                                 <th>{{ __('lms.page.teacher_profile.table.course_name') }}</th>
                                 <th>{{ __('lms.page.teacher_profile.table.modality') }}</th>
-                                <th>Grade</th>
-                                <th>Grade Approved By</th>
+                                <th>{{ __('lms.words.grade') }}</th>
+                                <th>{{ __('lms.words.messages.grade_approved_by') }}</th>
                                 <th>{{ __('lms.page.teacher_profile.table.hours') }}</th>
                                 <th>{{ __('lms.page.teacher_profile.table.start_date') }}</th>
                                 <th>{{ __('lms.page.teacher_profile.table.end_date') }}</th>
                                 <th>{{ __('lms.page.registration.pending.table.record_uploaded') }}</th>
                                 <th>{{ __('lms.page.teacher.table.approved') }}</th>
                                 <th>{{ __('lms.page.teacher_profile.table.certificate') }}</th>
-                                <th>diploma</th>
+                                <th>{{ __('lms.words.diploma') }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($teacher->registrations->sortByDesc('approval_time') as $registration)
                                 <tr class="{{ $registration->course->status == 0 ? 'disabled' : '' }}">
                                     <td>{{ $registration->course->university->name }}</td>
-                                    <td><a href="{{ url("/admin/course/$registration->course->id/show") }}">
+                                    <td><a href="{{ url("/admin/course/".$registration->course->id."/show") }}">
                                         {{ $registration->course->short_name }}</a><br/>
                                         <small class="text-warning">
                                             {{ $registration->course->course_code }}</small>

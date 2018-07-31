@@ -237,7 +237,7 @@ $(document).ready(function () {
 
                 deleteModal.find('.model-title').text('Delete University');
                 deleteModal.find('.js-message').text('Are you sure to delete University ['+name+']?');
-                deleteModal.find('#btn-delete-confirm').attr('data-url', '/admin/university/ajax/'+id);
+                deleteModal.find('#btn-delete-confirm').attr('data-url', app_url+'/admin/university/ajax/'+id);
                 deleteModal.find('#btn-delete-confirm').attr('data-id', id);
 
                 $('tr#university_id_'+id).addClass('danger');

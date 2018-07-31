@@ -76,8 +76,6 @@ $(document).ready(function () {
 
             if (courseTypeList.length > 0){
 
-                // console.log('load courses');
-
                 courseTypeList.empty();
                 courseTypeList.attr('disabled', 'disabled');
                 courseTypeList.append('<option>Loading...</option>');
@@ -239,7 +237,7 @@ $(document).ready(function () {
                     grade_entry_end_date    : modal.find('.js-edit-grade-entry-end-date').val(),
                     course_stage            : modal.find('.js-select-course-stage option:selected').val(),
                     course_status           : modal.find('.js-select-course-status option:selected').val(),
-                    is_disclaimer           : modal.find('.js-select-master-course option:selected').val(),
+                    is_disclaimer           : modal.find('.js-select-disclaimer_required option:selected').val(),
                     cost                    : modal.find('.js-edit-course-cost').val(),
                     finance_type            : modal.find('.js-edit-course-finance_type').val()
 
@@ -322,7 +320,7 @@ $(document).ready(function () {
                 modal.find('.js-edit-grade-entry-start-date').val(data.grade_entry_start_date),
                 modal.find('.js-edit-grade-entry-end-date').val(data.grade_entry_end_date),
                 modal.find('.js-select-course-stage option[value="'+data.course_stage+'"]').attr('selected', true),
-                modal.find('.js-select-course-status option[type="'+data.course_status+'"]').attr('selected', true),
+                modal.find('.js-select-course-status option[value="'+data.course_status+'"]').attr('selected', true),
                 modal.find('.js-select-disclaimer_required option[value="'+data.is_disclaimer+'"]').attr('selected', true),
                 modal.find('.js-edit-course-cost').val(data.cost),
                 modal.find('.js-edit-course-finance_type').val(data.finance_type),
@@ -554,7 +552,7 @@ $(document).ready(function () {
 
                 deleteModal.find('.model-title').text('Delete Canton');
                 deleteModal.find('.js-message').text('Are you sure to delete Canton ['+name+']?');
-                deleteModal.find('#btn-delete-confirm').attr('data-url', '/admin/course/ajax/'+id);
+                deleteModal.find('#btn-delete-confirm').attr('data-url', app_url+'/admin/course/ajax/'+id);
                 deleteModal.find('#btn-delete-confirm').attr('data-id', id);
                 deleteModal.modal('show');
 

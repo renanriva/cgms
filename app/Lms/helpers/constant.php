@@ -167,12 +167,15 @@
                 $youtube = 'https://www.youtube.com/watch?v='.$url;
             }
 
-            if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $youtube, $youtube)) {
-                return  $youtube[1];
-            } else{
+//            dd(preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $youtube, $youtube));
+//            if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $youtube, $youtube)) {
+//                return  $youtube[1];
+//            } else{//
                 return $youtube;
-            }
+//            }
         } else {
+
+            die('here');
             return null;
         }
     }

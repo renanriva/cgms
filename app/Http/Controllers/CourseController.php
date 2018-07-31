@@ -8,6 +8,7 @@ use App\Http\Requests\CourseInsertRequest;
 use App\Http\Requests\CourseUpdateRequest;
 use App\Registration;
 use App\Repository\CourseRepository;
+use App\Repository\MasterCourseRepository;
 use App\Repository\RegistrationRepository;
 use App\Repository\UniversityRepository;
 use DateTime;
@@ -32,6 +33,7 @@ class CourseController extends Controller
 {
 
     private  $repo;
+    private  $masterCourseRepo;
 
     /**
      * CourseController constructor.
@@ -39,6 +41,7 @@ class CourseController extends Controller
     public function __construct()
     {
         $this->repo = new CourseRepository();
+        $this->masterCourseRepo = new MasterCourseRepository();
     }
 
     /**
@@ -48,27 +51,37 @@ class CourseController extends Controller
      */
     public function index(Request $request){
 
-        $posts = $request->all();
 
         $user = Auth::user();
-        $page = isset($posts['page']) ? $posts['page'] : 1;
+
+        if ($user->can('browse', Course::class)){
+
+            $posts = $request->all();
+
+            $page = isset($posts['page']) ? $posts['page'] : 1;
 
 
-        if ($user->role == 'admin'){
+            if ($user->role == 'admin'){
 
-            $courses = $this->repo->paginate($page);
+                $courses = $this->repo->paginate($page);
 
 
-        } elseif ($user->role == 'university'){
+            } elseif ($user->role == 'university'){
 
-            $courses = $this->repo->coursesByUniversity($page, $user->university->id);
+                $courses = $this->repo->coursesByUniversity($page, $user->university->id);
+
+            }
+
+
+            $title = 'Course Management - '.env('APP_NAME') ;
+
+            return view('lms.admin.course.index', ['title'=> $title, 'courses' => $courses]);
+
+        } else {
+            return response()->redirectTo(url('/admin/unauthorized'));
 
         }
 
-
-        $title = 'Course Management - '.env('APP_NAME') ;
-
-        return view('lms.admin.course.index', ['title'=> $title, 'courses' => $courses]);
 
     }
 
@@ -86,6 +99,7 @@ class CourseController extends Controller
      * Process datatables ajax request.
      *
      * @return \Illuminate\Http\JsonResponse
+     * @deprecated
      */
     public function getTableData()
     {
@@ -126,10 +140,12 @@ class CourseController extends Controller
 
         $post = $request->all();
 
-        $course['course_code']                  = $post['course_code'];
-        $course['course_type_id']               = $post['course_type'];
+        $course['master_course_id']             = $post['master_course_id'];
         $course['university_id']                = $post['university_id'];
+        $course['course_type_id']               = $post['course_type'];
+        $course['course_code']                  = $post['course_code'];
         $course['short_name']                   = $post['short_name'];
+        $course['edition']                      = $post['course_edition'];
 
         if (isset($post['start_date'])) {
             $startDate = DateTime::createFromFormat('d/m/Y', $post['start_date']);
@@ -145,24 +161,6 @@ class CourseController extends Controller
             $course['end_date'] =  null;
         }
 
-        $course['hours']                        = $post['hours'];
-        $course['quota']                        = $post['quota'];
-
-        $course['comment']                      = $post['comment'];
-        $course['description']                  = $post['description'];
-        $course['video_text']                   = $post['video_text'];
-        $course['video_type']                   = $post['video_type'];
-        $course['video_code']                   = $post['video_code'];
-        $course['data_update_brief']            = $post['data_update_text'];
-        $course['terms_conditions']            = $post['terms_condition'];
-        $course['master_course_id']             = $post['master_course_id'];
-        $course['edition']                      = $post['course_edition'];
-        $course['stage']                        = $post['course_stage'];
-        $course['status']                       = $post['course_status'];
-        $course['is_disclaimer']                = $post['is_disclaimer'];
-        $course['cost']                         = $post['cost'];
-        $course['finance_type']                 = $post['finance_type'];
-
         if (isset($post['grade_entry_start_date'])) {
             $startDate = DateTime::createFromFormat('d/m/Y', $post['grade_entry_start_date']);
             $course['grade_upload_start_date'] = $startDate->format('Y-m-d');
@@ -177,6 +175,25 @@ class CourseController extends Controller
             $course['grade_upload_end_date'] =  null;
         }
 
+        $course['cost']                         = $post['cost'];
+        $course['finance_type']                 = $post['finance_type'];
+        $course['is_disclaimer']                = $post['is_disclaimer'];
+
+
+        $course['hours']                        = $post['hours'];
+        $course['quota']                        = $post['quota'];
+
+        $course['stage']                        = $post['course_stage'];
+        $course['status']                       = $post['course_status'];
+
+        $course['comment']                      = $post['comment'];
+        $course['description']                  = $post['description'];
+
+        $course['video_text']                   = $post['video_text'];
+        $course['video_type']                   = $post['video_type'];
+        $course['video_code']                   = $post['video_code'];
+        $course['data_update_brief']            = $post['data_update_text'];
+        $course['terms_conditions']             = $post['terms_condition'];
 
         $course['inspection_form_generated']    = false;
 
@@ -198,10 +215,11 @@ class CourseController extends Controller
 
             $post = $request->all();
 
-            $course['course_type_id']               = $post['course_type'];
-
-            $course->university_id  = $post['university_id'];
-            $course->short_name     = $post['short_name'];
+            $course->master_course_id               = $post['master_course_id'];
+            $course->university_id                  = $post['university_id'];
+            $course->course_type_id                 = $post['course_type'];
+            $course->short_name                     = $post['short_name'];
+            $course->edition                        = $post['course_edition'];
 
             if (isset($post['start_date'])) {
                 $startDate = DateTime::createFromFormat('d/m/Y', $post['start_date']);
@@ -217,26 +235,6 @@ class CourseController extends Controller
                 $course->end_date =  null;
             }
 
-            $course->hours          = $post['hours'];
-            $course->quota          = $post['quota'];
-
-            $course->comment        = $post['comment'];
-            $course->description    = $post['description'];
-
-            $course->comment                      = $post['comment'];
-            $course->video_text                   = $post['video_text'];
-            $course->video_type                   = $post['video_type'];
-            $course->video_code                   = $post['video_code'];
-            $course->data_update_brief            = $post['data_update_text'];
-            $course->terms_conditions             = $post['terms_condition'];
-            $course->master_course_id             = $post['master_course_id'];
-            $course->edition                      = $post['course_edition'];
-            $course->stage                        = $post['course_stage'];
-            $course->status                       = $post['course_status'];
-            $course->has_disclaimer               = $post['is_disclaimer'];
-            $course->cost                         = $post['cost'];
-            $course->finance_type                 = $post['finance_type'];
-
             if (isset($post['grade_entry_start_date'])) {
                 $startDate = DateTime::createFromFormat('d/m/Y', $post['grade_entry_start_date']);
                 $course->grade_upload_start_date = $startDate->format('Y-m-d');
@@ -251,8 +249,31 @@ class CourseController extends Controller
                 $course->grade_upload_end_date =  null;
             }
 
-            $course->updated_by     = Auth::user()->id;
+            $course->has_disclaimer                 = $post['is_disclaimer'];
+            $course->cost                           = $post['cost'];
+            $course->finance_type                   = $post['finance_type'];
+
+            $course->hours                          = $post['hours'];
+            $course->quota                          = $post['quota'];
+
+            $course->stage                          = $post['course_stage'];
+            $course->status                         = $post['course_status'];
+
+            $course->comment                        = $post['comment'];
+            $course->description                    = $post['description'];
+
+            $course->comment                        = $post['comment'];
+            $course->video_text                     = $post['video_text'];
+            $course->video_type                     = $post['video_type'];
+            $course->video_code                     = $post['video_code'];
+            $course->data_update_brief              = $post['data_update_text'];
+            $course->terms_conditions               = $post['terms_condition'];
+
+            $course->updated_by                     = Auth::user()->id;
             $course->save();
+
+            $this->repo->flushById($id);
+            $this->repo->flushCache();
 
             return response()->json(['course' => $course])->setStatusCode(200);
 
@@ -272,10 +293,11 @@ class CourseController extends Controller
     public function delete($id){
 
 //        @todo add authorization check
-        $course = $this->repo->findById($id);
+        $course = Course::find($id);
         $course->delete();
 
         $this->repo->flushById($id);
+        $this->repo->flushCache();
 
         return response()->json()->setStatusCode(204);
 
@@ -305,28 +327,39 @@ class CourseController extends Controller
                 foreach ($reader->toArray() as $row) {
 
 
-                    $course['course_code']          = $row['course_code'];
-                    $course['course_type']          = $row['course_type'];
-                    $course['modality']             = $row['modality'];
+                    $master_course = $this->masterCourseRepo->findbyCode($row['master_course_code']);
 
-                    $university = $uniRepo->getUniversityByName($row['university']);
-                    if ($university !== null){
-                        $course['university_id']        = $university->id;
-                    }
+                    $course['master_course_id']             = $master_course->id;
 
-                    $course['short_name']           = $row['short_name'];
-                    $course['start_date']           = $row['start_date'];
-                    $course['end_date']             = $row['end_date'];
-                    $course['hours']                = $row['hours'];
-                    $course['quota']                = $row['quota'];
-                    $course['comment']              = $row['comment'];
+                    $course['university_id']                = $row['university_id'];
+                    $course['course_code']                  = $row['course_code'];
+                    $course['course_type_id']               = $row['modality_id'];
+                    $course['short_name']                   = $row['short_name'];
+                    $course['edition']                      = isset($row['course_edition']) ? $row['course_edition']: '';
 
-                    $course['description']          = $row['description'];
+                    $course['start_date']                   = isset($row['start_date']) ? $row['start_date']: null;
+                    $course['end_date']                     = isset($row['end_date']) ? $row['end_date'] : null;
+                    $course['grade_upload_start_date']      = isset($row['grade_add_start_date']) ? $row['grade_add_start_date']: null;
+                    $course['grade_upload_end_date']        = isset($row['grade_add_end_date']) ? $row['grade_add_end_date']: null;
 
-                    $course['video_text']           = $row['video_information'];
-                    $course['video_type']           = $row['video_type'];
-                    $course['video_code']           = $row['embed_code'];
-                    $course['data_update_text']     = $row['data_update'];
+                    $course['cost']                         = isset($row['cost']) ? : '0';
+                    $course['finance_type']                 = isset($row['finance_type']) ? $row['finance_type']: '0';
+                    $course['is_disclaimer']                = $row['disclaimer_required'] == 'yes' ? '1' : '0';
+
+                    $course['hours']                        = isset($row['hours']) ? : '0';
+                    $course['quota']                        = isset($row['quota']) ? : '0';
+
+                    $course['stage']                        = $row['stage'] == 'published' ? '1' : '0';
+                    $course['status']                       = $row['status'] == 'active' ? '1' : '0';
+
+                    $course['comment']                      = isset($row['comment']) ? $row['comment']: '';
+                    $course['description']                  = isset($row['description']) ? $row['description']: '';
+
+                    $course['video_text']                   = isset($row['video_information']) ? $row['video_information']: '';
+                    $course['video_type']                   = 'youtube';
+                    $course['video_code']                   = isset($row['embed_code']) ? $row['embed_code'] : '';
+                    $course['data_update_text']             = isset($row['data_update']) ? $row['data_update'] : '';
+                    $course['terms_conditions']             = isset($row['terms_and_conditions']) ? $row['terms_and_conditions'] : '';
 
 
                     array_push($rows, $course);
@@ -336,6 +369,8 @@ class CourseController extends Controller
                 }
 
             });
+
+            $this->repo->flushCache();
 
             return response()->json(['rows' => $rows, 'success' => true] );
 
@@ -446,11 +481,10 @@ class CourseController extends Controller
 
 
     /**
-     * @param Request $request
      * @param         $course_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getRegister(Request $request, $course_id){
+    public function getRegister($course_id){
 
         $title = 'Register - '.env('APP_NAME') ;
 
@@ -514,20 +548,11 @@ class CourseController extends Controller
      */
     public function getAddMarkPage($courseId){
 
-
-        $user = Auth::user();
         $course = $this->repo->getById($courseId);
 
+        $title = 'Course Grade Upload - '.env('APP_NAME') ;
+        return view('lms.admin.course.grade', ['title' => $title, 'course' => $course]);
 
-        if ($user->can('addmark', $course)){
-
-            $title = 'Course Grade Upload - '.env('APP_NAME') ;
-            return view('lms.admin.course.grade', ['title' => $title, 'course' => $course]);
-
-        } else {
-
-            return response()->redirectTo('unauthorized');
-        }
     }
 
     /**
@@ -592,7 +617,8 @@ class CourseController extends Controller
                 return response()->json(['error' => $e->getMessage(),'rows' => $rows, 'file' => $path])->setStatusCode(422);
             }
 
-        } else {
+        }
+        else {
             //send 403 json response
             return response()->json(['error'=> 'Unauthorized'])->setStatusCode(403);
         }
@@ -615,7 +641,7 @@ class CourseController extends Controller
                 return response()->file($course->lor_file_path);
 
             } else {
-                return response()->redirectTo('admin/unauthorized');
+                return response()->redirectTo(url('/admin/unauthorized'));
 
             }
 

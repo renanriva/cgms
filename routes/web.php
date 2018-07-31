@@ -53,6 +53,9 @@ Route::middleware(['auth'])->group(function (){
          */
         Route::prefix('categories')->group(function (){
 
+            Route::post('/insert', 'CategoryController@postType');
+
+
             Route::get('/type', 'CategoryController@index');
             Route::get('/type/list', 'CategoryController@getTypeList');
 
@@ -102,7 +105,7 @@ Route::middleware(['auth'])->group(function (){
             Route::get('/create', 'CourseController@create');
 
             Route::post('/ajax/table', 'CourseController@getTableData');
-            Route::delete('/{id}/ajax', 'CourseController@delete');
+            Route::delete('/{id}/ajax', 'CourseController@delete');//@depricated
             Route::post('/ajax', 'CourseController@store');
             Route::post('/ajax/{id}', 'CourseController@update');
             Route::delete('/ajax/{id}', 'CourseController@delete');
@@ -151,6 +154,7 @@ Route::middleware(['auth'])->group(function (){
             Route::post('/approve/{id}', 'RegistrationController@postApprove');
             Route::post('/{id}/update/{part}', 'RegistrationController@updateRegistration');
             Route::post('/{id}/upload/inspection', 'RegistrationController@uploadStudentInspection');
+            Route::post('/proceed-to-the-course', 'RegistrationController@postProceedToTheCourse');
 
 
             Route::post('/{id}/download/student-inspection-form', 'RegistrationController@downloadStudentInspectionCertificate');
