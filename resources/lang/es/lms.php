@@ -325,7 +325,7 @@
             ],
         ],
         'words' =>[
-            'zone'  => 'Zona'
+            'zone'  => 'Zona',
             'course'    => 'Course',
             'diploma' => 'Diploma',
             'grade' => 'Grado',
